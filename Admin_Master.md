@@ -1,5 +1,5 @@
 
-
+Plantillas Django + Alpine
 ## titulo: "AdMind — Documento maestro de contexto" proyecto: "Proyecto de Ingeniería de Software II" institucion: "Universidad de Cundinamarca — Facatativá" equipo: ["Alejo (Manuel Alejandro Aldana Rincón)", "Camilo"] fecha_corte: 2026-09-11 estado_general: "Fin de planeación. Sprint 1 sin iniciar. Cero líneas de código." proposito: "Contexto completo para que cualquier agente de IA o persona nueva se ubique leyendo un solo archivo."
 
 # AdMind — Documento maestro
@@ -726,9 +726,12 @@ Aquí no hay tutorial que copiar. **Esta parte es el proyecto**, y es lo que se 
 
 ### 7.3 El proyecto espejo — desde el 2026-09-11, la rama `lab`
 
-**El repositorio aparte se descartó.** Su función la cumple una rama `lab` dentro del repositorio real, que **solo usa Alejo** y que **nunca se fusiona** hacia `desarrollo`. Lo que funciona en el lab se reescribe desde cero, sin mirar, y esa reescritura es la prueba de que se aprendió. El detalle operativo está en `Admind_Lab.md`, que es además lo que lee un agente de IA antes de acompañar un ejercicio.
+**El repositorio aparte se descartó.** Su función la cumple una rama `lab` dentro del repositorio real, que **solo usa Alejo** y que **nunca se fusiona** hacia `desarrollo`. Lo que funciona en el lab no sube: se vuelve a construir en `desarrollo` (hasta el 2026-09-14 lo reescribía Alejo sin mirar, como prueba de que aprendió; ver la nota de abajo). El detalle operativo está en `Admind_Lab.md`, que es además lo que lee un agente de IA antes de trabajar en el proyecto.
 
 La razón original sigue en pie —**aprender es romper cosas**, y romper cosas en el repositorio que se va a sustentar es mala idea—, pero una rama que nunca sube da la misma protección sin un tercer repositorio que mantener. Lo que se pierde: el lab arrastra la estructura del repositorio real, así que no es el lienzo en blanco que era MiniAdmind.
+
+> [!NOTE] Desde el 2026-09-14 el lab es opcional
+> Con el plazo reducido a un mes (§11), los ejercicios se hacen solo si hay tiempo. Lo que no se ensaye en el lab se construye directamente en el producto, y ya no hace falta reescribirlo sin mirar (§8.4).
 
 Alcance, y no crece: un conjunto, dos usuarios, un área, franjas de una hora, el ciclo mínimo bloquear → solicitar → aprobar/rechazar. Sin correo, sin 2FA, sin auditoría, sin documentos, sin visitantes.
 
@@ -824,17 +827,21 @@ Alejo trabaja la documentación en Obsidian (abriendo `admind-docs` como bóveda
 
 ### 8.4 Disciplina de trabajo con IA
 
-> [!TIP] El filtro de una sola pregunta **¿Puedo explicar esta línea, en voz alta, sin mirarla?** Si la respuesta es no, no entra al repositorio. Da igual que funcione.
+> [!WARNING] Reversión deliberada — 2026-09-14
+> Hasta esta fecha regía un **modo tutor estricto**: la IA explicaba, revisaba y ponía ejercicios, pero no escribía código del producto, y el filtro de abajo era de entrada al repositorio. **El plazo de entrega se redujo a un mes** y no hay que entregar el proyecto completo (§11). Con un equipo de dos que apenas está aprendiendo, ese modo no llega a tiempo, así que Alejo decidió que **la IA construya, pero solo lo que se le pide**. Django y las API se aprenden sobre la marcha. El protocolo operativo está en `Admind_Lab.md` §2.
 
+> [!TIP] El filtro de una sola pregunta **¿Puedo explicar esto ante el jurado?** Hasta el 2026-09-14, si la respuesta era no, no entraba al repositorio. Ahora puede entrar, pero lo que se vaya a defender se entiende antes de la sustentación.
+
+- **La IA construye lo que se le pide, con el alcance exacto del pedido.** Lo que haga falta fuera de él lo avisa y no lo hace
 - El diseño del motor de reglas se piensa en papel primero; la IA implementa lo ya especificado
 - Las pruebas del núcleo las escribe o revisa el equipo línea por línea
 - Bitácora de decisiones (ADR): qué se decidió, qué se descartó, por qué
 - Commits pequeños con historial coherente. Conventional Commits con el ID de la historia: `feat(reservas): agregar bloqueo de 3 minutos [HU-11]`
 - **Congelar el contrato de la API en el Planning**, antes de programar, para que ambos avancen sin bloquearse
 - **Rotar** capas por sprint: si uno hace siempre lo mismo, termina el semestre sabiendo la mitad
-- Declarar el uso de IA en la documentación si el curso lo permite
+- Declarar el uso de IA en la documentación si el curso lo permite. Desde el cambio del 2026-09-14 esto pesa más
 
-**Lo que ayuda:** preguntar _por qué_, no pedir el código · pedir revisión de lo escrito sin que lo corrija · pedir el concepto explicado de tres formas · pedir ejercicios, no soluciones. **Lo que lo arruina:** pegar código que funciona y seguir. Se siente como avanzar y es exactamente lo contrario.
+**Lo que ayuda:** pedir piezas concretas en vez de módulos enteros · preguntar _por qué_ sobre lo que la IA entregó · pedir el concepto explicado de tres formas · pedir preguntas de jurado sobre el código propio. **Lo que lo arruina:** aceptar código que funciona sin abrirlo y seguir. Se siente como avanzar y llega a la sustentación sin poder explicarlo.
 
 **El techo del proyecto no es cuánto código se puede generar, es cuánto se puede defender en la sustentación.**
 
@@ -931,6 +938,12 @@ _(La 15 fue revertida por la 22 y no se conserva como vigente.)_
 
 **Corte del seguimiento de velocidad: 2026-09-04.** Sin sprint iniciado.
 
+> [!CAUTION] El plazo de entrega se redujo a un mes (2026-09-14)
+> Comunicado por Alejo el 2026-09-14: la entrega queda cerca del **14 de octubre de 2026**, con la fecha exacta por confirmar, y **no hay que entregar el proyecto completo**. Consecuencias:
+> - El reparto de siete sprints de dos semanas (§11.2) no cabe: un mes da para dos sprints de esa duración
+> - Qué se entrega es decisión del equipo y sigue abierta (§12.8). El §3 ya da el criterio: si solo el Núcleo funciona, el proyecto se sustenta igual
+> - Cambió el modo de trabajo con IA (§8.4) y la Fase 0 pasa a ser opcional (§7.3)
+
 > [!NOTE] La demo descartada (2026-09-11)
 > En septiembre se construyó una demo navegable en Django —ingreso, panel e unidades— para un entregable de clase. **Se descartó:** estaba hecha por completo con IA y el equipo no podía explicarla. Quedó comprimida en `Backend.zip`, **no se usa como referencia**, y el repositorio volvió a quedar sin código de producto.
 >
@@ -993,6 +1006,7 @@ _(La 15 fue revertida por la 22 y no se conserva como vigente.)_
 
 ### 11.5 Pendientes que afectan la sustentación
 
+- [ ] **Confirmar la fecha exacta de entrega y decidir qué se entrega en ese mes** (§12.8). Añadido el 2026-09-14; condiciona el orden de todo lo demás en esta lista
 - [ ] **Cerrar la decisión del stack de frontend** (§12.1). Bloquea el arranque del Sprint 1
 - [ ] **Documentar formalmente las entrevistas a residentes**: guion, número de entrevistados, hallazgos y cómo cada hallazgo cambió el diseño. Sin esto, el flujo de reserva parece preferencia técnica y no decisión con evidencia
 - [ ] **Decidir si las consultas del Superusuario a datos personales quedan en auditoría** (R10)
@@ -1009,7 +1023,7 @@ _Los cuatro siguientes se detectaron el 2026-09-11 al cruzar este documento con 
 - [ ] **Alinear la Definition of Done con el modelo de ramas del curso** (§8.1, §8.5 y §12.7 a)
 - [ ] **Definir el ambiente de pruebas.** La DoD lo exige desde HU-01 y no hay ninguno definido en ningún documento: tal como está escrita, hoy ninguna historia puede darse por terminada
 - [ ] **Decidir los dos usuarios de base de datos** que exige la auditoría de solo inserción: uno dueño, que corre las migraciones, y otro de aplicación sin `UPDATE`, `DELETE` ni DDL. Afecta también cómo `pytest-django` crea la base de pruebas
-- [ ] **Ubicar la Fase 0 en el calendario.** La ruta la sitúa en un "Sprint 0" que no existe en el reparto de §11.2, y cuesta 25–30 horas por persona
+- [ ] **Ubicar la Fase 0 en el calendario.** La ruta la sitúa en un "Sprint 0" que no existe en el reparto de §11.2, y cuesta 25–30 horas por persona. _Pierde peso desde el 2026-09-14: la Fase 0 es opcional (§7.3)._
 
 ### 11.6 Pendientes menores con recomendación ya escrita
 
@@ -1080,6 +1094,21 @@ _Sin confirmar por el equipo. Se listan para que no se pierdan, no como hechos._
 
 **c) "Un solo bloqueo activo en todo el sistema" contra "toda clave única incluye `conjunto_id`".** El §5.1 dice que un residente solo puede tener un bloqueo activo en todo el sistema; el §5.4 exige que toda clave única lleve `conjunto_id`. Una persona puede tener rol de Residente en dos conjuntos. Si la frase es literal, esa restricción cruza conjuntos y es una excepción al aislamiento que no está en la lista cerrada de tablas globales (R12); si no lo es, hay que corregir la redacción.
 
+### 12.8 · Detectada el 2026-09-14: el plan del semestre contra el plazo de un mes
+
+_El plazo es un hecho. Lo abierto es qué hacer con él, y ningún agente recorta alcance por su cuenta._
+
+|Fuente|Qué dice|
+|---|---|
+|**§8.1 y §11.2**|Siete sprints de dos semanas, 38 historias, la misma duración en todos los sprints|
+|**Plazo comunicado el 2026-09-14**|Un mes para entregar, sin exigir el proyecto completo|
+
+Falta decidir:
+
+- **Qué historias entran.** El §3 da el orden (Núcleo, Comprometido, Condicional), pero no dice cuánto del Núcleo cabe en un mes
+- **Cuántos sprints y de qué duración.** La regla de duración fija (§8.1) existe para medir velocidad, y el §11.3 dejaba que el Sprint 1 calibrara la cifra
+- **Qué evidencias de Scrum del §8.1 se alcanzan a producir**, porque el jurado las va a pedir igual
+
 ---
 
 ## 13. Qué está decidido y qué está propuesto
@@ -1097,6 +1126,8 @@ _Sin confirmar por el equipo. Se listan para que no se pierdan, no como hechos._
 |Todo lo de §3 (alcance), §4 (legal), §5 (diseño) y §9 (ADR)|Referenciar siempre por ID en vez de `[[enlaces]]` de Obsidian|
 |**Modelo de ramas del curso**: `main`, `desarrollo` y `pruebas`, sin ramas por historia (§8.5)|Reescribir la DoD con el vocabulario de ramas del curso|
 |**El proyecto espejo es la rama `lab`**, no un repositorio aparte (§7.3)|Subir la rama `lab` al remoto, por confirmar con el profesor|
+|**Plazo de entrega de un mes**, sin exigir el proyecto completo (comunicado el 2026-09-14, §11)|Recorte de alcance y número de sprints para el plazo nuevo (§12.8)|
+|**La IA construye lo que se le pide, con alcance exacto**, y el lab queda opcional (Alejo, 2026-09-14, §8.4 y §7.3)|Declarar formalmente el uso de IA en la documentación del curso (§8.4)|
 
 ---
 
@@ -1106,3 +1137,4 @@ _Sin confirmar por el equipo. Se listan para que no se pierdan, no como hechos._
 |---|---|---|
 |1|2026-09-11|Versión inicial. Consolida Propuesta V11, Guía legal v1.0 (2026-08-20), Definición visual v1, Ruta de aprendizaje, Contexto Scrum, Seguimiento de velocidad (corte 2026-09-04), HU V11.1 y las decisiones de infraestructura documental tomadas en septiembre. Omite el historial de versiones v5–v9 salvo donde explica una decisión vigente|
 |1.1|2026-09-11|Corrige el punto de partida técnico de Camilo y su consecuencia sobre §12.1 (§2) · aplaza el catálogo de acentos y deja el choque con `design-system/` anotado (§6.3) · registra el entorno real de la máquina (§7.1) · sustituye el repositorio MiniAdmind por la rama `lab` (§7.3) · añade el modelo de ramas del curso (§8.5) y su desalineación con la DoD (§8.1) · registra la demo descartada (§11) · añade cuatro pendientes (§11.5) y tres contradicciones detectadas (§12.7) · dos filas nuevas en §13. Documento nuevo: `Admind_Lab.md`|
+|1.2|2026-09-14|Registra el plazo de entrega reducido a un mes (§11, §11.5) y la contradicción que abre con el plan de siete sprints (§12.8) · revierte el modo tutor estricto: la IA construye lo que se le pide, con alcance exacto (§8.4) · el lab pasa a ser opcional (§7.3) · dos filas nuevas en §13. `Admind_Lab.md` reescribe su §2 y ajusta §3, §6, §8, §9 y §10|
