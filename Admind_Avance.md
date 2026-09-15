@@ -2,7 +2,7 @@
 titulo: "AdMind — Avance del proyecto"
 proyecto: "Proyecto de Ingeniería de Software II — Universidad de Cundinamarca, Facatativá"
 creado: 2026-09-14
-actualizado: "2026-09-15 05:45 (hora de Colombia)"
+actualizado: "2026-09-15 05:55 (hora de Colombia)"
 proposito: "Cómo va el desarrollo: qué existe en el código, cómo avanza cada historia de usuario y qué se decidió al construir. Se actualiza al cerrar cada sesión de trabajo."
 ---
 
@@ -19,7 +19,7 @@ proposito: "Cómo va el desarrollo: qué existe en el código, cómo avanza cada
 
 ## 1. Resumen al corte
 
-**Corte: 2026-09-15, 05:45.** Segundo día de desarrollo real dentro del plazo de un mes (entrega cerca del 2026-10-14, fecha exacta por confirmar; maestro §11).
+**Corte: 2026-09-15, 05:55.** Segundo día de desarrollo real dentro del plazo de un mes (entrega cerca del 2026-10-14, fecha exacta por confirmar; maestro §11).
 
 | Frente | Estado |
 |---|---|
@@ -44,7 +44,7 @@ proposito: "Cómo va el desarrollo: qué existe en el código, cómo avanza cada
 |---|---|---|---|
 | Backend | `desarrollo` | `531e854` — conjuntos, permisos y aislamiento (2026-09-15 00:54) | Sí |
 | Frontend | `desarrollo` | `764425c` — estructura de carpetas (2026-09-13 01:01) | Sí |
-| Documentación | `main` | `f1b0110` — `Admind_Guia_Desarrollo.md` (2026-09-15 00:30); esta actualización va en el commit siguiente | Sí |
+| Documentación | `main` | `1c11335` — avance con los commits del backend (2026-09-15 05:45); esta actualización va en el commit siguiente | Sí |
 
 ### 2.2 Backend, pieza por pieza
 
@@ -113,7 +113,8 @@ Lo más reciente abajo. Solo hechos; los errores con su aprendizaje van en `Admi
 | 2026-09-15 00:30 | Documentación | `f1b0110` — `Admind_Guia_Desarrollo.md` |
 | 2026-09-15 00:54 | Backend | `531e854` — apps `conjuntos` y `permisos`, base del aislamiento en `apps/comun/`, app de apoyo `tests/aislamiento/` y prueba transversal de tablas globales. 27 pruebas nuevas, 37 en total. Son los pasos 2, 3 y 4 del plan del Sprint 1 en un solo commit porque se construyeron entrelazados. El mensaje dice "[HU-03] [HU-05] [HU-06] hechos"; son avances parciales (§5.3) |
 | 2026-09-15 | Backend | Commits `5505673`, `dc6a414` y `531e854` subidos a `origin/desarrollo`. Migraciones de `conjuntos` y `permisos` aplicadas en `admind_db` |
-| 2026-09-15 05:45 | Documentación | Actualización de este archivo con los dos commits de la madrugada |
+| 2026-09-15 05:45 | Documentación | `1c11335` — actualización de este archivo con los dos commits de la madrugada |
+| 2026-09-15 05:55 | Notion | HU-01, HU-03, HU-04, HU-05 y HU-06 pasan de "Sin empezar" a "En progreso" en `Historias de Usuario`. Son las únicas que no están en "Sin empezar" |
 
 ---
 
@@ -315,7 +316,8 @@ Adelanto: el modelo ya cubre el criterio de que un usuario desactivado no puede 
 - [x] Instalar `pytest` y `pytest-django` y escribir las pruebas de HU-04 — `dc6a414`
 - [ ] Declarar la capa de servicios en `apps/README.md`, que todavía describe el flujo vista → modelo
 - [x] Commit de este archivo y de los cambios del maestro en el repositorio de documentación — `b08754f`
-- [ ] En Notion: pasar HU-01, HU-03, HU-04, HU-05 y HU-06 a "En progreso" (ninguna a Terminada, aunque los mensajes de commit digan "completada" o "hechos") y corregir la lista de tipos de documento de HU-04
+- [x] En Notion: pasar HU-01, HU-03, HU-04, HU-05 y HU-06 a "En progreso" (ninguna a Terminada, aunque los mensajes de commit digan "completada" o "hechos") — hecho el 2026-09-15
+- [ ] En Notion: corregir la lista de tipos de documento de HU-04, que todavía dice `CC, CE, PA, PEP, TI` (la vigente es `CC, TI, CE, PAS, PPT`, maestro §5.2)
 - [ ] Darle `CREATEDB` al `admind_user` de Camilo: sin eso `pytest` no puede crear la base de pruebas
 - [ ] Índices encabezados por `conjunto_id` cuando nazca la primera tabla del producto que herede de `ModeloDeConjunto` (HU-05)
 - [ ] Paso 5 del plan del Sprint 1: login, decidiendo entre token y sesión
