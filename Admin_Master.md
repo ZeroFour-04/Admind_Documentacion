@@ -1,6 +1,6 @@
 
 Plantillas Django + Alpine
-## titulo: "AdMind — Documento maestro de contexto" proyecto: "Proyecto de Ingeniería de Software II" institucion: "Universidad de Cundinamarca — Facatativá" equipo: ["Alejo (Manuel Alejandro Aldana Rincón)", "Camilo"] fecha_corte: 2026-09-11 estado_general: "Fin de planeación. Sprint 1 sin iniciar. Cero líneas de código." proposito: "Contexto completo para que cualquier agente de IA o persona nueva se ubique leyendo un solo archivo."
+## titulo: "AdMind — Documento maestro de contexto" proyecto: "Proyecto de Ingeniería de Software II" institucion: "Universidad de Cundinamarca — Facatativá" equipo: ["Alejo (Manuel Alejandro Aldana Rincón)", "Camilo"] fecha_corte: 2026-09-14 estado_general: "Desarrollo iniciado el 2026-09-14: proyecto Django con Persona y Usuario. Sprint 1 sin iniciar formalmente. Avance en Admind_Avance.md." proposito: "Contexto completo para que cualquier agente de IA o persona nueva se ubique leyendo un solo archivo."
 
 # AdMind — Documento maestro
 
@@ -240,11 +240,22 @@ Persona                       -- TABLA GLOBAL: sin conjunto_id (R12)
   id : UUID                   (PK)
   tipo_documento ∈ {CC, TI, CE, PAS, PPT}
   numero_documento
-  nombre
-  correo
+  nombres
+  apellidos
+  telefono                    (opcional)
   activo : bool
   UNIQUE (tipo_documento, numero_documento)
+
+Usuario                       -- TABLA GLOBAL: sin conjunto_id (R12)
+  id : UUID                   (PK)
+  persona_id                  (única: una persona, como máximo un usuario)
+  correo                      (único; con él se inicia sesión)
+  contraseña                  (solo el hash)
+  activo : bool
 ```
+
+> [!NOTE] Datos personales revisados el 2026-09-14 (Alejo)
+> `nombre` se separa en **`nombres` y `apellidos`**, y `Persona` gana **`telefono`**, opcional. **El correo sale de `Persona` y vive solo en `Usuario`**: es credencial, porque con él se inicia sesión y a él llega la recuperación de contraseña. Si estuviera en las dos tablas, un día dirían cosas distintas. Una persona sin cuenta —un menor con TI registrado por sus padres— no necesita correo.
 
 |Código|En pantalla|
 |---|---|
@@ -949,6 +960,9 @@ _(La 15 fue revertida por la 22 y no se conserva como vigente.)_
 
 **Corte del seguimiento de velocidad: 2026-09-04.** Sin sprint iniciado.
 
+> [!TIP] El avance del desarrollo vive en `Admind_Avance.md`
+> Desde el 2026-09-14 hay código. Qué existe, qué historias avanzan y qué se decidió al construir se registra en ese archivo, en esta misma carpeta. Esta sección conserva el plan; aquel, lo que ya pasó.
+
 > [!CAUTION] El plazo de entrega se redujo a un mes (2026-09-14)
 > Comunicado por Alejo el 2026-09-14: la entrega queda cerca del **14 de octubre de 2026**, con la fecha exacta por confirmar, y **no hay que entregar el proyecto completo**. Consecuencias:
 > - El reparto de siete sprints de dos semanas (§11.2) no cabe: un mes da para dos sprints de esa duración
@@ -969,6 +983,7 @@ _(La 15 fue revertida por la 22 y no se conserva como vigente.)_
 |Excel V11.1 (entregable que el docente ya conoce, **congelado**)|Drive → `V11.1 Plantilla Product Backlog y HU BORRADOR.xlsx`|
 |Plantilla de velocidad|Drive → `Plantilla_Calculo_Velocidad_Scrum.xlsx`|
 |Documentación de diseño|`admind-docs` (Git)|
+|Avance del desarrollo, por historia y por commit|`Admind_Avance.md`, en el repositorio de documentación|
 
 ### 11.2 Reparto del backlog
 
@@ -1150,3 +1165,4 @@ Falta decidir:
 |1.1|2026-09-11|Corrige el punto de partida técnico de Camilo y su consecuencia sobre §12.1 (§2) · aplaza el catálogo de acentos y deja el choque con `design-system/` anotado (§6.3) · registra el entorno real de la máquina (§7.1) · sustituye el repositorio MiniAdmind por la rama `lab` (§7.3) · añade el modelo de ramas del curso (§8.5) y su desalineación con la DoD (§8.1) · registra la demo descartada (§11) · añade cuatro pendientes (§11.5) y tres contradicciones detectadas (§12.7) · dos filas nuevas en §13. Documento nuevo: `Admind_Lab.md`|
 |1.2|2026-09-14|Registra el plazo de entrega reducido a un mes (§11, §11.5) y la contradicción que abre con el plan de siete sprints (§12.8) · revierte el modo tutor estricto: la IA construye lo que se le pide, con alcance exacto (§8.4) · el lab pasa a ser opcional (§7.3) · dos filas nuevas en §13. `Admind_Lab.md` reescribe su §2 y ajusta §3, §6, §8, §9 y §10|
 |1.3|2026-09-14|Revisa la lista cerrada de tipos de documento: `CC`, `TI`, `CE`, `PAS`, `PPT`; sale `PEP`, `PA` pasa a `PAS` y `NIT` queda fuera (§3.1, §5.2)|
+|1.4|2026-09-14|`Persona` pasa a `nombres`, `apellidos` y `telefono`; el correo vive solo en `Usuario`, que se añade al diagrama (§5.2) · el frontmatter deja de decir "cero líneas de código" · §11 y §11.1 apuntan al documento nuevo `Admind_Avance.md`|
