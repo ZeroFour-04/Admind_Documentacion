@@ -74,7 +74,7 @@ El alcance es el instrumento de control de riesgo del proyecto. Está escrito as
 **Identidad de personas**
 
 - `Persona` es **global a la plataforma**, única por `(tipo_documento, numero_documento)`
-- Tipos de lista cerrada: `CC`, `CE`, `PA`, `PEP`, `TI`
+- Tipos de lista cerrada: `CC`, `TI`, `CE`, `PAS`, `PPT` (revisada el 2026-09-14, ver §5.2)
 - **La llave primaria es un UUID**, no el documento
 - El número se **normaliza al guardar**: sin puntos, sin espacios, sin ceros a la izquierda
 - Aplica a todos: residentes, vigilancia, secretaría y administración
@@ -238,7 +238,7 @@ El caso que originó la decisión: un vigilante que trabaja en el conjunto B y v
 ```
 Persona                       -- TABLA GLOBAL: sin conjunto_id (R12)
   id : UUID                   (PK)
-  tipo_documento ∈ {CC, CE, PA, PEP, TI}
+  tipo_documento ∈ {CC, TI, CE, PAS, PPT}
   numero_documento
   nombre
   correo
@@ -246,13 +246,24 @@ Persona                       -- TABLA GLOBAL: sin conjunto_id (R12)
   UNIQUE (tipo_documento, numero_documento)
 ```
 
+|Código|En pantalla|
+|---|---|
+|`CC`|Cédula de ciudadanía|
+|`TI`|Tarjeta de identidad|
+|`CE`|Cédula de extranjería|
+|`PAS`|Pasaporte|
+|`PPT`|Permiso por Protección Temporal|
+
+> [!NOTE] Lista revisada el 2026-09-14 (Alejo)
+> La lista anterior era `CC`, `CE`, `PA`, `PEP`, `TI`. **`PEP` sale y entra `PPT`**, que lo reemplazó para los migrantes venezolanos. **`PA` pasa a `PAS`.** **`NIT` no entra**: identifica empresas, no personas. Los códigos se guardan **sin puntos** (`TI`, no `T.I.`), por la misma razón que se normaliza el número: dos escrituras del mismo tipo romperían el `UNIQUE`. El nombre completo es solo presentación.
+
 **Por qué el documento identifica pero no es la llave primaria:**
 
 |Si el documento fuera PK|Consecuencia|
 |---|---|
 |Viaja a cada FK|Toda tabla que referencie a una persona lleva su cédula adentro|
 |Viaja a cada URL|`/residentes/1032456789` publica la cédula en el historial y en los logs|
-|El número solo no es único|CC, CE, PA, PEP y TI son numeraciones distintas que pueden coincidir|
+|El número solo no es único|CC, TI, CE, PAS y PPT son numeraciones distintas que pueden coincidir|
 |Los documentos cambian|Una TI se vuelve CC a los 18. Con PK documento, cada cambio es cascada — sobre una base que además prohíbe el borrado|
 
 El UUID **referencia**; el par `(tipo, número)` **identifica**. Son decisiones independientes.
@@ -1138,3 +1149,4 @@ Falta decidir:
 |1|2026-09-11|Versión inicial. Consolida Propuesta V11, Guía legal v1.0 (2026-08-20), Definición visual v1, Ruta de aprendizaje, Contexto Scrum, Seguimiento de velocidad (corte 2026-09-04), HU V11.1 y las decisiones de infraestructura documental tomadas en septiembre. Omite el historial de versiones v5–v9 salvo donde explica una decisión vigente|
 |1.1|2026-09-11|Corrige el punto de partida técnico de Camilo y su consecuencia sobre §12.1 (§2) · aplaza el catálogo de acentos y deja el choque con `design-system/` anotado (§6.3) · registra el entorno real de la máquina (§7.1) · sustituye el repositorio MiniAdmind por la rama `lab` (§7.3) · añade el modelo de ramas del curso (§8.5) y su desalineación con la DoD (§8.1) · registra la demo descartada (§11) · añade cuatro pendientes (§11.5) y tres contradicciones detectadas (§12.7) · dos filas nuevas en §13. Documento nuevo: `Admind_Lab.md`|
 |1.2|2026-09-14|Registra el plazo de entrega reducido a un mes (§11, §11.5) y la contradicción que abre con el plan de siete sprints (§12.8) · revierte el modo tutor estricto: la IA construye lo que se le pide, con alcance exacto (§8.4) · el lab pasa a ser opcional (§7.3) · dos filas nuevas en §13. `Admind_Lab.md` reescribe su §2 y ajusta §3, §6, §8, §9 y §10|
+|1.3|2026-09-14|Revisa la lista cerrada de tipos de documento: `CC`, `TI`, `CE`, `PAS`, `PPT`; sale `PEP`, `PA` pasa a `PAS` y `NIT` queda fuera (§3.1, §5.2)|
