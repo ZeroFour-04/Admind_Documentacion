@@ -2,7 +2,7 @@
 titulo: "AdMind — Avance del proyecto"
 proyecto: "Proyecto de Ingeniería de Software II — Universidad de Cundinamarca, Facatativá"
 creado: 2026-09-14
-actualizado: "2026-09-15 09:00 (hora de Colombia)"
+actualizado: "2026-09-15 10:35 (hora de Colombia)"
 proposito: "Cómo va el desarrollo: qué existe en el código, cómo avanza cada historia de usuario y qué se decidió al construir. Se actualiza al cerrar cada sesión de trabajo."
 ---
 
@@ -19,16 +19,16 @@ proposito: "Cómo va el desarrollo: qué existe en el código, cómo avanza cada
 
 ## 1. Resumen al corte
 
-**Corte: 2026-09-15, 09:00.** Segundo día de desarrollo real dentro del plazo de un mes (entrega cerca del 2026-10-14, fecha exacta por confirmar; maestro §11).
+**Corte: 2026-09-15, 10:35.** Segundo día de desarrollo real dentro del plazo de un mes (entrega cerca del 2026-10-14, fecha exacta por confirmar; maestro §11).
 
 | Frente | Estado |
 |---|---|
-| **Backend** | Django sobre PostgreSQL con `Persona`, `Usuario`, `Conjunto`, `Asignacion` y `TokenDeSesion`, el catálogo de roles y permisos en código y el aislamiento por conjunto. **Primeros endpoints:** inicio y cierre de sesión con token (`0b0c4f8`, en el remoto) y selector de conjunto activo con la prueba del intruso (paso 6, **sin commit al corte**) |
-| **Frontend** | Solo estructura de carpetas con README (commit `764425c`, 2026-09-13). Sin código ni cliente de la API |
-| **Historias** | **0 de 38 terminadas (0 de 188 SP).** Siete en progreso: HU-04 y HU-05 con todas sus tareas (les falta la DoD); HU-01, HU-06 y HU-26 con 3 de 5; HU-02 y HU-03 con 1 de 5 |
-| **Plan técnico del Sprint 1** | Pasos 1 a 6 de 8 hechos; el 6 sin commit (§4). Sigue el paso 7, HU-03 mínima, con el alcance por decidir (§6) |
+| **Backend** | Django sobre PostgreSQL con `Persona`, `Usuario`, `Conjunto`, `Asignacion` y `TokenDeSesion`, el catálogo de roles y permisos en código y el aislamiento por conjunto. **Primeros endpoints:** inicio y cierre de sesión con token (`0b0c4f8`) y selector de conjunto activo con la prueba del intruso (`d9b6271`). Todo en el remoto |
+| **Frontend** | Proyecto Django con **ingreso y salida funcionales** contra la API y maquetas del resto de pantallas, a partir del borrador de Alejo. En `557bc9f`, en el remoto (§2.4) |
+| **Historias** | **0 de 38 terminadas (0 de 188 SP).** Siete en progreso: HU-04 y HU-05 con todas sus tareas (les falta la DoD); HU-01 con 4 de 5; HU-06 y HU-26 con 3 de 5; HU-02 y HU-03 con 1 de 5 |
+| **Plan técnico del Sprint 1** | Pasos 1 a 6 de 8 hechos (§4), el último en `d9b6271`. Sigue el paso 7, HU-03 mínima, con el alcance por decidir (§6) |
 | **Sprint 1** | Sin iniciar formalmente. Qué entra en el mes y en cuántos sprints sigue abierto (maestro §12.8) |
-| **Pruebas automáticas** | **69, todas pasan** (`pytest`, corrido el 2026-09-15 08:59, con el paso 6 sin commit). En `0b0c4f8` eran 48 |
+| **Pruebas automáticas** | Backend: **69, todas pasan** (`pytest` sobre `d9b6271`, corrido el 2026-09-15 09:25). En `0b0c4f8` eran 48. Front: **ninguna en el repositorio**; el login se verificó con un script aparte (§3) |
 
 > [!NOTE] Por qué 0 SP con siete historias avanzadas
 > El método de velocidad acordado con el docente (maestro §11.3) solo cuenta lo terminado: una historia al 80 % aporta 0 SP.
@@ -42,9 +42,9 @@ proposito: "Cómo va el desarrollo: qué existe en el código, cómo avanza cada
 
 | Repositorio | Rama | Último commit | En el remoto |
 |---|---|---|---|
-| Backend | `desarrollo` | `0b0c4f8` — inicio y cierre de sesión con token (2026-09-15 08:40) | Sí. **El paso 6 está sin commit** |
-| Frontend | `desarrollo` | `764425c` — estructura de carpetas (2026-09-13 01:01) | Sí |
-| Documentación | `main` | `81f6298` — historias en progreso en Notion (2026-09-15 05:52) | **No**: va 1 commit adelante de `origin/main`. Esta actualización, sin commit |
+| Backend | `desarrollo` | `d9b6271` — selector de conjunto activo y aislamiento por endpoint (2026-09-15 09:11) | Sí |
+| Frontend | `desarrollo` | `1a4e7d1` — merge con dos commits de Camilo, sobre `557bc9f`: proyecto Django, login y maquetas (2026-09-15 10:14) | Sí |
+| Documentación | `main` | `c556285` — este archivo al corte de las 09:00 (2026-09-15 09:13) | Sí. Las actualizaciones de las 09:25, las 10:13 y las 10:35 de este archivo, sin commit, y cambios sin commit en otros dos archivos |
 
 ### 2.2 Backend, pieza por pieza
 
@@ -60,24 +60,24 @@ proposito: "Cómo va el desarrollo: qué existe en el código, cómo avanza cada
 | App `conjuntos` con el modelo `Conjunto` (UUID, `nombre`, `direccion`, `activo`, `operativo`) | Hecho. `operativo` nace en falso; sin campo de color | `apps/conjuntos/models.py` |
 | Catálogo fijo en código: 6 roles, 46 permisos, 18 sensibles y el reparto por rol | Hecho. **El reparto por rol es provisional** | `apps/permisos/catalogo.py` |
 | Modelo `Asignacion` (persona, rol, conjunto, vigencias) | Hecho | `apps/permisos/models.py` |
-| `Asignacion.objects.vigentes()`: empezaron y no han terminado | Hecho, **sin commit** | `apps/permisos/models.py` |
-| Servicios de permisos: conjuntos disponibles de una persona, `puede_operar_en` y permisos efectivos | Hecho, **sin commit** | `apps/permisos/servicios.py` |
-| Conjunto activo de la operación (`ContextVar`): `usar_conjunto()` para fijarlo a mano; `contexto_limpio()` y `fijar_conjunto_activo()` para las peticiones | Hecho; los dos últimos sin commit | `apps/comun/aislamiento/contexto.py` |
+| `Asignacion.objects.vigentes()`: empezaron y no han terminado | Hecho | `apps/permisos/models.py`, `d9b6271` |
+| Servicios de permisos: conjuntos disponibles de una persona, `puede_operar_en` y permisos efectivos | Hecho | `apps/permisos/servicios.py`, `d9b6271` |
+| Conjunto activo de la operación (`ContextVar`): `usar_conjunto()` para fijarlo a mano; `contexto_limpio()` y `fijar_conjunto_activo()` para las peticiones | Hecho; los dos últimos en `d9b6271` | `apps/comun/aislamiento/contexto.py` |
 | Modelo base `ModeloDeConjunto` con `ManagerDeConjunto` (filtra toda consulta por el conjunto activo) | Hecho. **Ningún modelo del producto lo usa todavía** | `apps/comun/modelos_base/modelos.py`, `apps/comun/aislamiento/managers.py` |
 | `fk_compuesta()`: FK `(x_id, conjunto_id)` escrita en la migración | Hecho. Probada solo con tablas de apoyo | `apps/comun/aislamiento/migraciones.py` |
-| `VistaDeConjunto`: vista base de DRF que fija el conjunto activo desde el token, rechaza `conjunto` o `conjunto_id` en la ruta, la URL o el cuerpo (400) y exige conjunto activo (403). Hace el papel del middleware del maestro (§4) | Hecho, **sin commit** | `apps/comun/aislamiento/vistas.py` |
+| `VistaDeConjunto`: vista base de DRF que fija el conjunto activo desde el token, rechaza `conjunto` o `conjunto_id` en la ruta, la URL o el cuerpo (400) y exige conjunto activo (403). Hace el papel del middleware del maestro (§4) | Hecho | `apps/comun/aislamiento/vistas.py`, `d9b6271` |
 | Modelo `TokenDeSesion`: huella SHA-256 del token, usuario, conjunto activo, 2FA verificado y vencimiento | Hecho | `apps/cuentas/models.py`, `0b0c4f8` |
 | Autenticación de DRF por `Authorization: Token <token>`. Toda vista exige token, salvo las que lo declaren | Hecho | `apps/cuentas/autenticacion.py`, `config/settings.py` |
 | Duración del token: 1 hora fija | Hecho | `DURACION_TOKEN_DE_SESION` en `config/settings.py` |
 | `POST /auth/login/` y `POST /auth/logout/` | Hecho (`0b0c4f8`). Desde el paso 6 el login también devuelve `conjunto_activo` y `permisos` | `apps/cuentas/` |
-| `GET /auth/conjuntos/` y `POST /auth/conjunto-activo/` | Hecho, **sin commit** | `apps/cuentas/` |
+| `GET /auth/conjuntos/` y `POST /auth/conjunto-activo/` | Hecho (`d9b6271`) | `apps/cuentas/` |
 | Capa de servicios (flujo controlador → servicio → repositorio que pide el profesor) | Hecho en `cuentas` y `permisos`. `apps/README.md` todavía no la declara | `apps/*/servicios.py` |
 | Migraciones: `0001` de `personas`, `conjuntos` y `permisos`; `0001` y `0002` de `cuentas`. Todas aplicadas en `admind_db` | Hecho. El paso 6 no trae migraciones | `apps/*/migrations/` |
-| Pruebas con `pytest` y `pytest-django`: 69 (10 de personas, 17 de cuentas, 2 de conjuntos, 20 de permisos, 7 del filtro por conjunto, 10 del intruso y de rutas, 3 de tablas globales) | Hecho, todas pasan. 21 son del paso 6, sin commit | `pytest.ini`, `apps/*/tests.py`, `tests/` |
-| Configuración de pruebas: app de apoyo `tests.aislamiento` (`Area`, `Reserva` y dos endpoints), URLs de pruebas y cifrado rápido de contraseñas | Hecho; las URLs de pruebas, sin commit | `config/settings_pruebas.py`, `config/urls_pruebas.py`, `tests/aislamiento/` |
+| Pruebas con `pytest` y `pytest-django`: 69 (10 de personas, 17 de cuentas, 2 de conjuntos, 20 de permisos, 7 del filtro por conjunto, 10 del intruso y de rutas, 3 de tablas globales) | Hecho, todas pasan. 21 son del paso 6 (`d9b6271`) | `pytest.ini`, `apps/*/tests.py`, `tests/` |
+| Configuración de pruebas: app de apoyo `tests.aislamiento` (`Area`, `Reserva` y dos endpoints), URLs de pruebas y cifrado rápido de contraseñas | Hecho; las URLs de pruebas, en `d9b6271` | `config/settings_pruebas.py`, `config/urls_pruebas.py`, `tests/aislamiento/` |
 | Plantilla de variables de entorno | Hecho | `.env _ejemplo` |
 | Recuperación de contraseña por correo, 2FA TOTP y clase de permiso por vista | **No hay** | — |
-| Cliente de la API en el front (`cliente_api/`) y `ALLOWED_HOSTS` para desplegar | **No hay** | — |
+| `ALLOWED_HOSTS` para desplegar | **No hay**, tampoco en el front | — |
 | Resto de apps (`unidades`, `areas`, `reservas`, …) | Solo carpeta con README | `apps/` |
 
 ### 2.3 Restricciones verificadas en PostgreSQL
@@ -98,6 +98,30 @@ Revisadas directamente en `admind_db`, no solo en el código de Python: las de `
 | `permisos_asignacion` | FK a `personas_persona` y a `conjuntos_conjunto` | Una asignación a una persona o a un conjunto que no existe |
 | `cuentas_tokendesesion` | `UNIQUE (huella)` | Dos sesiones con el mismo token |
 | `cuentas_tokendesesion` | FK a `cuentas_usuario` y a `conjuntos_conjunto` | Una sesión de un usuario que no existe, o con un conjunto activo que no existe |
+
+### 2.4 Frontend, pieza por pieza
+
+En `557bc9f` (2026-09-15 10:14), en la rama `desarrollo` de `Admind_Front-End` y en el remoto. Construido a partir del borrador de Alejo (`C:\Users\Alejandro\Desktop\Pagina`, seis páginas HTML) y adaptado al sistema de diseño (§4).
+
+| Pieza | Estado | Dónde |
+|---|---|---|
+| Proyecto Django del servidor web: Django 5.2.17, requests 2.34, python-dotenv | Hecho | `config/`, `manage.py`, `requirements.txt` |
+| Sin base de datos (`DATABASES = {}`). Las sesiones de este servidor se guardan en archivos de la carpeta temporal del sistema | Hecho | `config/settings.py` |
+| Clave secreta y dirección de la API por variables de entorno (`DJANGO_SECRET_KEY`, `ADMIND_API_URL`), con plantilla | Hecho | `.env` (fuera del repositorio), `.env _ejemplo` |
+| `.gitignore` con `.venv`, `.env` y cachés | Hecho | `.gitignore` |
+| `pedir()`: el único punto que llama a la API. Agrega `Authorization: Token`, convierte un 400 en errores por campo, da texto a 401, 403 y 404 ("No encontrado.") y avisa si la API no responde | Hecho | `cliente_api/http.py` |
+| `iniciar_sesion` (`POST /auth/login/`) y `cerrar_sesion` (`POST /auth/logout/`) | Hecho | `cliente_api/cuentas.py` |
+| **Ingreso funcional**: errores bajo cada campo, mensaje genérico de la API, token guardado en la sesión del servidor, sesión que vence con el token e id de sesión nuevo al entrar | Hecho | `apps/cuentas/` |
+| Salir (`POST /salir/`): llama al logout de la API y vacía la sesión aunque la API falle | Hecho | `apps/cuentas/views.py` |
+| `SesionRequeridaMiddleware`: toda pantalla exige sesión, salvo las marcadas con `@publica` | Hecho | `apps/cuentas/sesion.py` |
+| Plantillas base (`base`, `sin_sesion`, `aplicacion`) y los componentes `BarraSuperior` y `Lateral`, sobre las clases de `design-system/` | Hecho | `templates/` |
+| CSS propio, solo con variables del sistema de diseño | Hecho | `static/css/estructura.css`, `static/css/reservas.css` |
+| **Maquetas** con datos de ejemplo y sin llamadas a la API: recuperar contraseña, selector de conjunto, inicio, calendario de zonas comunes, reglas y anuncios. Solicitudes y apartamentos y parqueaderos, como estado vacío | Hecho | `apps/cuentas`, `conjuntos`, `paneles`, `reservas`, `reglas`, `anuncios`, `triage`, `unidades` |
+| Pruebas automáticas del front | **No hay**. El login se verificó con un script fuera del repositorio (§3) | `tests/` solo tiene README |
+| Selector conectado a la API, recuperación de contraseña real, 2FA y Alpine.js | **No hay** | — |
+| `index.html` y `apps/Administrador/Home.html`: dos HTML de prueba de Camilo (`57a45c0`, `fd6a03d`, 2026-09-14) que llegaron con el merge `1a4e7d1`. Quedan fuera de la estructura de Django y ninguna vista los sirve | Por decidir con Camilo (§6) | Raíz y `apps/Administrador/` del front |
+
+Las maquetas **no cuentan como avance** de las historias de esas pantallas (HU-08, HU-10, HU-11, HU-22, HU-25, HU-26): no llaman a la API ni cumplen sus criterios.
 
 ---
 
@@ -130,6 +154,16 @@ Lo más reciente abajo. Solo hechos; los errores con su aprendizaje van en `Admi
 | 2026-09-15 08:40 | Backend | `0b0c4f8` — paso 5: `TokenDeSesion`, autenticación de DRF por token, `POST /auth/login/` y `/auth/logout/`, token obligatorio por defecto, `LANGUAGE_CODE = 'es-co'` y cifrado rápido de contraseñas en las pruebas. 11 pruebas nuevas, 48 en total. Subido a `origin/desarrollo`. Migración `cuentas 0002` aplicada en `admind_db`. El mensaje dice "HU1"; HU-01 sigue en progreso (§5.3) |
 | 2026-09-15 08:59 | Backend | Paso 6 construido, **sin commit al corte**: selector de conjunto activo (`/auth/conjuntos/`, `/auth/conjunto-activo/`), `VistaDeConjunto`, permisos efectivos, prueba del intruso por endpoint y prueba transversal de rutas. 21 pruebas nuevas, 69 en total, todas pasan. Sin migraciones |
 | 2026-09-15 09:00 | Notion | Tareas técnicas marcadas según el código: HU-01 (3), HU-02 (1), HU-03 (1), HU-04 (5), HU-05 (5), HU-06 (3) y HU-26 (3). HU-02 y HU-26 pasan a "En progreso". La tarea de tipos de documento de HU-04 queda con la lista vigente. Ninguna pasa a "En revisión" ni a "Finalizado" |
+| 2026-09-15 09:11 | Backend | `d9b6271` — commit del paso 6: selector de conjunto activo, `VistaDeConjunto`, permisos efectivos, prueba del intruso por endpoint y prueba transversal de rutas. 15 archivos, sin migraciones. Subido a `origin/desarrollo`. El mensaje no lleva el ID de historia (maestro §8.4); lo construido avanza HU-05, HU-06 y HU-26 |
+| 2026-09-15 09:13 | Documentación | `c556285` — este archivo al corte de las 09:00. Al corte siguiente, `81f6298` y `c556285` están en `origin/main` |
+| 2026-09-15 09:25 | Backend | `pytest` sobre `d9b6271` con el árbol de trabajo limpio: 69 pruebas, todas pasan |
+| 2026-09-15 10:02 | Frontend | Proyecto Django del servidor web creado a partir del borrador de Alejo (`Desktop\Pagina`) y adaptado al sistema de diseño: ingreso y salida funcionales contra la API, sesión exigida en toda pantalla y maquetas del resto (§2.4). **Sin commit** |
+| 2026-09-15 10:03 | Frontend | Verificación con un script fuera del repositorio, 34 comprobaciones en verde. Contra el backend real: credenciales malas, correo mal escrito, campos vacíos y CSRF. Contra una API falsa: ingreso, token solo en el servidor, vencimiento, salida y calendario. Revisado en el navegador en escritorio y a 375px |
+| 2026-09-15 10:07 | Base de datos | Usuario de prueba en `admind_db`, aprobado por Alejo: `Persona` CC 1000000001 (Prueba AdMind) y `Usuario` `prueba@example.com`, sin `is_staff` ni asignaciones. La contraseña no se escribe en la documentación |
+| 2026-09-15 10:08 | Frontend y backend | Ingreso y salida por el front contra el backend real con el usuario de prueba: llega al selector, la sesión vence una hora después y al salir no queda ningún `TokenDeSesion` en `admind_db` |
+| 2026-09-15 10:14 | Frontend | `557bc9f` — commit del front: proyecto, login y maquetas (63 archivos), sin `.env` ni `.venv`. El mensaje ("Estructura inicial Admind") no lleva el ID de historia (maestro §8.4); lo construido avanza HU-01 |
+| 2026-09-15 10:14 | Frontend | `1a4e7d1` — merge de `origin/desarrollo`, que traía dos commits de Camilo del 2026-09-14 (`57a45c0`, `fd6a03d`): `index.html` y `apps/Administrador/Home.html`, HTML de prueba. Subido a `origin/desarrollo` |
+| 2026-09-15 10:34 | Notion | HU-01: marcada la tarea "Pantalla de login y manejo de errores (frontend)", 4 de 5. Sigue en "En progreso". HU-26 revisada: coincide con este archivo (3 de 5) |
 
 ---
 
@@ -162,11 +196,22 @@ Las que cambian el diseño quedan también en el maestro; las técnicas, solo aq
 | 2026-09-15 | `LANGUAGE_CODE` pasa de `en-us` a `es-co` | Alejo | `config/settings.py` |
 | 2026-09-15 | Cifrado rápido de contraseñas (`MD5PasswordHasher`) **solo en las pruebas y provisional**: la suite había subido a 33 s. Antes de volver a tocarlo se le consulta a Alejo | Alejo | `config/settings_pruebas.py` |
 | 2026-09-15 | `cuentas_tokendesesion` entra a la lista cerrada de tablas globales: el conjunto activo cambia dentro de la misma sesión | Alejo aprobó la propuesta del agente | `tests/esquema/test_tablas_globales.py` |
-| 2026-09-15 | Lo que el maestro §5.4 llama middleware es `VistaDeConjunto`, una vista base de DRF: DRF revisa el token dentro de la vista, cuando los middleware de Django ya corrieron. Suelta el conjunto activo al terminar cada petición, aunque haya error | Agente, a pedido de Alejo | `apps/comun/aislamiento/vistas.py` (sin commit) |
-| 2026-09-15 | Con un solo conjunto disponible, el token nace con ese conjunto activo; con varios o ninguno, nace sin conjunto. Si al usuario le retiran el rol o le desactivan el conjunto, pierde el conjunto activo en su siguiente petición | Agente, a pedido de Alejo (criterios de HU-26) | `apps/cuentas/servicios.py` (sin commit) |
-| 2026-09-15 | Los endpoints del selector quedan en `cuentas`, bajo `/auth/`, porque cambian la sesión. El README de `apps/conjuntos` decía que el cambio de conjunto iría allí | Agente, a pedido de Alejo | `apps/cuentas/urls.py` (sin commit) |
-| 2026-09-15 | Elegir un conjunto sin asignación vigente responde 404, exista o no el conjunto | Agente, a pedido de Alejo (maestro §5.4) | `apps/cuentas/views.py` (sin commit) |
-| 2026-09-15 | Registro de la prueba del intruso: toda ruta de conjunto se registra con su caso, y toda ruta que no sea de conjunto se declara aparte. Una ruta nueva sin registrar hace fallar la suite. Los endpoints de apoyo solo existen en las URLs de pruebas | Agente, a pedido de Alejo | `tests/aislamiento/test_intruso.py`, `config/urls_pruebas.py` (sin commit) |
+| 2026-09-15 | Lo que el maestro §5.4 llama middleware es `VistaDeConjunto`, una vista base de DRF: DRF revisa el token dentro de la vista, cuando los middleware de Django ya corrieron. Suelta el conjunto activo al terminar cada petición, aunque haya error | Agente, a pedido de Alejo | `apps/comun/aislamiento/vistas.py` |
+| 2026-09-15 | Con un solo conjunto disponible, el token nace con ese conjunto activo; con varios o ninguno, nace sin conjunto. Si al usuario le retiran el rol o le desactivan el conjunto, pierde el conjunto activo en su siguiente petición | Agente, a pedido de Alejo (criterios de HU-26) | `apps/cuentas/servicios.py` |
+| 2026-09-15 | Los endpoints del selector quedan en `cuentas`, bajo `/auth/`, porque cambian la sesión. El README de `apps/conjuntos` decía que el cambio de conjunto iría allí | Agente, a pedido de Alejo | `apps/cuentas/urls.py` |
+| 2026-09-15 | Elegir un conjunto sin asignación vigente responde 404, exista o no el conjunto | Agente, a pedido de Alejo (maestro §5.4) | `apps/cuentas/views.py` |
+| 2026-09-15 | Registro de la prueba del intruso: toda ruta de conjunto se registra con su caso, y toda ruta que no sea de conjunto se declara aparte. Una ruta nueva sin registrar hace fallar la suite. Los endpoints de apoyo solo existen en las URLs de pruebas | Agente, a pedido de Alejo | `tests/aislamiento/test_intruso.py`, `config/urls_pruebas.py` |
+| 2026-09-15 | El front toma las pantallas y la navegación del borrador de Alejo, pero con las clases y tokens de `design-system/`: sin sus colores, la fuente Arial ni el símbolo ⌂, y con el menú superior pasado a `Lateral` y `BarraSuperior` | Agente (Alejo pidió basarse en el borrador) | `templates/`, `apps/*/templates/` del front |
+| 2026-09-15 | Solo el login es funcional; el resto de pantallas son maquetas marcadas "Maqueta con datos de ejemplo" | Alejo | `apps/` del front |
+| 2026-09-15 | El login incluye **cerrar sesión** (`POST /salir/`), que ya existía en la API | Agente, como lectura del pedido | `apps/cuentas/views.py` del front |
+| 2026-09-15 | El token vive en la **sesión del servidor web**, guardada en archivos porque el front no tiene base de datos. El navegador solo recibe la cookie `sessionid` (HttpOnly). La sesión vence a la hora de `vence_en` y cambia de id al entrar. Es el lado del front de la decisión del token | Agente | `config/settings.py`, `apps/cuentas/sesion.py` del front |
+| 2026-09-15 | Toda pantalla del front exige sesión por defecto (`SesionRequeridaMiddleware`); solo el ingreso y recuperar contraseña se declaran `@publica`. Es el mismo criterio que `IsAuthenticated` en la API | Agente | `apps/cuentas/sesion.py` del front |
+| 2026-09-15 | `pedir()` es el único punto del front que llama a la API, con `requests`. Los campos del formulario se llaman igual que en la API (`correo`, `contrasena`) para que un 400 caiga en su campo | Agente | `cliente_api/http.py`, `apps/cuentas/forms.py` |
+| 2026-09-15 | El calendario se arma en el servidor, con enlaces y recarga, sin JavaScript. Por eso todavía no se trajo Alpine.js | Agente | `apps/reservas/` del front |
+| 2026-09-15 | Las apps del front se crean a mano, sin `startapp`: no llevan `models.py`, `admin.py` ni `migrations/` | Agente | `apps/*/apps.py` del front |
+| 2026-09-15 | Textos del borrador: "Avisos" pasa a **Anuncios** (término del maestro) y "Zona común" a **Zonas comunes**. Se quita **"Eliminar"** de Reglas y Anuncios hasta decidir si esas entidades se borran (maestro §5.10, §5.11) | Agente, **por confirmar** (§6) | Plantillas de `reglas` y `anuncios` del front |
+| 2026-09-15 | El día elegido del calendario no usa el acento, porque no es uno de sus cuatro sitios (maestro §6.1): lleva fondo hundido y borde oscuro | Agente | `static/css/reservas.css` del front |
+| 2026-09-15 | Después del ingreso siempre se va al selector maqueta, aunque la API diga que la persona tiene un solo conjunto. Provisional hasta conectar el selector | Agente | `apps/cuentas/views.py` del front |
 
 ---
 
@@ -194,13 +239,13 @@ Avance: **Sin empezar** · **En progreso** (con tareas técnicas hechas sobre el
 
 | HU | Historia | Sprint | SP | Prioridad | Avance |
 |---|---|---|---|---|---|
-| HU-01 | Inicio de sesión con correo y contraseña | 1 | 3 | Alta | **En progreso** (3/5) |
+| HU-01 | Inicio de sesión con correo y contraseña | 1 | 3 | Alta | **En progreso** (4/5) |
 | HU-02 | Segundo factor (TOTP) para permisos sensibles | 1 | 5 | Alta | **En progreso** (1/5) |
 | HU-03 | Asistente por pasos para crear un conjunto | 1 | 6 | Alta | **En progreso** (1/5) |
 | HU-04 | Persona global única por documento | 1 | 3 | Alta | **En progreso** (5/5, falta la DoD) |
-| HU-05 | Aislamiento de datos entre conjuntos | 1 | 2 | Alta | **En progreso** (5/5, falta la DoD; dos tareas sin commit) |
-| HU-26 | Selector de conjunto activo | 1 | 6 | Alta | **En progreso** (3/5, sin commit) |
-| HU-06 | Asignación de roles del catálogo fijo | 2 | 6 | Alta | **En progreso** (3/5, una sin commit) |
+| HU-05 | Aislamiento de datos entre conjuntos | 1 | 2 | Alta | **En progreso** (5/5, falta la DoD) |
+| HU-26 | Selector de conjunto activo | 1 | 6 | Alta | **En progreso** (3/5) |
+| HU-06 | Asignación de roles del catálogo fijo | 2 | 6 | Alta | **En progreso** (3/5) |
 | HU-07 | Vincular persona existente por búsqueda de documento | 2 | 3 | Alta | Sin empezar |
 | HU-08 | Vínculos de unidad y enrutamiento de notificaciones | 2 | 7 | Alta | Sin empezar |
 | HU-09 | Catálogo de áreas comunes del conjunto | 2 | 4 | Alta | Sin empezar |
@@ -235,7 +280,7 @@ Avance: **Sin empezar** · **En progreso** (con tareas técnicas hechas sobre el
 
 ### 5.3 Historias en progreso, en detalle
 
-Las tareas y criterios salen de Notion, que coincide con la copia local del Excel V11.1 (hoja `HU`). Las casillas de las tareas en Notion se marcaron el 2026-09-15 09:00 con lo que se describe aquí.
+Las tareas y criterios salen de Notion, que coincide con la copia local del Excel V11.1 (hoja `HU`). Las casillas de las tareas en Notion se marcaron el 2026-09-15 09:00 con lo que se describe aquí, y la pantalla de login de HU-01 a las 10:34, con su commit.
 
 #### HU-04 · Persona global única por documento — 5 de 5 tareas, falta la DoD
 
@@ -263,29 +308,29 @@ Para pasar a Terminada (maestro §8.1) le falta: el criterio de la API, el PR `d
 |---|---|---|
 | Llaves foráneas compuestas `(id, conjunto_id)` e índices encabezados por `conjunto_id` | Hecha | `fk_compuesta()` + `UNIQUE (id, conjunto)` en `ModeloDeConjunto`, probada con las tablas de apoyo. Cada tabla que hereda de `ModeloDeConjunto` recibe un índice sobre `conjunto_id` por su FK (verificado en la migración de apoyo). Los índices compuestos para consultas concretas se agregan con cada tabla |
 | Lista cerrada de tablas globales exenta del `conjunto_id` | Hecha | `TABLAS_GLOBALES` en `tests/esquema/test_tablas_globales.py`. No coincide del todo con el maestro §5.4 (§6) |
-| Middleware que resuelve el conjunto activo desde la sesión, como contexto de solo lectura | Hecha, **sin commit** | `VistaDeConjunto` en `apps/comun/aislamiento/vistas.py`: toma el conjunto activo de la sesión del token (§4) |
+| Middleware que resuelve el conjunto activo desde la sesión, como contexto de solo lectura | Hecha (`d9b6271`) | `VistaDeConjunto` en `apps/comun/aislamiento/vistas.py`: toma el conjunto activo de la sesión del token (§4) |
 | Repositorio base que inyecta `WHERE conjunto_id` en toda consulta | Hecha | `ManagerDeConjunto` + `ModeloDeConjunto`, `531e854`. "Sin SQL crudo fuera de ahí" queda como convención: nada lo impide |
-| Prueba del intruso por endpoint + prueba transversal de rutas y tablas registradas | Hecha; la parte de rutas y del intruso, **sin commit** | `tests/aislamiento/test_intruso.py` y `tests/esquema/test_tablas_globales.py` |
+| Prueba del intruso por endpoint + prueba transversal de rutas y tablas registradas | Hecha; la parte de rutas y del intruso, en `d9b6271` | `tests/aislamiento/test_intruso.py` y `tests/esquema/test_tablas_globales.py` |
 
 | Criterio de aceptación | Estado |
 |---|---|
-| Un usuario del conjunto A pide un recurso del B por su identificador y recibe 404, no 403 | Hecho y probado por endpoint, con los endpoints de apoyo (sin commit) |
-| Una petición con `conjunto_id` en la URL o el cuerpo se rechaza | Hecho y probado: 400 con `conjunto_id` en la URL y con `conjunto` en el cuerpo (sin commit) |
+| Un usuario del conjunto A pide un recurso del B por su identificador y recibe 404, no 403 | Hecho y probado por endpoint, con los endpoints de apoyo |
+| Una petición con `conjunto_id` en la URL o el cuerpo se rechaza | Hecho y probado: 400 con `conjunto_id` en la URL y con `conjunto` en el cuerpo |
 | Una reserva del conjunto 3 que apunta a un área del conjunto 8 la rechaza la base por la FK compuesta | Hecho y probado con las tablas de apoyo, también por `bulk_create`, que se salta `save()` |
 | Una tabla nueva fuera de la lista de globales sin `conjunto_id` hace fallar la suite | Hecho y probado, incluida una prueba de que la revisión detecta la tabla nueva |
-| Un endpoint nuevo sin prueba del intruso hace fallar la prueba transversal | Hecho y probado, incluida una prueba de que la revisión detecta la ruta nueva (sin commit) |
+| Un endpoint nuevo sin prueba del intruso hace fallar la prueba transversal | Hecho y probado, incluida una prueba de que la revisión detecta la ruta nueva |
 
-Todo se prueba con las tablas y endpoints de apoyo, porque todavía no existen áreas ni reservas reales. Para pasar a Terminada le falta el commit del paso 6, el PR revisado por Camilo y la prueba manual. Cuando exista el PR, puede pasar a "En revisión" en Notion.
+Todo se prueba con las tablas y endpoints de apoyo, porque todavía no existen áreas ni reservas reales. Para pasar a Terminada le falta el PR revisado por Camilo y la prueba manual. Cuando exista el PR, puede pasar a "En revisión" en Notion.
 
-#### HU-26 · Selector de conjunto activo — 3 de 5 tareas, sin commit
+#### HU-26 · Selector de conjunto activo — 3 de 5 tareas
 
 | Tarea técnica (Notion) | Estado | Evidencia |
 |---|---|---|
-| Consulta de los conjuntos con asignación vigente de la persona autenticada (backend) | Hecha, sin commit | `conjuntos_disponibles()` en `apps/permisos/servicios.py` y `GET /auth/conjuntos/` |
-| Escritura del conjunto activo en la sesión como contexto de solo lectura, nunca como parámetro de la petición | Hecha, sin commit | `POST /auth/conjunto-activo/` escribe en `TokenDeSesion.conjunto_activo`; `VistaDeConjunto` rechaza el conjunto en cualquier otra petición |
-| Selección automática y sin pantalla cuando la persona pertenece a un solo conjunto | Hecha, sin commit | `iniciar_sesion()` en `apps/cuentas/servicios.py` |
-| Pantalla de selección con nombre, logo y color base de cada conjunto (frontend) | Pendiente | El backend solo entrega `id` y `nombre`: logo y color están fuera de v1 (maestro §6.3, §12.3) |
-| Cambio de conjunto activo desde la barra superior, con recálculo de permisos efectivos | **A medias** | El backend cambia el conjunto y devuelve los permisos del nuevo; falta la barra superior del front |
+| Consulta de los conjuntos con asignación vigente de la persona autenticada (backend) | Hecha (`d9b6271`) | `conjuntos_disponibles()` en `apps/permisos/servicios.py` y `GET /auth/conjuntos/` |
+| Escritura del conjunto activo en la sesión como contexto de solo lectura, nunca como parámetro de la petición | Hecha (`d9b6271`) | `POST /auth/conjunto-activo/` escribe en `TokenDeSesion.conjunto_activo`; `VistaDeConjunto` rechaza el conjunto en cualquier otra petición |
+| Selección automática y sin pantalla cuando la persona pertenece a un solo conjunto | Hecha (`d9b6271`) | `iniciar_sesion()` en `apps/cuentas/servicios.py` |
+| Pantalla de selección con nombre, logo y color base de cada conjunto (frontend) | Pendiente | Hay una **maqueta** con datos de ejemplo que no llama a la API (§2.4). El backend solo entrega `id` y `nombre`: logo y color están fuera de v1 (maestro §6.3, §12.3) |
+| Cambio de conjunto activo desde la barra superior, con recálculo de permisos efectivos | **A medias** | El backend cambia el conjunto y devuelve los permisos del nuevo. La barra superior del front ya tiene "Cambiar de conjunto", pero lleva al selector maqueta sin llamar a la API |
 
 | Criterio de aceptación | Estado |
 |---|---|
@@ -301,37 +346,37 @@ Todo se prueba con las tablas y endpoints de apoyo, porque todavía no existen �
 |---|---|---|
 | Sembrar el catálogo fijo de 6 roles y sus permisos en código (migración) | Hecha, sin migración | `apps/permisos/catalogo.py`. No hay tablas que sembrar (§4). El reparto por rol es provisional |
 | Modelo Asignación (persona, rol, conjunto) con `conjunto_id` nulo solo para el rol de plataforma | Hecha | `apps/permisos/models.py`, tres restricciones verificadas en PostgreSQL (§2.3) |
-| Cálculo de permisos efectivos como unión aditiva, sin denegaciones | Hecha, **sin commit** | `permisos_efectivos()` en `apps/permisos/servicios.py`: roles vigentes en el conjunto más los de plataforma |
+| Cálculo de permisos efectivos como unión aditiva, sin denegaciones | Hecha (`d9b6271`) | `permisos_efectivos()` en `apps/permisos/servicios.py`: roles vigentes en el conjunto más los de plataforma |
 | Pantalla de asignación de roles por persona (frontend) | Pendiente | — |
 | Pruebas de los invariantes de rol y de auditoría de asignaciones | **A medias** | 20 pruebas del catálogo, de `Asignacion` y de permisos efectivos. Faltan la de "nunca cero Administración" y la de auditoría, que no existe todavía |
 
 | Criterio de aceptación | Estado |
 |---|---|
-| Al asignar un rol, la persona obtiene la unión de permisos de todos sus roles | Hecho y probado (sin commit) |
+| Al asignar un rol, la persona obtiene la unión de permisos de todos sus roles | Hecho y probado |
 | Nadie puede crear ni editar un rol desde la interfaz o la API | Se cumple por diseño (catálogo en código, sin tabla ni endpoint) |
-| Un rol asignado en el conjunto A no da permisos en el B | Hecho y probado, en el servicio y por el selector (sin commit) |
+| Un rol asignado en el conjunto A no da permisos en el B | Hecho y probado, en el servicio y por el selector |
 | El rol de plataforma no incluye `reserva.aprobar`, `anuncio.publicar` ni `infraccion.registrar` | Hecho y probado |
 | Retirar el rol al último usuario con Administración falla | Pendiente |
 
 Ninguna vista exige todavía un permiso concreto: los permisos se calculan y se devuelven, pero falta la clase de permiso por vista (§6).
 
-#### HU-01 · Inicio de sesión con correo y contraseña — 3 de 5 tareas
+#### HU-01 · Inicio de sesión con correo y contraseña — 4 de 5 tareas
 
 | Tarea técnica (Notion) | Estado | Evidencia |
 |---|---|---|
 | Modelo Usuario y hash de contraseña (backend) | Hecha | `apps/cuentas/models.py`, `962853f`. Contraseña con el hash de Django, login por correo sin distinguir mayúsculas |
 | Endpoint `POST /auth/login` con emisión de token de sesión | Hecha | `POST /auth/login/`, `0b0c4f8` |
 | Flujo de recuperación de contraseña por SMTP | Pendiente | — |
-| Pantalla de login y manejo de errores (frontend) | Pendiente | — |
+| Pantalla de login y manejo de errores (frontend) | Hecha | `557bc9f`. `apps/cuentas/` y `cliente_api/` del front: errores por campo, mensaje genérico y aviso si la API no responde. Verificada contra el backend real con el usuario de prueba |
 | Pruebas unitarias de autenticación y expiración de token | Hecha | 11 pruebas en `apps/cuentas/tests.py`, `0b0c4f8` |
 
 | Criterio de aceptación | Estado |
 |---|---|
-| Con credenciales válidas accede y ve el selector de conjunto activo | En el backend, sí: recibe el token y `conjunto_activo` vacío si debe elegir (sin commit). Falta la pantalla |
-| Con credenciales inválidas ve un mensaje genérico sin revelar si el correo existe | Hecho y probado |
+| Con credenciales válidas accede y ve el selector de conjunto activo | Entra por la pantalla del front y llega al selector, pero **el selector es maqueta**: no usa `GET /auth/conjuntos/` ni el `conjunto_activo` del login |
+| Con credenciales inválidas ve un mensaje genérico sin revelar si el correo existe | Hecho y probado en la API; la pantalla muestra ese mismo mensaje (verificado, `557bc9f`) |
 | Un usuario desactivado no puede entrar | Hecho y probado, también si se desactiva la persona o se desactiva con la sesión abierta |
 | Quien olvidó la contraseña recibe un enlace de un solo uso por correo | Pendiente |
-| Con un token vencido el sistema exige iniciar sesión de nuevo | Hecho y probado (401) |
+| Con un token vencido el sistema exige iniciar sesión de nuevo | Hecho y probado en la API (401). En el front la sesión vence a la misma hora que el token y vuelve al ingreso (verificado, `557bc9f`) |
 
 #### HU-03 · Asistente por pasos para crear un conjunto — 1 de 5 tareas
 
@@ -369,7 +414,8 @@ Ningún criterio de aceptación se cumple todavía: todos dependen del asistente
 
 **Decisiones de equipo:**
 - [ ] Fecha exacta de entrega y qué historias entran en el mes (maestro §12.8). Sin esto no se puede planear el Sprint 1
-- [ ] Stack del frontend (maestro §12.1)
+- [ ] Stack del frontend (maestro §12.1). Desde el 2026-09-15 el front ya está construido sobre plantillas de Django; si el equipo cierra por otro camino, se rehace
+- [ ] ¿Reglas y anuncios se pueden eliminar? Las maquetas quitaron "Eliminar" del borrador hasta decidirlo (§4)
 - [ ] Alcance de "HU-03 mínima" (paso 7). Propuesta del agente: crear el conjunto con sus datos básicos y asignarle administrador, dejando la validación completa de activación para cuando existan áreas, reglamento y reglas
 - [ ] Confirmar que `vigencia_hasta` es **el primer día sin el rol** (así está en `Asignacion.objects.vigentes()`): con la fecha de hoy, el rol se pierde de inmediato
 - [ ] ¿Se ocultan del selector los conjuntos no operativos? Hoy el selector solo excluye los desactivados, como dice HU-26
@@ -387,15 +433,24 @@ Ningún criterio de aceptación se cumple todavía: todos dependen del asistente
 **Diferencias entre el código y el maestro**, a llevar al maestro o corregir en el código:
 - [ ] Lista cerrada de tablas globales: el código agrega `conjuntos_conjunto`, `cuentas_tokendesesion`, `cuentas_usuario_groups` y `cuentas_usuario_user_permissions`, y admite `conjunto_id` nulo en `permisos_asignacion`. El maestro §5.4 solo nombra `Persona`, `Usuario` y los catálogos de roles y permisos, y su R12 todavía dice "falta escribir la lista cerrada"
 - [ ] Reparto de permisos por rol en `catalogo.py`: interpretado del maestro §5.3, provisional hasta validarlo con un administrador real (maestro §11.4)
-- [ ] Maestro §12.7 b (token contra sesión): resuelto en el código a favor del token con registro en la base (§4). Falta cerrarlo en el maestro y en los README de `cliente_api/` y `config/` del front, que lo tienen como pendiente
+- [ ] Maestro §12.7 b (token contra sesión): resuelto en el código a favor del token con registro en la base (§4). Falta cerrarlo en el maestro y en los README de `cliente_api/` y `config/` del front, que lo siguen teniendo como pendiente aunque el front ya lo implementa
 - [ ] El maestro §5.4 y §7.2 hablan de "middleware"; en el código es `VistaDeConjunto` (§4)
 - [ ] El README de `apps/conjuntos` dice que ahí va el cambio de conjunto activo; quedó en `apps/cuentas`
 - [ ] HU-26 pide logo y color en el selector; están fuera de v1 (maestro §6.3, ya registrado en §12.3)
+- [ ] Quedaron desactualizados el README raíz del front ("Todavía no hay código") y la Guía de desarrollo §13 ("el proyecto Django del frontend no existe")
 
 **Técnicos:**
-- [ ] **Commit del paso 6 del backend** (selector, `VistaDeConjunto`, permisos efectivos, prueba del intruso)
-- [ ] Subir `81f6298` y esta actualización del repositorio de documentación
-- [x] Subir a `origin/desarrollo` los commits del backend — `desarrollo` al día hasta `0b0c4f8`
+- [x] Commit del paso 6 del backend (selector, `VistaDeConjunto`, permisos efectivos, prueba del intruso) — `d9b6271`
+- [x] Subir `81f6298` y la actualización de las 09:00 del repositorio de documentación — `c556285`, en `origin/main`
+- [ ] Commit y subida de las actualizaciones de las 09:25, las 10:13 y las 10:35 de este archivo
+- [x] Commit del front (proyecto, login y maquetas) — `557bc9f`, en `origin/desarrollo`. El mensaje no lleva `[HU-01]`
+- [ ] Pruebas automáticas del front en `tests/` (`pytest-django` con la API simulada). Hoy solo existe un script fuera del repositorio
+- [x] En Notion: marcar la tarea "Pantalla de login y manejo de errores" de HU-01 — hecho el 2026-09-15 10:34
+- [ ] Conectar el selector a la API (`GET /auth/conjuntos/`, `POST /auth/conjunto-activo/`) y mostrar el conjunto activo real en la barra. Para probarlo, el usuario de prueba necesita un conjunto y una asignación
+- [ ] Camilo: crear el `.venv` del front, instalar `requirements.txt` y armar su `.env` a partir de `.env _ejemplo`
+- [ ] Decidir con Camilo qué pasa con `index.html` y `apps/Administrador/Home.html` del front: HTML de prueba fuera de la estructura (§2.4)
+- [ ] **Contraseñas en los repositorios**: `.env _ejemplo` del backend trae un valor en `DB_PASSWORD`, y el repositorio de documentación versiona `Credenciales/`. Quitarlas no las borra del historial: hay que cambiar la contraseña
+- [x] Subir a `origin/desarrollo` los commits del backend — `desarrollo` al día hasta `d9b6271`
 - [x] Instalar `pytest` y `pytest-django` y escribir las pruebas de HU-04 — `dc6a414`
 - [ ] Declarar la capa de servicios en `apps/README.md`, que todavía describe el flujo vista → modelo. Ya hay `servicios.py` en `cuentas` y `permisos`
 - [x] Commit de este archivo y de los cambios del maestro en el repositorio de documentación — `b08754f`
@@ -404,7 +459,7 @@ Ningún criterio de aceptación se cumple todavía: todos dependen del asistente
 - [x] En Notion: marcar las tareas técnicas hechas — hecho el 2026-09-15 09:00
 - [ ] Darle `CREATEDB` al `admind_user` de Camilo y correr `migrate` en su máquina: sin eso `pytest` no puede crear la base de pruebas
 - [ ] Clase de permiso por vista ("esta vista exige `reserva.aprobar`"): hoy ninguna vista exige un permiso concreto (HU-06)
-- [ ] Recuperación de contraseña por correo (HU-01) y flujo de 2FA (HU-02)
+- [ ] Recuperación de contraseña por correo (HU-01; en el front es maqueta) y flujo de 2FA (HU-02)
 - [ ] Comando que borre los tokens vencidos: dejan de servir, pero se acumulan en `cuentas_tokendesesion`
 - [ ] Índices compuestos `(conjunto_id, …)` para consultas concretas, con cada tabla del producto que herede de `ModeloDeConjunto`
 - [x] Paso 5 del plan del Sprint 1: login con token — `0b0c4f8`
