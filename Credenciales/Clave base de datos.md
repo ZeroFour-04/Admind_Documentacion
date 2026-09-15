@@ -1,9 +1,9 @@
 
 # Nombre de la Base de datos: admind_db
 
-> [!NOTE] Manuel Alejandro
-> Usuario: admind_alejo
-> Contraseña: admind_alejo
+> [!NOTE] Nombre de la DB: admind_db
+> Usuario: admind_user
+> Contraseña: admind2026
 
 
 > [!NOTE] Title
