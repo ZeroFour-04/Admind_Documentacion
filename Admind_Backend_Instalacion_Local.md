@@ -36,11 +36,11 @@ proposito: "Guía para que Camilo baje el backend de GitHub y lo deje corriendo 
 
 Si ya conoces Django, esto es todo. Si no, sigue los pasos de abajo, que explican cada uno.
 
-- [ ] Clonar o actualizar el repo y quedar en `desarrollo`
+- [x] Clonar o actualizar el repo y quedar en `desarrollo`
 - [ ] `python -m venv .venv` y activarlo
 - [ ] `python -m pip install -r requirements.txt`
 - [ ] Crear en PostgreSQL el usuario `admind_user` y la base `admind_db`
-- [ ] Crear el `.env` con las cuatro variables
+- [x] Crear el `.env` con las cuatro variables
 - [ ] `python manage.py migrate`
 - [ ] `python manage.py runserver` y ver el cohete en `http://127.0.0.1:8000`
 
