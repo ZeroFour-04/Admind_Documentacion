@@ -14,7 +14,7 @@ proposito: "Cómo se agrega algo a AdMind respetando su arquitectura: una pantal
 > - Lo leen Alejo, Camilo y cualquier agente de IA antes de construir algo.
 > - Para correr el backend en tu PC: [Admind_Backend_Instalacion_Local](Admind_Backend_Instalacion_Local.md).
 > - Para saber cómo se creó el backend: [Admind_Backend_Inicializacion](Admind_Backend_Inicializacion.md).
-> - Para saber qué existe hoy y cómo va cada historia: [Admind_Avance](Admind_Avance.md).
+> - Para saber qué existe hoy y cómo va cada historia: [Admind_Avance](../Avance/Admind_Avance.md).
 
 > [!WARNING]
 > **Casi todo lo que describe esta guía todavía no existe en el código.** Al 2026-09-15 el backend tiene dos modelos (`Persona` y `Usuario`) y ningún endpoint, y el frontend tiene carpetas con README más el sistema de diseño. La guía describe **la forma que debe tener lo que se construya**; la §13 lista las piezas que faltan.
