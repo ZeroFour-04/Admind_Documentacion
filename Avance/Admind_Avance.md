@@ -2,7 +2,7 @@
 titulo: "AdMind — Avance del proyecto"
 proyecto: "Proyecto de Ingeniería de Software II — Universidad de Cundinamarca, Facatativá"
 creado: 2026-09-14
-actualizado: "2026-09-15 10:35 (hora de Colombia)"
+actualizado: "2026-09-27 17:35 (hora de Colombia)"
 proposito: "Cómo va el desarrollo: qué existe en el código, cómo avanza cada historia de usuario y qué se decidió al construir. Se actualiza al cerrar cada sesión de trabajo."
 ---
 
@@ -19,7 +19,19 @@ proposito: "Cómo va el desarrollo: qué existe en el código, cómo avanza cada
 
 ## 1. Resumen al corte
 
-**Corte: 2026-09-15, 10:35.** Segundo día de desarrollo real dentro del plazo de un mes (entrega cerca del 2026-10-14, fecha exacta por confirmar; maestro §11).
+**Corte: 2026-09-27, 17:35.** Un agente ejecutó `Guias/Admind_Plan_Sprints_2_3.md` de la Fase 0 a la 10, con las decisiones D1 a D12 en su opción recomendada (Alejo, 2026-09-27).
+
+| Frente | Estado al 2026-09-27 |
+|---|---|
+| **Backend** | `desarrollo` en `66f8897`: 15 commits locales sobre `3c70e3a`, **sin subir**. Apps nuevas `auditoria`, `areas`, `reglas` y `reservas`, API de `personas` y `apps/comun/bloqueo/`. Migraciones nuevas aplicadas en `admind_db` (§2.5) |
+| **Frontend** | `desarrollo` en `c1d8f6b`: 9 commits locales sobre `b42ce93`, **sin subir**. Pantallas reales de áreas, apartamentos, roles, registrar persona, reglas y reservas; Alpine.js 3.17.4 autoalojado (§2.5) |
+| **Historias** | HU-06 a HU-13 con todos sus criterios en código y con prueba (§5.3). **Ninguna Terminada**: les falta la DoD humana (PR `desarrollo → pruebas` revisado y prueba manual de quien no la programó) |
+| **Pruebas automáticas** | Backend: **300, todas pasan** (eran 171). Front: **109, todas pasan** (eran 51). `makemigrations --check` sin cambios |
+
+> [!WARNING] Filas que esta sesión no tocó
+> Lo que sigue de este archivo quedó en el corte del 2026-09-15 salvo las historias HU-06 a HU-13, la §2.5, la bitácora del 2026-09-27, las decisiones del plan y los pendientes marcados con esa fecha. Entre el 2026-09-15 y el 2026-09-25 se construyeron otras piezas (HU-01, HU-02, HU-03, HU-21, HU-25, HU-26…) que aquí siguen con su estado viejo. El punto de partida verificado de esta sesión está en el plan, §1.
+
+**Corte anterior: 2026-09-15, 10:35.** Segundo día de desarrollo real dentro del plazo de un mes (entrega cerca del 2026-10-14, fecha exacta por confirmar; maestro §11).
 
 | Frente | Estado |
 |---|---|
@@ -123,6 +135,41 @@ En `557bc9f` (2026-09-15 10:14), en la rama `desarrollo` de `Admind_Front-End` y
 
 Las maquetas **no cuentan como avance** de las historias de esas pantallas (HU-08, HU-10, HU-11, HU-22, HU-25, HU-26): no llaman a la API ni cumplen sus criterios.
 
+### 2.5 Construido en los Sprints 2 y 3 (2026-09-27)
+
+**Backend** (`3c70e3a..66f8897`). Toda tabla nueva hereda `ModeloDeConjunto`, sus FK entre tablas de conjunto son compuestas y toda ruta nueva está en la prueba del intruso.
+
+| Pieza | Dónde |
+|---|---|
+| Auditoría de solo inserción: tabla `auditoria_registro` (actor, acción, entidad, antes, después, detalle, `via_superusuario`). Modificar o borrar una fila lanza `RegistroInmutable`, también por el queryset. Quitarle `UPDATE` y `DELETE` al usuario de base de datos queda para después (D8 a) | `apps/auditoria/` |
+| Áreas comunes: clasificación cerrada (`comun`, `comun_esencial`, `comun_uso_exclusivo`), `es_esencial` derivado, horario con bloques fijos (D1 a), mantenimiento y desactivar sin borrar. `franjas_del_dia()` | `apps/areas/`, rutas `/areas/` |
+| Unidades y vínculos: crear unidad, detalle con vigentes e históricos, registrar y cerrar vínculos (solo para quien ya tiene rol en el conjunto, P3), `unidades_para_solicitar()` | `apps/unidades/`, rutas `/unidades/<id>/…` |
+| Roles: `asignar_rol` y `retirar_rol` con auditoría; retirar al último de Administración responde 409, con `select_for_update` sobre las asignaciones de Administración | `apps/permisos/servicios.py`, rutas `/auth/usuarios/<id>/roles/…` |
+| `UsuarioResumenSerializer` gana `persona` y `asignaciones` (P2) | `apps/cuentas/serializers.py` |
+| Búsqueda por documento exacto (POST) con auditoría y límite de 20 por hora, 429 al pasarse (D6); vincular reutiliza `asignar_rol` | `apps/personas/`, rutas `/personas/buscar/` y `/personas/vincular/` |
+| Reglas beta: catálogo de 7 tipos que solo restringen (D4 a), validador de parámetros, descripción en palabras, versionado al editar (`reemplaza`) y retirar por vigencia | `apps/reglas/catalogo.py`, `models.py`, `servicios.py`, rutas `/reglas/` |
+| Motor de reglas: alfas `RESIDE`, `NO_EN_EL_PASADO` y `AREA_DISPONIBLE`; un evaluador por tipo; AND sin detenerse en la primera falla. `unidad_en_mora()` provisional en `False` hasta HU-35 (D5 b) | `apps/reglas/alfa.py`, `evaluador.py`, `mora.py` |
+| Mecanismo compartido de bloqueo (R1): `tomar()` traduce el índice único parcial en `RecursoOcupado`; `expirar_vencidos()` es un solo `UPDATE` idempotente | `apps/comun/bloqueo/bloqueo.py` |
+| Reservas: `Solicitud` con 7 estados (`LIBERADA` nuevo, D2 a), índices únicos parciales por franja y por persona (D3 a); franjas, tomar el bloqueo de 3 minutos, liberar, avisos del panel, enviar con evaluación guardada (P10) y aviso a la Administración | `apps/reservas/`, rutas `/reservas/…` |
+| `requisitos_para_operar`: `areas` y `reglas_beta` pasan a disponibles. El reglamento sigue en construcción, así que ningún conjunto queda operativo | `apps/conjuntos/servicios.py` |
+| Pruebas de concurrencia obligatorias del maestro §5.1 (10 hilos con barrera sobre la misma franja) | `tests/concurrencia/test_bloqueo_de_franjas.py` |
+| Migraciones nuevas, **aplicadas en `admind_db`**: `auditoria 0001`, `areas 0001`, `reglas 0001`, `reservas 0001` | `apps/*/migrations/` |
+
+**Frontend** (`b42ce93..c1d8f6b`)
+
+| Pieza | Dónde |
+|---|---|
+| Áreas comunes: lista, alta con clasificación obligatoria, edición con mantenimiento, desactivar; ítem "Áreas comunes" en el lateral con `area.gestionar` | `apps/areas/`, `cliente_api/areas.py` |
+| Asistente de HU-03 en cinco pasos: 1 Datos, 2 Administración, 3 Áreas, 4 Reglas, 5 Resumen | `apps/conjuntos/` |
+| Apartamentos: lista con vínculos vigentes, registrar apartamento, detalle con vigentes e históricos, agregar y cerrar vínculos. Reemplaza la maqueta | `apps/unidades/`, `cliente_api/unidades.py` |
+| Roles en el detalle del usuario: retirar y asignar los que no tiene; el 409 del último administrador como alerta | `apps/usuarios/`, `cliente_api/cuentas.py` |
+| Registrar persona: buscar por documento, vincular si existe, o pasar al alta con el documento por la sesión, nunca por la URL (P4) | `apps/usuarios/`, `cliente_api/personas.py` |
+| Reglas: lista agrupada por área, alta en dos pasos sin JavaScript con un formulario por tipo, edición que avisa la versión nueva. Reemplaza la maqueta | `apps/reglas/`, `cliente_api/reglas.py` |
+| Reservas: selector de área, franjas del día con su estado en texto, Reservar, solicitud con cuenta regresiva, Cancelar y `sendBeacon` al salir, panel de confirmación y envío | `apps/reservas/`, `cliente_api/reservas.py`, `static/js/reservas.js` |
+| Fragmento de confirmación del contenido, solo con clases existentes (P7) | `templates/componentes/confirmacion_de_contenido.html` |
+| Alpine.js 3.17.4 autoalojado, con versión y SHA-256 anotados; se carga solo donde se usa (P13) | `static/js/vendor/`, `templates/base/base.html` |
+| Mensajes de 409 y 429 en el cliente de la API (P12) | `cliente_api/http.py` |
+
 ---
 
 ## 3. Bitácora
@@ -164,6 +211,18 @@ Lo más reciente abajo. Solo hechos; los errores con su aprendizaje van en `Admi
 | 2026-09-15 10:14 | Frontend | `557bc9f` — commit del front: proyecto, login y maquetas (63 archivos), sin `.env` ni `.venv`. El mensaje ("Estructura inicial Admind") no lleva el ID de historia (maestro §8.4); lo construido avanza HU-01 |
 | 2026-09-15 10:14 | Frontend | `1a4e7d1` — merge de `origin/desarrollo`, que traía dos commits de Camilo del 2026-09-14 (`57a45c0`, `fd6a03d`): `index.html` y `apps/Administrador/Home.html`, HTML de prueba. Subido a `origin/desarrollo` |
 | 2026-09-15 10:34 | Notion | HU-01: marcada la tarea "Pantalla de login y manejo de errores (frontend)", 4 de 5. Sigue en "En progreso". HU-26 revisada: coincide con este archivo (3 de 5) |
+| 2026-09-27 16:30 | Backend y frontend | Fase 0 del plan de los Sprints 2 y 3: los dos repos limpios en `desarrollo`, `pull --ff-only` sin cambios, 171 y 51 pruebas en verde. Alejo responde "Recomendada" a D1–D12 y autoriza descargar Alpine |
+| 2026-09-27 16:41 | Backend | `08f4126` — auditoría de solo inserción. Migración aplicada en `admind_db` |
+| 2026-09-27 16:43–16:48 | Backend y frontend | HU-09: `f933349` modelo `Area`, `ff24541` servicio y API, `daf56af` pantalla y paso de áreas del asistente. Migración aplicada |
+| 2026-09-27 16:51–16:53 | Backend y frontend | HU-08: `89e793c` API de unidades y vínculos (y P2), `a9350c2` pantalla de apartamentos |
+| 2026-09-27 16:56–16:57 | Backend y frontend | HU-06: `b5003af` asignar y retirar roles, `25132e8` roles en el detalle del usuario |
+| 2026-09-27 16:59–17:01 | Backend y frontend | HU-07: `37aeb85` buscar y vincular, `f4da065` registrar persona |
+| 2026-09-27 17:04–17:09 | Backend y frontend | HU-10: `bb5586f` catálogo y modelo, `a8be0ae` servicio y API, `2e11201` pantalla y paso de reglas. Migración aplicada |
+| 2026-09-27 17:10–17:19 | Backend y frontend | HU-11: `ddac827` bloqueo compartido, `05c621c` modelo `Solicitud`, `9d99568` servicio y API, `06f2340` concurrencia (pasó 5 de 5 corridas), `d7b04a8` Alpine 3.17.4, `6aa1a3d` pantallas. Migración aplicada |
+| 2026-09-27 17:21–17:23 | Backend y frontend | HU-12: `000c335` avisos, `f6b8fef` panel de confirmación |
+| 2026-09-27 17:27–17:30 | Backend y frontend | HU-13: `a8e6ca5` alfas y evaluador, `66f8897` envío, `c1d8f6b` pantalla del envío |
+| 2026-09-27 17:32 | Backend y frontend | Cierre: 300 y 109 pruebas en verde, `makemigrations --check` sin cambios, `git status` limpio en los dos repos. Nada subido. El recorrido en el navegador no se hizo: pide iniciar sesión con las cuentas de prueba, cuya contraseña no tiene el agente; queda en el guion manual del plan §6 |
+| 2026-09-27 17:50 | Notion | A pedido de Alejo: HU-06 a HU-13 pasan a "En revisión" (HU-06 estaba otra vez en "Finalizado"). Casillas de tareas marcadas y nota de revisión en cada página. En HU-06 se restauran las tareas 4 y 5 del Excel. En HU-12 quedan dos tareas sin marcar: alta demanda (PB-24) y el reuso del panel en citas y alternativas (HU-31, HU-32). Ninguna a "Finalizado" |
 
 ---
 
@@ -212,6 +271,25 @@ Las que cambian el diseño quedan también en el maestro; las técnicas, solo aq
 | 2026-09-15 | Textos del borrador: "Avisos" pasa a **Anuncios** (término del maestro) y "Zona común" a **Zonas comunes**. Se quita **"Eliminar"** de Reglas y Anuncios hasta decidir si esas entidades se borran (maestro §5.10, §5.11) | Agente, **por confirmar** (§6) | Plantillas de `reglas` y `anuncios` del front |
 | 2026-09-15 | El día elegido del calendario no usa el acento, porque no es uno de sus cuatro sitios (maestro §6.1): lleva fondo hundido y borde oscuro | Agente | `static/css/reservas.css` del front |
 | 2026-09-15 | Después del ingreso siempre se va al selector maqueta, aunque la API diga que la persona tiene un solo conjunto. Provisional hasta conectar el selector | Agente | `apps/cuentas/views.py` del front |
+| 2026-09-27 | **D1 a**: franjas en bloques fijos por área (`hora_apertura`, `hora_cierre`, `duracion_franja_minutos`) | Alejo (recomendada) | `apps/areas/` |
+| 2026-09-27 | **D2 a**: estado nuevo no bloqueante `LIBERADA` con `motivo_liberacion` `voluntaria` o `reglas`. **Falta llevarlo al maestro §5.1** | Alejo (recomendada) | `apps/reservas/models.py` |
+| 2026-09-27 | **D3 a**: un solo bloqueo activo **por conjunto**, índice único parcial `(conjunto, persona)`. **Falta corregir la redacción del maestro §5.1 y §12.7 c** | Alejo (recomendada) | `apps/reservas/models.py` |
+| 2026-09-27 | **D4 a**: catálogo beta de 7 tipos (sin duración máxima ni depósito) y versionado por reemplazo, con copia de la evaluación en la solicitud. Provisional hasta un reglamento real. **Falta llevarlo al maestro §5.10** | Alejo (recomendada) | `apps/reglas/` |
+| 2026-09-27 | **D5 b**: `unidad_en_mora()` devuelve `False` hasta HU-35 | Alejo (recomendada) | `apps/reglas/mora.py` |
+| 2026-09-27 | **D6**: 20 búsquedas por documento por hora y administrador, contadas sobre la auditoría; 429 al pasarse. Se cuentan en el conjunto activo | Alejo (recomendada) | `apps/personas/servicios.py` |
+| 2026-09-27 | **D7 a**: se reserva aunque el conjunto no esté operativo, hasta HU-33 | Alejo (recomendada) | `apps/reservas/servicios.py` |
+| 2026-09-27 | **D8 a**: auditoría de solo inserción en código; los dos usuarios de BD quedan para después | Alejo (recomendada) | `apps/auditoria/` |
+| 2026-09-27 | **D9 a**: el panel resalta menos de 24 h, límite de anticipación y otra solicitud; alta demanda llega con PB-24 | Alejo (recomendada) | `apps/reservas/servicios.py` |
+| 2026-09-27 | **D10 a**: una persona sin cuenta se vincula igual; la respuesta dice `tiene_cuenta` | Alejo (recomendada) | `apps/personas/` |
+| 2026-09-27 | **D11 a**: un commit local por paso, sin push; migraciones aplicadas en `admind_db` al cerrar cada fase | Alejo (recomendada) | Git de los dos repos |
+| 2026-09-27 | **D12 a**: Alpine.js 3.17.4 autoalojado, descargado de npm por el agente con autorización | Alejo (recomendada) | `static/js/vendor/` del front |
+| 2026-09-27 | **P1 a P15** del plan (§3), aplicadas tal cual: FK de `Area` redeclarada, `persona` y `asignaciones` en el usuario, vincular solo a quien tiene rol, búsqueda por POST, cierres con `vigencia_hasta = hoy`, códigos 409/429/400 con `motivos`, fragmento de confirmación, residir para tomar el bloqueo, `mora.py`, evaluación en la solicitud, `DURACION_BLOQUEO`, mensajes 409/429 en el front, bloque `scripts`, solo solicitudes propias y `via_superusuario` como parámetro | Plan, aprobado por Alejo | Ver el plan §3 |
+| 2026-09-27 | `RegistroInmutable` vive en `apps/auditoria/models.py` y no en `servicios.py`: el modelo lo lanza y el servicio importa el modelo | Agente | `apps/auditoria/models.py` |
+| 2026-09-27 | Desactivar un área ya inactiva responde 409; una regla que todavía no empieza se cierra en su fecha de inicio | Agente (el plan no lo decía) | `apps/areas/`, `apps/reglas/servicios.py` |
+| 2026-09-27 | El evaluador aplica las reglas beta **vigentes el día en que se evalúa**, no las del día de la franja | Agente (el plan no lo decía) | `apps/reglas/evaluador.py` |
+| 2026-09-27 | `Resultado` vive en `apps/reglas/alfa.py` para no crear un archivo más; lo usan las alfas y el evaluador | Agente | `apps/reglas/alfa.py` |
+| 2026-09-27 | El botón "Añadir usuario" de la lista pasa a "Registrar persona", que busca primero por documento | Agente (lo pide el plan F5) | `apps/usuarios/` del front |
+| 2026-09-27 | El horario del panel se escribe "2:00 p. m.", como el maestro §5.1; el formato de Django daría "p.m." | Agente | `apps/reservas/views.py` del front |
 
 ---
 
@@ -224,14 +302,14 @@ Sprint previsto según Notion (reparto del Excel V11.1). Con el plazo de un mes 
 | Sprint previsto | Historias | SP | Terminadas | En progreso |
 |---|---|---|---|---|
 | 1 | HU-01 a HU-05, HU-26 | 25 | 0 | 6 |
-| 2 | HU-06 a HU-09 | 20 | 0 | 1 |
-| 3 | HU-10 a HU-13 | 26 | 0 | 0 |
+| 2 | HU-06 a HU-09 | 20 | 0 | 4 |
+| 3 | HU-10 a HU-13 | 26 | 0 | 4 |
 | 4 | HU-14 a HU-19 | 28 | 0 | 0 |
 | 5 | HU-20, HU-21, HU-25, HU-27, HU-28, HU-29 | 28 | 0 | 0 |
 | 6 | HU-22, HU-23, HU-24, HU-30 a HU-34 | 38 | 0 | 0 |
 | 7 | HU-35, HU-36, HU-37 | 16 | 0 | 0 |
 | Condicional | HU-38 | 7 | 0 | 0 |
-| **Total** | **38** | **188** | **0** | **7** |
+| **Total** | **38** | **188** | **0** | **14** |
 
 ### 5.2 Todas las historias
 
@@ -245,14 +323,14 @@ Avance: **Sin empezar** · **En progreso** (con tareas técnicas hechas sobre el
 | HU-04 | Persona global única por documento | 1 | 3 | Alta | **En progreso** (5/5, falta la DoD) |
 | HU-05 | Aislamiento de datos entre conjuntos | 1 | 2 | Alta | **En progreso** (5/5, falta la DoD) |
 | HU-26 | Selector de conjunto activo | 1 | 6 | Alta | **En progreso** (3/5) |
-| HU-06 | Asignación de roles del catálogo fijo | 2 | 6 | Alta | **En progreso** (3/5) |
-| HU-07 | Vincular persona existente por búsqueda de documento | 2 | 3 | Alta | Sin empezar |
-| HU-08 | Vínculos de unidad y enrutamiento de notificaciones | 2 | 7 | Alta | Sin empezar |
-| HU-09 | Catálogo de áreas comunes del conjunto | 2 | 4 | Alta | Sin empezar |
-| HU-10 | Configuración de reglas beta de reserva | 3 | 9 | Alta | Sin empezar |
-| HU-11 | Bloqueo exclusivo de 3 minutos sobre una franja | 3 | 7 | Alta | Sin empezar |
-| HU-12 | Confirmación de contenido antes de enviar | 3 | 2 | Alta | Sin empezar |
-| HU-13 | Envío de solicitud y motor de reglas alfa/beta | 3 | 8 | Alta | Sin empezar |
+| HU-06 | Asignación de roles del catálogo fijo | 2 | 6 | Alta | **En progreso** (5/5, falta la DoD) |
+| HU-07 | Vincular persona existente por búsqueda de documento | 2 | 3 | Alta | **En progreso** (criterios en código, falta la DoD) |
+| HU-08 | Vínculos de unidad y enrutamiento de notificaciones | 2 | 7 | Alta | **En progreso** (criterios en código, falta la DoD) |
+| HU-09 | Catálogo de áreas comunes del conjunto | 2 | 4 | Alta | **En progreso** (criterios en código, falta la DoD) |
+| HU-10 | Configuración de reglas beta de reserva | 3 | 9 | Alta | **En progreso** (criterios en código, falta la DoD) |
+| HU-11 | Bloqueo exclusivo de 3 minutos sobre una franja | 3 | 7 | Alta | **En progreso** (criterios en código, falta la DoD) |
+| HU-12 | Confirmación de contenido antes de enviar | 3 | 2 | Alta | **En progreso** (criterios en código, falta la DoD) |
+| HU-13 | Envío de solicitud y motor de reglas alfa/beta | 3 | 8 | Alta | **En progreso** (criterios en código, falta la DoD) |
 | HU-14 | Bandeja del administrador: aprobar o rechazar | 4 | 8 | Alta | Sin empezar |
 | HU-15 | Condiciones del alquiler congeladas y versionadas | 4 | 4 | Alta | Sin empezar |
 | HU-16 | Registro de pago declarado y comprobante | 4 | 4 | Media | Sin empezar |
@@ -340,25 +418,119 @@ Todo se prueba con las tablas y endpoints de apoyo, porque todavía no existen �
 | Al cambiar de conjunto, los permisos pasan a ser los de sus roles en el nuevo y ninguno del anterior | Hecho y probado (Administración en un conjunto, Residente en otro) |
 | Un conjunto desactivado o sin asignación vigente no aparece en la lista | Hecho y probado. Un conjunto no operativo sí aparece (§6) |
 
-#### HU-06 · Asignación de roles del catálogo fijo — 3 de 5 tareas
+#### HU-06 · Asignación de roles del catálogo fijo — 5 de 5 tareas, falta la DoD
 
-| Tarea técnica (Notion) | Estado | Evidencia |
+Actualizado el 2026-09-27 con `b5003af` (API) y `25132e8` (pantalla). Las pruebas nuevas están en `apps/permisos/test_roles.py`.
+
+| Criterio de aceptación | Prueba | Pasa |
 |---|---|---|
-| Sembrar el catálogo fijo de 6 roles y sus permisos en código (migración) | Hecha, sin migración | `apps/permisos/catalogo.py`. No hay tablas que sembrar (§4). El reparto por rol es provisional |
-| Modelo Asignación (persona, rol, conjunto) con `conjunto_id` nulo solo para el rol de plataforma | Hecha | `apps/permisos/models.py`, tres restricciones verificadas en PostgreSQL (§2.3) |
-| Cálculo de permisos efectivos como unión aditiva, sin denegaciones | Hecha (`d9b6271`) | `permisos_efectivos()` en `apps/permisos/servicios.py`: roles vigentes en el conjunto más los de plataforma |
-| Pantalla de asignación de roles por persona (frontend) | Pendiente | — |
-| Pruebas de los invariantes de rol y de auditoría de asignaciones | **A medias** | 20 pruebas del catálogo, de `Asignacion` y de permisos efectivos. Faltan la de "nunca cero Administración" y la de auditoría, que no existe todavía |
+| Al asignar un rol, la persona obtiene la unión de permisos de todos sus roles | `test_asignar_un_rol_suma_los_permisos_de_todos_sus_roles` | Sí |
+| Nadie puede crear ni editar un rol desde la interfaz o la API | `test_no_existe_crear_ni_editar_roles`: solo existen `usuario-roles` y `usuario-rol-retirar`; `"operador"` y `"superusuario"` → 400 | Sí |
+| Un rol asignado en el conjunto A no da permisos en el B | `test_rol_de_un_conjunto_no_da_permisos_en_otro` (ya existía) | Sí |
+| El rol de plataforma no incluye `reserva.aprobar`, `anuncio.publicar` ni `infraccion.registrar` | `test_rol_de_plataforma_no_opera_dentro_de_un_conjunto` (ya existía) | Sí |
+| Retirar el rol al último usuario con Administración falla | `test_retirar_el_rol_al_ultimo_de_administracion_falla`, `test_con_dos_administradores_se_retira_uno` y `test_dos_retiros_a_la_vez_no_dejan_el_conjunto_sin_administracion` (dos hilos) | Sí |
+| Auditoría de asignaciones (tarea) | `test_asignar_y_retirar_quedan_en_la_auditoria` | Sí |
 
-| Criterio de aceptación | Estado |
-|---|---|
-| Al asignar un rol, la persona obtiene la unión de permisos de todos sus roles | Hecho y probado |
-| Nadie puede crear ni editar un rol desde la interfaz o la API | Se cumple por diseño (catálogo en código, sin tabla ni endpoint) |
-| Un rol asignado en el conjunto A no da permisos en el B | Hecho y probado, en el servicio y por el selector |
-| El rol de plataforma no incluye `reserva.aprobar`, `anuncio.publicar` ni `infraccion.registrar` | Hecho y probado |
-| Retirar el rol al último usuario con Administración falla | Pendiente |
+Extras: retirar quita los permisos de inmediato; asignar un rol vigente → 409; sin `rol.asignar` → 403. En el front, `tests/test_usuarios.py`: sin `rol.asignar` no hay botones, el 409 se muestra y asignar vuelve al detalle.
 
-Ninguna vista exige todavía un permiso concreto: los permisos se calculan y se devuelven, pero falta la clase de permiso por vista (§6).
+#### HU-07 · Vincular persona existente por búsqueda de documento — criterios en código, falta la DoD
+
+`37aeb85` (API) y `f4da065` (pantalla). Pruebas en `apps/personas/test_busqueda.py`.
+
+| Criterio de aceptación | Prueba | Pasa |
+|---|---|---|
+| Documento existente → se vincula sin crear un registro nuevo | `test_documento_existente_se_vincula_sin_crear_otra_persona` | Sí |
+| Documento inexistente → se ofrece crear | API: `test_documento_inexistente_no_encuentra_a_nadie`. Front: `test_no_encontrada_lleva_al_alta_con_el_documento_y_sin_ponerlo_en_la_url` | Sí |
+| Cada búsqueda queda en la auditoría con quién y qué documento | `test_cada_busqueda_queda_en_la_auditoria_con_quien_y_que_documento` | Sí |
+| Pasar el límite de búsquedas se rechaza | `test_pasar_el_limite_de_busquedas_se_rechaza`: 20 en la última hora → 429; una de hace 2 h no cuenta | Sí |
+| Vinculada a dos conjuntos, sus roles del otro no dan permisos | `test_vinculada_a_dos_conjuntos_sus_roles_del_otro_no_dan_permisos` | Sí |
+
+Extras: con puntos y espacios encuentra igual, un número parcial no; la respuesta no trae teléfono, correo ni datos de otros conjuntos; vincular un rol vigente → 409. En el front, el documento nunca aparece en una URL.
+
+#### HU-08 · Vínculos de unidad y enrutamiento de notificaciones — criterios en código, falta la DoD
+
+`89e793c` (API) y `a9350c2` (pantalla). Pruebas en `apps/unidades/tests.py`.
+
+| Criterio de aceptación | Prueba | Pasa |
+|---|---|---|
+| Propietario y arrendatario vigentes coexisten | `test_propietario_y_arrendatario_vigentes_coexisten` | Sí |
+| Al cerrar el vínculo del arrendatario, el histórico se conserva | `test_al_cerrar_el_vinculo_del_arrendatario_el_historico_se_conserva` (sin `DELETE`: 405) | Sí |
+| Convocatoria a asamblea → al propietario aunque no resida | `test_cada_hecho_llega_a_quien_corresponde_segun_el_vinculo` (ya existía) | Sí |
+| Infracción → propietario y arrendatario | La misma prueba (ya existía) | Sí |
+| Propietario no residente con rol Residente no puede reservar | `test_un_propietario_que_no_vive_ahi_no_puede_reservar` (tomar → 400) y `test_sin_vivir_en_la_unidad_elegida_la_alfa_lo_impide` (alfa `RESIDE`), en `apps/reservas/tests.py` | Sí |
+
+Extras: vincular a una persona sin rol en el conjunto → 400 (P3); vínculo duplicado → 409; cerrar dos veces → 409; cierre antes del inicio → 400; auditoría de unidad y vínculo.
+
+#### HU-09 · Catálogo de áreas comunes del conjunto — criterios en código, falta la DoD
+
+`f933349`, `ff24541` (API) y `daf56af` (pantalla y paso del asistente). Pruebas en `apps/areas/tests.py`.
+
+| Criterio de aceptación | Prueba | Pasa |
+|---|---|---|
+| Al crear un área hay que elegir la clasificación de la lista cerrada | `test_al_crear_un_area_hay_que_elegir_la_clasificacion_de_la_lista_cerrada` | Sí |
+| Un área común esencial tiene `es_esencial` verdadero | `test_solo_un_area_comun_esencial_es_esencial` | Sí |
+| Un área en mantenimiento no admite solicitudes | `test_un_area_en_mantenimiento_no_admite_solicitudes` (tomar → 409), en `apps/reservas/tests.py` | Sí |
+| Sin `area.gestionar`, editar → 403 | `test_sin_area_gestionar_no_se_crea_ni_se_edita_y_solo_se_ven_las_activas` | Sí |
+| Un área retirada se desactiva, no se borra | `test_un_area_retirada_se_desactiva_y_no_se_borra` | Sí |
+| Regla alfa de mora sobre áreas esenciales | `test_una_unidad_en_mora_no_pide_un_area_no_esencial_pero_si_una_esencial`, en `apps/reservas/tests.py` | Sí |
+
+Extras: el requisito `areas` de `requisitos_para_operar` se cumple con un área activa; nombre repetido → 400; cierre antes de la apertura → 400; auditoría de crear, editar, mantenimiento y desactivar.
+
+#### HU-10 · Configuración de reglas beta de reserva — criterios en código, falta la DoD
+
+`bb5586f`, `a8be0ae` (API) y `2e11201` (pantalla y paso del asistente). Pruebas en `apps/reglas/tests.py`.
+
+| Criterio de aceptación | Prueba | Pasa |
+|---|---|---|
+| Sin reglas, el conjunto no puede quedar operativo | `test_sin_reglas_el_conjunto_no_puede_quedar_operativo` | Sí |
+| Una regla exige tipo, parámetros, área y vigencia | `test_una_regla_exige_tipo_parametros_area_y_vigencia` (cuatro casos) | Sí |
+| Una regla permisiva se rechaza | `test_una_regla_permisiva_se_rechaza` | Sí |
+| Una regla beta no relaja una alfa | `test_una_regla_beta_no_relaja_una_alfa` | Sí |
+| Se aplican en AND sin precedencias | `test_el_evaluador_no_se_detiene_en_la_primera_falla` y `test_si_incumple_tres_reglas_ve_los_tres_motivos_y_se_libera_el_bloqueo` | Sí |
+| Una regla editada deja autor y fecha | `test_una_regla_editada_deja_version_autor_y_fecha` | Sí |
+
+Extras: cada tipo se crea y se describe en palabras; parámetros de más o equivocados → 400; área de otro conjunto → 400; retirar cierra la vigencia y la conserva.
+
+#### HU-11 · Bloqueo exclusivo de 3 minutos sobre una franja — criterios en código, falta la DoD
+
+`ddac827`, `05c621c`, `9d99568`, `06f2340` (backend) y `d7b04a8`, `6aa1a3d` (front). Pruebas en `apps/reservas/tests.py` y `tests/concurrencia/`.
+
+| Criterio de aceptación | Prueba | Pasa |
+|---|---|---|
+| Franja libre + Reservar → `EN_SOLICITUD` y reloj de 3 minutos | `test_franja_libre_y_reservar_deja_la_solicitud_en_tramite_con_3_minutos` | Sí |
+| Otra persona sobre una franja en trámite → aviso inmediato | `test_otra_persona_sobre_una_franja_en_tramite_recibe_el_aviso_de_inmediato` y `test_n_residentes_sobre_la_misma_franja_producen_exactamente_un_bloqueo` (10 hilos) | Sí |
+| Bloqueo vencido + acceso → `EXPIRADA` y franja libre | `test_un_bloqueo_vencido_expira_al_siguiente_acceso_y_la_franja_queda_libre` y `test_un_bloqueo_vencido_no_bloquea` | Sí |
+| Con un bloqueo activo no toma otro en ninguna área | `test_con_un_bloqueo_activo_no_se_toma_otro_en_ninguna_area` | Sí |
+| Al cerrar el formulario, el bloqueo se libera sin esperar | `test_al_cerrar_el_formulario_el_bloqueo_se_libera_sin_esperar` y `test_uno_liberado_a_mano_no_expira_dos_veces`. El `sendBeacon` al cerrar la pestaña va al guion manual | Sí (el beacon, pendiente de prueba manual) |
+
+Extras: cada quien ve la franja propia como "Tuya" y la ajena sin saber de quién es; una franja que ya empezó no se toma; solo se ven las solicitudes propias.
+
+#### HU-12 · Confirmación de contenido antes de enviar — criterios en código, falta la DoD
+
+`000c335` (avisos) y `f6b8fef` (panel). Pruebas en `apps/reservas/tests.py` y `tests/test_reservas.py` del front.
+
+| Criterio de aceptación | Prueba | Pasa |
+|---|---|---|
+| Ve el área, el día de la semana en letras, la fecha y el horario | `test_el_panel_dice_el_area_el_dia_de_la_semana_en_letras_la_fecha_y_el_horario` (front) | Sí |
+| Corregir vuelve sin perder lo escrito | Guion manual (JavaScript). En código: el formulario se oculta con `x-show`, no se destruye | Pendiente de prueba manual |
+| Una fecha atípica se resalta sin impedir el envío | Tres pruebas de `avisos` en el backend y `test_los_avisos_se_muestran_con_texto_y_no_deshabilitan_el_envio` (front). Alta demanda llega con PB-24 | Sí |
+| El panel abierto no detiene ni extiende el reloj | Guion manual. En código: el reloj vive en el mismo `x-data` y no se reinicia | Pendiente de prueba manual |
+| Un envío que salta la interfaz se evalúa igual | `test_un_envio_que_salta_la_interfaz_se_evalua_igual` | Sí |
+
+#### HU-13 · Envío de solicitud y motor de reglas alfa/beta — criterios en código, falta la DoD
+
+`a8e6ca5`, `66f8897` (backend) y `c1d8f6b` (front). Pruebas en `apps/reservas/tests.py` y `apps/reglas/tests.py`.
+
+| Criterio de aceptación | Prueba | Pasa |
+|---|---|---|
+| Una solicitud válida pasa a `APARTADA` y se avisa a la Administración | `test_una_solicitud_valida_queda_apartada_y_se_avisa_a_la_administracion` (Consejo no recibe el aviso) | Sí |
+| Si incumple tres reglas, ve los tres motivos y se libera el bloqueo | `test_si_incumple_tres_reglas_ve_los_tres_motivos_y_se_libera_el_bloqueo` | Sí |
+| Sin vínculo vigente con `reside`, la alfa lo impide | `test_sin_vivir_en_la_unidad_elegida_la_alfa_lo_impide` | Sí |
+| Una unidad en mora no puede pedir un área no esencial | `test_una_unidad_en_mora_no_pide_un_area_no_esencial_pero_si_una_esencial` y `test_paz_y_salvo_solo_restringe_areas_no_esenciales` | Sí |
+| Queda registrado qué reglas se evaluaron y con qué resultado | `test_queda_registrado_que_reglas_se_evaluaron_y_con_que_resultado` | Sí |
+| Pruebas por cada tipo de regla | `test_cada_tipo_cumple_o_no_segun_sus_parametros` (5 tipos), `test_el_cupo_por_unidad_cuenta_las_apartadas_de_la_ventana` y la de paz y salvo | Sí |
+
+Extras: enviar vencida → `EXPIRADA` y 409; la de otra persona → 404; dos veces → 409; sin motivo o con 0 asistentes → 400. Las alfas de piscina y de cobro quedan fuera: no hay datos con qué evaluarlas.
 
 #### HU-01 · Inicio de sesión con correo y contraseña — 4 de 5 tareas
 
@@ -438,6 +610,16 @@ Ningún criterio de aceptación se cumple todavía: todos dependen del asistente
 - [ ] El README de `apps/conjuntos` dice que ahí va el cambio de conjunto activo; quedó en `apps/cuentas`
 - [ ] HU-26 pide logo y color en el selector; están fuera de v1 (maestro §6.3, ya registrado en §12.3)
 - [ ] Quedaron desactualizados el README raíz del front ("Todavía no hay código") y la Guía de desarrollo §13 ("el proyecto Django del frontend no existe")
+
+**Del plan de los Sprints 2 y 3 (2026-09-27):**
+- [ ] Revisar los 15 commits del backend y los 9 del front, y subirlos (el agente no hace push)
+- [ ] Volver a crear la rama `pruebas` del backend en GitHub y abrir los PR `desarrollo → pruebas`, revisados por quien no programó (plan §5)
+- [ ] Prueba manual de HU-06 a HU-13 con el guion del plan §6, por quien no las programó. El agente no pudo recorrerlas en el navegador: pide iniciar sesión con las cuentas de prueba
+- [ ] Llevar al maestro D2 (`LIBERADA`), D3 (bloqueo por conjunto) y D4 (catálogo beta y versionado): §5.1, §5.10 y §12.7 c
+- [x] Notion: HU-06 a HU-13 en "En revisión", con casillas y nota de revisión; tareas 4 y 5 de HU-06 restauradas — hecho el 2026-09-27 17:50
+- [ ] `alpine.min.js` se versionó con `core.autocrlf=true`: en otra máquina con Windows el archivo puede quedar con CRLF y su SHA-256 no coincidir con el del README de `vendor/`. Un `.gitattributes` con `*.js -text` para `vendor/` lo evitaría
+- [ ] El límite de búsquedas cuenta por conjunto: un administrador de dos conjuntos puede hacer 20 en cada uno. Decidir si debe ser global
+- [ ] Fuera del plan, sin hacer: la lista, el detalle y el alta de usuarios del front no sobreescribían `estado_vista` y mostraban "Maqueta"; se corrigió en la lista y el detalle porque el plan las tocaba, pero `usuarios/nuevo.html` sigue mostrándola
 
 **Técnicos:**
 - [x] Commit del paso 6 del backend (selector, `VistaDeConjunto`, permisos efectivos, prueba del intruso) — `d9b6271`
