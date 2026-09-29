@@ -10,3 +10,45 @@ Consejo         consejo@example.com            creado · pide 2FA
 Secretaría      secretaria@example.com         creado · pide 2FA
 Vigilancia      vigilancia@example.com         creado
 Residente       residente@example.com          creado
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+|                |                              |            |
+| -------------- | ---------------------------- | ---------- |
+| Superusuario   | `superusuario@example.com`   | 9000000001 |
+| Administración | `administracion@example.com` | 9000000002 |
+| Consejo        | `consejo@example.com`        | 9000000003 |
+| Secretaría     | `secretaria@example.com`     | 9000000004 |
+| Vigilancia     | `vigilancia@example.com`     | 9000000005 |
+| Residente      | `residente@example.com`      | 9000000006 |
+
+
+
+
+
+
+
+
+
+19
