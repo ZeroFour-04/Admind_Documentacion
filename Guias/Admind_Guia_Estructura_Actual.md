@@ -396,7 +396,7 @@ Se eligió **token opaco guardado en la base** y no JWT: se puede revocar al ins
 
 ### 5.4 Roles y permisos (`apps/permisos/`)
 
-- **Catálogo fijo en código** (`catalogo.py`): 6 roles (Superusuario, Administración, Consejo, Secretaría, Vigilancia, Residente) y la lista de permisos de cada uno (`"reserva.solicitar"`, `"area.gestionar"`…). No se editan desde la interfaz: un cambio se hace en el código. El reparto es provisional hasta validarlo con un administrador real.
+- **Catálogo fijo en código** (`catalogo.py`): 5 roles (Superusuario, Administración, Secretaría, Vigilancia, Residente) y la lista de permisos de cada uno (`"reserva.solicitar"`, `"area.gestionar"`…). No se editan desde la interfaz: un cambio se hace en el código. El reparto es provisional hasta validarlo con un administrador real.
 - **`Asignacion`**: "la persona X tiene el rol Y en el conjunto Z desde tal fecha hasta tal fecha". El Superusuario tiene `conjunto` nulo (es de plataforma).
 - **`exigir_permiso(request, "reserva.solicitar")`** (`permisos/views.py`): la primera línea de cada vista. Si falta el permiso → 403.
 - **"Nunca cero Administración"**: el servicio impide retirar el último rol de Administración de un conjunto (`UltimaAdministracion`).

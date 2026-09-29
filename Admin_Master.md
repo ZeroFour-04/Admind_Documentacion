@@ -293,7 +293,6 @@ Un conjunto residencial no necesita inventar cargos; necesita que la portería n
 |---|---|---|
 |**Superusuario**|Plataforma|El equipo de desarrollo. Crea y desactiva conjuntos, restaura gobierno, anula registros, ve auditoría técnica, opera el sistema. **Lee datos de residentes sin procedimiento previo**|
 |**Administración**|Conjunto|Gestión del conjunto, reglas, áreas, personas, reservas, infracciones, documentos, parqueaderos, respaldo|
-|**Consejo**|Conjunto|Lectura de infracciones, actas y auditoría. Existe porque es un órgano real de la Ley 675 (arts. 53 y 55)|
 |**Secretaría**|Conjunto|Triage de solicitudes, prioridad, rechazo formal, anuncios. **No aprueba nada**|
 |**Vigilancia**|Conjunto|Registro de visitantes, consulta de reservas del día, registro de hechos|
 |**Residente**|Conjunto|Solicitar reservas, ver las propias, cancelar, abrir casos, ver anuncios y documentos|
@@ -515,7 +514,7 @@ RegistroDeInfraccion
 - `fecha_notificacion` es obligatoria. Un registro sin comunicación es una anotación privada sobre una persona identificada, y eso es tratamiento sin finalidad legítima
 - La notificación alcanza a **propietario y arrendatario** (C-318/02)
 - El registro **nunca** llega al tablón de anuncios
-- Visibilidad restringida a Administración, Consejo y vínculos vigentes de la unidad
+- Visibilidad restringida a Administración y vínculos vigentes de la unidad
 - No hay borrado. Un registro equivocado se **anula** con motivo, y solo el Superusuario
 
 > [!WARNING] El registro no es prueba de debido proceso Demuestra que hubo una comunicación con fecha y destinatario. **No demuestra** que se respetó el derecho de defensa del art. 59, ni que decidió el órgano competente, ni que la decisión quedó en firme. La interfaz tiene que decirlo en el propio registro (R11).
@@ -1028,7 +1027,7 @@ _(La 15 fue revertida por la 22 y no se conserva como vigente.)_
 > 
 > 1. Las **reglas beta** de reservas
 > 2. Las **tres listas de causales formales** de rechazo (Evento, Caso, Cita)
-> 3. La **asignación de permisos** de los seis roles fijos — con **Secretaría como el caso más urgente**, porque es el único rol cuyos permisos se definieron desde el diseño y no desde la observación
+> 3. La **asignación de permisos** de los cinco roles fijos — con **Secretaría como el caso más urgente**, porque es el único rol cuyos permisos se definieron desde el diseño y no desde la observación
 
 ### 11.5 Pendientes que afectan la sustentación
 

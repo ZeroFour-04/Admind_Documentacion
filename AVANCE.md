@@ -62,10 +62,10 @@ Cada criterio de aceptación tiene una prueba automática con nombre propio.
 
 ### Adelantadas del Sprint 5
 
-|HU|SP|Estado|
-|---|---|---|
-|HU-21 Identidad del conjunto|4|Construida el 22/09 (8 acentos y logo). **Hoy se amplió** con color propio en hex y foto cuadrada 1:1, commiteado y subido (`f053d31` y `96a30b4`). Esto **revierte** la decisión de "solo 8 acentos, sin hex libre", y el maestro §6.3 todavía no lo recoge|
-|HU-25 Anuncios|6|Construida el 22/09, con lo mínimo del canal de notificaciones (bandeja y correo) y de HU-08|
+| HU                           | SP  | Estado                                                                                                                                                                                                                                                       |
+| ---------------------------- | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| HU-21 Identidad del conjunto | 4   | Construida el 22/09 (8 acentos y logo). **Hoy se amplió** con color propio en hex y foto cuadrada 1:1, commiteado y subido (`f053d31` y `96a30b4`). Esto **revierte** la decisión de "solo 8 acentos, sin hex libre", y el maestro §6.3 todavía no lo recoge |
+| HU-25 Anuncios               | 6   | Construida el 22/09, con lo mínimo del canal de notificaciones (bandeja y correo) y de HU-08                                                                                                                                                                 |
 
 ### Sin empezar
 
