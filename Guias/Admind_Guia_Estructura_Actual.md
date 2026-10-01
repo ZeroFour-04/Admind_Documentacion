@@ -4,8 +4,11 @@ proyecto: "Proyecto de Ingeniería de Software II — Universidad de Cundinamarc
 fecha: 2026-09-30
 proposito: "Explicar desde cero la estructura actual de AdMind, las tecnologías que usa (incluido Alpine.js) y todo lo construido hasta el 2026-09-30, con un recorrido completo de una reserva de punta a punta."
 ---
-[Desarrollo 22-09](../Notas/Desarrollo%2022-09.md)
+[Desarrollo 22-09](../Archivo/Notas/Desarrollo%2022-09.md)
 # AdMind — Cómo está hecho hoy
+
+> [!WARNING] Tutorial con fecha de corte
+> Desde el 2026-09-30 la documentación vigente está en las carpetas numeradas de la bóveda (ver `README.md`). Esta guía se conserva como la explicación de corrido del proyecto al 2026-09-30, para personas. Sus secciones de referencia (§1 a §3 y §5 a §10) se copiaron a `02_Arquitectura/`, `05_Modulos/` y `08_Estado/`, y es allá donde se mantienen. Los nombres de archivo que cita (`Admin_Master.md`, `Admind_Avance.md`, `Admind_Lab.md`) se resuelven en la tabla de equivalencias de `Admin_Master.md`.
 
 > [!NOTE] Qué es este documento
 > Una foto explicada del proyecto **al 2026-09-30**, pensada para quien se perdió en el camino. Explica **qué hay, dónde está y cómo encaja**, con ejemplos del código real.

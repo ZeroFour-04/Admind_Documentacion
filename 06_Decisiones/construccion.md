@@ -1,0 +1,87 @@
+---
+resumen: "Decisiones tomadas al construir, por fecha: qué se decidió, quién y dónde quedó. Incluye D1 a D12 del plan de los Sprints 2 y 3."
+tipo: decision
+origen: "avance §4 (2026-09-27) + decisiones del 2026-09-13 al 2026-09-30"
+actualizado: 2026-09-30
+---
+
+# Decisiones tomadas al construir
+
+Lo más reciente abajo. Las que cambian el diseño se avisan además al inicio de la nota afectada (reservas, permisos, motor de reglas, sistema visual, aislamiento, stack).
+
+Referencias dentro de la tabla: *maestro §N* se resuelve en `Admin_Master.md`; *(§6)* a secas es [pendientes](../08_Estado/pendientes.md); *el plan* es `07_Planes/hechos/Admind_Plan_Sprints_2_3.md`.
+
+| Fecha | Decisión | Quién | Dónde quedó |
+|---|---|---|---|
+| 2026-09-13 | El front se arma sobre **plantillas de Django + Alpine.js**, no Vue: una sola forma de trabajar (Python + HTML) es más fácil de aprender y de defender con el plazo corto. El maestro §12.1 sigue abierta por escrito | Alejo | `Frontend/Admind_Front-End`; [abiertas](abiertas.md) |
+| 2026-09-14 | El esquema diseñado a mano en DBeaver (base `admind`) se usa **como plano**: las tablas las crean los modelos y migraciones de Django, no `inspectdb`. Así Camilo recrea la base con un `migrate`, y las FK compuestas y los privilegios viajan en las migraciones (maestro §7.1) | Alejo | Aquí |
+| 2026-09-14 | La base de diseño (`admind`) no se toca; el desarrollo usa una base aparte, `admind_db` | Alejo | Aquí |
+| 2026-09-14 | Tipos de documento: `CC`, `TI`, `CE`, `PAS`, `PPT`, con códigos sin puntos | Alejo | Maestro §5.2 |
+| 2026-09-14 | `Persona` con `nombres`, `apellidos` y `telefono`; el correo vive solo en `Usuario` | Alejo | Maestro §5.2 |
+| 2026-09-14 | Usuario propio desde el primer `migrate`, con inicio de sesión por correo (`AbstractBaseUser` + `PermissionsMixin`). `is_active` e `is_staff` se quedan en inglés porque Django los busca por ese nombre | Propuesta del agente, aplicada por Alejo | `apps/cuentas/models.py` |
+| 2026-09-14 | Las restricciones de la base se declaran en el modelo (`Meta.constraints`) para que viajen en las migraciones; la normalización del documento y del correo ocurre en `save()` | Propuesta del agente, aplicada por Alejo | `apps/personas/models.py`, `apps/cuentas/models.py` |
+| 2026-09-15 | Plan técnico del Sprint 1 en 8 pasos: 1 pruebas de HU-04 → 2 `conjuntos` y modelo base → 3 `permisos` (catálogo y `Asignacion`, adelantados de HU-06) → 4 HU-05 en la base → 5 login, decidiendo entre token y sesión → 6 HU-26 y middleware → 7 HU-03 mínima → 8 HU-02 | Propuesta del agente, aprobada por Alejo | Aquí |
+| 2026-09-15 | **Roles y permisos viven en código**, sin tablas `rol` ni `permiso`. Resuelve el choque con el esquema de diseño a favor del maestro. Por eso el catálogo no necesita migración | Alejo | `apps/permisos/catalogo.py`; ya lo decía el maestro §5.3 |
+| 2026-09-15 | **`Asignacion.conjunto` es nulo solo para el Superusuario**, forzado con un CHECK en la base. Resuelve el otro choque a favor del maestro | Alejo | `apps/permisos/models.py`; ya lo decía el maestro §5.3 |
+| 2026-09-15 | Retirar un rol es cerrar su vigencia (`vigencia_hasta`), no borrar la fila. Solo puede haber una asignación vigente por persona, rol y conjunto | Agente, a pedido de Alejo | `apps/permisos/models.py` |
+| 2026-09-15 | Aislamiento en tres capas: `ManagerDeConjunto` filtra toda consulta por el conjunto activo y **falla** si no hay uno; `ModeloDeConjunto.save()` toma el conjunto activo y rechaza escribir en otro; la base rechaza la fila cruzada con la FK compuesta, que se escribe con `fk_compuesta()` (`RunSQL`, `ON DELETE RESTRICT`) porque Django no la maneja | Agente, a pedido de Alejo | `apps/comun/` |
+| 2026-09-15 | El conjunto activo se guarda en un `ContextVar`. En una petición lo fijará el middleware (pendiente); en pruebas y procesos de plataforma se fija con `usar_conjunto()` | Agente, a pedido de Alejo | `apps/comun/aislamiento/contexto.py` |
+| 2026-09-15 | Las pruebas corren con `config/settings_pruebas.py`, que agrega la app de apoyo `tests.aislamiento` (modelos `Area` y `Reserva` que solo existen en la base de pruebas). Así HU-05 se prueba sin crear todavía las apps reales de áreas y reservas | Agente, a pedido de Alejo | `pytest.ini`, `tests/aislamiento/` |
+| 2026-09-15 | Lista cerrada de tablas globales escrita en la prueba transversal. Además de lo que nombra el maestro §5.4 incluye `conjuntos_conjunto` y las dos tablas que crea `PermissionsMixin`, y admite `conjunto_id` nulo en `permisos_asignacion`. **Falta llevarlo al maestro** (§6) | Agente, a pedido de Alejo | `tests/esquema/test_tablas_globales.py` |
+| 2026-09-15 | `TIME_ZONE` pasa de `UTC` a `America/Bogota` | Alejo | `config/settings.py` |
+| 2026-09-15 | `Conjunto` se crea sin campo de color: se aplica la decisión de un solo acento por ahora (2026-09-11). El campo llega con HU-21 | Alejo | `apps/conjuntos/models.py` |
+| 2026-09-15 | **Autenticación por token con registro en la base**, no por sesión de Django ni por JWT. Resuelve el maestro §12.7 b. El token es un texto aleatorio; la base guarda solo su huella SHA-256, y la fila guarda usuario, conjunto activo, 2FA verificado y vencimiento. El servidor web guarda el token en su propia sesión y lo reenvía en cada llamada; el navegador no lo ve. **Falta llevarlo al maestro** (§6) | Alejo, con la recomendación del agente | `apps/cuentas/models.py`, `apps/cuentas/autenticacion.py` |
+| 2026-09-15 | El token dura **1 hora fija** y no se renueva con el uso | Alejo (el agente había puesto 8 horas) | `DURACION_TOKEN_DE_SESION` en `config/settings.py` |
+| 2026-09-15 | Toda vista de DRF exige token por defecto (`IsAuthenticated`); solo el login lo declara a propósito | Agente, a pedido de Alejo | `config/settings.py` |
+| 2026-09-15 | El login responde lo mismo (401, "Correo o contraseña incorrectos.") si el correo no existe, la contraseña es mala o la cuenta está desactivada. Desactivar la persona también corta el acceso, al entrar y en cada petición | Agente, a pedido de Alejo (criterio de HU-01 y maestro §5.11) | `apps/cuentas/servicios.py` |
+| 2026-09-15 | `LANGUAGE_CODE` pasa de `en-us` a `es-co` | Alejo | `config/settings.py` |
+| 2026-09-15 | Cifrado rápido de contraseñas (`MD5PasswordHasher`) **solo en las pruebas y provisional**: la suite había subido a 33 s. Antes de volver a tocarlo se le consulta a Alejo | Alejo | `config/settings_pruebas.py` |
+| 2026-09-15 | `cuentas_tokendesesion` entra a la lista cerrada de tablas globales: el conjunto activo cambia dentro de la misma sesión | Alejo aprobó la propuesta del agente | `tests/esquema/test_tablas_globales.py` |
+| 2026-09-15 | Lo que el maestro §5.4 llama middleware es `VistaDeConjunto`, una vista base de DRF: DRF revisa el token dentro de la vista, cuando los middleware de Django ya corrieron. Suelta el conjunto activo al terminar cada petición, aunque haya error | Agente, a pedido de Alejo | `apps/comun/aislamiento/vistas.py` |
+| 2026-09-15 | Con un solo conjunto disponible, el token nace con ese conjunto activo; con varios o ninguno, nace sin conjunto. Si al usuario le retiran el rol o le desactivan el conjunto, pierde el conjunto activo en su siguiente petición | Agente, a pedido de Alejo (criterios de HU-26) | `apps/cuentas/servicios.py` |
+| 2026-09-15 | Los endpoints del selector quedan en `cuentas`, bajo `/auth/`, porque cambian la sesión. El README de `apps/conjuntos` decía que el cambio de conjunto iría allí | Agente, a pedido de Alejo | `apps/cuentas/urls.py` |
+| 2026-09-15 | Elegir un conjunto sin asignación vigente responde 404, exista o no el conjunto | Agente, a pedido de Alejo (maestro §5.4) | `apps/cuentas/views.py` |
+| 2026-09-15 | Registro de la prueba del intruso: toda ruta de conjunto se registra con su caso, y toda ruta que no sea de conjunto se declara aparte. Una ruta nueva sin registrar hace fallar la suite. Los endpoints de apoyo solo existen en las URLs de pruebas | Agente, a pedido de Alejo | `tests/aislamiento/test_intruso.py`, `config/urls_pruebas.py` |
+| 2026-09-15 | El front toma las pantallas y la navegación del borrador de Alejo, pero con las clases y tokens de `design-system/`: sin sus colores, la fuente Arial ni el símbolo ⌂, y con el menú superior pasado a `Lateral` y `BarraSuperior` | Agente (Alejo pidió basarse en el borrador) | `templates/`, `apps/*/templates/` del front |
+| 2026-09-15 | Solo el login es funcional; el resto de pantallas son maquetas marcadas "Maqueta con datos de ejemplo" | Alejo | `apps/` del front |
+| 2026-09-15 | El login incluye **cerrar sesión** (`POST /salir/`), que ya existía en la API | Agente, como lectura del pedido | `apps/cuentas/views.py` del front |
+| 2026-09-15 | El token vive en la **sesión del servidor web**, guardada en archivos porque el front no tiene base de datos. El navegador solo recibe la cookie `sessionid` (HttpOnly). La sesión vence a la hora de `vence_en` y cambia de id al entrar. Es el lado del front de la decisión del token | Agente | `config/settings.py`, `apps/cuentas/sesion.py` del front |
+| 2026-09-15 | Toda pantalla del front exige sesión por defecto (`SesionRequeridaMiddleware`); solo el ingreso y recuperar contraseña se declaran `@publica`. Es el mismo criterio que `IsAuthenticated` en la API | Agente | `apps/cuentas/sesion.py` del front |
+| 2026-09-15 | `pedir()` es el único punto del front que llama a la API, con `requests`. Los campos del formulario se llaman igual que en la API (`correo`, `contrasena`) para que un 400 caiga en su campo | Agente | `cliente_api/http.py`, `apps/cuentas/forms.py` |
+| 2026-09-15 | El calendario se arma en el servidor, con enlaces y recarga, sin JavaScript. Por eso todavía no se trajo Alpine.js | Agente | `apps/reservas/` del front |
+| 2026-09-15 | Las apps del front se crean a mano, sin `startapp`: no llevan `models.py`, `admin.py` ni `migrations/` | Agente | `apps/*/apps.py` del front |
+| 2026-09-15 | Textos del borrador: "Avisos" pasa a **Anuncios** (término del maestro) y "Zona común" a **Zonas comunes**. Se quita **"Eliminar"** de Reglas y Anuncios hasta decidir si esas entidades se borran (maestro §5.10, §5.11) | Agente, **por confirmar** (§6) | Plantillas de `reglas` y `anuncios` del front |
+| 2026-09-15 | El día elegido del calendario no usa el acento, porque no es uno de sus cuatro sitios (maestro §6.1): lleva fondo hundido y borde oscuro | Agente | `static/css/reservas.css` del front |
+| 2026-09-15 | Después del ingreso siempre se va al selector maqueta, aunque la API diga que la persona tiene un solo conjunto. Provisional hasta conectar el selector | Agente | `apps/cuentas/views.py` del front |
+| 2026-09-21 | **Acento por conjunto reactivado** para HU-26: `Conjunto.acento` guarda el slug (los 8 del catálogo) y `<html>` lleva `data-acento`. Revierte el aplazamiento del 2026-09-11. El verde por defecto es el de `design-system/` (`#0E6B5A`), no el del maestro | Alejo | `apps/conjuntos/`, `design-system/tokens/` |
+| 2026-09-27 | **D1 a**: franjas en bloques fijos por área (`hora_apertura`, `hora_cierre`, `duracion_franja_minutos`) | Alejo (recomendada) | `apps/areas/` |
+| 2026-09-27 | **D2 a**: estado nuevo no bloqueante `LIBERADA` con `motivo_liberacion` `voluntaria` o `reglas`. **Falta llevarlo al maestro §5.1** | Alejo (recomendada) | `apps/reservas/models.py` |
+| 2026-09-27 | **D3 a**: un solo bloqueo activo **por conjunto**, índice único parcial `(conjunto, persona)`. **Falta corregir la redacción del maestro §5.1 y §12.7 c** | Alejo (recomendada) | `apps/reservas/models.py` |
+| 2026-09-27 | **D4 a**: catálogo beta de 7 tipos (sin duración máxima ni depósito) y versionado por reemplazo, con copia de la evaluación en la solicitud. Provisional hasta un reglamento real. **Falta llevarlo al maestro §5.10** | Alejo (recomendada) | `apps/reglas/` |
+| 2026-09-27 | **D5 b**: `unidad_en_mora()` devuelve `False` hasta HU-35 | Alejo (recomendada) | `apps/reglas/mora.py` |
+| 2026-09-27 | **D6**: 20 búsquedas por documento por hora y administrador, contadas sobre la auditoría; 429 al pasarse. Se cuentan en el conjunto activo | Alejo (recomendada) | `apps/personas/servicios.py` |
+| 2026-09-27 | **D7 a**: se reserva aunque el conjunto no esté operativo, hasta HU-33 | Alejo (recomendada) | `apps/reservas/servicios.py` |
+| 2026-09-27 | **D8 a**: auditoría de solo inserción en código; los dos usuarios de BD quedan para después | Alejo (recomendada) | `apps/auditoria/` |
+| 2026-09-27 | **D9 a**: el panel resalta menos de 24 h, límite de anticipación y otra solicitud; alta demanda llega con PB-24 | Alejo (recomendada) | `apps/reservas/servicios.py` |
+| 2026-09-27 | **D10 a**: una persona sin cuenta se vincula igual; la respuesta dice `tiene_cuenta` | Alejo (recomendada) | `apps/personas/` |
+| 2026-09-27 | **D11 a**: un commit local por paso, sin push; migraciones aplicadas en `admind_db` al cerrar cada fase | Alejo (recomendada) | Git de los dos repos |
+| 2026-09-27 | **D12 a**: Alpine.js 3.17.4 autoalojado, descargado de npm por el agente con autorización | Alejo (recomendada) | `static/js/vendor/` del front |
+| 2026-09-27 | **P1 a P15** del plan (§3), aplicadas tal cual: FK de `Area` redeclarada, `persona` y `asignaciones` en el usuario, vincular solo a quien tiene rol, búsqueda por POST, cierres con `vigencia_hasta = hoy`, códigos 409/429/400 con `motivos`, fragmento de confirmación, residir para tomar el bloqueo, `mora.py`, evaluación en la solicitud, `DURACION_BLOQUEO`, mensajes 409/429 en el front, bloque `scripts`, solo solicitudes propias y `via_superusuario` como parámetro | Plan, aprobado por Alejo | Ver el plan §3 |
+| 2026-09-27 | `RegistroInmutable` vive en `apps/auditoria/models.py` y no en `servicios.py`: el modelo lo lanza y el servicio importa el modelo | Agente | `apps/auditoria/models.py` |
+| 2026-09-27 | Desactivar un área ya inactiva responde 409; una regla que todavía no empieza se cierra en su fecha de inicio | Agente (el plan no lo decía) | `apps/areas/`, `apps/reglas/servicios.py` |
+| 2026-09-27 | El evaluador aplica las reglas beta **vigentes el día en que se evalúa**, no las del día de la franja | Agente (el plan no lo decía) | `apps/reglas/evaluador.py` |
+| 2026-09-27 | `Resultado` vive en `apps/reglas/alfa.py` para no crear un archivo más; lo usan las alfas y el evaluador | Agente | `apps/reglas/alfa.py` |
+| 2026-09-27 | El botón "Añadir usuario" de la lista pasa a "Registrar persona", que busca primero por documento | Agente (lo pide el plan F5) | `apps/usuarios/` del front |
+| 2026-09-27 | El horario del panel se escribe "2:00 p. m.", como el maestro §5.1; el formato de Django daría "p.m." | Agente | `apps/reservas/views.py` del front |
+| 2026-09-29 | **Color propio y foto 1:1** del conjunto (HU-21): hex libre además de los 8 acentos; si el texto blanco baja de 4.5:1 solo se advierte; la foto cuadrada reemplaza al logo. Revierte *solo 8 acentos, sin hex libre* (maestro §6.3) | Alejo | `apps/conjuntos/` de los dos repos; [conjuntos](../05_Modulos/conjuntos.md) |
+| 2026-09-29 | **Un solo rol vigente por persona y conjunto**: se cambia, no se suma (`asignacion_un_rol_por_conjunto`, `cambiar_rol`). Contradice el maestro §3.1 y R5 y el criterio de HU-06 en Notion y en el Excel | Alejo | `apps/permisos/`, migración `permisos/0002`; [permisos](../05_Modulos/permisos.md) |
+| 2026-09-29 | **El rol Consejo se elimina**: quedan 5 roles. No se repone | Alejo | `apps/permisos/catalogo.py`, migración `permisos/0003` |
+| 2026-09-29 | El Superusuario tiene todos los permisos del catálogo | Sin registrar | `apps/permisos/catalogo.py` |
+| 2026-09-29 | En el informe 3 al docente los Sprints 1 y 2 se reportan **terminados** (12 historias, 55 SP) y el Sprint 3 en revisión, aunque ninguna historia ha pasado por un PR a `pruebas` | Alejo | `Archivo/Informes/2026-09-29/`; [estado_actual](../08_Estado/estado_actual.md) |
+| 2026-09-30 | Las credenciales se quedan en el repositorio de documentación: es privado | Alejo | `Credenciales/` |
+| 2026-09-30 | La documentación se reorganiza: routers `AGENTS.md` y `CLAUDE.md`, índice en `README.md`, notas cortas por carpeta y protocolos. El maestro pasa a ser una tabla de equivalencias | Alejo | [documentacion](../03_Reglas/documentacion.md) |
+
+## Ver también
+
+- [cerradas](cerradas.md) — las 30 decisiones de diseño anteriores al código
+- [abiertas](abiertas.md) — lo que sigue sin decidir

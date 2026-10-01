@@ -8,13 +8,16 @@ proposito: "Cómo se agrega algo a AdMind respetando su arquitectura: una pantal
 
 # AdMind — Guía para trabajar en el proyecto
 
+> [!WARNING] Tutorial con fecha de corte
+> Desde el 2026-09-30 la documentación vigente está en las carpetas numeradas de la bóveda (ver `README.md`). Esta guía se conserva como tutorial del 2026-09-15, con sus recetas y ejemplos de código. Sus reglas (§3.2, §3.3, §3.5, §4.1, §4.3, §5, §8.5 y §9 a §12) se copiaron a `03_Reglas/`, y es allá donde se mantienen. En el código real la capa de servicio es `servicios.py` y no hay `repositories.py`. Los nombres de archivo que cita (`Admin_Master.md`, `Admind_Avance.md`, `Admind_Lab.md`) se resuelven en la tabla de equivalencias de `Admin_Master.md`.
+
 > [!NOTE]
 > **Qué es este documento.** El manual de obra de AdMind: explica **cómo** se construye dentro de su arquitectura. **Qué** debe hacer el producto (reglas, estados, permisos, ley) está en `Admin_Master.md`, y **si esta guía lo contradice, manda el maestro**.
 >
 > - Lo leen Alejo, Camilo y cualquier agente de IA antes de construir algo.
 > - Para correr el backend en tu PC: [Admind_Backend_Instalacion_Local](Admind_Backend_Instalacion_Local.md).
 > - Para saber cómo se creó el backend: [Admind_Backend_Inicializacion](Admind_Backend_Inicializacion.md).
-> - Para saber qué existe hoy y cómo va cada historia: [Admind_Avance](../Avance/Admind_Avance.md).
+> - Para saber qué existe hoy y cómo va cada historia: [estado_actual](../08_Estado/estado_actual.md).
 
 > [!WARNING]
 > **Casi todo lo que describe esta guía todavía no existe en el código.** Al 2026-09-15 el backend tiene dos modelos (`Persona` y `Usuario`) y ningún endpoint, y el frontend tiene carpetas con README más el sistema de diseño. La guía describe **la forma que debe tener lo que se construya**; la §13 lista las piezas que faltan.

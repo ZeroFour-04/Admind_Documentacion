@@ -8,6 +8,9 @@ proposito: Contexto para cualquier agente de IA que trabaje con Alejo en AdMind 
 
 # AdMind — Lab
 
+> [!WARNING] Desde el 2026-09-30 este documento ya no es la entrada para agentes
+> La entrada es `AGENTS.md`, en la raíz de la bóveda. Aquí queda solo lo propio del lab, que es opcional desde el 2026-09-14. Las referencias a `Admin_Master.md` se resuelven en su tabla de equivalencias.
+
 > [!IMPORTANT] Si eres un agente de IA, lee esto primero
 >
 > 1. Lee este archivo completo y después `Admin_Master.md`, que está en esta misma carpeta. El maestro manda sobre el producto; este documento manda sobre **cómo se trabaja aquí**.
@@ -36,29 +39,10 @@ proposito: Contexto para cualquier agente de IA que trabaje con Alejo en AdMind 
 
 ## 2. Cómo debe ayudar un agente
 
-> [!WARNING] Reversión deliberada — 2026-09-14
-> Hasta esta fecha el agente solo orientaba: Alejo escribía todo el código, y el agente explicaba, revisaba sin corregir y ponía ejercicios. **El plazo de entrega se redujo a un mes** y no hay que entregar el proyecto completo. Con un equipo de dos que apenas está aprendiendo, ese modo no llega a tiempo, así que Alejo decidió dejarlo a un lado: **el agente construye, pero solo lo que Alejo le pide.** Queda escrito como reversión y no se borra, como pide el §9 del maestro.
+> [!NOTE] Movido el 2026-09-30
+> Esta sección vive ahora en `03_Reglas/trabajo_con_ia.md`.
 
-### 2.1 Construir a pedido — el modo por defecto
-
-1. **Se construye exactamente lo pedido.** Ni un modelo, una vista, una prueba o un archivo de más. Nada de "de paso también arreglé…".
-2. **Lo que haga falta fuera del pedido se avisa, no se hace.** Una dependencia, una migración, un error que se ve en código vecino, una carpeta que no existe: se dice en una línea y se espera respuesta.
-3. **Si el alcance es ambiguo, se toma la lectura más estrecha y se dice cuál fue.** Se pregunta antes solo cuando las dos lecturas llevan a trabajos muy distintos.
-4. **Al entregar, un resumen corto:** qué archivos se tocaron, qué hace cada pieza y qué decisión técnica hay ahí que el jurado podría preguntar. La explicación a fondo, solo si la pide.
-5. **Construir no autoriza a decidir.** Siguen siendo preguntas las contradicciones del maestro (§12), el recorte de alcance para el plazo nuevo y todo lo de la §9 de este documento.
-
-### 2.2 Orientar — cuando Alejo la pida
-
-Alejo tiene que sustentar, así que va a seguir pidiendo orientación. Cuando la pida:
-
-- Se explica en serio lo que pregunte, **incluido el código que escribió el agente**: qué hace, por qué así y qué se descartó
-- Si pide preparar la sustentación, se ponen preguntas de jurado sobre ese código
-- No se convierte cada entrega en un ejercicio ni se le pide que la reescriba él, salvo que lo pida
-
-### 2.3 El filtro, con el plazo nuevo
-
-> [!TIP] ¿Puedo explicar esto ante el jurado?
-> Hasta el 2026-09-14 era un filtro de entrada: si Alejo no podía explicar una línea, no entraba al repositorio. Ahora es una meta de sustentación: lo que construye el agente sí entra, y lo que se vaya a defender se entiende antes de llegar al jurado.
+Aquí queda solo la tutoría dentro del lab.
 
 ### 2.4 Tutoría dentro del lab — si hay tiempo
 
@@ -114,20 +98,9 @@ lab          práctica de Alejo; cuarta rama, no oficial
 
 ## 4. Entorno de la máquina
 
-Verificado el 2026-09-11:
+> [!NOTE] Movido el 2026-09-30
+> Esta sección vive ahora en `02_Arquitectura/entorno_local.md`.
 
-| Pieza | Estado |
-| --- | --- |
-| Sistema | Windows 10 IoT Enterprise LTSC 2021. La terminal por defecto es **PowerShell** |
-| Python | **3.14.3**, el único instalado. Django 5.2 LTS lo soporta desde el parche **5.2.8** |
-| Git | 2.53 |
-| Docker | **No instalado.** La ruta de aprendizaje lo asume; no bloquea nada de la Fase 0 |
-| PostgreSQL | **18**, como servicio de Windows `postgresql-x64-18`, puerto 5432 |
-
-El Postgres nativo ya da las tres cosas que el diseño exige y SQLite no: índices únicos parciales, llaves foráneas compuestas y privilegios por tabla. **Nunca se sustituye por SQLite**, ni siquiera "para empezar más rápido".
-
-> [!TIP] La herramienta que más rinde
-> El depurador de VS Code. Un punto de parada en una vista, una petición, y avanzar línea por línea por el middleware y el ORM. El criterio de salida de la Fase 1 —explicar qué archivo se ejecuta y en qué orden— se aprende así en una tarde.
 
 ---
 
@@ -204,27 +177,17 @@ Sirve para tres cosas a la vez: consolida lo aprendido, da el dato de "tiempo de
 
 ## 8. Lo que un agente no debe hacer
 
-- **Construir más de lo que Alejo pidió**, ni siquiera "de paso". Lo que falte se avisa (§2.1).
-- **Escribir el código de solución de un ejercicio del lab**, ni "para que lo uses de ejemplo". Fuera del lab, construir lo pedido sí es su trabajo.
-- **Proponer ramas por historia.** El modelo de ramas es requisito del curso.
-- **Subir código del lab a `desarrollo`**, por merge, *cherry-pick* o copia.
-- **Usar `Backend.zip`** como referencia: es la demo descartada, hecha con IA.
-- **Resolver las contradicciones abiertas del maestro (§12)**, en especial el stack del frontend (§12.1). Se pregunta.
-- **Recortar alcance o repartir el mes en sprints** por su cuenta (maestro §12.8). Se pregunta.
-- **Proponer Tailwind, Bootstrap o un framework de componentes.** El sistema visual es CSS propio sobre variables.
-- **Sustituir PostgreSQL por SQLite** para simplificar.
-- **Dar por cerrado un ejercicio** sin que Alejo responda las preguntas de jurado.
+> [!NOTE] Movido el 2026-09-30
+> Esta sección vive ahora en `03_Reglas/trabajo_con_ia.md`.
+
 
 ---
 
 ## 9. Lo que un agente debe preguntar en vez de decidir
 
-- ¿Cuál es la fecha exacta de entrega, y qué se entrega en ese mes? Hasta que se decida, se construye lo que Alejo pida.
-- ¿Cuántos sprints caben en el mes y cuándo arranca el primero? El plan de siete sprints de dos semanas (maestro §11.2) ya no cabe.
-- ¿Qué significa exactamente la rama `pruebas` para el profesor: ambiente de pruebas en una cadena `desarrollo → pruebas → main`, u otra cosa?
-- ¿El stack de frontend ya se cerró (§12.1)? Sin eso no arranca el Sprint 1, pero **la Fase 0 no depende de esa decisión**.
-- ¿La rama `lab` se sube al remoto o se queda local?
-- ¿Cuál manda en lo visual: `design-system/` o el §6 del maestro? Por ahora se trabaja con **un solo acento**.
+> [!NOTE] Movido el 2026-09-30
+> Esta sección vive ahora en `03_Reglas/trabajo_con_ia.md`.
+
 
 ---
 
