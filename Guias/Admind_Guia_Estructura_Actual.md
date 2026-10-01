@@ -1,16 +1,21 @@
 ---
 titulo: "AdMind — Cómo está hecho hoy"
 proyecto: "Proyecto de Ingeniería de Software II — Universidad de Cundinamarca, Facatativá"
-fecha: 2026-09-29
-proposito: "Explicar desde cero la estructura actual de AdMind, las tecnologías que usa (incluido Alpine.js) y todo lo construido hasta el 2026-09-29, con un recorrido completo de una reserva de punta a punta."
+fecha: 2026-09-30
+proposito: "Explicar desde cero la estructura actual de AdMind, las tecnologías que usa (incluido Alpine.js) y todo lo construido hasta el 2026-09-30, con un recorrido completo de una reserva de punta a punta."
 ---
-
+[Desarrollo 22-09](../Notas/Desarrollo%2022-09.md)
 # AdMind — Cómo está hecho hoy
 
 > [!NOTE] Qué es este documento
-> Una foto explicada del proyecto **al 2026-09-29**, pensada para quien se perdió en el camino. Explica **qué hay, dónde está y cómo encaja**, con ejemplos del código real.
+> Una foto explicada del proyecto **al 2026-09-30**, pensada para quien se perdió en el camino. Explica **qué hay, dónde está y cómo encaja**, con ejemplos del código real.
 >
-> **Qué cambió desde la versión del 28/09:** la identidad del conjunto (HU-21) ahora admite un **color propio** además de los 8 acentos, y el logo pasó a ser una **foto cuadrada 1:1** con recortador en el navegador. Eso sumó un segundo uso de Alpine. Está construido y con pruebas, pero **sin commit** (ver §4.6, §4.7, §5.7 y §10).
+> **Qué cambió desde la versión del 29/09:**
+> - El color propio y la foto 1:1 del conjunto (HU-21) y los cambios de roles de ese día **ya están commiteados y subidos** a `desarrollo` en los dos repos (§1 y §10).
+> - **Un solo rol por persona y conjunto**: se cambia, no se suma (§5.4). Hay endpoints nuevos para cambiar el rol y para "eliminar" (desvincular) a un usuario del conjunto.
+> - El rol **Consejo ya no existe**: el catálogo tiene 5 roles. El **Superusuario** pasó a tener todos los permisos del catálogo.
+> - Pantalla **Mi perfil**, y la barra superior muestra el **tipo de usuario**. El lateral oculta Usuarios y Apartamentos a quien no sea Superusuario, Administración o Secretaría (§6.4).
+> - **Una prueba del backend falla**: la que vigila que toda ruta nueva tenga su prueba del intruso (§8).
 >
 > - **Qué debe hacer el producto** (reglas, estados, ley): `Admin_Master.md`. Si esta guía lo contradice, manda el maestro.
 > - **Avance historia por historia**: `Avance/Admind_Avance.md`.
@@ -24,10 +29,10 @@ proposito: "Explicar desde cero la estructura actual de AdMind, las tecnologías
 
 **AdMind** es una plataforma web para administrar conjuntos residenciales: usuarios y roles, apartamentos, áreas comunes, reservas, anuncios y notificaciones. Un mismo sistema atiende a **varios conjuntos** y los datos de uno nunca se ven desde otro.
 
-| Qué | Estado al 2026-09-29 |
+| Qué | Estado al 2026-09-30 |
 |---|---|
-| **Backend** (la API) | Rama `desarrollo` en `66f8897`, **subida a GitHub**, más cambios **sin commit** en `apps/conjuntos/` (color propio y foto 1:1, con su migración `0004` ya aplicada en `admind_db`). 11 apps con código más `comun`. **320 pruebas, todas pasan** (verificado hoy, 16 s) |
-| **Frontend** (las pantallas) | Rama `desarrollo` en `c1d8f6b`, **subida a GitHub**, más cambios **sin commit** en `apps/conjuntos/`, la base y la barra (los mismos de HU-21). 11 apps con pantallas. **127 pruebas, todas pasan** (verificado hoy, 2 s) |
+| **Backend** (la API) | Rama `desarrollo` en `ee256ff`, **subida a GitHub**, sin cambios pendientes. 11 apps con código más `comun`. **330 pruebas: 329 pasan y 1 falla** (verificado hoy, 33 s). La que falla es `test_toda_ruta_de_la_api_esta_cubierta` (§8) |
+| **Frontend** (las pantallas) | Rama `desarrollo` en `7fa88ea`, **subida a GitHub**, sin cambios pendientes. 11 apps con pantallas. **140 pruebas, todas pasan** (verificado hoy, 7 s) |
 | **Historias de usuario** | HU-01 a HU-13, HU-21, HU-25 y HU-26 tienen código. **Ninguna está "Terminada"**: a todas les falta la parte humana de la DoD (PR `desarrollo → pruebas` revisado y prueba manual de quien no la programó) |
 | **Lo que sigue sin empezar** | HU-14 en adelante (bandeja del administrador, pagos, visitantes, casos, citas, documentos…), salvo HU-21 y HU-25 |
 | **Plazo** | Entrega cerca del 2026-10-14 (fecha exacta sin confirmar). No hay que entregar las 38 historias |
@@ -61,7 +66,7 @@ A D M I N D/
 │   ├── apps/                        ← un módulo por sección de la interfaz: vistas, formularios, plantillas
 │   ├── templates/base/              ← el esqueleto de toda página
 │   ├── templates/componentes/       ← piezas reutilizables: barra, lateral, campo, confirmación
-│   ├── static/css  static/js        ← estilos propios y el JavaScript: reservas.js, identidad.js y vendor/alpine.min.js
+│   ├── static/css  static/js        ← estilos propios y el JavaScript: reservas.js, identidad.js, usuarios.js y vendor/alpine.min.js
 │   ├── design-system/               ← tokens de color, tipografía y componentes CSS (de Claude Design)
 │   └── tests/                       ← pruebas de pantallas con la API simulada
 │
@@ -157,7 +162,7 @@ Django es el framework sobre el que están **los dos** proyectos. Casi todo lo q
 | **Proyecto** | `config/` | Ajustes globales y la tabla de rutas principal | `config/settings.py`, `config/urls.py` |
 | **App** | `apps/<nombre>/` | Un módulo con su propio tema | `apps/reservas/` |
 | **Modelo** | `models.py` | Una clase de Python = una tabla de la base | `Solicitud` → tabla `reservas_solicitud` |
-| **Migración** | `migrations/0001_….py` | El guion que crea o cambia las tablas. Se genera con `makemigrations` y se aplica con `migrate` | Hay 15 en el back; la última es `conjuntos/0004_color_personalizado` (29/09) |
+| **Migración** | `migrations/0001_….py` | El guion que crea o cambia las tablas. Se genera con `makemigrations` y se aplica con `migrate` | Hay 17 en el back; las últimas son `permisos/0002_un_rol_por_conjunto` y `permisos/0003_sin_rol_consejo` (29/09) |
 | **Vista** | `views.py` | Recibe una petición y devuelve una respuesta | `FranjasView` |
 | **URL** | `urls.py` | Qué dirección llama a qué vista | `path("franjas/", FranjasView.as_view())` |
 
@@ -256,12 +261,15 @@ La pantalla de color y foto (`conjuntos/identidad.html` y `_selector_acento.html
 2. **Mostrar el panel de confirmación** ("Vas a solicitar el Salón social para el sábado 4 de octubre…") **sin recargar la página** y sin perder lo escrito si el usuario pulsa "Corregir".
 3. **Soltar la franja si la persona se va** de la página sin enviar (con `navigator.sendBeacon`, que alcanza a mandar una petición aunque la pestaña se esté cerrando).
 
-**2. El color y la foto del conjunto** (HU-21, 29/09, sin commit), `static/js/identidad.js`. Se carga en la pantalla *Color y foto* y en el paso 1 del asistente. Tiene dos componentes:
+**2. El color y la foto del conjunto** (HU-21, 29/09), `static/js/identidad.js`. Se carga en la pantalla *Color y foto* y en el paso 1 del asistente. Tiene dos componentes:
 
 - **`selectorDeColor`**: al mover el selector de color del navegador marca solo la opción "Personalizado", y calcula en vivo el contraste del texto blanco de los botones sobre ese color. Si baja de 4.5:1 **solo advierte**; se puede guardar igual.
 - **`recortadorDeFoto`**: al elegir una imagen la muestra dentro de un cuadro; la persona la arrastra (o usa las flechas) y la acerca con un deslizador. Al enviar, dibuja lo que quedó dentro del cuadro en un `<canvas>` de 512 × 512, lo convierte a WebP (o JPG si pesa más de 512 KB) y **reemplaza el archivo del formulario** por ese recorte antes de mandarlo.
 
 Las dos pantallas **funcionan sin JavaScript**: sin Alpine, se marca "Personalizado" a mano y la foto sube tal cual; si no es cuadrada, la API la rechaza con un mensaje claro (§5.7). Como en la reserva, el navegador ayuda pero **no decide**.
+
+> [!NOTE] Un JavaScript que no es Alpine
+> `static/js/usuarios.js` (29/09) tiene ocho líneas de JavaScript puro, sin Alpine: abre y cierra con `showModal()` y `close()` el `<dialog>` "¿Seguro que quiere eliminar este usuario?" del detalle de usuario. El `<dialog>` es una etiqueta nativa del navegador. Por eso el conteo de Alpine sigue en **dos** lugares.
 
 #### El componente real, comentado
 
@@ -388,7 +396,7 @@ Un registro de **solo inserción**: `Registro` prohíbe `update()` y `delete()`.
 
 1. `POST /auth/login/` con correo y contraseña → el servicio crea un **`TokenDeSesion`** y devuelve el token (una cadena aleatoria). En la base se guarda solo su **huella** SHA-256, nunca el token en claro.
 2. La sesión dura **1 hora** (`DURACION_TOKEN_DE_SESION`) y guarda: usuario, **conjunto activo** y si el **segundo factor** ya se verificó.
-3. Si la persona tiene un solo conjunto, se elige solo; si tiene varios, pasa por el selector (`POST /auth/conjunto-activo/`, HU-26).
+3. Si la persona tiene un solo conjunto, se elige solo; si tiene varios, pasa por el selector (`POST /auth/conjunto-activo/`, HU-26). Con la sesión, la API devuelve también los **permisos** y el **rol** de la persona en ese conjunto (`roles` y `tipo_usuario`, p. ej. "Administrador"; el Superusuario aparece como tal en cualquier conjunto). El front los guarda para decidir qué mostrar.
 4. Quien tiene algún **permiso sensible** (gestionar usuarios, asignar roles, ver auditoría…) debe configurar y verificar el **segundo factor** (código de 6 dígitos con django-otp, HU-02). Mientras no lo haga, `DosFactoresAlDia` responde 403 en todo lo demás.
 5. Recuperar contraseña (HU-01): `POST /auth/recuperar/` manda un enlace por correo (en local, el correo sale en la consola).
 
@@ -396,19 +404,24 @@ Se eligió **token opaco guardado en la base** y no JWT: se puede revocar al ins
 
 ### 5.4 Roles y permisos (`apps/permisos/`)
 
-- **Catálogo fijo en código** (`catalogo.py`): 5 roles (Superusuario, Administración, Secretaría, Vigilancia, Residente) y la lista de permisos de cada uno (`"reserva.solicitar"`, `"area.gestionar"`…). No se editan desde la interfaz: un cambio se hace en el código. El reparto es provisional hasta validarlo con un administrador real.
+- **Catálogo fijo en código** (`catalogo.py`): 5 roles (Superusuario, Administración, Secretaría, Vigilancia, Residente) y la lista de permisos de cada uno (`"reserva.solicitar"`, `"area.gestionar"`…). No se editan desde la interfaz: un cambio se hace en el código. El reparto es provisional hasta validarlo con un administrador real. **Consejo se eliminó el 29/09**: no hay que reponerlo aunque el plan de sprints o el avance lo mencionen. El **Superusuario** tiene todos los permisos del catálogo.
 - **`Asignacion`**: "la persona X tiene el rol Y en el conjunto Z desde tal fecha hasta tal fecha". El Superusuario tiene `conjunto` nulo (es de plataforma).
+- **Un solo rol por persona y conjunto** (decisión de Alejo, 29/09). La restricción de la base `asignacion_un_rol_por_conjunto` (persona + conjunto, solo entre las asignaciones abiertas) lo hace cumplir; en otro conjunto la persona puede tener otro rol. Si ya tiene uno, **no se suma otro: se cambia**.
+- **Los servicios** (`permisos/servicios.py`): `asignar_rol` (si ya tiene rol → `RolYaAsignado`), `cambiar_rol` (cierra el actual hoy y abre el nuevo **en la misma transacción**, así nunca queda con dos ni con ninguno; auditoría `rol.cambiar`), `retirar_rol` y `retirar_roles_del_conjunto` (la base del "Eliminar usuario"). Retirar nunca borra: solo cierra la vigencia.
 - **`exigir_permiso(request, "reserva.solicitar")`** (`permisos/views.py`): la primera línea de cada vista. Si falta el permiso → 403.
-- **"Nunca cero Administración"**: el servicio impide retirar el último rol de Administración de un conjunto (`UltimaAdministracion`).
+- **"Nunca cero Administración"**: el servicio impide retirar o cambiar el último rol de Administración de un conjunto (`UltimaAdministracion`).
+
+> [!WARNING] Choca con el maestro
+> El maestro (§3.1, línea de permisos efectivos, y R5) y el criterio de HU-06 todavía dicen que una persona puede tener **varios roles** y que sus permisos son la unión. Lo vigente es un solo rol por conjunto.
 
 ### 5.5 Todas las apps del backend
 
 | App | Qué guarda / hace | Endpoints principales | HU |
 |---|---|---|---|
 | `personas` | `Persona` global, única por tipo y número de documento (normalizado) | `GET /personas/buscar/`, `POST /personas/vincular/` | HU-04, HU-07 |
-| `cuentas` | `Usuario` (entra con correo), `TokenDeSesion`, 2FA, recuperación, usuarios del conjunto | `/auth/login/`, `/auth/logout/`, `/auth/conjuntos/`, `/auth/conjunto-activo/`, `/auth/usuarios/…`, `/auth/recuperar/…`, `/auth/dos-factores/…` | HU-01, HU-02, HU-06, HU-26 |
+| `cuentas` | `Usuario` (entra con correo), `TokenDeSesion`, 2FA, recuperación, usuarios del conjunto | `/auth/login/`, `/auth/logout/`, `/auth/conjuntos/`, `/auth/conjunto-activo/`, `/auth/usuarios/…` (incluye `perfil/`, `<id>/eliminar/` y `<id>/roles/<asignación>/cambiar/`), `/auth/recuperar/…`, `/auth/dos-factores/…` | HU-01, HU-02, HU-06, HU-26 |
 | `conjuntos` | `Conjunto` (acento y `color_personalizado`), `LogoDeConjunto` (la foto 1:1), asistente de creación | `POST /conjuntos/`, `/conjuntos/actual/…` (activar, identidad, logo), `/conjuntos/logos/<huella>/` | HU-03, HU-21 |
-| `permisos` | Catálogo de roles, `Asignacion`, permisos efectivos | (se usan desde `cuentas`: `/auth/usuarios/<id>/roles/`) | HU-06 |
+| `permisos` | Catálogo de 5 roles, `Asignacion` (un rol vigente por persona y conjunto), permisos efectivos | (se usan desde `cuentas`: `/auth/usuarios/<id>/roles/`) | HU-06 |
 | `unidades` | `Unidad` (apartamento) y `VinculoUnidad` (propietario, reside…) con histórico; a quién avisar de qué | `/unidades/`, `/unidades/<id>/vinculos/…` | HU-08 |
 | `areas` | `Area` común: clasificación cerrada, horario por bloques, mantenimiento | `/areas/`, `/areas/<id>/`, `/areas/<id>/desactivar/` | HU-09 |
 | `reglas` | Reglas **beta** configurables y versionadas; reglas **alfa** fijas; el evaluador | `/reglas/`, `/reglas/<id>/`, `/reglas/<id>/retirar/` | HU-10, HU-13 |
@@ -427,7 +440,7 @@ Cuando un residente envía una solicitud, `reglas/evaluador.py` → `evaluar(sol
 - Todas **restringen**, ninguna permite, así que se combinan con **Y** sin conflictos.
 - El resultado se **copia** en `Solicitud.evaluacion` (JSON), para que la explicación siga siendo cierta aunque la regla cambie mañana.
 
-### 5.7 La identidad del conjunto: color propio y foto 1:1 (HU-21, 29/09, sin commit)
+### 5.7 La identidad del conjunto: color propio y foto 1:1 (HU-21, 29/09)
 
 **El color.** `Acento` suma una novena opción, `personalizado`, y `Conjunto` un campo `color_personalizado` (hex `#rrggbb` en minúsculas). La regla se cumple en tres capas:
 
@@ -470,7 +483,7 @@ Así ninguna vista del front repite la lógica HTTP: solo hace `try: api_reserva
 
 ### 6.3 `apps/cuentas/sesion.py`: la sesión del front
 
-- `abrir_sesion()`: al entrar, guarda en la sesión el **token**, el **conjunto activo**, los **permisos** y el estado del **segundo factor**, y hace que la sesión venza a la misma hora que el token.
+- `abrir_sesion()`: al entrar, guarda en la sesión el **token**, el **conjunto activo**, los **permisos**, los **roles** y el **tipo de usuario** y el estado del **segundo factor**, y hace que la sesión venza a la misma hora que el token.
 - `tiene_permiso(request, "area.gestionar")`: lo usan las plantillas para **mostrar u ocultar** botones y secciones del lateral. Ojo: es solo para decidir qué se ve. **Quien decide de verdad es la API** en cada petición.
 - `SesionRequeridaMiddleware`: toda pantalla exige sesión salvo las marcadas con `@publica` (ingreso, recuperar contraseña). Con el segundo factor pendiente, solo deja abrir las pantallas para completarlo.
 
@@ -480,8 +493,8 @@ Cada app del front tiene `views.py` (funciones), `urls.py`, a veces `forms.py` (
 
 | Sección del lateral | App del front | Estado |
 |---|---|---|
-| Ingreso, recuperar contraseña, segundo factor | `cuentas` | Real, contra la API |
-| Selector de conjunto, asistente de creación, *Color y foto* (8 acentos o color propio, foto 1:1 con recortador) | `conjuntos` | Real. El asistente es parcial (HU-03). **Aquí también está Alpine** (29/09, sin commit) |
+| Ingreso, recuperar contraseña, segundo factor, **Mi perfil** (ícono de la barra superior: datos personales y tipo de usuario) | `cuentas` | Real, contra la API |
+| Selector de conjunto, asistente de creación, *Color y foto* (8 acentos o color propio, foto 1:1 con recortador) | `conjuntos` | Real. El asistente es parcial (HU-03). **Aquí también está Alpine** (29/09) |
 | Inicio | `paneles` | **Maqueta** con datos de ejemplo |
 | Zonas comunes (calendario, solicitud) | `reservas` | Real. **Aquí está Alpine** |
 | Áreas comunes | `areas` | Real (solo con `area.gestionar`) |
@@ -490,10 +503,12 @@ Cada app del front tiene `views.py` (funciones), `urls.py`, a veces `forms.py` (
 | Notificaciones | `notificaciones` | Real |
 | Solicitudes | `triage` | **Maqueta** vacía (HU-22, futuro) |
 | Conjunto | `conjuntos` | Real (resumen del asistente) |
-| Usuarios (lista, detalle con roles, registrar persona) | `usuarios` | Real. `usuarios/nuevo.html` aún muestra la etiqueta "Maqueta" |
+| Usuarios (lista con su rol, detalle con **un** rol que se asigna o se cambia, "Eliminar usuario" con confirmación, registrar persona) | `usuarios` | Real. `usuarios/nuevo.html` aún muestra la etiqueta "Maqueta" |
 | Apartamentos y parqueaderos | `unidades` | Real (apartamentos y vínculos; parqueaderos no) |
 
-`templates/componentes/` guarda lo reutilizable: `barra_superior.html` (nombre y foto del conjunto activo, o sus iniciales), `lateral.html` (marca solo el ítem activo leyendo la URL), `campo.html`, `errores_formulario.html` y `confirmacion_de_contenido.html` (el panel de HU-12).
+**Quién ve Usuarios y Apartamentos.** El lateral los muestra solo si el rol de la sesión es Superusuario, Administración ("Administrador") o Secretaría; con otro rol, no aparecen. Es solo presentación: la API decide con el permiso de cada petición. "Eliminar usuario" no borra a la persona: cierra sus roles en el conjunto activo (`retirar_roles_del_conjunto`), y es la forma de desvincularla.
+
+`templates/componentes/` guarda lo reutilizable: `barra_superior.html` (nombre y foto del conjunto activo o sus iniciales, el tipo de usuario y el ícono del perfil), `lateral.html` (marca solo el ítem activo leyendo la URL), `_enlaces_gestion.html` (los dos enlaces de gestión), `campo.html`, `errores_formulario.html` y `confirmacion_de_contenido.html` (el panel de HU-12).
 
 Cuando una app necesita piezas propias las guarda dentro de ella: `conjuntos/_foto.html` y `conjuntos/_selector_acento.html` (el guion bajo indica "pedazo para incluir, no página"), y las **etiquetas de plantilla** en `apps/conjuntos/templatetags/conjuntos.py` (`atributos_de_acento`, `iniciales`, `color_seguro`, `poco_legible`, `contraste_con_blanco`), que se cargan con `{% load conjuntos %}`.
 
@@ -588,13 +603,13 @@ stateDiagram-v2
 
 | Dónde | Cuántas | Qué cubren |
 |---|---|---|
-| `Backend/…/apps/*/tests.py` y `test_*.py` | la mayoría de las 320 | Cada app: modelos, servicios, endpoints, códigos de error. `conjuntos/test_identidad.py` cubre el color propio y la foto 1:1 (PNG, JPG y WebP no cuadrados) |
-| `Backend/…/tests/aislamiento/` | — | Filtro por conjunto y la **prueba del intruso** sobre todas las rutas |
+| `Backend/…/apps/*/tests.py` y `test_*.py` | la mayoría de las 330 (329 pasan, 1 falla) | Cada app: modelos, servicios, endpoints, códigos de error. `conjuntos/test_identidad.py` cubre el color propio y la foto 1:1 (PNG, JPG y WebP no cuadrados); `permisos/test_roles.py`, el rol único por conjunto y el cambio de rol |
+| `Backend/…/tests/aislamiento/` | — | Filtro por conjunto y la **prueba del intruso** sobre todas las rutas. **Hoy falla** `test_toda_ruta_de_la_api_esta_cubierta`: las rutas `usuario-perfil` y `usuario-eliminar` (29/09) no están en las listas de la prueba |
 | `Backend/…/tests/concurrencia/` | — | N personas contra la misma franja → un solo bloqueo |
 | `Backend/…/tests/esquema/` | — | La **lista cerrada de tablas globales**: si aparece una tabla sin `conjunto_id` que no esté en la lista, falla |
-| `Frontend/…/tests/` | 127 | Cada pantalla con la API simulada: qué muestra, qué oculta sin permiso, cómo presenta los errores. `test_acentos.py` y `test_identidad.py` cubren la rampa del color propio, la advertencia de contraste y el marcador con iniciales |
+| `Frontend/…/tests/` | 140 | Cada pantalla con la API simulada: qué muestra, qué oculta sin permiso, cómo presenta los errores. `test_acentos.py` y `test_identidad.py` cubren la rampa del color propio, la advertencia de contraste y el marcador con iniciales |
 
-Las pruebas automáticas **no reemplazan** la prueba manual de la DoD: nadie ha recorrido HU-06 a HU-13 en el navegador todavía. El recortador de foto es JavaScript y **no tiene prueba automática**: solo se prueba a mano.
+Las pruebas automáticas **no reemplazan** la prueba manual de la DoD: nadie ha recorrido HU-06 a HU-13 en el navegador todavía. El recortador de foto y el diálogo de "Eliminar usuario" son JavaScript y **no tienen prueba automática**: solo se prueban a mano.
 
 ---
 
@@ -629,24 +644,24 @@ python -m pytest -q
 
 ---
 
-## 10. Estado de las historias al 2026-09-29
+## 10. Estado de las historias al 2026-09-30
 
 Ninguna historia está **Terminada**: la DoD del maestro (§8.1) pide, además del código y las pruebas, un PR `desarrollo → pruebas` revisado por quien no programó y una prueba manual de otra persona. Eso aún no ha pasado con ninguna.
 
 | Grupo | Historias | Qué hay |
 |---|---|---|
 | **Sprint 1** | HU-01 login y recuperación · HU-02 segundo factor · HU-03 asistente de conjunto · HU-04 persona única · HU-05 aislamiento · HU-26 selector | Todo construido y commiteado ("sprint 1 terminado", 21–22/09). HU-03 quedó **parcial** (sin reglamento). `Admind_Avance.md` §5.2 todavía muestra fracciones viejas para HU-01, 02, 03 y 26 |
-| **Sprints 2 y 3** | HU-06 roles · HU-07 vincular persona · HU-08 unidades · HU-09 áreas · HU-10 reglas beta · HU-11 bloqueo · HU-12 confirmación · HU-13 envío y reglas | Todos sus criterios en código y con prueba (27/09). En Notion, "En revisión" |
-| **Adelantadas del Sprint 5** | HU-21 color y foto · HU-25 anuncios | Construidas el 22/09 (HU-25 con lo mínimo de notificaciones). HU-21 se amplió el 29/09 con el color propio y la foto 1:1, **sin commit** |
+| **Sprints 2 y 3** | HU-06 roles · HU-07 vincular persona · HU-08 unidades · HU-09 áreas · HU-10 reglas beta · HU-11 bloqueo · HU-12 confirmación · HU-13 envío y reglas | Todos sus criterios en código y con prueba (27/09). En Notion, "En revisión". HU-06 cambió el 29/09: **un solo rol por conjunto** (se cambia, no se suma) y sin rol Consejo; su criterio en Notion y en el Excel aún dice varios roles |
+| **Adelantadas del Sprint 5** | HU-21 color y foto · HU-25 anuncios | Construidas el 22/09 (HU-25 con lo mínimo de notificaciones). HU-21 se amplió el 29/09 con el color propio y la foto 1:1, ya commiteado |
 | **Sin empezar** | HU-14 a HU-20, HU-22 a HU-24, HU-27 a HU-38 | Solo el README de su app |
 
 ### Lo que frena para cerrar historias
 
-- [ ] **Commitear y subir** el cambio de HU-21 del 29/09 en los dos repos (back: `apps/conjuntos/` con `imagenes.py` y la migración `0004`; front: `apps/conjuntos/`, `colores.py`, `templatetags/`, `identidad.js`, la base, la barra y `estructura.css`).
+- [ ] **Arreglar la prueba que falla** del backend: agregar `usuario-perfil` (ruta sin conjunto) a `RUTAS_SIN_CONJUNTO` y `usuario-eliminar` (ruta de conjunto) a la prueba del intruso, en `tests/aislamiento/test_intruso.py`. Hoy `desarrollo` sube con un test en rojo.
 - [ ] El backend **no tiene rama `pruebas` en GitHub** (existe solo en local). Hay que subirla para abrir los PR `desarrollo → pruebas`.
 - [ ] **Prueba manual** de HU-06 a HU-13 por quien no las programó, con el guion de `Guias/Admind_Plan_Sprints_2_3.md` §6.
 - [ ] **Decidir el alcance** que entra antes de la entrega (maestro §12.8). El siguiente paso natural del núcleo es HU-14 (aprobar o rechazar), que cierra el ciclo de la reserva.
-- [ ] Llevar al maestro las decisiones tomadas al construir: estado `LIBERADA`, un bloqueo por persona por conjunto, catálogo de reglas beta y versionado, token con registro en la base, stack del front (§12.1), y el **color propio y la foto 1:1** de HU-21 (§6.3 todavía dice que el acento está aplazado y sin hex libre).
+- [ ] Llevar al maestro las decisiones tomadas al construir: estado `LIBERADA`, un bloqueo por persona por conjunto, catálogo de reglas beta y versionado, token con registro en la base, stack del front (§12.1), el **color propio y la foto 1:1** de HU-21 (§6.3 todavía dice que el acento está aplazado y sin hex libre), el **rol único por conjunto** (§3.1 y R5 dicen varios) y el **Superusuario con todos los permisos**.
 - [ ] `Admind_Avance.md` tiene filas del 15/09 sin actualizar (su propio aviso lo dice).
 
 ---
@@ -659,7 +674,7 @@ Ninguna historia está **Terminada**: la DoD del maestro (§8.1) pide, además d
 | **Conjunto activo** | El conjunto con el que estás trabajando en esta sesión. Sale del token, nunca de la petición |
 | **Tabla global** | Tabla sin `conjunto_id` (Persona, Usuario, Conjunto, tokens…). Están en una lista cerrada que una prueba vigila |
 | **Persona / Usuario** | Persona = el ser humano, único por documento, puede estar en varios conjuntos. Usuario = su cuenta para entrar (correo + contraseña) |
-| **Asignación** | Un rol de una persona en un conjunto, con vigencia |
+| **Asignación** | El rol de una persona en un conjunto, con vigencia. Solo puede haber una vigente por persona y conjunto |
 | **Unidad / Vínculo** | Unidad = apartamento. Vínculo = relación de una persona con la unidad (propietario, reside…), con histórico |
 | **Franja** | Un bloque de horario de un área en una fecha: (área, fecha, hora de inicio, hora de fin) |
 | **Bloqueo** | Los 3 minutos exclusivos para llenar y enviar una solicitud sobre una franja |
