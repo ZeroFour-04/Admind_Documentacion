@@ -37,6 +37,16 @@ Esto sale de lo que registran los documentos locales, no de Notion:
 
 Sobre el punto de seguridad: el 2026-09-30 Alejo decidió dejar `Credenciales/` en el repositorio de documentación porque es privado.
 
+## Anuncios con fotos (2026-10-05)
+
+Lo que el agente no pudo hacer al cerrar [Plan_Anuncios_Con_Fotos](../07_Planes/hechos/Plan_Anuncios_Con_Fotos.md):
+
+- [ ] **Commits** en `desarrollo` de los dos repositorios. El plan trae los cuatro mensajes sugeridos; la migración `anuncios/0002_fotos` va en el mismo commit que el modelo.
+- [ ] **Prueba manual** con los dos servidores y usuarios reales, con el guion del plan. El agente no tiene la contraseña ni el segundo factor de los usuarios de prueba, y publicar en `admind_db` manda correo real.
+- [ ] **Avisarle a Camilo:** hay una migración nueva en `anuncios` (correr `migrate`) y la respuesta de `/anuncios/` ahora trae `fotos`.
+- [ ] **Notion:** anotar en HU-25 que ahora lleva fotos.
+- [ ] PR `desarrollo → pruebas` revisado, como el resto de las historias.
+
 ## Lista larga (corte 2026-09-27)
 
 Referencias sin nombre de documento (*§2*, *§4*, *§6*…) son del antiguo `Admind_Avance.md`: §2 → [inventario_codigo](inventario_codigo.md) · §3 → [bitacora](bitacora.md) · §4 → [construccion](../06_Decisiones/construccion.md) · §5 → [historias](historias.md) y [historias_evidencia](historias_evidencia.md) · §6 → [pendientes](pendientes.md). *Maestro §N* se resuelve en `Admin_Master.md`. *El plan* es `07_Planes/hechos/Admind_Plan_Sprints_2_3.md`.

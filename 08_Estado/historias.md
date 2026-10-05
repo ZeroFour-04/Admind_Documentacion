@@ -56,7 +56,7 @@ La columna "Sprint" es el reparto previsto en el Excel V11.1, que ya no se cumpl
 | HU-19 | Dos oportunidades por franja y aviso de última | 4 | 3 | Media | Sin empezar |
 | HU-20 | Anulación de registros por el Superusuario | 5 | 5 | Media | Sin empezar |
 | HU-21 | Identidad visual del conjunto: color y logo | 5 | 4 | Baja | **Construida** el 22/09 y ampliada el 29/09 con color propio y foto 1:1 (falta la DoD) |
-| HU-25 | Anuncios con alcance de conjunto o vivienda | 5 | 6 | Media | **Construida** el 22/09, con lo mínimo del canal de notificaciones (falta la DoD) |
+| HU-25 | Anuncios con alcance de conjunto o vivienda | 5 | 6 | Media | **Construida** el 22/09, con lo mínimo del canal de notificaciones (falta la DoD). El 05/10 se amplió: hasta 4 fotos por anuncio, sin commit |
 | HU-27 | Registro de visitantes y vehículos | 5 | 5 | Media | **Parcial** desde el 01/10 (Camilo): registra el ingreso y lista los visitantes; sin salida |
 | HU-28 | Parqueadero de visitantes atado a la visita | 5 | 3 | Media | Sin empezar |
 | HU-29 | Tablero de casos con respuesta obligatoria | 5 | 5 | Media | Sin empezar |
@@ -106,7 +106,7 @@ Cada criterio de aceptación tiene una prueba automática con nombre propio.
 | HU                           | SP  | Estado                                                                                                                                                                                                                                                       |
 | ---------------------------- | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | HU-21 Identidad del conjunto | 4   | Construida el 22/09 (8 acentos y logo). **Hoy se amplió** con color propio en hex y foto cuadrada 1:1, commiteado y subido (`f053d31` y `96a30b4`). Esto **revierte** la decisión de "solo 8 acentos, sin hex libre", y el maestro §6.3 todavía no lo recoge |
-| HU-25 Anuncios               | 6   | Construida el 22/09, con lo mínimo del canal de notificaciones (bandeja y correo) y de HU-08                                                                                                                                                                 |
+| HU-25 Anuncios               | 6   | Construida el 22/09, con lo mínimo del canal de notificaciones (bandeja y correo) y de HU-08. El 05/10 se amplió con hasta 4 fotos por anuncio (sin commit)                                                                                                                                                                 |
 
 ### HU-27, parcial (Camilo, commits del 2026-10-01)
 

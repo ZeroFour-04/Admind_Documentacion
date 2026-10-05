@@ -51,7 +51,7 @@ Cada carpeta de `apps/` tiene un `README.md` que dice para qué existe. Las apps
 | `areas` | `Area` común: nombre por conjunto, horario por bloques, mantenimiento | `/areas/`, `/areas/<id>/`, `/areas/<id>/desactivar/` | HU-09 |
 | `reglas` | Reglas **beta** configurables y versionadas; reglas **alfa** fijas; el evaluador | `/reglas/`, `/reglas/<id>/`, `/reglas/<id>/retirar/` | HU-10, HU-13 |
 | `reservas` | `Solicitud`: franjas, bloqueo de 3 min, envío y evaluación | `/reservas/franjas/`, `/reservas/solicitudes/…` | HU-11, HU-12, HU-13 |
-| `anuncios` | Anuncios del conjunto o de una vivienda | `/anuncios/`, `/anuncios/<id>/` | HU-25 |
+| `anuncios` | Anuncios del conjunto o de una vivienda, con hasta 4 fotos (`FotoDeAnuncio`) | `/anuncios/`, `/anuncios/<id>/`, `/anuncios/<id>/fotos/<foto_id>/` | HU-25 |
 | `notificaciones` | Bandeja en la app + correo; `canal.notificar(aviso, personas)` | `GET /notificaciones/` | HU-25, HU-08 |
 | `visitantes` | `Visitante`: quién entró, a qué apartamento, con qué vehículo y a qué hora. Sin `servicios.py`: la vista usa el ORM | `GET` y `POST /visitantes/` | HU-27 (parcial) |
 | `auditoria` | Registro de solo inserción | (sin endpoints: lo usan los servicios) | transversal |
