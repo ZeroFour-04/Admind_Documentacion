@@ -2,7 +2,7 @@
 resumen: "Cómo correr los dos servidores y las pruebas, qué cubre cada suite y cuál falla hoy."
 tipo: arquitectura
 origen: "guía de estructura §4.8, §8 y §9 (2026-09-30) + plan de los Sprints 2 y 3 §0.4"
-actualizado: 2026-09-30
+actualizado: 2026-10-05
 ---
 
 # Pruebas y ejecución
@@ -33,11 +33,11 @@ Las pruebas se escriben como funciones `def test_…():` con `assert`. `pytest-d
 
 | Dónde | Cuántas | Qué cubren |
 |---|---|---|
-| `Backend/…/apps/*/tests.py` y `test_*.py` | la mayoría de las 330 (329 pasan, 1 falla) | Cada app: modelos, servicios, endpoints, códigos de error. `conjuntos/test_identidad.py` cubre el color propio y la foto 1:1 (PNG, JPG y WebP no cuadrados); `permisos/test_roles.py`, el rol único por conjunto y el cambio de rol |
+| `Backend/…/apps/*/tests.py` y `test_*.py` | la mayoría de las 334 (333 pasan, 1 falla). `cuentas/tests.py` cubre también el límite de 3 enlaces por hora (con la caché vaciada antes de cada prueba) | Cada app: modelos, servicios, endpoints, códigos de error. `conjuntos/test_identidad.py` cubre el color propio y la foto 1:1 (PNG, JPG y WebP no cuadrados); `permisos/test_roles.py`, el rol único por conjunto y el cambio de rol |
 | `Backend/…/tests/aislamiento/` | — | Filtro por conjunto y la **prueba del intruso** sobre todas las rutas. **Hoy falla** `test_toda_ruta_de_la_api_esta_cubierta`: las rutas `usuario-perfil` y `usuario-eliminar` (29/09) no están en las listas de la prueba |
 | `Backend/…/tests/concurrencia/` | — | N personas contra la misma franja → un solo bloqueo |
 | `Backend/…/tests/esquema/` | — | La **lista cerrada de tablas globales**: si aparece una tabla sin `conjunto_id` que no esté en la lista, falla |
-| `Frontend/…/tests/` | 140 | Cada pantalla con la API simulada: qué muestra, qué oculta sin permiso, cómo presenta los errores. `test_acentos.py` y `test_identidad.py` cubren la rampa del color propio, la advertencia de contraste y el marcador con iniciales |
+| `Frontend/…/tests/` | 160 | Cada pantalla con la API simulada: qué muestra, qué oculta sin permiso, cómo presenta los errores. `test_acentos.py` y `test_identidad.py` cubren la rampa del color propio, la advertencia de contraste y el marcador con iniciales; `test_recuperacion.py`, las pantallas de recuperar la contraseña (sin sesión, con la API simulada) |
 
 Las pruebas automáticas **no reemplazan** la prueba manual de la DoD: nadie ha recorrido HU-06 a HU-13 en el navegador todavía. El recortador de foto y el diálogo de "Eliminar usuario" son JavaScript y **no tienen prueba automática**: solo se prueban a mano.
 

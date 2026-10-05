@@ -2,7 +2,7 @@
 resumen: "Decisiones tomadas al construir, por fecha: qué se decidió, quién y dónde quedó. Incluye D1 a D12 del plan de los Sprints 2 y 3."
 tipo: decision
 origen: "avance §4 (2026-09-27) + decisiones del 2026-09-13 al 2026-09-30"
-actualizado: 2026-09-30
+actualizado: 2026-10-05
 ---
 
 # Decisiones tomadas al construir
@@ -80,6 +80,12 @@ Referencias dentro de la tabla: *maestro §N* se resuelve en `Admin_Master.md`; 
 | 2026-09-29 | En el informe 3 al docente los Sprints 1 y 2 se reportan **terminados** (12 historias, 55 SP) y el Sprint 3 en revisión, aunque ninguna historia ha pasado por un PR a `pruebas` | Alejo | `Archivo/Informes/2026-09-29/`; [estado_actual](../08_Estado/estado_actual.md) |
 | 2026-09-30 | Las credenciales se quedan en el repositorio de documentación: es privado | Alejo | `Credenciales/` |
 | 2026-09-30 | La documentación se reorganiza: routers `AGENTS.md` y `CLAUDE.md`, índice en `README.md`, notas cortas por carpeta y protocolos. El maestro pasa a ser una tabla de equivalencias | Alejo | [documentacion](../03_Reglas/documentacion.md) |
+| 2026-10-04 | Las funcionalidades se trabajan con **planes guiados**: un chat de planeación escribe el plan y Alejo lo ejecuta en otro chat con un agente que guía en vez de construir. El agente explica por bloques, Alejo aplica el código y explica de vuelta cada fase, y el avance se anota en el plan. El agente solo guía si el plan es guiado y Alejo lo aprueba cuando se lo pregunta al empezar; si no, construye a pedido como antes | Alejo | [Inicio](../Inicio.md), [ejecutar_plan_guiado](../09_Protocolos/ejecutar_plan_guiado.md) |
+| 2026-10-04 | HU-01 (recuperación de contraseña): se termina con límite de intentos, correo real por SMTP y pruebas del front; el envío que no tumba la respuesta (`send_mail` síncrono y sin `try`) queda fuera (D1) | Alejo | [Plan_Recuperacion_Contrasena](../07_Planes/hechos/Plan_Recuperacion_Contrasena.md) |
+| 2026-10-04 | El correo de recuperación sigue saliendo de `cuentas` con `send_mail` y **no** pasa por el canal de notificaciones: el canal exige conjunto activo y deja aviso en la bandeja, y aquí no hay sesión ni conjunto (D2; contradice la decisión cerrada 4 para este correo) | Alejo | [Plan_Recuperacion_Contrasena](../07_Planes/hechos/Plan_Recuperacion_Contrasena.md), README de `apps/cuentas/` |
+| 2026-10-04 | El límite de enlaces cuenta en memoria con el throttling de DRF (D3), por correo y no por IP (D4), a 3 por hora (D5). Clave: huella del correo con `strip().lower()`. 429 con texto propio, igual exista o no la cuenta | Alejo | [Plan_Recuperacion_Contrasena](../07_Planes/hechos/Plan_Recuperacion_Contrasena.md), `apps/cuentas/limites.py` |
+| 2026-10-04 | El correo sale desde un Gmail creado solo para AdMind, con contraseña de aplicación en el `.env` ignorado por git (D6 a). Las pruebas nunca mandan correo real | Alejo | [Plan_Recuperacion_Contrasena](../07_Planes/hechos/Plan_Recuperacion_Contrasena.md) |
+| 2026-10-05 | En el front, un 429 muestra el `detail` de la API (el texto fijo queda de respaldo): cada límite explica lo suyo. Las pantallas de recuperación tienen pruebas con la API simulada | Agente, a pedido de Alejo | `cliente_api/http.py`, `tests/test_recuperacion.py` |
 
 ## Ver también
 

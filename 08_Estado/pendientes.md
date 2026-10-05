@@ -2,7 +2,7 @@
 resumen: "Lista de pendientes: lo que frena los story points, lo que hay que corregir en Notion, decisiones de equipo y pendientes técnicos."
 tipo: estado
 origen: "informe por sprints §4 a §6 (2026-09-29) + avance §6 (2026-09-27)"
-actualizado: 2026-09-29
+actualizado: 2026-10-05
 ---
 
 # Pendientes
@@ -98,7 +98,11 @@ Referencias sin nombre de documento (*§2*, *§4*, *§6*…) son del antiguo `Ad
 - [x] En Notion: marcar las tareas técnicas hechas — hecho el 2026-09-15 09:00
 - [ ] Darle `CREATEDB` al `admind_user` de Camilo y correr `migrate` en su máquina: sin eso `pytest` no puede crear la base de pruebas
 - [ ] Clase de permiso por vista ("esta vista exige `reserva.aprobar`"): hoy ninguna vista exige un permiso concreto (HU-06)
-- [ ] Recuperación de contraseña por correo (HU-01; en el front es maqueta) y flujo de 2FA (HU-02)
+- [x] Recuperación de contraseña por correo (HU-01): límite de 3 enlaces por hora, SMTP real y pruebas del front — hecho el 2026-10-05 ([Plan_Recuperacion_Contrasena](../07_Planes/hechos/Plan_Recuperacion_Contrasena.md)). Falta la prueba manual de la DoD
+- [ ] `send_mail` de la recuperación es síncrono y sin `try` ni `EMAIL_TIMEOUT`: con SMTP real, si el servidor de correo falla, `/auth/recuperar/` responde 500 solo cuando la cuenta existe, y tarda más que con un correo inexistente (deja adivinar qué correos están registrados)
+- [ ] `/auth/login/` no limita los intentos de contraseña
+- [ ] El límite de enlaces de recuperación vive en memoria: se pierde al reiniciar y no se comparte entre procesos. Una tabla global o una caché compartida lo arreglaría (decisión D3 del plan)
+- [ ] Flujo de 2FA en el front (HU-02)
 - [ ] Comando que borre los tokens vencidos: dejan de servir, pero se acumulan en `cuentas_tokendesesion`
 - [ ] Índices compuestos `(conjunto_id, …)` para consultas concretas, con cada tabla del producto que herede de `ModeloDeConjunto`
 - [x] Paso 5 del plan del Sprint 1: login con token — `0b0c4f8`

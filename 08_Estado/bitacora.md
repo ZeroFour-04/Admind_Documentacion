@@ -2,7 +2,7 @@
 resumen: "Bitácora del proyecto: una fila por hecho, con fecha, hora, repositorio y commit. Lo más reciente abajo."
 tipo: estado
 origen: "avance §3"
-actualizado: 2026-09-27
+actualizado: 2026-10-05
 ---
 
 # Bitácora
@@ -59,3 +59,5 @@ En las filas anteriores al 2026-09-30, *este archivo* es el antiguo `Admind_Avan
 | 2026-09-27 17:32 | Backend y frontend | Cierre: 300 y 109 pruebas en verde, `makemigrations --check` sin cambios, `git status` limpio en los dos repos. Nada subido. El recorrido en el navegador no se hizo: pide iniciar sesión con las cuentas de prueba, cuya contraseña no tiene el agente; queda en el guion manual del plan §6 |
 | 2026-09-27 17:50 | Notion | A pedido de Alejo: HU-06 a HU-13 pasan a "En revisión" (HU-06 estaba otra vez en "Finalizado"). Casillas de tareas marcadas y nota de revisión en cada página. En HU-06 se restauran las tareas 4 y 5 del Excel. En HU-12 quedan dos tareas sin marcar: alta demanda (PB-24) y el reuso del panel en citas y alternativas (HU-31, HU-32). Ninguna a "Finalizado" |
 | 2026-09-30 | Documentación | La bóveda se reorganiza en carpetas numeradas con routers (`AGENTS.md`, `CLAUDE.md`), índice (`README.md`) y protocolos. El maestro y `Admind_Avance.md` se parten en notas cortas; lo histórico pasa a `Archivo/` |
+| 2026-10-04 | Frontend | Ícono de la pestaña: el de AdMind por defecto (`static/img/`) y la foto del conjunto activo cuando la tiene (`base.html`). 3 pruebas nuevas, 150 en verde. Sin commit |
+| 2026-10-05 | Backend y Frontend | HU-01: `/auth/recuperar/` limita a 3 enlaces por hora por correo (429 igual exista o no la cuenta, `apps/cuentas/limites.py`); el front muestra el `detail` de un 429 y tiene 10 pruebas de las dos pantallas de recuperación; el correo llegó a una bandeja real por SMTP. Back 334 pruebas (333 pasan, 1 falla la conocida), Front 160. Sin commit |

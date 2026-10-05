@@ -2,7 +2,7 @@
 resumen: "Cómo trabaja un agente de IA en AdMind: construir solo lo pedido, qué no hacer, qué preguntar en vez de decidir y cómo pedirle."
 tipo: regla
 origen: "maestro v1.4 (2026-09-14) cabecera y §8.4 + Lab §2, §8 y §9 (2026-09-14) + guía de desarrollo §11 y §12 (2026-09-15)"
-actualizado: 2026-09-15
+actualizado: 2026-10-04
 ---
 
 # Trabajo con agentes de IA
@@ -39,6 +39,9 @@ actualizado: 2026-09-15
 
 > [!WARNING] Reversión deliberada — 2026-09-14
 > Hasta esta fecha el agente solo orientaba: Alejo escribía todo el código, y el agente explicaba, revisaba sin corregir y ponía ejercicios. **El plazo de entrega se redujo a un mes** y no hay que entregar el proyecto completo. Con un equipo de dos que apenas está aprendiendo, ese modo no llega a tiempo, así que Alejo decidió dejarlo a un lado: **el agente construye, pero solo lo que Alejo le pide.** Queda escrito como reversión y no se borra, como pide el §9 del maestro.
+
+> [!NOTE] Plan guiado — 2026-10-04
+> Desde esta fecha las funcionalidades se trabajan con **planes guiados**: un chat de planeación escribe el plan ([Inicio](../Inicio.md)) y Alejo lo ejecuta en otro chat con un agente que **guía en vez de construir** ([ejecutar_plan_guiado](../09_Protocolos/ejecutar_plan_guiado.md)). El agente solo guía si el plan es guiado **y** Alejo lo aprueba cuando se lo pregunta; si no, vale lo de abajo.
 
 ### Construir a pedido — el modo por defecto
 

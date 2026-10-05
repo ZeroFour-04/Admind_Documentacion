@@ -2,7 +2,7 @@
 resumen: "Cómo se escribe un plan de trabajo para que lo ejecute un agente, y qué se hace al terminarlo."
 tipo: protocolo
 origen: "forma del plan de los Sprints 2 y 3 (2026-09-27)"
-actualizado: 2026-09-30
+actualizado: 2026-10-04
 ---
 
 # Protocolo: abrir y cerrar un plan
@@ -33,3 +33,7 @@ El plan cita las reglas en vez de copiarlas: [invariantes](../03_Reglas/invarian
 2. **Actualizar el contexto** con [actualizar_contexto](actualizar_contexto.md). Las decisiones que Alejo respondió en el plan pasan a [construccion](../06_Decisiones/construccion.md).
 3. **Mover el archivo** de `07_Planes/activos/` a `07_Planes/hechos/` y cambiar su fila en [planes](../07_Planes/planes.md). Un plan hecho no se edita.
 4. **Dejar escrito lo que el agente no puede hacer:** la parte humana de la DoD (PR `desarrollo → pruebas` revisado y prueba manual de quien no programó) va a [pendientes](../08_Estado/pendientes.md).
+
+## Plan guiado
+
+Cuando el plan lo ejecuta Alejo con un agente que guía en vez de construir, cambian tres cosas. Lo escribe un chat de planeación siguiendo [Inicio](../Inicio.md). Usa la plantilla [plan_guiado](Plantillas/plan_guiado.md), que trae la sección de seguimiento. Y se ejecuta con [ejecutar_plan_guiado](ejecutar_plan_guiado.md), solo si Alejo lo aprueba cuando el agente le pregunta; si prefiere que el agente construya, vale *Ejecutar* de arriba. Abrir y cerrar no cambian.

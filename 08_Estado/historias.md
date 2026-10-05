@@ -3,7 +3,7 @@ resumen: "Las 38 historias de usuario: sprint previsto, story points y avance de
 tipo: estado
 corte: 2026-09-29
 origen: "avance §5.2 (2026-09-27) actualizado con el informe por sprints del 2026-09-29 y la guía de estructura del 2026-09-30"
-actualizado: 2026-09-30
+actualizado: 2026-10-05
 ---
 
 # Historias de usuario
@@ -77,7 +77,7 @@ La columna "Sprint" es el reparto previsto en el Excel V11.1, que ya no se cumpl
 
 |HU|SP|Estado|Qué le falta|
 |---|---|---|---|
-|HU-01 Login con correo y contraseña|3|5/5 tareas y 5/5 criterios. Incluye la recuperación de contraseña por enlace de un solo uso|La DoD. Además tiene dos huecos de seguridad: `/auth/recuperar/` no limita los intentos y `send_mail` es síncrono. El SMTP real no está configurado (hoy el correo sale por consola)|
+|HU-01 Login con correo y contraseña|3|5/5 tareas y 5/5 criterios. Incluye la recuperación de contraseña por enlace de un solo uso|La DoD. Además queda un hueco: `send_mail` es síncrono y sin `try` (con SMTP real, un fallo da 500 solo si la cuenta existe). El límite de 3 enlaces por hora y el SMTP real quedaron hechos el 2026-10-05|
 |HU-02 Segundo factor (TOTP)|5|5/5 y 5/5. TOTP con QR y 10 códigos de respaldo|La DoD|
 |HU-03 Asistente para crear un conjunto|6|Parcial. Desde el 27/09 los pasos de Áreas y Reglas son reales|**Está bloqueada**: el reglamento no tiene módulo (HU-33) y cuenta como no cumplido, así que **ningún conjunto puede quedar operativo**. Tampoco verifiqué si registra en la auditoría quién creó el conjunto|
 |HU-04 Persona única por documento|3|5/5 y 5/5|La DoD|

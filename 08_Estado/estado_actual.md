@@ -3,7 +3,7 @@ resumen: "Dónde está el proyecto hoy: commits, pruebas, historias por grupo y 
 tipo: estado
 corte: 2026-09-30
 origen: "guía de estructura §1 y §10 (2026-09-30)"
-actualizado: 2026-09-30
+actualizado: 2026-10-05
 ---
 
 # Estado actual
@@ -16,8 +16,8 @@ actualizado: 2026-09-30
 
 | Qué | Estado al 2026-09-30 |
 |---|---|
-| **Backend** (la API) | Rama `desarrollo` en `ee256ff`, **subida a GitHub**, sin cambios pendientes. 11 apps con código más `comun`. **330 pruebas: 329 pasan y 1 falla** (verificado hoy, 33 s). La que falla es `test_toda_ruta_de_la_api_esta_cubierta` ([pruebas_y_ejecucion](../02_Arquitectura/pruebas_y_ejecucion.md)) |
-| **Frontend** (las pantallas) | Rama `desarrollo` en `7fa88ea`, **subida a GitHub**, sin cambios pendientes. 11 apps con pantallas. **140 pruebas, todas pasan** (verificado hoy, 7 s) |
+| **Backend** (la API) | Rama `desarrollo` en `ee256ff`, **subida a GitHub**, sin cambios pendientes. 11 apps con código más `comun`. **330 pruebas: 329 pasan y 1 falla** (verificado hoy, 33 s). *Actualización del 2026-10-05:* con el límite de enlaces de recuperación, **334 pruebas: 333 pasan y 1 falla** (la misma), en `desarrollo` sobre `71ded31` y con el cambio **sin commitear** hasta que Alejo lo haga. La que falla es `test_toda_ruta_de_la_api_esta_cubierta` ([pruebas_y_ejecucion](../02_Arquitectura/pruebas_y_ejecucion.md)) |
+| **Frontend** (las pantallas) | Rama `desarrollo` en `7fa88ea`, **subida a GitHub**, sin cambios pendientes. 11 apps con pantallas. **140 pruebas, todas pasan** (verificado hoy, 7 s). *Actualización del 2026-10-05:* el favicon (`2af7114`) lo subió a 150 y las pruebas de la recuperación de contraseña, a **160, todas pasan**; esas 10 están **sin commitear** hasta que Alejo lo haga |
 | **Historias de usuario** | HU-01 a HU-13, HU-21, HU-25 y HU-26 tienen código. **Ninguna está "Terminada"**: a todas les falta la parte humana de la DoD (PR `desarrollo → pruebas` revisado y prueba manual de quien no la programó) |
 | **Lo que sigue sin empezar** | HU-14 en adelante (bandeja del administrador, pagos, visitantes, casos, citas, documentos…), salvo HU-21 y HU-25 |
 | **Plazo** | Entrega cerca del 2026-10-14 (fecha exacta sin confirmar). No hay que entregar las 38 historias |

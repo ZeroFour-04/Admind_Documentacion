@@ -101,6 +101,8 @@ Una línea por nota: qué tiene y cuándo abrirla. Las reglas para agentes de IA
 | [generar_informe_de_avance](09_Protocolos/generar_informe_de_avance.md) | Entregable para el docente, con capturas |
 | [generar_documento_de_avance](09_Protocolos/generar_documento_de_avance.md) | Foto fechada del proyecto para el equipo, solo texto |
 | [abrir_y_cerrar_un_plan](09_Protocolos/abrir_y_cerrar_un_plan.md) | Antes de un trabajo largo y al terminarlo |
+| [Inicio](Inicio.md) | Prompt de arranque de un chat de planeación: recibe una funcionalidad y entrega un plan guiado |
+| [ejecutar_plan_guiado](09_Protocolos/ejecutar_plan_guiado.md) | Al ejecutar un plan con `modo: guiado`, si Alejo lo aprueba cuando el agente le pregunta: explica por bloques, Alejo aplica y el avance se anota en el plan |
 
 Las plantillas están en `09_Protocolos/Plantillas/`.
 
