@@ -2,7 +2,7 @@
 resumen: "El frontend por dentro: config sin base de datos, cliente_api, la sesión del front y el estado de cada pantalla."
 tipo: arquitectura
 origen: "guía de estructura §6 (2026-09-30)"
-actualizado: 2026-09-30
+actualizado: 2026-10-05
 ---
 
 # El frontend por dentro
@@ -29,7 +29,7 @@ Así ninguna vista del front repite la lógica HTTP: solo hace `try: api_reserva
 
 - `abrir_sesion()`: al entrar, guarda en la sesión el **token**, el **conjunto activo**, los **permisos**, los **roles** y el **tipo de usuario** y el estado del **segundo factor**, y hace que la sesión venza a la misma hora que el token.
 - `tiene_permiso(request, "area.gestionar")`: lo usan las plantillas para **mostrar u ocultar** botones y secciones del lateral. Ojo: es solo para decidir qué se ve. **Quien decide de verdad es la API** en cada petición.
-- `SesionRequeridaMiddleware`: toda pantalla exige sesión salvo las marcadas con `@publica` (ingreso, recuperar contraseña). Con el segundo factor pendiente, solo deja abrir las pantallas para completarlo.
+- `SesionRequeridaMiddleware`: toda pantalla exige sesión salvo las marcadas con `@publica` (ingreso, recuperar contraseña y el enlace del correo que quita el segundo factor). Con el segundo factor pendiente, solo deja abrir las pantallas para completarlo.
 
 ## Las pantallas
 
@@ -37,7 +37,7 @@ Cada app del front tiene `views.py` (funciones), `urls.py`, a veces `forms.py` (
 
 | Sección del lateral | App del front | Estado |
 |---|---|---|
-| Ingreso, recuperar contraseña, segundo factor, **Mi perfil** (ícono de la barra superior: datos personales y tipo de usuario) | `cuentas` | Real, contra la API |
+| Ingreso, recuperar contraseña, segundo factor (con «¿Problemas con la verificación en dos pasos?»: pedir por correo el enlace que lo quita y confirmarlo), **Mi perfil** (ícono de la barra superior: datos personales y tipo de usuario) | `cuentas` | Real, contra la API |
 | Selector de conjunto, asistente de creación, *Color y foto* (8 acentos o color propio, foto 1:1 con recortador) | `conjuntos` | Real. El asistente es parcial (HU-03). **Aquí también está Alpine** (29/09) |
 | Inicio | `paneles` | **Maqueta** con datos de ejemplo |
 | Zonas comunes (calendario, solicitud) | `reservas` | Real. **Aquí está Alpine** |
@@ -46,11 +46,14 @@ Cada app del front tiene `views.py` (funciones), `urls.py`, a veces `forms.py` (
 | Anuncios | `anuncios` | Real |
 | Notificaciones | `notificaciones` | Real |
 | Solicitudes | `triage` | **Maqueta** vacía (HU-22, futuro) |
+| Visitantes ("Visitante" para Vigilancia: formulario de ingreso y los de hoy; con `visitante.ver_historico`, el historial sin formulario) | `visitantes` | Real, parcial (HU-27): solo el ingreso, sin salida ni parqueadero |
 | Conjunto | `conjuntos` | Real (resumen del asistente) |
 | Usuarios (lista con su rol, detalle con **un** rol que se asigna o se cambia, "Eliminar usuario" con confirmación, registrar persona) | `usuarios` | Real. `usuarios/nuevo.html` aún muestra la etiqueta "Maqueta" |
 | Apartamentos y parqueaderos | `unidades` | Real (apartamentos y vínculos; parqueaderos no) |
 
 **Quién ve Usuarios y Apartamentos.** El lateral los muestra solo si el rol de la sesión es Superusuario, Administración ("Administrador") o Secretaría; con otro rol, no aparecen. Es solo presentación: la API decide con el permiso de cada petición. "Eliminar usuario" no borra a la persona: cierra sus roles en el conjunto activo (`retirar_roles_del_conjunto`), y es la forma de desvincularla.
+
+**Qué ve Vigilancia.** Desde el 01/10 el lateral le muestra solo Inicio, Zonas comunes, Reglas, Anuncios y Visitante; Áreas comunes, Notificaciones, Solicitudes, Conjunto y los enlaces de gestión se le ocultan por el rol, no por un permiso.
 
 `templates/componentes/` guarda lo reutilizable: `barra_superior.html` (nombre y foto del conjunto activo o sus iniciales, el tipo de usuario y el ícono del perfil), `lateral.html` (marca solo el ítem activo leyendo la URL), `_enlaces_gestion.html` (los dos enlaces de gestión), `campo.html`, `errores_formulario.html` y `confirmacion_de_contenido.html` (el panel de HU-12).
 

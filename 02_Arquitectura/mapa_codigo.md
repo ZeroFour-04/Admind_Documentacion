@@ -2,7 +2,7 @@
 resumen: "Mapa del código: qué hay en cada carpeta de los tres repos, qué hace cada app del backend y qué nota la explica."
 tipo: arquitectura
 origen: "guía de estructura §2 y §5.5 (2026-09-30)"
-actualizado: 2026-09-30
+actualizado: 2026-10-05
 ---
 
 # Mapa del código
@@ -16,7 +16,7 @@ A D M I N D/
 │   ├── apps/                        ← un módulo por tema del negocio
 │   │   ├── comun/                   ← piezas compartidas: aislamiento, modelo base, bloqueo
 │   │   ├── personas/ cuentas/ conjuntos/ permisos/ unidades/
-│   │   ├── areas/ reglas/ reservas/ anuncios/ notificaciones/ auditoria/
+│   │   ├── areas/ reglas/ reservas/ anuncios/ notificaciones/ auditoria/ visitantes/
 │   │   └── casos/ citas/ pagos/ …   ← solo README: módulos futuros, sin código
 │   ├── tests/                       ← pruebas transversales (aislamiento, concurrencia, esquema)
 │   ├── bd/                          ← notas sobre la base de datos
@@ -28,7 +28,7 @@ A D M I N D/
 │   ├── apps/                        ← un módulo por sección de la interfaz: vistas, formularios, plantillas
 │   ├── templates/base/              ← el esqueleto de toda página
 │   ├── templates/componentes/       ← piezas reutilizables: barra, lateral, campo, confirmación
-│   ├── static/css  static/js        ← estilos propios y el JavaScript: reservas.js, identidad.js, usuarios.js y vendor/alpine.min.js
+│   ├── static/css  static/js        ← estilos propios y el JavaScript: reservas.js, identidad.js, usuarios.js, visitantes.js y vendor/alpine.min.js
 │   ├── design-system/               ← tokens de color, tipografía y componentes CSS (de Claude Design)
 │   └── tests/                       ← pruebas de pantallas con la API simulada
 │
@@ -37,7 +37,7 @@ A D M I N D/
 └── .claude/launch.json              ← cómo arranca Claude los dos servidores
 ```
 
-Cada carpeta de `apps/` tiene un `README.md` que dice para qué existe. Las apps que **solo** tienen README (`casos`, `citas`, `pagos`, `visitantes`, `infracciones`, `documentos`, `parqueaderos`, `triage` en el back, `importacion_respaldo`) son el lugar reservado para historias futuras.
+Cada carpeta de `apps/` tiene un `README.md` que dice para qué existe. Las apps que **solo** tienen README (`casos`, `citas`, `pagos`, `infracciones`, `documentos`, `parqueaderos`, `triage` en el back, `importacion_respaldo`) son el lugar reservado para historias futuras.
 
 ## Apps del backend
 
@@ -48,11 +48,12 @@ Cada carpeta de `apps/` tiene un `README.md` que dice para qué existe. Las apps
 | `conjuntos` | `Conjunto` (acento y `color_personalizado`), `LogoDeConjunto` (la foto 1:1), asistente de creación | `POST /conjuntos/`, `/conjuntos/actual/…` (activar, identidad, logo), `/conjuntos/logos/<huella>/` | HU-03, HU-21 |
 | `permisos` | Catálogo de 5 roles, `Asignacion` (un rol vigente por persona y conjunto), permisos efectivos | (se usan desde `cuentas`: `/auth/usuarios/<id>/roles/`) | HU-06 |
 | `unidades` | `Unidad` (apartamento) y `VinculoUnidad` (propietario, reside…) con histórico; a quién avisar de qué | `/unidades/`, `/unidades/<id>/vinculos/…` | HU-08 |
-| `areas` | `Area` común: clasificación cerrada, horario por bloques, mantenimiento | `/areas/`, `/areas/<id>/`, `/areas/<id>/desactivar/` | HU-09 |
+| `areas` | `Area` común: nombre por conjunto, horario por bloques, mantenimiento | `/areas/`, `/areas/<id>/`, `/areas/<id>/desactivar/` | HU-09 |
 | `reglas` | Reglas **beta** configurables y versionadas; reglas **alfa** fijas; el evaluador | `/reglas/`, `/reglas/<id>/`, `/reglas/<id>/retirar/` | HU-10, HU-13 |
 | `reservas` | `Solicitud`: franjas, bloqueo de 3 min, envío y evaluación | `/reservas/franjas/`, `/reservas/solicitudes/…` | HU-11, HU-12, HU-13 |
 | `anuncios` | Anuncios del conjunto o de una vivienda | `/anuncios/`, `/anuncios/<id>/` | HU-25 |
 | `notificaciones` | Bandeja en la app + correo; `canal.notificar(aviso, personas)` | `GET /notificaciones/` | HU-25, HU-08 |
+| `visitantes` | `Visitante`: quién entró, a qué apartamento, con qué vehículo y a qué hora. Sin `servicios.py`: la vista usa el ORM | `GET` y `POST /visitantes/` | HU-27 (parcial) |
 | `auditoria` | Registro de solo inserción | (sin endpoints: lo usan los servicios) | transversal |
 | `comun` | Aislamiento, modelo base, bloqueo | — | HU-05, HU-11 |
 

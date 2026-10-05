@@ -54,7 +54,7 @@ Referencias sin nombre de documento (*§2*, *§4*, *§6*…) son del antiguo `Ad
 - [x] `asignacion.conjunto_id` es `NOT NULL`, pero el maestro lo deja nulo para el Superusuario (§5.3) — resuelto el 2026-09-15 a favor del maestro (§4)
 - [x] Roles y permisos como tablas, contra "catálogos fijos en código" (§5.3) — resuelto el 2026-09-15 a favor del maestro (§4)
 - [ ] Estados de `reserva` con nombres distintos a los del maestro — app `reservas`
-- [ ] `area_comun` sin `clasificacion` (§3.1) — app `areas`
+- [x] `area_comun` sin `clasificacion` (§3.1) — resuelto el 2026-10-05: la clasificación se eliminó de las áreas
 - [ ] No hay tablas de reglas (§5.10) ni de notificaciones
 - [ ] Columnas `registrado_por`, `decidido_por`, `priorizado_por` y `anulado_por` sin FK ni destino claro (¿persona o usuario?). Mientras tanto `Asignacion` se creó sin `registrado_por`
 - [ ] `auditoria` sin `via_superusuario` (§5.3)
@@ -102,7 +102,13 @@ Referencias sin nombre de documento (*§2*, *§4*, *§6*…) son del antiguo `Ad
 - [ ] `send_mail` de la recuperación es síncrono y sin `try` ni `EMAIL_TIMEOUT`: con SMTP real, si el servidor de correo falla, `/auth/recuperar/` responde 500 solo cuando la cuenta existe, y tarda más que con un correo inexistente (deja adivinar qué correos están registrados)
 - [ ] `/auth/login/` no limita los intentos de contraseña
 - [ ] El límite de enlaces de recuperación vive en memoria: se pierde al reiniciar y no se comparte entre procesos. Una tabla global o una caché compartida lo arreglaría (decisión D3 del plan)
-- [ ] Flujo de 2FA en el front (HU-02)
+- [x] Flujo de 2FA en el front (HU-02) — ya existe: pantallas de configurar, verificar y códigos de respaldo en `apps/cuentas/` (visto el 2026-10-05)
+- [ ] HU-27 (visitantes, de Camilo) está parcial: falta registrar la salida, la finalidad declarada, la autorización y el plazo de retención (Ley 1581, R2), el parqueadero de visitantes (HU-28) y el aviso a quienes residen en el apartamento
+- [ ] `apps/visitantes/views.py` del backend consulta y crea con el ORM directo: no hay `servicios.py`, no deja registro en la auditoría y la regla "solo Vigilancia registra" vive en la vista ([capas](../03_Reglas/capas.md)). Es de Camilo: se le avisa
+- [ ] Los `README.md` de `apps/visitantes/` (back y front) describen el alcance previsto, no lo construido: les falta la ruta `/visitantes/` y lo que quedó pendiente
+- [ ] Enlace para quitar el segundo factor (HU-02, 2026-10-05): falta recorrerlo a mano con la API encendida y un correo real, y hacer el commit en los dos repositorios
+- [ ] Quitar el segundo factor y restablecer la contraseña no dejan registro en la auditoría: `apps/auditoria/` escribe en el conjunto activo y esas rutas no tienen ninguno. Registrarlo pide una tabla global (R12), que es decisión de equipo
+- [ ] El envío del enlace del segundo factor comparte el hueco del de la contraseña: `send_mail` síncrono y sin `try`; si el servidor de correo falla, la ruta responde 500
 - [ ] Comando que borre los tokens vencidos: dejan de servir, pero se acumulan en `cuentas_tokendesesion`
 - [ ] Índices compuestos `(conjunto_id, …)` para consultas concretas, con cada tabla del producto que herede de `ModeloDeConjunto`
 - [x] Paso 5 del plan del Sprint 1: login con token — `0b0c4f8`

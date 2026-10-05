@@ -22,18 +22,20 @@ La columna "Sprint" es el reparto previsto en el Excel V11.1, que ya no se cumpl
 |**2**|HU-06 a HU-09|20|4 de 4|—|
 |**3**|HU-10 a HU-13|26|4 de 4|—|
 |**4**|HU-14 a HU-19|28|0|6|
-|**5**|HU-20, 21, 25, 27, 28, 29|28|2 (HU-21, HU-25, 10 SP)|4|
+|**5**|HU-20, 21, 25, 27, 28, 29|28|2 (HU-21, HU-25, 10 SP) y HU-27 parcial|3|
 |**6**|HU-22 a 24, HU-30 a 34|38|0|8|
 |**7**|HU-35, 36, 37|16|0|3|
 |Condicional|HU-38|7|0|1|
-|**Total**|**38**|**188**|**16 (81 SP)**|**22 (107 SP)**|
+|**Total**|**38**|**188**|**16 (81 SP)** y HU-27 parcial (5 SP)|**21 (102 SP)**|
+
+*Actualización del 2026-10-05:* HU-27 pasó de sin empezar a parcial con el commit de Camilo. Lo demás sigue como el 29/09.
 
 ## Todas las historias
 
 | HU | Historia | Sprint | SP | Prioridad | Avance |
 |---|---|---|---|---|---|
 | HU-01 | Inicio de sesión con correo y contraseña | 1 | 3 | Alta | **Construida** (5/5 tareas y criterios, con recuperación de contraseña; falta la DoD) |
-| HU-02 | Segundo factor (TOTP) para permisos sensibles | 1 | 5 | Alta | **Construida** (5/5; TOTP con QR y códigos de respaldo; falta la DoD) |
+| HU-02 | Segundo factor (TOTP) para permisos sensibles | 1 | 5 | Alta | **Construida** (5/5; TOTP con QR, códigos de respaldo y, desde el 05/10, enlace por correo para quitarlo si se pierde la aplicación; falta la DoD) |
 | HU-03 | Asistente por pasos para crear un conjunto | 1 | 6 | Alta | **Parcial**: los pasos de Áreas y Reglas son reales desde el 27/09; bloqueada por el reglamento (HU-33) |
 | HU-04 | Persona global única por documento | 1 | 3 | Alta | **Construida** (5/5, falta la DoD) |
 | HU-05 | Aislamiento de datos entre conjuntos | 1 | 2 | Alta | **Construida** (5/5, falta la DoD) |
@@ -55,7 +57,7 @@ La columna "Sprint" es el reparto previsto en el Excel V11.1, que ya no se cumpl
 | HU-20 | Anulación de registros por el Superusuario | 5 | 5 | Media | Sin empezar |
 | HU-21 | Identidad visual del conjunto: color y logo | 5 | 4 | Baja | **Construida** el 22/09 y ampliada el 29/09 con color propio y foto 1:1 (falta la DoD) |
 | HU-25 | Anuncios con alcance de conjunto o vivienda | 5 | 6 | Media | **Construida** el 22/09, con lo mínimo del canal de notificaciones (falta la DoD) |
-| HU-27 | Registro de visitantes y vehículos | 5 | 5 | Media | Sin empezar |
+| HU-27 | Registro de visitantes y vehículos | 5 | 5 | Media | **Parcial** desde el 01/10 (Camilo): registra el ingreso y lista los visitantes; sin salida |
 | HU-28 | Parqueadero de visitantes atado a la visita | 5 | 3 | Media | Sin empezar |
 | HU-29 | Tablero de casos con respuesta obligatoria | 5 | 5 | Media | Sin empezar |
 | HU-22 | Bandeja de triage de la Secretaría | 6 | 7 | Media | Sin empezar |
@@ -78,7 +80,7 @@ La columna "Sprint" es el reparto previsto en el Excel V11.1, que ya no se cumpl
 |HU|SP|Estado|Qué le falta|
 |---|---|---|---|
 |HU-01 Login con correo y contraseña|3|5/5 tareas y 5/5 criterios. Incluye la recuperación de contraseña por enlace de un solo uso|La DoD. Además queda un hueco: `send_mail` es síncrono y sin `try` (con SMTP real, un fallo da 500 solo si la cuenta existe). El límite de 3 enlaces por hora y el SMTP real quedaron hechos el 2026-10-05|
-|HU-02 Segundo factor (TOTP)|5|5/5 y 5/5. TOTP con QR y 10 códigos de respaldo|La DoD|
+|HU-02 Segundo factor (TOTP)|5|5/5 y 5/5. TOTP con QR y 10 códigos de respaldo. Desde el 2026-10-05, enlace por correo para quitarlo y configurarlo de nuevo (sin commit)|La DoD, y recorrer el enlace a mano con la API encendida y un correo real|
 |HU-03 Asistente para crear un conjunto|6|Parcial. Desde el 27/09 los pasos de Áreas y Reglas son reales|**Está bloqueada**: el reglamento no tiene módulo (HU-33) y cuenta como no cumplido, así que **ningún conjunto puede quedar operativo**. Tampoco verifiqué si registra en la auditoría quién creó el conjunto|
 |HU-04 Persona única por documento|3|5/5 y 5/5|La DoD|
 |HU-05 Aislamiento entre conjuntos|2|5/5 y 5/5. Desde el 27/09 ya lo usan tablas reales (áreas, reservas y demás)|La DoD|
@@ -106,10 +108,21 @@ Cada criterio de aceptación tiene una prueba automática con nombre propio.
 | HU-21 Identidad del conjunto | 4   | Construida el 22/09 (8 acentos y logo). **Hoy se amplió** con color propio en hex y foto cuadrada 1:1, commiteado y subido (`f053d31` y `96a30b4`). Esto **revierte** la decisión de "solo 8 acentos, sin hex libre", y el maestro §6.3 todavía no lo recoge |
 | HU-25 Anuncios               | 6   | Construida el 22/09, con lo mínimo del canal de notificaciones (bandeja y correo) y de HU-08                                                                                                                                                                 |
 
+### HU-27, parcial (Camilo, commits del 2026-10-01)
+
+Verificado en el código el 2026-10-05. No se comparó contra los criterios de Notion.
+
+| Qué hay | Qué no hay |
+|---|---|
+| `Visitante`: nombre, cédula, placa y tipo de vehículo (opcionales), apartamento visitado y hora de entrada, que pone el servidor | Registro de la **salida** |
+| `POST /visitantes/`: solo el rol Vigilancia, con `visitante.registrar` | Finalidad declarada, autorización y plazo de retención (Ley 1581, R2), que pide el README de la app |
+| `GET /visitantes/`: los de hoy para quien solo registra; todo el histórico con `visitante.ver_historico` | Parqueadero de visitantes (HU-28) y aviso a quienes residen en el apartamento |
+| Pantalla con el formulario (Vigilancia) y el listado; 6 pruebas en el back, 7 en el front y su listado en la prueba del intruso | Capa de servicio y registro en la auditoría: la vista usa el ORM directo |
+
 ### Sin empezar
 
 - **Sprint 4:** HU-14 a HU-19.
-- **Sprint 5:** HU-20, HU-27, HU-28 y HU-29.
+- **Sprint 5:** HU-20, HU-28 y HU-29.
 - **Sprints 6 y 7:** todas.
 - **Condicional:** HU-38.
 

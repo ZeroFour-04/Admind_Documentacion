@@ -17,14 +17,14 @@ punto_de_partida: "Backend 71ded31 (330 pruebas: 329 pasan y 1 falla, la conocid
 
 <!-- Lo mantiene el agente que ejecuta, guíe o construya. Quien escribe el plan lo deja en cero, con una fila por fase. -->
 
-**Dónde voy:** plan terminado el 2026-10-05 (F0 a F4). Solo queda lo humano: los commits de F1 (Backend) y de F2 y F3 (Frontend), el aviso a Camilo y la prueba manual de la DoD. F0, F1 y F4 fueron guiadas; F2 y F3 las construyó el agente porque Alejo lo pidió.
+**Dónde voy:** plan terminado el 2026-10-05 (F0 a F4). Commits hechos por Alejo: F1 en el Backend (`1c82605`) y F2 y F3 juntas en el Frontend (`afcd6e6`). Solo queda lo humano: el aviso a Camilo y la prueba manual de la DoD. F0, F1 y F4 fueron guiadas; F2 y F3 las construyó el agente porque Alejo lo pidió.
 
 | Fase | Deja funcionando | Estado | Modo | Explicada de vuelta | Verificación | Commit | Fecha |
 |---|---|---|---|---|---|---|---|
 | F0 | Punto de partida confirmado | hecha | guiada | — | Back: 329 passed, 1 failed (la conocida), `makemigrations` sin cambios, árbol limpio. Front: 150 passed, árbol limpio (ver Desviaciones) | — | 2026-10-04 |
-| F1 | La API rechaza con 429 el cuarto enlace en una hora para un mismo correo | hecha | guiada | saltada | Back: 333 passed, 1 failed (la conocida), `makemigrations` sin cambios | pendiente (Alejo) | 2026-10-04 |
-| F2 | La pantalla de pedir enlace tiene pruebas y muestra el mensaje del 429 | hecha | construida | — | Front: rojo esperado en `pasado_el_limite` antes de B2.5, luego 5 pruebas en verde | pendiente (Alejo) | 2026-10-05 |
-| F3 | La pantalla de crear contraseña nueva tiene pruebas | hecha | construida | — | Front: `160 passed` (suite completa); Back: `333 passed, 1 failed` (la conocida), `makemigrations` sin cambios | pendiente (Alejo) | 2026-10-05 |
+| F1 | La API rechaza con 429 el cuarto enlace en una hora para un mismo correo | hecha | guiada | saltada | Back: 333 passed, 1 failed (la conocida), `makemigrations` sin cambios | Back `1c82605` | 2026-10-04 |
+| F2 | La pantalla de pedir enlace tiene pruebas y muestra el mensaje del 429 | hecha | construida | — | Front: rojo esperado en `pasado_el_limite` antes de B2.5, luego 5 pruebas en verde | Front `afcd6e6` (junto con F3) | 2026-10-05 |
+| F3 | La pantalla de crear contraseña nueva tiene pruebas | hecha | construida | — | Front: `160 passed` (suite completa); Back: `333 passed, 1 failed` (la conocida), `makemigrations` sin cambios | Front `afcd6e6` (junto con F2) | 2026-10-05 |
 | F4 | El enlace llega a una bandeja real por SMTP | hecha | guiada (la hizo Alejo; el agente comprobó B4.4 y el cierre) | — | Alejo confirmó en el chat que el correo llegó. Con el SMTP configurado: Back `333 passed, 1 failed` (la conocida; `apps/cuentas/tests.py`: 40 passed), Front `160 passed`, `makemigrations` sin cambios, `.env` fuera de `git status` | — | 2026-10-05 |
 
 <!-- Estado: pendiente · en curso · hecha. Modo: guiada · construida (la hizo el agente). Explicada de vuelta: sí · saltada · — si fue construida. Verificación: qué se corrió y cómo salió. -->

@@ -35,7 +35,7 @@ El alcance es el instrumento de control de riesgo del proyecto. Está escrito as
 
 - Salón comunal, piscina, gimnasio, y catálogo de áreas ampliable por conjunto
 - Ciclo: bloquear 3 min → llenar → confirmar contenido → solicitar → validar reglas → revisión del administrador → aprobar o rechazar → cancelar
-- Cada área lleva `clasificacion ∈ {comun, comun_esencial, comun_uso_exclusivo}` y el flag derivado `esEsencial`
+- Un área se identifica por su nombre dentro del conjunto: no lleva tipo ni clasificación (decisión del 2026-10-05)
 
 **Asignación en alta demanda**
 

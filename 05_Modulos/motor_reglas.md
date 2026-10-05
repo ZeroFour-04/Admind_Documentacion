@@ -26,7 +26,7 @@ actualizado: 2026-09-30
 - Toda decisión queda trazada
 - Una regla beta nunca puede relajar una alfa
 - El cobro por un bien común solo procede si el reglamento lo autoriza
-- La restricción por mora solo aplica a bienes comunes **no esenciales**
+- ~~La restricción por mora solo aplica a bienes comunes **no esenciales**~~ — retirada el 2026-10-05: las áreas ya no tienen clasificación, así que no hay forma de marcar una como esencial ([construccion](../06_Decisiones/construccion.md))
 - Piscina: menores de 12 años requieren acompañante adulto; salvavidas en los supuestos exigidos
 
 **Nivel 2 — Reglas beta.** Configuradas por el administrador al crear el conjunto, tomadas de su reglamento. **Catálogo de tipos parametrizados, no DSL de texto libre** — un DSL es un proyecto de semestre por sí solo.
