@@ -2,7 +2,7 @@
 resumen: "Restricciones que hace cumplir PostgreSQL: las verificadas en la base y las que sostienen la concurrencia de reservas."
 tipo: arquitectura
 origen: "avance §2.3 (2026-09-15) + guía de estructura §4.4 (2026-09-30)"
-actualizado: 2026-09-30
+actualizado: 2026-10-06
 ---
 
 # Restricciones en PostgreSQL
@@ -18,6 +18,19 @@ AdMind no confía solo en Python para las reglas importantes: las repite como **
 | FK compuesta `(x_id, conjunto_id)` | `apps/comun/aislamiento/migraciones.py` → `fk_compuesta()` | Que una fila apunte a algo de **otro conjunto** |
 
 "Índice único **parcial**" significa: "único, pero solo entre las filas que cumplen una condición" (por ejemplo, solo las solicitudes en estado `EN_SOLICITUD`, `APARTADA` o `RESERVADA`). Las solicitudes expiradas o liberadas no cuentan, y por eso la franja vuelve a quedar libre.
+
+## Áreas y reglas (2026-10-06)
+
+Llegaron con el motor de reglas por niveles. Están en el modelo y en las migraciones `areas/0004` y `reglas/0004`, y tienen prueba que escribe directo en la base. En `admind_db` existen desde que se corra `migrate`.
+
+| Restricción | Dónde | Qué impide |
+|---|---|---|
+| `CHECK` `area_aforo_maximo_valido` | `areas/models.py` | Un área con aforo menor que 1. El campo es obligatorio |
+| `CHECK` `regla_nivel_coherente` | `reglas/models.py` | Una regla **abierta** en el nivel equivocado: una del conjunto con área, o una de un área sin ella. Las cerradas son historial y no se revisan |
+| Índice único parcial `regla_alfa_unica_abierta` | ídem | Dos reglas abiertas del mismo tipo en el conjunto |
+| Índice único parcial `regla_beta_unica_abierta` | ídem | Dos reglas abiertas del mismo tipo en la misma área |
+
+Una regla *abierta* es la que tiene `vigencia_hasta` vacía. La FK compuesta `(area_id, conjunto_id)` de `Regla` no cambió: PostgreSQL no la revisa cuando `area_id` es nulo, que es el caso de las reglas del conjunto.
 
 ## Verificadas en `admind_db` (2026-09-14 y 2026-09-15)
 

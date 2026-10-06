@@ -2,7 +2,7 @@
 resumen: "Lista de pendientes: lo que frena los story points, lo que hay que corregir en Notion, decisiones de equipo y pendientes técnicos."
 tipo: estado
 origen: "informe por sprints §4 a §6 (2026-09-29) + avance §6 (2026-09-27)"
-actualizado: 2026-10-05
+actualizado: 2026-10-06
 ---
 
 # Pendientes
@@ -46,6 +46,51 @@ Lo que el agente no pudo hacer al cerrar [Plan_Anuncios_Con_Fotos](../07_Planes/
 - [ ] **Avisarle a Camilo:** hay una migración nueva en `anuncios` (correr `migrate`) y la respuesta de `/anuncios/` ahora trae `fotos`.
 - [ ] **Notion:** anotar en HU-25 que ahora lleva fotos.
 - [ ] PR `desarrollo → pruebas` revisado, como el resto de las historias.
+
+## Estructura de viviendas, HU-39 (2026-10-06)
+
+Historia nueva, definida con Alejo tras la retroalimentación del docente. Sin construir.
+
+- [ ] **Alejo:** responder D1 a D5 de [Plan_Estructura_De_Viviendas](../07_Planes/activos/Plan_Estructura_De_Viviendas.md) y ejecutarlo.
+- [ ] **Notion:** crear HU-39 con los criterios que están en [historias](historias.md), y ponerle sprint, puntos y prioridad. El agente no toca Notion.
+- [ ] **Avisarle a Camilo:** hay una historia nueva; el plan trae una migración en `unidades`, tres rutas nuevas en `/unidades/` y el asistente pasa de 5 a 6 pasos.
+- [ ] **Segunda parte de HU-39**, sin plan todavía: las palabras del conjunto en las pantallas («Apartamento» está fijo en unas 70 menciones de 12 plantillas), el listado agrupado, registrar una vivienda a mano dentro de una agrupación, y retirar viviendas y agrupaciones con confirmación.
+- [ ] **Decidir** los tres puntos que quedan de [abiertas](../06_Decisiones/abiertas.md) 12.9: persona principal, cómo se cumple lo legal con los datos de quienes se mudan, y retiro de varias viviendas a la vez.
+
+## Habitantes de la vivienda (2026-10-06)
+
+Alejo decidió el tercer tipo de vínculo, `habitante` ([construccion](../06_Decisiones/construccion.md), [unidades](../05_Modulos/unidades.md)). Sin historia, sin plan y sin construir.
+
+- [ ] **Orden:** las zonas con ingreso dependen de esto. Propuesta del agente, sin decidir: que sea la primera fase del plan de ingresos. Qué entra antes de la entrega lo decide Alejo.
+- [ ] **Lo legal, antes de construir la pantalla:** qué finalidad se declara, quién autoriza el registro (el adulto responsable, si es un menor) y cuánto tiempo se conserva ([legal](../01_Contexto/legal.md) §4.2). Las pantallas de registro de hoy tampoco muestran la autorización.
+- [ ] **Avisarle a Camilo:** un tipo nuevo de vínculo, una migración en `unidades` y una operación que crea una persona sin cuenta.
+- [ ] **Historia y Notion:** no tiene historia. El agente no toca Notion.
+
+## Motor de reglas y zonas con ingreso (2026-10-06)
+
+Definición nueva con Alejo: [motor_reglas](../05_Modulos/motor_reglas.md) e [ingresos](../05_Modulos/ingresos.md). El motor para las áreas con reserva se construyó el 2026-10-06; el ingreso sigue sin construir.
+
+- [ ] **Alejo:** confirmar los supuestos del agente (están al final de las dos notas) y decidir los puntos de [abiertas](../06_Decisiones/abiertas.md) 12.10.
+- [ ] **Definir la creación de conjuntos** con las reglas nuevas: qué paso del asistente llena las alfa y qué exige para quedar operativo.
+- [ ] **Avisarle a Camilo:** alfa y beta cambiaron de significado; hay una funcionalidad nueva que usa el rol Vigilancia, pide un permiso nuevo y se parece a HU-27.
+- [ ] **Historia y Notion:** el ingreso a zonas no tiene historia, y los criterios de HU-09, HU-10 y HU-13 describen el modelo anterior. El agente no toca Notion.
+- [x] **Alejo:** responder D1 a D4 de [Plan_Motor_De_Reglas](../07_Planes/activos/Plan_Motor_De_Reglas.md) y ejecutarlo — respondidas (las cuatro en a) y construido por el agente el 2026-10-06, fases F0 a F5. El ingreso a zonas todavía no tiene plan.
+- [ ] **Alejo, para cerrar el plan del motor:** correr `migrate` en `admind_db` (bloque B3.6 del plan): aplica `areas/0004` y `reglas/0002` a `0004`, **cierra todas las reglas que había** y deja con aforo 1 las áreas que no tenían regla de aforo. Después, poner el aforo real de cada área y volver a definir las reglas en el tablero.
+- [ ] **Alejo:** revisar y hacer los commits del motor en los dos repositorios (el agente no hace commits sin que se los pidan; los mensajes sugeridos están al cierre de cada fase del plan). Sin `push` hasta probarlo.
+- [ ] **Prueba manual** del motor con el guion del final del plan (11 pasos). El agente recorrió las pantallas del front contra una API con la base de pruebas, sin usuarios reales ni navegador.
+- [ ] **Avisarle a Camilo, del motor:** crear un área ahora exige `aforo_maximo` y hay migración en `areas`; `migrate` cierra las reglas que tenía definidas y hay que volver a definirlas; la pantalla de reglas cambió, y `POST /reglas/` ya no exige `area` (va solo en las reglas de un área) y responde `409` si la regla ya está definida.
+- [ ] **Pagos:** *paz y salvo* y *día límite de pago* no tienen efecto hasta que exista el módulo (HU-16, HU-35), que además necesita la cuota mensual por vivienda (maestro §11.5).
+- [ ] **Texto de diseño:** el maestro §5.10 y [alcance](../01_Contexto/alcance.md) 3.1 siguen con el modelo anterior; solo llevan el aviso.
+- [ ] **READMEs del código:** el de `apps/reglas/` del Backend se corrigió el 2026-10-06. Sigue sin tocar `Backend/Admind_Backend/apps/conjuntos/README.md`, que dice que áreas y reglas cuentan como no cumplidas y que la auditoría «llega con `apps/auditoria/`», que ya existe.
+
+## Asistente de creación completo (2026-10-06)
+
+Tres planes abiertos el mismo día tocan el asistente; el orden está en [planes](../07_Planes/planes.md).
+
+- [ ] **Alejo:** responder D1 a D5 de [Plan_Asistente_De_Creacion](../07_Planes/activos/Plan_Asistente_De_Creacion.md).
+- [ ] **Alejo, confirmar el choque sobre *días que no abre*.** En el chat del asistente respondió que el motivo y los periodos quedaban para después; [Plan_Motor_De_Reglas](../07_Planes/activos/Plan_Motor_De_Reglas.md) los construye (B2.3, B4.4 y F5). El 2026-10-06 pidió ejecutar el plan y respondió D2 a, así que **quedaron construidos**. Falta que confirme que así lo quería; el agente no lo preguntó antes de construir porque no había leído esta nota.
+- [ ] **Avisarle a Camilo:** hay una app nueva, `documentos`, registrada en `config/`; el asistente pasa a siete pasos; y un conjunto ya puede quedar operativo.
+- [ ] **Decidir** si reservar exige que el conjunto esté operativo. Hoy no se revisa (plan D7 a del 27/09) y hasta ahora no importaba, porque ninguno podía estarlo.
 
 ## Lista larga (corte 2026-09-27)
 

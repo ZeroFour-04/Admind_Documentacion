@@ -2,7 +2,7 @@
 resumen: "Términos del proyecto y del código en una frase cada uno."
 tipo: contexto
 origen: "guía de estructura §11 (2026-09-30) y guía de desarrollo §14 (2026-09-15)"
-actualizado: 2026-09-30
+actualizado: 2026-10-06
 ---
 
 # Glosario
@@ -14,10 +14,15 @@ actualizado: 2026-09-30
 | **Tabla global** | Tabla sin `conjunto_id` (Persona, Usuario, Conjunto, tokens…). Están en una lista cerrada que una prueba vigila |
 | **Persona / Usuario** | Persona = el ser humano, único por documento, puede estar en varios conjuntos. Usuario = su cuenta para entrar (correo + contraseña) |
 | **Asignación** | El rol de una persona en un conjunto, con vigencia. Solo puede haber una vigente por persona y conjunto |
-| **Unidad / Vínculo** | Unidad = apartamento. Vínculo = relación de una persona con la unidad (propietario, reside…), con histórico |
+| **Unidad / Vínculo** | Unidad = una vivienda del conjunto, apartamento o casa (en pantalla, «vivienda»). Vínculo = relación de una persona con la unidad (propietario, reside…), con histórico |
+| **Agrupación** | Lo que junta viviendas dentro de un conjunto: una torre, un bloque, una manzana. La palabra la pone cada conjunto y es opcional. Definida el 2026-10-06 (HU-39), todavía sin construir. No se llama *bloque*: esa palabra ya es de las franjas y del bloqueo |
+| **Habitante** | Quien vive en una vivienda sin ser propietario ni arrendatario: la familia, un conviviente. Es un tercer tipo de vínculo, siempre con `reside`, y puede no tener cuenta. Decidido el 2026-10-06, sin construir. No es el rol *Residente*, que dice qué puede hacer una cuenta |
 | **Franja** | Un bloque de horario de un área en una fecha: (área, fecha, hora de inicio, hora de fin) |
 | **Bloqueo** | Los 3 minutos exclusivos para llenar y enviar una solicitud sobre una franja |
-| **Regla alfa / beta** | Alfa: en el código, siempre activa. Beta: la configura el administrador, versionada |
+| **Regla alfa / beta** | **Alfa** = regla del conjunto (una `Regla` sin área); **beta** = regla de un área. Las dos las define Administración, una sola vez por tipo, y son versionadas. Las fijas en el código se llaman **reglas del sistema** (`apps/reglas/sistema.py`). Así está construido desde el 2026-10-06; antes alfa era «fija» y beta «configurable», y los planes y notas anteriores usan ese sentido ([motor_reglas](../05_Modulos/motor_reglas.md)) |
+| **Zona / Área** | Un espacio común del catálogo del conjunto. En el código es `Area`; al definir las reglas se dice *zona*. Qué palabra va en pantalla está sin decidir |
+| **Modo de uso** | Cómo se usa una zona: *con reserva* (se aparta una franja) o *con ingreso* (vigilancia registra a quien entra). Definido el 2026-10-06, sin construir |
+| **Ingreso** | El registro de que un residente entró a una zona con ingreso, con sus acompañantes y su hora de salida ([ingresos](../05_Modulos/ingresos.md)). Sin construir |
 | **Token** | La "llave" que el front manda a la API en cada petición. Vence en 1 hora |
 | **Segundo factor (2FA, TOTP)** | El código de 6 dígitos de una app autenticadora, obligatorio con permisos sensibles |
 | **Serializer** | Valida lo que entra a la API y da forma a lo que sale (el "DTO") |

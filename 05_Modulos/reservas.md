@@ -4,7 +4,7 @@ tipo: modulo
 modulo: reservas
 hu: [HU-11, HU-12, HU-13]
 origen: "maestro v1.4 (2026-09-14) §5.1 + guía de estructura §7 (2026-09-30)"
-actualizado: 2026-09-30
+actualizado: 2026-10-06
 ---
 
 # Reservas
@@ -13,6 +13,7 @@ actualizado: 2026-09-30
 > - Hay un séptimo estado, no bloqueante: `LIBERADA`, con `motivo_liberacion` `voluntaria` o `reglas` (D2 a). Soltar el bloqueo a tiempo o incumplir las reglas no gasta oportunidad de R9.
 > - *Un solo bloqueo activo* es **por conjunto**, no en todo el sistema (D3 a): índice único parcial `(conjunto, persona)`.
 > - Aprobar y rechazar (HU-14) todavía no existe: una solicitud llega a `APARTADA` y ahí se queda.
+> - **2026-10-06:** este flujo pasa a ser el de las zonas *con reserva*; las zonas *con ingreso* no lo usan y siguen sin construir ([ingresos](ingresos.md)). Las reglas que evalúa **ya cambiaron de nivel** en el código: sistema, aforo del área, del conjunto y del área ([motor_reglas](motor_reglas.md)).
 >
 > Detalle en [construccion](../06_Decisiones/construccion.md).
 
@@ -87,7 +88,7 @@ sequenceDiagram
     R->>R: llena motivo y asistentes, "Revisar solicitud" (Alpine, sin servidor)
     R->>F: "Enviar solicitud" (POST …/enviar/)
     F->>A: POST /reservas/solicitudes/<id>/enviar/
-    A->>A: evaluar(): reglas alfa + beta, todas
+    A->>A: evaluar(): sistema + aforo + alfa + beta, todas
     alt cumple todas
         A->>DB: estado = APARTADA + aviso a Administración
         A-->>F: 200 APARTADA

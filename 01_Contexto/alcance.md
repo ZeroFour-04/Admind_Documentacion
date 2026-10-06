@@ -2,7 +2,7 @@
 resumen: "Alcance en cuatro niveles: Núcleo, Comprometido, Condicional y Fuera de alcance."
 tipo: contexto
 origen: "maestro v1.4 (2026-09-14) §3"
-actualizado: 2026-09-14
+actualizado: 2026-10-06
 ---
 
 # Alcance, en cuatro niveles
@@ -11,6 +11,9 @@ actualizado: 2026-09-14
 > - **Plazo:** entrega cerca del 2026-10-14 y no se entrega completo. Qué entra sigue abierto ([abiertas](../06_Decisiones/abiertas.md), §12.8); ningún agente recorta alcance por su cuenta.
 > - **Roles (2026-09-29):** una persona tiene un solo rol vigente por conjunto. Donde 3.1 dice *unión de todos los roles*, ver [permisos](../05_Modulos/permisos.md).
 > - **Logo por conjunto (3.3):** desde el 2026-09-29 existe la foto 1:1 del conjunto (HU-21). Ver [conjuntos](../05_Modulos/conjuntos.md).
+> - **Viviendas (2026-10-06):** el asistente gana un paso que genera las viviendas del conjunto, y **tener al menos una vivienda pasa a ser requisito para quedar operativo**, además de los que lista 3.1. Es HU-39, todavía sin construir. Ver [construccion](../06_Decisiones/construccion.md).
+> - **Reglas y zonas (2026-10-06):** alfa pasa a ser la regla del conjunto y beta la de la zona. Donde 3.1 dice que *la anticipación máxima es una regla beta*, ahora es alfa. Las zonas tienen dos modos de uso, con reserva y con ingreso; el ingreso con aforo (gimnasio, piscina) es una funcionalidad nueva, sin historia. Todo sin construir. Ver [motor_reglas](../05_Modulos/motor_reglas.md) e [ingresos](../05_Modulos/ingresos.md).
+> - **`conjunto.crear` (el código manda):** 3.1 dice que es solo del Superusuario, pero en `apps/permisos/catalogo.py` también lo tiene Administración. Quien crea un conjunto desde Administración queda como su Administración (`apps/conjuntos/servicios.py`).
 
 El alcance es el instrumento de control de riesgo del proyecto. Está escrito así a propósito: **si solo el Núcleo funciona, el proyecto se sustenta igual.**
 

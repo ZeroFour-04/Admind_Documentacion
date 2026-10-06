@@ -1,9 +1,9 @@
 ---
-resumen: "Las 38 historias de usuario: sprint previsto, story points y avance de cada una, con lo que le falta a las construidas."
+resumen: "Las 38 historias de usuario y HU-39 (nueva, 2026-10-06): sprint previsto, story points y avance de cada una, con lo que le falta a las construidas."
 tipo: estado
 corte: 2026-09-29
 origen: "avance §5.2 (2026-09-27) actualizado con el informe por sprints del 2026-09-29 y la guía de estructura del 2026-09-30"
-actualizado: 2026-10-05
+actualizado: 2026-10-06
 ---
 
 # Historias de usuario
@@ -36,18 +36,18 @@ La columna "Sprint" es el reparto previsto en el Excel V11.1, que ya no se cumpl
 |---|---|---|---|---|---|
 | HU-01 | Inicio de sesión con correo y contraseña | 1 | 3 | Alta | **Construida** (5/5 tareas y criterios, con recuperación de contraseña; falta la DoD) |
 | HU-02 | Segundo factor (TOTP) para permisos sensibles | 1 | 5 | Alta | **Construida** (5/5; TOTP con QR, códigos de respaldo y, desde el 05/10, enlace por correo para quitarlo si se pierde la aplicación; falta la DoD) |
-| HU-03 | Asistente por pasos para crear un conjunto | 1 | 6 | Alta | **Parcial**: los pasos de Áreas y Reglas son reales desde el 27/09; bloqueada por el reglamento (HU-33) |
+| HU-03 | Asistente por pasos para crear un conjunto | 1 | 6 | Alta | **Parcial**: los pasos de Áreas y Reglas son reales desde el 27/09; bloqueada por el reglamento (HU-33). El 06/10 se planeó completa, en tres planes: [planes](../07_Planes/planes.md) |
 | HU-04 | Persona global única por documento | 1 | 3 | Alta | **Construida** (5/5, falta la DoD) |
 | HU-05 | Aislamiento de datos entre conjuntos | 1 | 2 | Alta | **Construida** (5/5, falta la DoD) |
 | HU-26 | Selector de conjunto activo | 1 | 6 | Alta | **Construida** (5/5, conectada a la API; falta la DoD) |
 | HU-06 | Asignación de roles del catálogo fijo | 2 | 6 | Alta | **Construida** (criterios en código, falta la DoD). Desde el 29/09, un solo rol por conjunto |
 | HU-07 | Vincular persona existente por búsqueda de documento | 2 | 3 | Alta | **Construida** (criterios en código, falta la DoD) |
 | HU-08 | Vínculos de unidad y enrutamiento de notificaciones | 2 | 7 | Alta | **Construida** (criterios en código, falta la DoD) |
-| HU-09 | Catálogo de áreas comunes del conjunto | 2 | 4 | Alta | **Construida** (criterios en código, falta la DoD) |
-| HU-10 | Configuración de reglas beta de reserva | 3 | 9 | Alta | **Construida** (criterios en código, falta la DoD) |
+| HU-09 | Catálogo de áreas comunes del conjunto | 2 | 4 | Alta | **Construida** (criterios en código, falta la DoD). Desde el 06/10 cada área lleva **aforo máximo obligatorio** (sin commit). El modo de uso de la zona sigue sin construir |
+| HU-10 | Configuración de reglas beta de reserva | 3 | 9 | Alta | **Construida** (criterios en código, falta la DoD). El 06/10 se redefinió y se **reconstruyó por niveles**, sin commit: reglas del conjunto y del área, una sola por tipo, con descripción fija y días que no abre con motivo ([motor_reglas](../05_Modulos/motor_reglas.md)). Sus criterios en Notion describen el modelo anterior |
 | HU-11 | Bloqueo exclusivo de 3 minutos sobre una franja | 3 | 7 | Alta | **Construida** (criterios en código, falta la DoD) |
 | HU-12 | Confirmación de contenido antes de enviar | 3 | 2 | Alta | **Construida** (criterios en código, falta la DoD) |
-| HU-13 | Envío de solicitud y motor de reglas alfa/beta | 3 | 8 | Alta | **Construida** (criterios en código, falta la DoD) |
+| HU-13 | Envío de solicitud y motor de reglas alfa/beta | 3 | 8 | Alta | **Construida** (criterios en código, falta la DoD). Desde el 06/10 el evaluador junta reglas del sistema, aforo del área, reglas del conjunto y reglas del área (sin commit) |
 | HU-14 | Bandeja del administrador: aprobar o rechazar | 4 | 8 | Alta | Sin empezar |
 | HU-15 | Condiciones del alquiler congeladas y versionadas | 4 | 4 | Alta | Sin empezar |
 | HU-16 | Registro de pago declarado y comprobante | 4 | 4 | Media | Sin empezar |
@@ -72,6 +72,7 @@ La columna "Sprint" es el reparto previsto en el Excel V11.1, que ya no se cumpl
 | HU-36 | Importación masiva con dry-run e idempotencia | 7 | 7 | Baja | Sin empezar |
 | HU-37 | Respaldo de información por conjunto | 7 | 5 | Baja | Sin empezar |
 | HU-38 | Registro de actividades sobre la auditoría | Condicional | 7 | Baja | Sin empezar |
+| HU-39 | Estructura de viviendas del conjunto: agrupaciones y generación en lote | Por definir | Por estimar | Por definir | **Definida el 06/10**, sin construir. Historia nueva tras la retroalimentación del docente; **no está en Notion**. Primera parte en [Plan_Estructura_De_Viviendas](../07_Planes/activos/Plan_Estructura_De_Viviendas.md) |
 
 ## Detalle de las construidas (corte 2026-09-29)
 
@@ -95,11 +96,11 @@ Cada criterio de aceptación tiene una prueba automática con nombre propio.
 |HU-06 Asignar y retirar roles|6|Todos los criterios con prueba|"Nunca cero Administración" responde 409 y hay una prueba con dos hilos a la vez|
 |HU-07 Vincular persona por documento|3|Todos los criterios con prueba|Máximo 20 búsquedas por hora, contadas **por conjunto** (falta decidir si el límite debe ser global)|
 |HU-08 Unidades y vínculos|7|Todos los criterios con prueba|Solo se vincula a quien ya tiene un rol en el conjunto|
-|HU-09 Áreas comunes|4|Todos los criterios con prueba|Franjas por bloques fijos (D1 a)|
-|HU-10 Reglas beta|9|Todos los criterios con prueba|7 tipos de regla que solo restringen, con versionado|
+|HU-09 Áreas comunes|4|Todos los criterios con prueba|Franjas por bloques fijos (D1 a). Aforo máximo obligatorio desde el 06/10|
+|HU-10 Reglas beta|9|Todos los criterios con prueba|Desde el 06/10: 5 tipos vigentes en dos niveles (3 del conjunto y 2 del área), una sola abierta por tipo, con versionado; 3 tipos retirados quedan para el historial|
 |HU-11 Bloqueo de 3 minutos|7|Todos los criterios con prueba, incluida la de concurrencia con 10 hilos|Falta probar a mano el `sendBeacon` que libera el bloqueo al cerrar la pestaña|
 |HU-12 Confirmación antes de enviar|2|3 de 5 criterios con prueba automática|"Corregir sin perder lo escrito" y "el reloj no se detiene" necesitan prueba manual. La alta demanda depende de PB-24, que no existe|
-|HU-13 Envío y motor de reglas|8|Todos los criterios con prueba|La mora siempre da `False` hasta que exista HU-35 (D5 b). Las alfas de piscina y de cobro quedan fuera|
+|HU-13 Envío y motor de reglas|8|Todos los criterios con prueba|La mora siempre da `False` hasta que exista HU-35 (D5 b). Las reglas de piscina y de cobro quedan fuera|
 
 ### Adelantadas del Sprint 5
 
@@ -118,6 +119,22 @@ Verificado en el código el 2026-10-05. No se comparó contra los criterios de N
 | `POST /visitantes/`: solo el rol Vigilancia, con `visitante.registrar` | Finalidad declarada, autorización y plazo de retención (Ley 1581, R2), que pide el README de la app |
 | `GET /visitantes/`: los de hoy para quien solo registra; todo el histórico con `visitante.ver_historico` | Parqueadero de visitantes (HU-28) y aviso a quienes residen en el apartamento |
 | Pantalla con el formulario (Vigilancia) y el listado; 6 pruebas en el back, 7 en el front y su listado en la prueba del intruso | Capa de servicio y registro en la auditoría: la vista usa el ORM directo |
+
+### HU-39, definida el 2026-10-06 y sin construir
+
+*Como Administración, quiero describir cómo está organizado mi conjunto y que el sistema cree sus viviendas, para empezar a usar la plataforma sin registrarlas una por una.* Sale de la retroalimentación del docente sobre HU-03 y HU-08; lo decidido está en [construccion](../06_Decisiones/construccion.md). Sprint, puntos y prioridad los pone el equipo en Notion.
+
+| # | Criterio | Plan |
+|---|---|---|
+| 1 | El asistente tiene un paso «Viviendas» que pregunta: apartamentos, casas o las dos cosas; si se agrupan y con qué palabra (torre, bloque, manzana, otra, o no se agrupan); cómo se identifican las agrupaciones (números, letras o nombres propios); cuántas viviendas tiene cada una, iguales o distintas; y cómo se numeran | Primera parte |
+| 2 | Antes de crear, el sistema muestra la vista previa: cuántas viviendas, en qué agrupaciones y con qué nombres. Nada se guarda sin confirmar | Primera parte |
+| 3 | Las viviendas se crean todas o ninguna, con el nombre armado con las palabras del conjunto. Las que ya existen se omiten y se informa cuántas | Primera parte |
+| 4 | Un conjunto mixto registra apartamentos y casas, cada grupo con su agrupación | Primera parte |
+| 5 | Un conjunto sin viviendas no puede quedar operativo | Primera parte |
+| 6 | Después de creado, se pueden agregar agrupaciones y viviendas (ampliaciones), con el generador o a mano | El generador, en la primera parte; a mano con agrupación, en la segunda |
+| 7 | Las pantallas usan las palabras del conjunto: Apartamentos, Casas o Viviendas, y Torre, Manzana… Hoy «Apartamento» está fijo en unas 70 menciones de 12 plantillas | Segunda parte |
+| 8 | Retirar una vivienda o una agrupación pide siempre confirmación. Es baja lógica y una por una; no hay borrado | Segunda parte |
+| 9 | Aislamiento por conjunto y registro en la auditoría, como toda pieza nueva | Primera parte |
 
 ### Sin empezar
 

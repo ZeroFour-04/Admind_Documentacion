@@ -2,7 +2,7 @@
 resumen: "Cómo correr los dos servidores y las pruebas, qué cubre cada suite y cuál falla hoy."
 tipo: arquitectura
 origen: "guía de estructura §4.8, §8 y §9 (2026-09-30) + plan de los Sprints 2 y 3 §0.4"
-actualizado: 2026-10-05
+actualizado: 2026-10-06
 ---
 
 # Pruebas y ejecución
@@ -38,6 +38,8 @@ Las pruebas se escriben como funciones `def test_…():` con `assert`. `pytest-d
 | `Backend/…/tests/concurrencia/` | — | N personas contra la misma franja → un solo bloqueo |
 | `Backend/…/tests/esquema/` | — | La **lista cerrada de tablas globales**: si aparece una tabla sin `conjunto_id` que no esté en la lista, falla |
 | `Frontend/…/tests/` | 180 (169 en el último commit, `ea0e9e5`) | Cada pantalla con la API simulada: qué muestra, qué oculta sin permiso, cómo presenta los errores. `test_anuncios.py` cubre también subir fotos al publicar y la galería del tablón. `test_acentos.py` y `test_identidad.py` cubren la rampa del color propio, la advertencia de contraste y el marcador con iniciales; `test_recuperacion.py`, las pantallas de recuperar la contraseña (sin sesión, con la API simulada); `test_segundo_factor.py`, las de pedir y confirmar el enlace que quita el segundo factor |
+
+**Al 2026-10-06**, con el motor de reglas por niveles sin commit: Backend **378** (377 pasan y falla la misma de siempre, que ya lista 5 rutas sin registrar) y Frontend **193**, todas pasan. Sobre los últimos commits (`2d11dbe` y `a3792d7`) eran 368 y 188. `apps/reglas/tests.py` cubre los niveles, la regla única por tipo, los tipos retirados, el catálogo, las tres restricciones de la base y el evaluador; `tests/test_reglas.py` del front, el tablero, los días que no abre y el paso del asistente.
 
 Las pruebas automáticas **no reemplazan** la prueba manual de la DoD: nadie ha recorrido HU-06 a HU-13 en el navegador todavía. El recortador de foto y el diálogo de "Eliminar usuario" son JavaScript y **no tienen prueba automática**: solo se prueban a mano.
 

@@ -2,7 +2,7 @@
 resumen: "Lista de planes de trabajo: cuáles están activos y cuáles ya se ejecutaron."
 tipo: plan
 origen: "reorganización del 2026-09-30"
-actualizado: 2026-10-05
+actualizado: 2026-10-06
 ---
 
 # Planes
@@ -13,7 +13,11 @@ Cómo se escribe y se cierra uno: [abrir_y_cerrar_un_plan](../09_Protocolos/abri
 
 | Plan | Qué cubre | Abierto | Estado |
 |---|---|---|---|
-| — | Ninguno por ahora | — | — |
+| [Plan_Estructura_De_Viviendas](activos/Plan_Estructura_De_Viviendas.md) | HU-39, primera parte: agrupaciones, generador de viviendas con vista previa, su API y el paso «Viviendas» del asistente, con conjuntos mixtos y el requisito para quedar operativo. Fases F0 a F4, guiado | 2026-10-06 | Sin empezar; faltan las respuestas D1 a D5 |
+| [Plan_Motor_De_Reglas](activos/Plan_Motor_De_Reglas.md) | El motor de reglas de la definición del 2026-10-06, para las áreas con reserva: aforo obligatorio en el área, reglas del conjunto (alfa) y del área (beta) una sola vez por tipo, descripción fija de cada una, días que no abre con motivo y el tablero de reglas. Fases F0 a F5, guiado. No incluye el ingreso a zonas | 2026-10-06 | **Construido por el agente el 2026-10-06** (F0 a F5, D1 a D4 en a), sin commit. Falta B3.6, `migrate` en `admind_db`, que corre Alejo; con eso se cierra y pasa a *Hechos* |
+| [Plan_Asistente_De_Creacion](activos/Plan_Asistente_De_Creacion.md) | El asistente de creación completo (HU-03): dice en qué orden van los tres planes y construye lo que faltaba, que es el paso del reglamento en PDF (lo mínimo de HU-33), los requisitos para quedar operativo y el resumen de siete pasos. Fases F0 a F3, guiado | 2026-10-06 | Sin empezar; faltan las respuestas D1 a D5 |
+
+**Orden de los tres planes del asistente:** viviendas; F1 y F2 del asistente (con eso un conjunto ya puede quedar operativo); motor de reglas; F3 del asistente. Lo único fijo es que viviendas va antes del asistente y el motor antes de su F3.
 
 El siguiente paso natural del núcleo es HU-14 (aprobar o rechazar una solicitud), pero qué entra antes de la entrega sigue sin decidir ([abiertas](../06_Decisiones/abiertas.md), 12.8).
 

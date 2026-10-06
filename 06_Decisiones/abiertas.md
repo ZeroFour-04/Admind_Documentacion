@@ -1,8 +1,8 @@
 ---
-resumen: "Contradicciones abiertas entre documentos (12.1 a 12.8). Ningún agente las resuelve por su cuenta."
+resumen: "Contradicciones abiertas entre documentos (12.1 a 12.8) y vacíos sin decidir sobre las viviendas (12.9) y sobre el motor de reglas y las zonas con ingreso (12.10). Ningún agente las resuelve por su cuenta."
 tipo: decision
-origen: "maestro v1.4 (2026-09-14) §12"
-actualizado: 2026-09-30
+origen: "maestro v1.4 (2026-09-14) §12; 12.9 y 12.10 agregadas el 2026-10-06"
+actualizado: 2026-10-06
 ---
 
 # Contradicciones abiertas entre documentos
@@ -13,6 +13,8 @@ actualizado: 2026-09-30
 > - **12.7 b (token o sesión):** resuelta el 2026-09-15 con token registrado en la base.
 > - **12.7 c (un solo bloqueo):** resuelta el 2026-09-27: un bloqueo por persona y conjunto (D3 a).
 > - **12.8 (qué entra en el mes):** sigue abierta.
+> - **12.9 (quién vive en una vivienda y cómo se retira):** a) resuelta el 2026-10-06 con el vínculo `habitante`; b), c) y d) siguen abiertas.
+> - **12.10 (motor de reglas y zonas con ingreso):** a) resuelta el 2026-10-06 (el tablero avisa); b), c), d) y e) siguen abiertas.
 >
 > Las resoluciones están en [construccion](construccion.md). Lo que no aparece en esta lista sigue como está escrito abajo.
 
@@ -91,6 +93,38 @@ Falta decidir:
 - **Qué historias entran.** El §3 da el orden (Núcleo, Comprometido, Condicional), pero no dice cuánto del Núcleo cabe en un mes
 - **Cuántos sprints y de qué duración.** La regla de duración fija (§8.1) existe para medir velocidad, y el §11.3 dejaba que el Sprint 1 calibrara la cifra
 - **Qué evidencias de Scrum del §8.1 se alcanzan a producir**, porque el jurado las va a pedir igual
+
+## 12.9 · Detectadas el 2026-10-06, al definir HU-39: quién vive en una vivienda y cómo se retira
+
+_No son contradicciones entre documentos: son vacíos que Alejo preguntó y que nadie ha decidido. Lo que se afirma del código se comprobó ese día._
+
+**a) Las personas de una vivienda que no son propietario ni arrendatario — resuelta el 2026-10-06.** Alejo decidió el tercer tipo de vínculo, `habitante`: está en [construccion](construccion.md) y sigue sin construir. Lo que sigue es el vacío como se detectó. Hoy una persona llega a una vivienda así: se crea con su cuenta y un rol en el conjunto (`registrar_usuario` crea las tres cosas juntas), y después se le registra un vínculo, que solo puede ser `propietario` o `arrendatario`, con `reside` sí o no. El cónyuge o el hijo adulto que vive ahí no cabe en ninguno de los dos tipos, así que no puede reservar, porque el derecho a reservar nace del vínculo ([unidades](../05_Modulos/unidades.md)). [personas](../05_Modulos/personas.md) prevé una persona sin cuenta («un menor con TI registrado por sus padres»), pero no existe la operación que la cree. Falta decidir si se registran, y cómo: nada más que los titulares (como hoy), un tercer tipo de vínculo para quien solo habita, o un censo sin identidad. Tocaría `VinculoUnidad` y quizá `Persona`.
+
+**Esto bloquea las zonas con ingreso** ([ingresos](../05_Modulos/ingresos.md)). Ahí el vigilante busca el documento solo entre quienes residen según sus vínculos, así que la familia de un propietario o de un arrendatario sale como «no encontrado» y solo podría entrar como acompañante de un titular que esté presente. Las reservas no se afectan: la familia asiste como parte del aforo de la reserva. Propuesta del agente del 2026-10-06, sin decidir: un tercer tipo de vínculo, `habitante`, siempre con `reside`, para una persona que puede no tener cuenta ni rol. Obliga a volver explícitos los dos enrutamientos que hoy toman «todos los vínculos» (el anuncio a la vivienda y la infracción, `VINCULOS_POR_HECHO` en `apps/unidades/servicios.py`) y a crear la operación que registra una persona sin cuenta.
+
+**b) Persona principal de la vivienda.** No existe. Una vivienda puede tener varios propietarios y varios arrendatarios vigentes, todos iguales, y a quién se avisa lo decide el hecho, no un «principal». Falta decidir si el equipo quiere un contacto principal y para qué.
+
+**c) Qué datos se piden de quienes se mudan.** La bóveda solo fija la regla general: toda captura de documento exige finalidad declarada, autorización y plazo de retención (Ley 1581, [legal](../01_Contexto/legal.md) §4.2). No hay un requisito escrito sobre el registro de residentes. Por verificar contra la guía legal v1.0 y con el docente, antes de programar nada: que la Ley 675 (art. 51, num. 2) encarga al administrador el registro de propietarios y residentes sin decir qué campos lleva, y el trato que la Ley 1581 da a los datos de menores y a los datos sensibles. Con duda legal no se implementa. El 2026-10-06 Alejo decidió que los habitantes, menores incluidos, se registran con su documento. Lo que falta definir antes de construir esa pantalla es cómo cumple los tres requisitos: qué finalidad se declara, quién autoriza (el adulto responsable, si es un menor) y cuánto tiempo se conserva.
+
+**d) Retirar varias viviendas a la vez.** [eliminacion](../03_Reglas/eliminacion.md) dice que ninguna operación borra ni desactiva por filtro, siempre por identificador, y Alejo decidió que una vivienda se retira una por una. Si una generación sale mal (por ejemplo, dos pisos de más en seis torres son 48 viviendas), corregirla es lento. Falta decidir si una lista explícita de viviendas marcadas, con confirmación que las nombre, cuenta como «por identificador». La vista previa de HU-39 existe para que esto casi no pase.
+
+## 12.10 · Detectadas el 2026-10-06, al redefinir el motor de reglas y las zonas con ingreso
+
+_Tampoco son contradicciones entre documentos: son vacíos que quedaron al definir [motor_reglas](../05_Modulos/motor_reglas.md) e [ingresos](../05_Modulos/ingresos.md)._
+
+**a) Un cierre que cae sobre reservas ya aprobadas.** *Días que no abre* admite periodos sin tope, y las reglas se evalúan al pedir, así que un cierre nuevo no toca las reservas aprobadas de esos días. Falta decidir qué hace el sistema al guardarlo: avisar cuántas quedan dentro y dejar que Administración las cancele (la que recomendó el agente), no dejar guardar mientras existan, o cancelarlas todas con aviso a cada residente. **Resuelta el 2026-10-06:** Alejo eligió avisar (D2 a del plan del motor). El tablero de reglas dice cuántas reservas apartadas o aprobadas caen en los días que el área no abre y enlaza a las solicitudes del área; cancelarlas sigue siendo decisión de Administración, caso por caso.
+
+**b) Lo legal, por verificar antes de programar.** Con duda legal no se implementa.
+
+- Que restringir por mora el ingreso al gimnasio o a la piscina procede. El agente citó **de memoria** que el art. 59 de la Ley 675 nombra las zonas de recreación y deporte como bienes no esenciales; [legal](../01_Contexto/legal.md) §4.2 solo trae la referencia. Sigue vigente el aviso del 2026-10-05: nada impide crear una zona que sea un bien esencial y exigirle paz y salvo.
+- Que registrar quién entra a una zona, y cuándo, es un dato personal: la Ley 1581 pide finalidad declarada, autorización y plazo de retención. No se definió ninguno de los tres.
+- Las reglas de piscina de la Ley 1209 (menores de 12 años con un adulto, salvavidas) no se definieron para el modo con ingreso.
+
+**c) El permiso y el rol de quien registra el ingreso.** Alejo eligió Vigilancia «por ahora» y dudó si debía ser un rol aparte. Hace falta un permiso nuevo en el catálogo; el agente propuso `ingreso.registrar`. El catálogo de roles y permisos es de equipo.
+
+**d) Las palabras en pantalla.** La definición dice *zona* y el código y los textos actuales dicen *área*; las descripciones se escribieron una vez con *turno* y el glosario dice *franja*. Falta quedarse con un solo par.
+
+**e) Cómo entran las reglas al asistente de creación.** Qué paso llena las alfa, cuáles son obligatorias y qué reemplaza al requisito actual de «al menos una regla beta vigente» para quedar operativo. Es lo siguiente por definir con Alejo. **Decidido en parte el 2026-10-06:** el paso de reglas es el tablero del plan del motor; para quedar operativo se exigen al menos un área activa y las reglas del conjunto, en vez de «al menos una regla beta vigente». Falta precisar qué cuenta como reglas del conjunto definidas: es la D3 de [Plan_Asistente_De_Creacion](../07_Planes/activos/Plan_Asistente_De_Creacion.md).
 
 ## Ver también
 
