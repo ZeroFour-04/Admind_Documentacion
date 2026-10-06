@@ -28,7 +28,7 @@ A D M I N D/
 │   ├── apps/                        ← un módulo por sección de la interfaz: vistas, formularios, plantillas
 │   ├── templates/base/              ← el esqueleto de toda página
 │   ├── templates/componentes/       ← piezas reutilizables: barra, lateral, campo, confirmación
-│   ├── static/css  static/js        ← estilos propios y el JavaScript: reservas.js, identidad.js, usuarios.js, visitantes.js y vendor/alpine.min.js
+│   ├── static/css  static/js        ← estilos propios y el JavaScript: reservas.js, identidad.js, usuarios.js, visitantes.js, lateral.js (menú en pantallas angostas) y vendor/alpine.min.js
 │   ├── design-system/               ← tokens de color, tipografía y componentes CSS (de Claude Design)
 │   └── tests/                       ← pruebas de pantallas con la API simulada
 │

@@ -30,6 +30,8 @@ La columna "Sprint" es el reparto previsto en el Excel V11.1, que ya no se cumpl
 
 *Actualización del 2026-10-05:* HU-27 pasó de sin empezar a parcial con el commit de Camilo. Lo demás sigue como el 29/09.
 
+*Actualización del 2026-10-06 (corte del informe 4):* **HU-14 está construida** (8 SP, Sprint 4), así que la tabla de arriba queda corta: son 17 historias construidas (89 SP), HU-27 y HU-33 parciales (8 SP) y 19 sin empezar (91 SP). Todo lo que las filas de abajo marcan como «sin commit» **ya tiene commit y está subido** (Backend hasta `279e963`, Frontend hasta `fff4651`), y sus migraciones están aplicadas en `admind_db`.
+
 ## Todas las historias
 
 | HU | Historia | Sprint | SP | Prioridad | Avance |
@@ -48,7 +50,7 @@ La columna "Sprint" es el reparto previsto en el Excel V11.1, que ya no se cumpl
 | HU-11 | Bloqueo exclusivo de 3 minutos sobre una franja | 3 | 7 | Alta | **Construida** (criterios en código, falta la DoD) |
 | HU-12 | Confirmación de contenido antes de enviar | 3 | 2 | Alta | **Construida** (criterios en código, falta la DoD) |
 | HU-13 | Envío de solicitud y motor de reglas alfa/beta | 3 | 8 | Alta | **Construida** (criterios en código, falta la DoD). Desde el 06/10 el evaluador junta reglas del sistema, aforo del área, reglas del conjunto y reglas del área (sin commit) |
-| HU-14 | Bandeja del administrador: aprobar o rechazar | 4 | 8 | Alta | Sin empezar |
+| HU-14 | Bandeja del administrador: aprobar o rechazar | 4 | 8 | Alta | **Construida** el 05/10 por Camilo (Backend `2d11dbe`, Frontend `d76ac0f` y `fff4651`): solicitudes por área y bandeja del conjunto, aceptar o rechazar con motivo obligatorio, auditoría y 409 si ya se decidió; Administración, Secretaría y Superusuario. Falta la DoD, el aviso al residente al decidir, la causal de lista cerrada, las condiciones del alquiler (HU-15) y registrar sus tres rutas en la prueba del intruso. No se comparó contra sus criterios de Notion |
 | HU-15 | Condiciones del alquiler congeladas y versionadas | 4 | 4 | Alta | Sin empezar |
 | HU-16 | Registro de pago declarado y comprobante | 4 | 4 | Media | Sin empezar |
 | HU-17 | Cancelación de reservas en firme | 4 | 3 | Media | Sin empezar |
@@ -138,12 +140,12 @@ Verificado en el código el 2026-10-05. No se comparó contra los criterios de N
 
 ### Sin empezar
 
-- **Sprint 4:** HU-14 a HU-19.
+- **Sprint 4:** HU-15 a HU-19.
 - **Sprint 5:** HU-20, HU-28 y HU-29.
 - **Sprints 6 y 7:** todas.
 - **Condicional:** HU-38.
 
-**HU-14 (aprobar o rechazar, 8 SP)** es la que cierra el ciclo de la reserva: hoy una solicitud llega a `APARTADA` y ahí se queda.
+**HU-14 (aprobar o rechazar, 8 SP)** ya está construida (05/10): una solicitud `APARTADA` pasa a `RESERVADA` o `RECHAZADA`. Del ciclo de la reserva falta la cancelación en firme (HU-17).
 
 ## Ver también
 

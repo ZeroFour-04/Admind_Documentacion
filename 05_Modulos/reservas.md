@@ -12,7 +12,7 @@ actualizado: 2026-10-06
 > [!WARNING] Decisiones posteriores al texto del maestro (2026-09-27)
 > - Hay un séptimo estado, no bloqueante: `LIBERADA`, con `motivo_liberacion` `voluntaria` o `reglas` (D2 a). Soltar el bloqueo a tiempo o incumplir las reglas no gasta oportunidad de R9.
 > - *Un solo bloqueo activo* es **por conjunto**, no en todo el sistema (D3 a): índice único parcial `(conjunto, persona)`.
-> - Aprobar y rechazar (HU-14) todavía no existe: una solicitud llega a `APARTADA` y ahí se queda.
+> - **2026-10-06:** aprobar y rechazar (HU-14) **ya existe** desde el 05/10 (Camilo, Backend `2d11dbe`): `POST /reservas/solicitudes/<id>/decision/` con `decision` (`RESERVADA` o `RECHAZADA`) y `motivo` obligatorio, `GET /reservas/areas/<id>/solicitudes/` y `GET /reservas/bandeja/`; `servicios.decidir_solicitud` bloquea la fila, solo decide una `APARTADA` (si no, 409) y deja la auditoría. El resto de esta nota todavía lo describe como pendiente.
 > - **2026-10-06:** este flujo pasa a ser el de las zonas *con reserva*; las zonas *con ingreso* no lo usan y siguen sin construir ([ingresos](ingresos.md)). Las reglas que evalúa **ya cambiaron de nivel** en el código: sistema, aforo del área, del conjunto y del área ([motor_reglas](motor_reglas.md)).
 >
 > Detalle en [construccion](../06_Decisiones/construccion.md).
