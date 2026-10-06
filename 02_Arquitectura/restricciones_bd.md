@@ -32,6 +32,16 @@ Llegaron con el motor de reglas por niveles. Están en el modelo y en las migrac
 
 Una regla *abierta* es la que tiene `vigencia_hasta` vacía. La FK compuesta `(area_id, conjunto_id)` de `Regla` no cambió: PostgreSQL no la revisa cuando `area_id` es nulo, que es el caso de las reglas del conjunto.
 
+## Viviendas y documentos (2026-10-06)
+
+Las trae `unidades/0002_estructura`; el reglamento solo lleva las de toda tabla de conjunto. Sin aplicar todavía en `admind_db`.
+
+| Restricción | Dónde | Qué impide |
+|---|---|---|
+| `UNIQUE (conjunto, clave)` = `agrupacion_clave_unica_en_conjunto` | `unidades/models.py` | Dos agrupaciones iguales en el conjunto. `clave` es la etiqueta y el nombre sin tildes ni mayúsculas: «Torre 1» y «TORRE 1» son la misma |
+| `CHECK` `agrupacion_tipo_vivienda_valido` y `unidad_tipo_valido` | ídem | Un tipo de vivienda que no sea `apartamento` o `casa` |
+| FK compuesta `(agrupacion_id, conjunto_id)` | migración `unidades/0002_estructura` | Que una vivienda apunte a una agrupación de otro conjunto. Con `agrupacion_id` nulo no aplica |
+
 ## Verificadas en `admind_db` (2026-09-14 y 2026-09-15)
 
 Faltan aquí las de las tablas creadas después (áreas, reglas, reservas, auditoría, unidades): están en el `models.py` de cada app.

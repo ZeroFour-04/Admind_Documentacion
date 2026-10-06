@@ -4,7 +4,7 @@ tipo: modulo
 modulo: permisos
 hu: [HU-06]
 origen: "maestro v1.4 (2026-09-14) §5.3 + guía de estructura §5.4 (2026-09-30)"
-actualizado: 2026-09-30
+actualizado: 2026-10-06
 ---
 
 # Roles y permisos
@@ -13,6 +13,7 @@ actualizado: 2026-09-30
 > - **Un solo rol vigente por persona y conjunto**: se cambia, no se suma. En otro conjunto puede tener otro, y Superusuario más un rol de conjunto sigue siendo posible. Donde el diseño diga *unión de los roles*, lo vigente es esto.
 > - El rol **Consejo se eliminó**: el catálogo tiene 5 roles. No se repone aunque el plan de los Sprints 2 y 3 o los avances viejos lo mencionen.
 > - El **Superusuario tiene todos los permisos** del catálogo.
+> - **`conjunto.activar` también lo tiene Administración** (2026-10-06, Alejo, D1 b del plan del asistente): quien administra deja operativo su conjunto al terminar el asistente. Sigue en el grupo Plataforma, igual que `conjunto.crear`, que Administración ya tenía.
 >
 > Detalle en [construccion](../06_Decisiones/construccion.md).
 

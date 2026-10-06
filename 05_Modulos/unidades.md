@@ -2,15 +2,15 @@
 resumen: "Vínculos de unidad (propietario, arrendatario, reside) y enrutamiento de notificaciones por vínculo."
 tipo: modulo
 modulo: unidades
-hu: [HU-08]
+hu: [HU-08, HU-39]
 origen: "maestro v1.4 (2026-09-14) §5.5"
 actualizado: 2026-10-06
 ---
 
 # Unidades y vínculos
 
-> [!WARNING] Decisión del 2026-10-06 (HU-39), sin construir
-> Las viviendas dejan de registrarse solo una por una con nombre libre. El asistente las va a generar en lote, y cada una pertenece, si el conjunto las agrupa, a una **agrupación** (torre, bloque, manzana). Una unidad puede ser apartamento o casa. Lo decidido está en [construccion](../06_Decisiones/construccion.md) y el trabajo en [Plan_Estructura_De_Viviendas](../07_Planes/activos/Plan_Estructura_De_Viviendas.md). Mientras no se construya, el código sigue como dice esta nota.
+> [!NOTE] Decisión del 2026-10-06 (HU-39): primera parte construida ese día, sin commit
+> Las viviendas dejan de registrarse solo una por una con nombre libre. El asistente las genera en lote, y cada una pertenece, si el conjunto las agrupa, a una **agrupación** (torre, bloque, manzana). Una unidad puede ser apartamento o casa. Lo decidido está en [construccion](../06_Decisiones/construccion.md) y cómo quedó, en *Estructura de viviendas: cómo está construida*, más abajo. Falta la segunda parte: las palabras del conjunto en las pantallas, registrar a mano dentro de una agrupación y retirar viviendas.
 >
 > Si hay una persona principal de la vivienda sigue sin decidir: [abiertas](../06_Decisiones/abiertas.md) 12.9.
 
@@ -25,6 +25,18 @@ actualizado: 2026-10-06
 > | Comunicación de infracción | No: solo a propietario y arrendatario (C-318/02) |
 >
 > Un habitante con cuenta puede reservar a nombre de su vivienda, y en las zonas con ingreso se le encuentra por su documento ([ingresos](ingresos.md)). Los anuncios de todo el conjunto llegan por rol, no por vínculo: sin cuenta no recibe ninguno. En el código, hoy `VINCULOS_POR_HECHO` toma «todos los vínculos» para la infracción; al construir pasa a nombrar los dos tipos. Detalle en [construccion](../06_Decisiones/construccion.md).
+
+## Estructura de viviendas: cómo está construida (HU-39, 2026-10-06)
+
+- **Dos niveles, el primero opcional.** `Agrupacion` guarda la palabra del conjunto (`etiqueta`: Torre, Manzana…), su `nombre` (1, A, Esmeralda), el `tipo_vivienda` y el `orden` de creación, con el que «Torre 2» va antes que «Torre 10». `Unidad` suma `tipo` (apartamento o casa), `agrupacion` (puede faltar), `numero` y `piso`; su `nombre` sigue siendo el texto completo ya armado («Torre 1 – Apto 101»), que es lo que muestran visitantes, anuncios y reservas.
+- **Comparar sin tildes ni mayúsculas.** `Agrupacion.clave` es la etiqueta y el nombre pasados por `estructura.clave()`. La restricción única va sobre ella, así que «Torre 1» y «TORRE 1» no conviven; «Torre 1» y «Manzana 1», sí.
+- **El generador es una función pura.** `apps/unidades/estructura.py` → `generar(descripcion)` recibe la descripción de una **tanda** (un grupo de viviendas del mismo tipo) y devuelve las viviendas con su nombre. No importa modelos ni toca la base, y por eso la vista previa y la creación usan el mismo cálculo. Un conjunto mixto son dos tandas; una ampliación es otra tanda más adelante.
+- **Cuatro patrones de numeración:** `piso_consecutivo` (101, 102… solo apartamentos), `consecutivo` (reinicia en cada agrupación), `corrido` (sigue de una a la siguiente) y `lista` (los números que escriba el administrador).
+- **Guardar es todo o nada.** `servicios.generar_estructura()` crea en una transacción las agrupaciones que falten y las viviendas nuevas con `bulk_create` (el conjunto se fija a mano, porque `bulk_create` se salta `save()`), y deja **un** registro `unidad.generar` en la auditoría. Las viviendas que ya existen se omiten y se informa cuántas. Si una agrupación existe con otro tipo de vivienda, o si otra persona generó lo mismo a la vez, responde `409`.
+- **Topes por tanda,** en el serializer: 60 agrupaciones, 60 pisos, 40 apartamentos por piso, 500 viviendas por agrupación y 2 000 en total.
+- **API,** las tres con `vinculo.gestionar`: `POST /unidades/estructura/previsualizar/` (no guarda), `POST /unidades/estructura/` (201 si creó algo, 200 si todo existía) y `GET /unidades/agrupaciones/`. `GET /unidades/` ordena por agrupación, piso y número.
+- **En el front,** el paso «2. Viviendas» del asistente. Alpine (`static/js/viviendas.js`) solo arma la descripción y la frase que la resume; la descripción viaja en un campo oculto y la API la valida y calcula.
+- **Lo registrado a mano** (`POST /unidades/`) queda como apartamento, sin agrupación y sin número.
 
 ## Diseño (maestro §5.5)
 

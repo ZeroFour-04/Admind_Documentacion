@@ -41,6 +41,8 @@ Las pruebas se escriben como funciones `def test_…():` con `assert`. `pytest-d
 
 **Al 2026-10-06**, con el motor de reglas por niveles sin commit: Backend **378** (377 pasan y falla la misma de siempre, que ya lista 5 rutas sin registrar) y Frontend **193**, todas pasan. Sobre los últimos commits (`2d11dbe` y `a3792d7`) eran 368 y 188. `apps/reglas/tests.py` cubre los niveles, la regla única por tipo, los tipos retirados, el catálogo, las tres restricciones de la base y el evaluador; `tests/test_reglas.py` del front, el tablero, los días que no abre y el paso del asistente.
 
+**Al 2026-10-06, con el asistente completo y las viviendas sin commit** (sobre `9b3b231` y `b5d96df`, que ya traen el motor): Backend **415** (414 pasan y falla la misma, con las mismas 5 rutas) y Frontend **206**, todas pasan. Antes eran 378 y 196. `apps/unidades/test_estructura.py` prueba el generador de viviendas **sin base de datos**: son funciones puras. `apps/unidades/tests.py` suma la API de la estructura (vista previa que no guarda, generar, repetir sin duplicar, mixtos, topes y orden natural); `apps/documentos/tests.py`, subir, ver y descargar el reglamento, los rechazos y quién puede; `apps/conjuntos/tests.py`, que un conjunto completo queda operativo y qué falta cuando no. En el front, `tests/test_asistente_viviendas.py` y `tests/test_asistente_reglamento.py`. `static/js/viviendas.js` **no tiene prueba automática**: solo a mano.
+
 Las pruebas automáticas **no reemplazan** la prueba manual de la DoD: nadie ha recorrido HU-06 a HU-13 en el navegador todavía. El recortador de foto y el diálogo de "Eliminar usuario" son JavaScript y **no tienen prueba automática**: solo se prueban a mano.
 
 ## Correr todo en el PC

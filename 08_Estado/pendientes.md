@@ -14,7 +14,7 @@ Lo más urgente, ya resumido, está en [estado_actual](estado_actual.md). Aquí 
 1. **La rama `pruebas` del backend no existe en GitHub** (solo en local). Sin ella no se puede abrir el PR `desarrollo → pruebas`. En el front sí existe, pero está igual a `main`.
 2. **Falta la revisión y la prueba manual de Camilo.** Casi todos los commits son tuyos, así que le toca a Camilo. El guion de prueba manual de HU-06 a HU-13 está en `07_Planes/hechos/Admind_Plan_Sprints_2_3.md` §6.
 3. **Falta decidir el alcance** que entra antes de la entrega (maestro §12.8). Con unos 15 días, lo natural es HU-14. Queda por ver si se suma algo más del Sprint 4.
-4. **HU-03 depende del reglamento (HU-33).** Hay dos caminos: construir un reglamento mínimo, o aceptar la historia con ese requisito pendiente. Esa decisión es tuya.
+4. **HU-03 depende del reglamento (HU-33).** Hay dos caminos: construir un reglamento mínimo, o aceptar la historia con ese requisito pendiente. Esa decisión es tuya. **Resuelto el 2026-10-06:** se construyó el reglamento mínimo y un conjunto ya puede quedar operativo.
 
 ## Por corregir en Notion (2026-09-29)
 
@@ -49,9 +49,11 @@ Lo que el agente no pudo hacer al cerrar [Plan_Anuncios_Con_Fotos](../07_Planes/
 
 ## Estructura de viviendas, HU-39 (2026-10-06)
 
-Historia nueva, definida con Alejo tras la retroalimentación del docente. Sin construir.
+Historia nueva, definida con Alejo tras la retroalimentación del docente. La primera parte se construyó el 2026-10-06, sin commit.
 
-- [ ] **Alejo:** responder D1 a D5 de [Plan_Estructura_De_Viviendas](../07_Planes/activos/Plan_Estructura_De_Viviendas.md) y ejecutarlo.
+- [x] **Alejo:** responder D1 a D5 de [Plan_Estructura_De_Viviendas](../07_Planes/activos/Plan_Estructura_De_Viviendas.md) y ejecutarlo. Respondió todas en a y lo construyó el agente (2026-10-06).
+- [ ] **Alejo, para cerrar el plan de viviendas:** correr `migrate` en `admind_db` (aplica `unidades/0002_estructura`; no cambia ninguna vivienda que ya exista: quedan como apartamento y sin agrupación), revisar y hacer los commits, y mover el plan a `hechos/` con Obsidian abierto.
+- [ ] **Prueba manual** del paso «Viviendas» con el guion del final del plan (12 pasos). El JavaScript no tiene prueba automática: el agente lo comprobó con Node y en el panel del navegador con la página servida aparte, sin usuarios reales.
 - [ ] **Notion:** crear HU-39 con los criterios que están en [historias](historias.md), y ponerle sprint, puntos y prioridad. El agente no toca Notion.
 - [ ] **Avisarle a Camilo:** hay una historia nueva; el plan trae una migración en `unidades`, tres rutas nuevas en `/unidades/` y el asistente pasa de 5 a 6 pasos.
 - [ ] **Segunda parte de HU-39**, sin plan todavía: las palabras del conjunto en las pantallas («Apartamento» está fijo en unas 70 menciones de 12 plantillas), el listado agrupado, registrar una vivienda a mano dentro de una agrupación, y retirar viviendas y agrupaciones con confirmación.
@@ -87,7 +89,12 @@ Definición nueva con Alejo: [motor_reglas](../05_Modulos/motor_reglas.md) e [in
 
 Tres planes abiertos el mismo día tocan el asistente; el orden está en [planes](../07_Planes/planes.md).
 
-- [ ] **Alejo:** responder D1 a D5 de [Plan_Asistente_De_Creacion](../07_Planes/activos/Plan_Asistente_De_Creacion.md).
+- [x] **Alejo:** responder D1 a D5 de [Plan_Asistente_De_Creacion](../07_Planes/activos/Plan_Asistente_De_Creacion.md). Respondió D1 en b y las demás en a, y lo construyó el agente (2026-10-06).
+- [ ] **Alejo, para cerrar el plan del asistente:** correr `migrate` en `admind_db` (aplica `documentos/0001_initial`), revisar y hacer los commits en los dos repositorios, y mover el plan a `hechos/` con Obsidian abierto.
+- [ ] **Prueba manual** del asistente con el guion del final del plan (9 pasos), con una cuenta de Administración. El agente lo recorrió con el front de verdad contra una API con la base de pruebas, sin usuarios reales ni navegador.
+- [ ] **Avisarle a Camilo, del catálogo de permisos:** `conjunto.activar` ahora también lo tiene Administración (D1 b). Y que el requisito de reglas cambió: ya no basta «alguna regla vigente», hace falta la anticipación máxima del conjunto.
+- [ ] **Notion:** HU-03 cambia de criterios (siete pasos, seis requisitos, activa Administración) y HU-33 queda cubierta solo en el reglamento. El agente no toca Notion.
+- [ ] **Sin decidir, visto al construir:** dejar operativo un conjunto no deja registro en la auditoría, y un conjunto operativo no se vuelve a revisar si después deja de cumplir un requisito (por ejemplo, si retiran la anticipación máxima).
 - [ ] **Alejo, confirmar el choque sobre *días que no abre*.** En el chat del asistente respondió que el motivo y los periodos quedaban para después; [Plan_Motor_De_Reglas](../07_Planes/activos/Plan_Motor_De_Reglas.md) los construye (B2.3, B4.4 y F5). El 2026-10-06 pidió ejecutar el plan y respondió D2 a, así que **quedaron construidos**. Falta que confirme que así lo quería; el agente no lo preguntó antes de construir porque no había leído esta nota.
 - [ ] **Avisarle a Camilo:** hay una app nueva, `documentos`, registrada en `config/`; el asistente pasa a siete pasos; y un conjunto ya puede quedar operativo.
 - [ ] **Decidir** si reservar exige que el conjunto esté operativo. Hoy no se revisa (plan D7 a del 27/09) y hasta ahora no importaba, porque ninguno podía estarlo.

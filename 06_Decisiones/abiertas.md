@@ -14,7 +14,7 @@ actualizado: 2026-10-06
 > - **12.7 c (un solo bloqueo):** resuelta el 2026-09-27: un bloqueo por persona y conjunto (D3 a).
 > - **12.8 (qué entra en el mes):** sigue abierta.
 > - **12.9 (quién vive en una vivienda y cómo se retira):** a) resuelta el 2026-10-06 con el vínculo `habitante`; b), c) y d) siguen abiertas.
-> - **12.10 (motor de reglas y zonas con ingreso):** a) resuelta el 2026-10-06 (el tablero avisa); b), c), d) y e) siguen abiertas.
+> - **12.10 (motor de reglas y zonas con ingreso):** a) resuelta el 2026-10-06 (el tablero avisa) y e) resuelta el 2026-10-06 (la anticipación máxima del conjunto); b), c) y d) siguen abiertas.
 >
 > Las resoluciones están en [construccion](construccion.md). Lo que no aparece en esta lista sigue como está escrito abajo.
 
@@ -124,7 +124,7 @@ _Tampoco son contradicciones entre documentos: son vacíos que quedaron al defin
 
 **d) Las palabras en pantalla.** La definición dice *zona* y el código y los textos actuales dicen *área*; las descripciones se escribieron una vez con *turno* y el glosario dice *franja*. Falta quedarse con un solo par.
 
-**e) Cómo entran las reglas al asistente de creación.** Qué paso llena las alfa, cuáles son obligatorias y qué reemplaza al requisito actual de «al menos una regla beta vigente» para quedar operativo. Es lo siguiente por definir con Alejo. **Decidido en parte el 2026-10-06:** el paso de reglas es el tablero del plan del motor; para quedar operativo se exigen al menos un área activa y las reglas del conjunto, en vez de «al menos una regla beta vigente». Falta precisar qué cuenta como reglas del conjunto definidas: es la D3 de [Plan_Asistente_De_Creacion](../07_Planes/activos/Plan_Asistente_De_Creacion.md).
+**e) Cómo entran las reglas al asistente de creación.** Qué paso llena las alfa, cuáles son obligatorias y qué reemplaza al requisito actual de «al menos una regla beta vigente» para quedar operativo. Es lo siguiente por definir con Alejo. **Decidido en parte el 2026-10-06:** el paso de reglas es el tablero del plan del motor; para quedar operativo se exigen al menos un área activa y las reglas del conjunto, en vez de «al menos una regla beta vigente». Falta precisar qué cuenta como reglas del conjunto definidas: es la D3 de [Plan_Asistente_De_Creacion](../07_Planes/activos/Plan_Asistente_De_Creacion.md). **Resuelta el 2026-10-06:** Alejo eligió D3 a: cuenta tener vigente la anticipación máxima del conjunto. Ya está construido ([construccion](construccion.md)).
 
 ## Ver también
 

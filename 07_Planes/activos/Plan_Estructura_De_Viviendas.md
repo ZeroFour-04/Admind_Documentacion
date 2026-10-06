@@ -17,15 +17,15 @@ punto_de_partida: "Backend 2d11dbe (368 pruebas recolectadas), Frontend a3792d7 
 
 <!-- Lo mantiene el agente que ejecuta, guíe o construya. Quien escribe el plan lo deja en cero, con una fila por fase. -->
 
-**Dónde voy:** sin empezar.
+**Dónde voy:** F0 a F4 construidas y verificadas. Falta, de Alejo: `migrate` en `admind_db` (`unidades/0002_estructura`), los commits, la prueba manual con usuarios reales y los avisos a Camilo. El contexto ya se actualizó; solo queda mover el archivo a `hechos/`. Modo: lo construyó el agente (Alejo, 2026-10-06). Sin commits: Alejo no los ha pedido.
 
 | Fase | Deja funcionando | Estado | Modo | Explicada de vuelta | Verificación | Commit | Fecha |
 |---|---|---|---|---|---|---|---|
-| F0 | Punto de partida confirmado | pendiente | — | — | | — | |
-| F1 | La base guarda agrupaciones y viviendas con tipo, agrupación, número y piso | pendiente | | | | | |
-| F2 | El generador convierte una descripción en viviendas con nombre, sin tocar la base | pendiente | | | | | |
-| F3 | La API previsualiza y crea la estructura, y un conjunto sin viviendas no queda operativo | pendiente | | | | | |
-| F4 | El asistente tiene el paso «Viviendas»: describir, ver cómo queda y crear | pendiente | | | | | |
+| F0 | Punto de partida confirmado | hecha | — | — | Backend `9b3b231` (no `2d11dbe`: ya trae el motor de reglas): 378 recogidas, 377 pasan y 1 falla (`test_toda_ruta_de_la_api_esta_cubierta`, 5 rutas sin registrar, ya venía). Frontend `b5d96df`: 196 pasan. Sin migraciones pendientes, árbol limpio | — | 2026-10-06 |
+| F1 | La base guarda agrupaciones y viviendas con tipo, agrupación, número y piso | hecha | construida | — | `pytest apps/unidades tests`: pasan, con la misma falla de F0. `makemigrations --check` sin cambios. Migración `unidades/0002_estructura` | sin commit | 2026-10-06 |
+| F2 | El generador convierte una descripción en viviendas con nombre, sin tocar la base | hecha | construida | — | `pytest apps/unidades/test_estructura.py`: 11 pasan, sin base | sin commit | 2026-10-06 |
+| F3 | La API previsualiza y crea la estructura, y un conjunto sin viviendas no queda operativo | hecha | construida | — | Backend: 403 recogidas (línea base + 25), 402 pasan y la misma falla de F0, que sigue nombrando 5 rutas y ninguna de las tres nuevas. `makemigrations --check` sin cambios | sin commit | 2026-10-06 |
+| F4 | El asistente tiene el paso «Viviendas»: describir, ver cómo queda y crear | hecha | construida | — | Frontend: 200 pasan (196 + 4). `viviendas.js` se comprobó con Node (frase y descripción de cuatro casos) y en el panel del navegador con la página servida aparte: sin errores de consola, los bloques aparecen en orden, la frase dice «6 torres de 10 pisos con 4 apartamentos por piso: 240 apartamentos» y «No todas son iguales» arma la tabla. El guion manual no lo recorrió una persona: lo cubre un recorrido desechable del front de verdad contra la API con la base de pruebas | sin commit | 2026-10-06 |
 
 <!-- Estado: pendiente · en curso · hecha. Modo: guiada · construida (la hizo el agente). Explicada de vuelta: sí · saltada · — si fue construida. Verificación: qué se corrió y cómo salió. -->
 
@@ -33,13 +33,23 @@ punto_de_partida: "Backend 2d11dbe (368 pruebas recolectadas), Frontend a3792d7 
 
 <!-- Una línea por caso: fecha · bloque · qué difería del plan · qué se hizo. -->
 
-Ninguna.
+- 2026-10-06 · B0.1 · El plan esperaba Backend `2d11dbe` (368) y Frontend `a3792d7` (188); el código ya traía el motor de reglas (`9b3b231`, 378 y `b5d96df`, 196). Alejo pidió seguir: los números de los pasos se toman como estén.
+- 2026-10-06 · B1.3 · El plan pide `migrate` después de crear la migración. No se corrió sobre `admind_db` (se aplica solo si Alejo lo autoriza); las pruebas usan su propia base. Queda para Alejo.
+- 2026-10-06 · B2.5 · La prueba de `lista` escribe «ph» en minúscula y afirma «Apto Ph»: `limpiar` solo sube la primera letra. Escrito «PH», queda «PH».
+- 2026-10-06 · B4.3 · `urls.py` del front no tenía el comentario «Paso 4» que el plan mandaba cambiar: no hubo nada que tocar ahí.
+- 2026-10-06 · B4.6 · Detalles de la plantilla que el plan dejó abiertos: el campo «¿Cuántas … son?» limita a 26 con letras y a 60 con números; la casilla «No todas son iguales» y su tabla no aparecen con el patrón «Los escribo yo», porque ahí la lista es la misma para todas.
+- 2026-10-06 · B3.5 y B3.6 · La respuesta 409 de «agrupación de otro tipo» la dan dos vistas: se sacó a una función `agrupacion_de_otro_tipo` en `views.py` en vez de repetirla.
 
 ### Conceptos por repasar
 
 <!-- Lo que costó, lo que se saltó y los bloques `tuyo` que terminaron con el código dado. Con las fases construidas por el agente, es la lista de estudio para la sustentación. -->
 
-Ninguno.
+Todo lo construyó el agente: es la lista de estudio para la sustentación.
+
+- **F1:** por qué `clave` es una columna guardada, qué hace la FK compuesta `(agrupacion_id, conjunto_id)` y por qué la FK admite nulo.
+- **F2:** qué es una función pura y por qué `estructura.generar` no importa modelos; `limpiar` frente a `clave`; la variable `siguiente` del patrón `corrido`.
+- **F3:** `transaction.atomic` con `bulk_create` y por qué el conjunto se fija a mano; qué pasa si dos personas generan lo mismo a la vez (`IntegrityError` → 409); el orden natural con `Length("numero")`.
+- **F4:** por qué el navegador no habla con la API; los cuatro campos ocultos; los *getters* de Alpine; por qué la opción elegida se marca con neutros.
 
 ## 2. Instrucciones para el agente
 
@@ -76,11 +86,11 @@ Ya decididas por Alejo el 2026-10-06, en el chat de definición ([construccion](
 
 | ID | Decisión | Opciones | Recomendada | Respuesta |
 |---|---|---|---|---|
-| D1 | Cómo se arma el nombre de una vivienda | a) «Torre 1 – Apto 101», «Manzana A – Casa 4»; sin agrupación, «Casa 12» b) «Torre 1 – 101», como el ejemplo que hay hoy en pantalla c) «Torre 1 – Apartamento 101» | a | |
-| D2 | Dónde va el paso «Viviendas» en el asistente | a) segundo, después de Datos básicos; los demás se renumeran b) quinto, justo antes del Resumen; solo cambia el número del Resumen | a | |
-| D3 | Dónde vive la palabra de la agrupación, ahora que hay mixtos | a) en cada agrupación (`Agrupacion.etiqueta` y `tipo_vivienda`); `Conjunto` no se toca en este plan b) en `Conjunto`, con un par de campos por tipo de vivienda; no admite un conjunto con torres y bloques a la vez | a | |
-| D4 | Qué deja en la auditoría una generación | a) un registro por generación, con el resumen: tipo, cuántas viviendas y en qué agrupaciones b) un registro por vivienda, como hoy al crearlas a mano (240 registros para 240 viviendas) | a | |
-| D5 | Los íconos de torre y casa y las tarjetas de opción | a) un SVG propio dentro de una plantilla de `apps/conjuntos/` y estilos de pantalla en `static/css/estructura.css`; no entran al inventario de componentes b) sin íconos por ahora | a | |
+| D1 | Cómo se arma el nombre de una vivienda | a) «Torre 1 – Apto 101», «Manzana A – Casa 4»; sin agrupación, «Casa 12» b) «Torre 1 – 101», como el ejemplo que hay hoy en pantalla c) «Torre 1 – Apartamento 101» | a | **a** (Alejo, en el chat, 2026-10-06) |
+| D2 | Dónde va el paso «Viviendas» en el asistente | a) segundo, después de Datos básicos; los demás se renumeran b) quinto, justo antes del Resumen; solo cambia el número del Resumen | a | **a** (Alejo, en el chat, 2026-10-06) |
+| D3 | Dónde vive la palabra de la agrupación, ahora que hay mixtos | a) en cada agrupación (`Agrupacion.etiqueta` y `tipo_vivienda`); `Conjunto` no se toca en este plan b) en `Conjunto`, con un par de campos por tipo de vivienda; no admite un conjunto con torres y bloques a la vez | a | **a** (Alejo, en el chat, 2026-10-06) |
+| D4 | Qué deja en la auditoría una generación | a) un registro por generación, con el resumen: tipo, cuántas viviendas y en qué agrupaciones b) un registro por vivienda, como hoy al crearlas a mano (240 registros para 240 viviendas) | a | **a** (Alejo, en el chat, 2026-10-06) |
+| D5 | Los íconos de torre y casa y las tarjetas de opción | a) un SVG propio dentro de una plantilla de `apps/conjuntos/` y estilos de pantalla en `static/css/estructura.css`; no entran al inventario de componentes b) sin íconos por ahora | a | **a** (Alejo, en el chat, 2026-10-06) |
 
 Si D2 es **b**, B4.3 se reduce: el paso nuevo lleva `"paso": 5`, el Resumen pasa a 6 y lo demás conserva su número. Si D3 es **b**, se para: cambia F1 y Alejo vuelve al chat de planeación.
 
@@ -173,7 +183,7 @@ flowchart LR
 
 ## F0 · Confirmar el punto de partida
 
-- [ ] **B0.1** · Correr las dos suites y `makemigrations --check --dry-run` ([pruebas_y_ejecucion](../../02_Arquitectura/pruebas_y_ejecucion.md)). Se espera: 368 pruebas en el Backend y 188 en el Frontend, sin migraciones pendientes y `git status` limpio en los dos. Anota en *Verificación* cuántas pasan y cuáles fallan: son la línea base. Si los commits o los conteos no coinciden con el frontmatter, se para y se le avisa a Alejo.
+- [x] **B0.1** · Correr las dos suites y `makemigrations --check --dry-run` ([pruebas_y_ejecucion](../../02_Arquitectura/pruebas_y_ejecucion.md)). Se espera: 368 pruebas en el Backend y 188 en el Frontend, sin migraciones pendientes y `git status` limpio en los dos. Anota en *Verificación* cuántas pasan y cuáles fallan: son la línea base. Si los commits o los conteos no coinciden con el frontmatter, se para y se le avisa a Alejo.
 
 ## F1 · Backend: agrupaciones y viviendas con estructura
 
@@ -181,7 +191,7 @@ flowchart LR
 
 **Concepto de la fase:** un conjunto tiene dos niveles, agrupación y vivienda, y el primero es opcional. La base hace cumplir tres cosas sin depender del código: que no haya dos agrupaciones iguales, que el tipo de vivienda sea uno de dos y que una vivienda no apunte a una agrupación de otro conjunto.
 
-- [ ] **B1.1** · explicado · `Backend/Admind_Backend/apps/unidades/models.py`
+- [x] **B1.1** · explicado · `Backend/Admind_Backend/apps/unidades/models.py`
   - **Qué:** dos clases nuevas, antes de `Unidad`.
   - **Concepto:** `clave` es una columna calculada por el servicio para comparar sin tildes ni mayúsculas. La restricción única va sobre ella, no sobre lo que escribió el administrador.
   - **Forma:**
@@ -221,7 +231,7 @@ flowchart LR
             return f"{self.etiqueta} {self.nombre}"
     ```
   - **Comprobación:** el archivo importa sin error (`manage.py check`).
-- [ ] **B1.2** · explicado · mismo archivo, clase `Unidad`
+- [x] **B1.2** · explicado · mismo archivo, clase `Unidad`
   - **Qué:** `nombre` sube a 100 caracteres; cuatro campos nuevos; un `CHECK` y un índice. El docstring pasa a decir que es apartamento o casa.
   - **Concepto:** la FK a la agrupación admite nulo porque no todo conjunto agrupa. `PROTECT` porque no hay borrado físico ([eliminacion](../../03_Reglas/eliminacion.md)).
   - **Forma:**
@@ -239,7 +249,7 @@ flowchart LR
 
     En `Meta`: agregar a `constraints` `models.CheckConstraint(condition=Q(tipo__in=TipoDeVivienda.values), name="unidad_tipo_valido")`, y `indexes = [models.Index(fields=["conjunto", "agrupacion"], name="unidad_por_agrupacion")]`.
   - **Comprobación:** `manage.py check` sin errores.
-- [ ] **B1.3** · explicado · `Backend/Admind_Backend/apps/unidades/migrations/0002_estructura.py`
+- [x] **B1.3** · explicado · `Backend/Admind_Backend/apps/unidades/migrations/0002_estructura.py`
   - **Qué:** generar la migración con `./.venv/Scripts/python.exe manage.py makemigrations unidades -n estructura` y agregarle a mano la FK compuesta, como última operación. Después, `migrate`.
   - **Concepto:** Django crea una FK simple sobre `agrupacion_id`. La compuesta `(agrupacion_id, conjunto_id)` la agrega `fk_compuesta`, y es la que impide en PostgreSQL apuntar a una agrupación de otro conjunto. Con `agrupacion_id` nulo la restricción no aplica, igual que en `anuncios_anuncio.unidad_id`.
   - **Forma:** el `import` de `fk_compuesta` arriba, como en `0001_initial.py`, y al final de `operations`:
@@ -248,7 +258,7 @@ flowchart LR
         fk_compuesta('unidades_unidad', 'agrupacion_id', 'unidades_agrupacion'),
     ```
   - **Comprobación:** `makemigrations --check --dry-run` responde que no hay cambios, y `migrate` aplica `unidades.0002_estructura`.
-- [ ] **B1.4** · explicado · `Backend/Admind_Backend/apps/unidades/tests.py`
+- [x] **B1.4** · explicado · `Backend/Admind_Backend/apps/unidades/tests.py`
   - **Qué:** una prueba de que la base rechaza dos agrupaciones con la misma clave. Importar `Agrupacion` y `TipoDeVivienda`.
   - **Concepto:** `pytest.raises(IntegrityError)` con `transaction.atomic()`, el mismo patrón de `test_no_hay_dos_vinculos_vigentes_iguales_sobre_la_misma_unidad`.
   - **Forma:**
@@ -264,7 +274,7 @@ flowchart LR
             )
     ```
   - **Comprobación:** pasa.
-- [ ] **B1.5** · tuyo (modelo: `test_la_base_no_deja_que_un_vinculo_apunte_a_una_unidad_de_otro_conjunto`, en el mismo archivo) · `tests.py`
+- [x] **B1.5** · tuyo (modelo: `test_la_base_no_deja_que_un_vinculo_apunte_a_una_unidad_de_otro_conjunto`, en el mismo archivo) · `tests.py`
   - **Qué:** `test_la_base_no_deja_que_una_unidad_apunte_a_una_agrupacion_de_otro_conjunto`.
   - **Qué cambia respecto al modelo:** la fila ajena es una `Agrupacion` creada dentro de otro conjunto, y la que falla es una `Unidad` del conjunto activo con esa agrupación.
   - **Comprobación:** pasa. Si se quita la línea de `fk_compuesta` de la migración, falla: esa es la prueba de que la restricción existe.
@@ -282,7 +292,7 @@ flowchart LR
 
 **Concepto de la fase:** una **función pura** recibe datos y devuelve datos; no lee ni escribe en ningún lado. Por eso se prueba sin base, sin servidor y sin sesión, y por eso la vista previa y la creación pueden compartirla.
 
-- [ ] **B2.1** · explicado · `Backend/Admind_Backend/apps/unidades/estructura.py` (archivo nuevo)
+- [x] **B2.1** · explicado · `Backend/Admind_Backend/apps/unidades/estructura.py` (archivo nuevo)
   - **Qué:** la cabecera del archivo, los patrones y las dos funciones de texto.
   - **Concepto:** normalizar para guardar (`limpiar`) no es lo mismo que normalizar para comparar (`clave`). La primera respeta las tildes del administrador; la segunda las quita.
   - **Forma:**
@@ -322,7 +332,7 @@ flowchart LR
 
     Si D1 no es **a**, `ABREVIATURAS` cambia: con **b** no se usa y con **c** lleva las palabras completas.
   - **Comprobación:** se prueba en B2.4.
-- [ ] **B2.2** · explicado · mismo archivo
+- [x] **B2.2** · explicado · mismo archivo
   - **Qué:** las dos formas de numerar.
   - **Concepto:** cada función devuelve pares `(número, piso)`. El número es texto porque «PH» y «1A» también son números de vivienda.
   - **Forma:**
@@ -341,7 +351,7 @@ flowchart LR
         return [(str(numero), None) for numero in range(desde, desde + cantidad)]
     ```
   - **Comprobación:** se prueba en B2.4 y B2.5.
-- [ ] **B2.3** · explicado · mismo archivo
+- [x] **B2.3** · explicado · mismo archivo
   - **Qué:** lo que devuelve el generador y el generador.
   - **Concepto:** `dataclass(frozen=True)` es un objeto que solo lleva datos y no se puede modificar. El patrón `corrido` necesita recordar por dónde va la numeración entre una agrupación y la siguiente: es la variable `siguiente`.
   - **Forma:**
@@ -399,7 +409,7 @@ flowchart LR
 
     El guion de «Torre 1 – Apto 101» es el mismo de los nombres que ya existen («Torre 3 – 402»): raya corta con un espacio a cada lado.
   - **Comprobación:** se prueba en B2.4.
-- [ ] **B2.4** · explicado · `Backend/Admind_Backend/apps/unidades/test_estructura.py` (archivo nuevo)
+- [x] **B2.4** · explicado · `Backend/Admind_Backend/apps/unidades/test_estructura.py` (archivo nuevo)
   - **Qué:** las pruebas del texto y la del caso central. El archivo **no** lleva `pytestmark = pytest.mark.django_db`.
   - **Concepto:** `parametrize` corre la misma prueba con varios datos. Estas pruebas no piden base: si alguna la pidiera, el generador dejó de ser puro.
   - **Forma:**
@@ -440,7 +450,7 @@ flowchart LR
         assert torres[0].viviendas[4].piso == 2
     ```
   - **Comprobación:** `./.venv/Scripts/python.exe -m pytest apps/unidades/test_estructura.py -q` da 6 en verde.
-- [ ] **B2.5** · tuyo (modelo: la prueba de las seis torres, B2.4) · mismo archivo
+- [x] **B2.5** · tuyo (modelo: la prueba de las seis torres, B2.4) · mismo archivo
   - **Qué:** cinco pruebas, una por caso: casas por manzana con `consecutivo` (dos manzanas de 10 y 15: la segunda vuelve a empezar en 1); las mismas con `corrido` (la segunda va de 11 a 25); `lista` con «1», «2» y «PH»; casas sin agrupación (`etiqueta` vacía y una sola agrupación de nombre vacío: «Casa 1» a «Casa 120»); y `primer_piso` en 2 (la primera vivienda es «201»).
   - **Qué cambia respecto al modelo:** la descripción de entrada. Cada prueba afirma la primera vivienda, la última y el total.
   - **Comprobación:** 11 en verde en el archivo.
@@ -490,7 +500,7 @@ Con `consecutivo` y `corrido`, cada agrupación lleva `cantidad` en vez de `piso
 
 Las tres exigen `vinculo.gestionar` y heredan `VistaDeConjunto`.
 
-- [ ] **B3.1** · explicado · `Backend/Admind_Backend/apps/unidades/serializers.py`
+- [x] **B3.1** · explicado · `Backend/Admind_Backend/apps/unidades/serializers.py`
   - **Qué:** dos serializers de entrada y dos de salida. Importar `TipoDeVivienda`, `estructura` y sus `Patron` y `clave`.
   - **Concepto:** lo que se comprueba mirando solo la petición va en el serializer ([capas](../../03_Reglas/capas.md)). Los rangos van en cada campo; lo que cruza campos, en `validate()`. El mensaje de `validate()` llega al front como `non_field_errors`.
   - **Forma:**
@@ -549,7 +559,7 @@ Las tres exigen `vinculo.gestionar` y heredan `VistaDeConjunto`.
 
     De salida: `AgrupacionSerializer` (`id`, `nombre_completo` como `SerializerMethodField` que devuelve `str(agrupacion)`, igual que `get_persona` en `VinculoSerializer`, `tipo_vivienda`, `viviendas`) y `ResumenDeAgrupacionesSerializer` (`agrupaciones` con `many=True`, `sin_agrupar`, `total`). El resumen de la estructura ya es un diccionario: no necesita serializer.
   - **Comprobación:** se prueba por la API en B3.7 y B3.8.
-- [ ] **B3.2** · explicado · `Backend/Admind_Backend/apps/unidades/servicios.py`
+- [x] **B3.2** · explicado · `Backend/Admind_Backend/apps/unidades/servicios.py`
   - **Qué:** una excepción, dos funciones de apoyo y la vista previa. Importar `estructura` y `Agrupacion`.
   - **Concepto:** la vista previa hace dos consultas, no una por vivienda: las agrupaciones por su clave y las viviendas por su nombre. Lo que ya existe se resta en memoria.
   - **Forma:**
@@ -604,7 +614,7 @@ Las tres exigen `vinculo.gestionar` y heredan `VistaDeConjunto`.
         return resumen_de_estructura(descripcion["tipo_vivienda"], propuestas, *existentes_para(propuestas))
     ```
   - **Comprobación:** B3.7.
-- [ ] **B3.3** · explicado · mismo archivo
+- [x] **B3.3** · explicado · mismo archivo
   - **Qué:** la creación. Importar `Max`.
   - **Concepto:** `transaction.atomic()` hace que todo se guarde o nada. `bulk_create` manda las viviendas en una sola instrucción, pero se salta `save()`, que es donde `ModeloDeConjunto` pone el conjunto: por eso `conjunto_id` va a mano. Si otra persona creó lo mismo entre la consulta y la escritura, la restricción única lanza `IntegrityError` y la transacción se deshace.
   - **Forma:**
@@ -672,7 +682,7 @@ Las tres exigen `vinculo.gestionar` y heredan `VistaDeConjunto`.
 
     Si D4 es **b**, el registro único se cambia por uno por vivienda, y como `bulk_create` no devuelve nada que auditar una por una, las viviendas se crean con `Unidad.objects.create` dentro del ciclo.
   - **Comprobación:** B3.7.
-- [ ] **B3.4** · explicado · mismo archivo
+- [x] **B3.4** · explicado · mismo archivo
   - **Qué:** `resumen_de_agrupaciones()` nueva, y el orden de `unidades_del_conjunto()`. Importar `F` y `Length` (`django.db.models.functions`).
   - **Concepto:** ordenar texto pone «1001» antes que «101». Ordenar primero por el largo del número y después por el número da el orden natural sin convertir nada.
   - **Forma:**
@@ -689,7 +699,7 @@ Las tres exigen `vinculo.gestionar` y heredan `VistaDeConjunto`.
 
     En `unidades_del_conjunto()`, `.order_by("nombre")` pasa a `.order_by(F("agrupacion__orden").asc(nulls_last=True), "piso", Length("numero"), "numero", "nombre")`.
   - **Comprobación:** B3.8, y las pruebas que ya existían de `GET /unidades/` siguen en verde.
-- [ ] **B3.5** · explicado · `Backend/Admind_Backend/apps/unidades/views.py` y `urls.py`
+- [x] **B3.5** · explicado · `Backend/Admind_Backend/apps/unidades/views.py` y `urls.py`
   - **Qué:** la vista de la vista previa y su ruta, antes de `<uuid:unidad_id>/`.
   - **Concepto:** la vista no consulta la base ni calcula: valida, exige el permiso y convierte la excepción del servicio en un código HTTP.
   - **Forma:**
@@ -713,11 +723,11 @@ Las tres exigen `vinculo.gestionar` y heredan `VistaDeConjunto`.
 
     Ruta: `path("estructura/previsualizar/", PrevisualizarEstructuraView.as_view(), name="estructura-previsualizar")`.
   - **Comprobación:** B3.7.
-- [ ] **B3.6** · tuyo (modelo: B3.5) · mismos archivos
+- [x] **B3.6** · tuyo (modelo: B3.5) · mismos archivos
   - **Qué:** `GenerarEstructuraView` (`POST`, ruta `estructura/`, nombre `estructura-generar`) y `AgrupacionesView` (`GET`, ruta `agrupaciones/`, nombre `agrupaciones`).
   - **Qué cambia respecto al modelo:** la primera llama a `generar_estructura(request.user.persona, …)`, responde 201 si `resumen["nuevas"]` es mayor que cero y 200 si no, y además convierte `EstructuraCambiada` en 409 con «Alguien acaba de registrar esas viviendas. Mira otra vez cómo queda.». La segunda no recibe nada y serializa `resumen_de_agrupaciones()` con `ResumenDeAgrupacionesSerializer`.
   - **Comprobación:** B3.7 y B3.8.
-- [ ] **B3.7** · explicado · `Backend/Admind_Backend/apps/unidades/tests.py`
+- [x] **B3.7** · explicado · `Backend/Admind_Backend/apps/unidades/tests.py`
   - **Qué:** dos pruebas de la API con la fixture `admin`.
   - **Concepto:** la primera afirma una ausencia: que previsualizar no escribió. La segunda cuenta filas y revisa que quedó **un** registro de auditoría.
   - **Forma:**
@@ -751,11 +761,11 @@ Las tres exigen `vinculo.gestionar` y heredan `VistaDeConjunto`.
         assert [registro.accion for registro in Registro.objects.all()] == ["unidad.generar"]
     ```
   - **Comprobación:** pasan las dos.
-- [ ] **B3.8** · tuyo (modelo: B3.7) · mismo archivo
+- [x] **B3.8** · tuyo (modelo: B3.7) · mismo archivo
   - **Qué:** seis pruebas: generar dos veces lo mismo no duplica y la segunda responde 200 con `nuevas` en 0; un conjunto mixto (dos torres y después dos manzanas de casas) deja cuatro agrupaciones, dos de cada tipo; sin `vinculo.gestionar` las tres rutas responden 403; más de 2 000 viviendas responde 400; «Torre 1» de casas cuando ya existe de apartamentos responde 409; y `GET /unidades/` trae «Torre 2» antes que «Torre 10» y «Apto 902» antes que «Apto 1001».
   - **Qué cambia respecto al modelo:** la descripción y lo que se afirma. Para el 403, el modelo es `test_sin_vinculo_gestionar_no_se_crean_unidades_ni_vinculos`.
   - **Comprobación:** pasan las seis.
-- [ ] **B3.9** · explicado · `Backend/Admind_Backend/tests/aislamiento/test_intruso.py`
+- [x] **B3.9** · explicado · `Backend/Admind_Backend/tests/aislamiento/test_intruso.py`
   - **Qué:** registrar las tres rutas. Importar `Agrupacion`.
   - **Concepto:** toda ruta nueva entra a la prueba del intruso ([invariantes](../../03_Reglas/invariantes.md)). Un listado no puede traer el identificador de otro conjunto, y una acción que reciba `conjunto` en el cuerpo responde 400 sin tocar nada.
   - **Forma:**
@@ -785,7 +795,7 @@ Las tres exigen `vinculo.gestionar` y heredan `VistaDeConjunto`.
 
     En `LISTADOS`: `"agrupaciones": listado_de_agrupaciones`. En `ACCIONES`: `"estructura-previsualizar": estructura_en("estructura-previsualizar")` y `"estructura-generar": estructura_en("estructura-generar")`.
   - **Comprobación:** `./.venv/Scripts/python.exe -m pytest tests/aislamiento -q`. Si `test_toda_ruta_de_la_api_esta_cubierta` ya fallaba en F0, su mensaje no puede nombrar ninguna de las tres rutas nuevas.
-- [ ] **B3.10** · explicado · `Backend/Admind_Backend/apps/conjuntos/servicios.py` y `apps/conjuntos/tests.py`
+- [x] **B3.10** · explicado · `Backend/Admind_Backend/apps/conjuntos/servicios.py` y `apps/conjuntos/tests.py`
   - **Qué:** el requisito nuevo, después de `administracion`, y su prueba. Importar `Unidad` de `apps.unidades.models`, como ya se importan `Area` y `Regla`.
   - **Concepto:** `requisitos_para_operar` es una lista: agregar un requisito es agregar una fila, y `activar()` y el Resumen del front lo recogen sin tocarlos.
   - **Forma:**
@@ -810,7 +820,7 @@ Las tres exigen `vinculo.gestionar` y heredan `VistaDeConjunto`.
 
 **Concepto de la fase:** el navegador nunca habla con la API. Alpine arma la descripción y el servidor del front la reenvía; la vista previa es HTML que pinta el servidor con lo que respondió la API. Lo que se crea es lo que se previsualizó.
 
-- [ ] **B4.1** · explicado · `Frontend/Admind_Front-End/cliente_api/unidades.py`
+- [x] **B4.1** · explicado · `Frontend/Admind_Front-End/cliente_api/unidades.py`
   - **Qué:** tres funciones, una por ruta nueva.
   - **Concepto:** `cliente_api` es el único lugar del front que conoce las rutas de la API ([reglas_frontend](../../03_Reglas/reglas_frontend.md)).
   - **Forma:**
@@ -831,7 +841,7 @@ Las tres exigen `vinculo.gestionar` y heredan `VistaDeConjunto`.
         return pedir(request, "POST", "unidades/estructura/", descripcion)
     ```
   - **Comprobación:** se usa en B4.2.
-- [ ] **B4.2** · explicado · `Frontend/Admind_Front-End/apps/conjuntos/views.py` y `urls.py`
+- [x] **B4.2** · explicado · `Frontend/Admind_Front-End/apps/conjuntos/views.py` y `urls.py`
   - **Qué:** la vista del paso y su ruta, `asistente/viviendas/`, con nombre `asistente-viviendas`. Importar `json` y `cliente_api.unidades` como `api_unidades`.
   - **Concepto:** la vista distingue dos acciones del mismo formulario, `previsualizar` y `crear`. Después de crear redirige, para que recargar la página no vuelva a enviar.
   - **Forma:**
@@ -894,12 +904,12 @@ Las tres exigen `vinculo.gestionar` y heredan `VistaDeConjunto`.
         return render(request, "conjuntos/asistente_viviendas.html", contexto)
     ```
   - **Comprobación:** B4.8.
-- [ ] **B4.3** · explicado · `_pasos.html`, las vistas que llevan `"paso"` y las dos pruebas que nombran pasos
+- [x] **B4.3** · explicado · `_pasos.html`, las vistas que llevan `"paso"` y las dos pruebas que nombran pasos
   - **Qué:** el asistente pasa a seis pasos, con «2. Viviendas» después de «1. Datos básicos».
   - **Concepto:** el número del paso está repetido en la plantilla y en cada vista. Cambiarlo es mecánico, y las pruebas que nombran los pasos avisan si quedó uno sin cambiar.
   - **Forma:** en `apps/conjuntos/templates/conjuntos/_pasos.html`, un bloque igual a los demás con `paso == 2`, la ruta `conjuntos:asistente-viviendas` y el texto `2. Viviendas`; los siguientes pasan a `3. Administración`, `4. Áreas`, `5. Reglas` y `6. Resumen`, cada uno con su `paso ==` nuevo, y el comentario de arriba dice seis pasos. En `apps/conjuntos/views.py`: `administracion` lleva `"paso": 3`, `areas` 4 y `resumen` 6, con sus docstrings; `nuevo` y `datos` redirigen a `conjuntos:asistente-viviendas` (la redirección de `administracion` a sí misma no cambia). En `apps/reglas/views.py`: los dos `"paso": 4` pasan a 5. En `asistente_administracion.html`: «Volver» apunta a `conjuntos:asistente-viviendas`. En `urls.py`, el comentario «Paso 4» pasa a «Paso 5». En `tests/test_areas.py` (línea 124) se esperan `4. Áreas`, `5. Reglas` y `6. Resumen`, y el nombre de la prueba dice seis pasos; en `tests/test_reglas.py` (línea 133), `5. Reglas`.
   - **Comprobación:** la suite del Frontend sigue en 188 en verde.
-- [ ] **B4.4** · explicado · `Frontend/Admind_Front-End/apps/conjuntos/templates/conjuntos/_icono_vivienda.html` (archivo nuevo)
+- [x] **B4.4** · explicado · `Frontend/Admind_Front-End/apps/conjuntos/templates/conjuntos/_icono_vivienda.html` (archivo nuevo)
   - **Qué:** el ícono de torre o de casa, según `tipo`.
   - **Concepto:** un SVG en línea toma el color del texto con `currentColor`, así que no lleva ningún hex. `aria-hidden` porque es decorativo: el texto va al lado.
   - **Forma:**
@@ -919,7 +929,7 @@ Las tres exigen `vinculo.gestionar` y heredan `VistaDeConjunto`.
     </svg>
     ```
   - **Comprobación:** se ve en B4.6.
-- [ ] **B4.5** · explicado · `Frontend/Admind_Front-End/static/js/viviendas.js` (archivo nuevo)
+- [x] **B4.5** · explicado · `Frontend/Admind_Front-End/static/js/viviendas.js` (archivo nuevo)
   - **Qué:** el componente de Alpine que guarda las respuestas y arma la descripción.
   - **Concepto:** un *getter* (`get total()`) se recalcula solo cuando cambia algo de lo que lee. La descripción, la frase y si el botón está activo son getters: no hay que acordarse de actualizarlos. Nada aquí decide nombres ni qué existe.
   - **Forma:**
@@ -1077,7 +1087,7 @@ Las tres exigen `vinculo.gestionar` y heredan `VistaDeConjunto`.
     });
     ```
   - **Comprobación:** en el navegador, con B4.6. El JavaScript no tiene prueba automática en este proyecto: se recorre con el guion de prueba manual.
-- [ ] **B4.6** · explicado · `Frontend/Admind_Front-End/apps/conjuntos/templates/conjuntos/asistente_viviendas.html` (archivo nuevo)
+- [x] **B4.6** · explicado · `Frontend/Admind_Front-End/apps/conjuntos/templates/conjuntos/asistente_viviendas.html` (archivo nuevo)
   - **Qué:** la pantalla del paso, con el modelo de `asistente_areas.html`: pestañas, avisos, lo que ya hay, la vista previa, el formulario y los enlaces Volver y Continuar.
   - **Concepto:** los campos que solo usa Alpine no llevan `name` que la vista lea; al servidor viajan cuatro campos ocultos. Los bloques que aparecen después llevan `x-show` y `style="display:none"`, como en `_selector_acento.html`, para que no parpadeen antes de que cargue Alpine.
   - **Forma:** de arriba abajo, dentro de `{% block contenido %}`:
@@ -1174,7 +1184,7 @@ Las tres exigen `vinculo.gestionar` y heredan `VistaDeConjunto`.
 
     En `{% block scripts %}`: `{{ estado|json_script:"estado-inicial" }}`, `js/viviendas.js` y `js/vendor/alpine.min.js`, los dos con `defer` y en ese orden. Los bloques `titulo`, `titulo_vista` («Viviendas del conjunto») y `estado_vista` vacío, como en los demás pasos.
   - **Comprobación:** con los dos servidores arriba, la pantalla abre y la frase cambia al responder.
-- [ ] **B4.7** · explicado · `Frontend/Admind_Front-End/static/css/estructura.css`
+- [x] **B4.7** · explicado · `Frontend/Admind_Front-End/static/css/estructura.css`
   - **Qué:** los estilos del paso, al final del archivo.
   - **Concepto:** solo variables, ningún hex ni token nuevo. La opción elegida se marca con neutros porque el acento solo va en sus cuatro sitios.
   - **Forma:**
@@ -1193,7 +1203,7 @@ Las tres exigen `vinculo.gestionar` y heredan `VistaDeConjunto`.
     .estructura__item{display:flex;align-items:center;gap:var(--e-2);padding:var(--e-2) var(--e-3);border:1px solid var(--borde);border-radius:var(--radio-control)}
     ```
   - **Comprobación:** en el navegador, las opciones se ven como tarjetas y la elegida queda marcada en gris, no con el color del conjunto.
-- [ ] **B4.8** · explicado · `Frontend/Admind_Front-End/tests/test_asistente_viviendas.py` (archivo nuevo)
+- [x] **B4.8** · explicado · `Frontend/Admind_Front-End/tests/test_asistente_viviendas.py` (archivo nuevo)
   - **Qué:** la prueba de la vista previa.
   - **Concepto:** en el front se prueba la traducción, no las reglas: que la descripción llegue a `cliente_api` tal cual y sin `conjunto`, y que lo que respondió la API quede en el HTML.
   - **Forma:**
@@ -1238,7 +1248,7 @@ Las tres exigen `vinculo.gestionar` y heredan `VistaDeConjunto`.
         generar.assert_not_called()
     ```
   - **Comprobación:** pasa.
-- [ ] **B4.9** · tuyo (modelo: B4.8) · mismo archivo
+- [x] **B4.9** · tuyo (modelo: B4.8) · mismo archivo
   - **Qué:** tres pruebas: «crear» llama a `generar_estructura` y redirige a `/conjuntos/asistente/viviendas/?creadas=40`; una descripción ilegible (`especificacion` con texto que no es JSON) muestra el aviso y no llama a la API; y un `ErrorDeApi(409, {"detail": "…"})` de la vista previa muestra ese texto.
   - **Qué cambia respecto al modelo:** la `accion`, lo simulado y lo que se afirma. Para la redirección se mira `respuesta["Location"]`.
   - **Comprobación:** cuatro en verde en el archivo.

@@ -36,7 +36,7 @@ La columna "Sprint" es el reparto previsto en el Excel V11.1, que ya no se cumpl
 |---|---|---|---|---|---|
 | HU-01 | Inicio de sesión con correo y contraseña | 1 | 3 | Alta | **Construida** (5/5 tareas y criterios, con recuperación de contraseña; falta la DoD) |
 | HU-02 | Segundo factor (TOTP) para permisos sensibles | 1 | 5 | Alta | **Construida** (5/5; TOTP con QR, códigos de respaldo y, desde el 05/10, enlace por correo para quitarlo si se pierde la aplicación; falta la DoD) |
-| HU-03 | Asistente por pasos para crear un conjunto | 1 | 6 | Alta | **Parcial**: los pasos de Áreas y Reglas son reales desde el 27/09; bloqueada por el reglamento (HU-33). El 06/10 se planeó completa, en tres planes: [planes](../07_Planes/planes.md) |
+| HU-03 | Asistente por pasos para crear un conjunto | 1 | 6 | Alta | **Construida completa el 06/10, sin commit**: siete pasos (datos, viviendas, administración, áreas, reglas, reglamento y resumen) y seis requisitos; un conjunto ya puede quedar operativo y lo activa el Superusuario o Administración. Falta la parte humana de la DoD. Sus criterios en Notion describen el asistente anterior. Tres planes: [planes](../07_Planes/planes.md) |
 | HU-04 | Persona global única por documento | 1 | 3 | Alta | **Construida** (5/5, falta la DoD) |
 | HU-05 | Aislamiento de datos entre conjuntos | 1 | 2 | Alta | **Construida** (5/5, falta la DoD) |
 | HU-26 | Selector de conjunto activo | 1 | 6 | Alta | **Construida** (5/5, conectada a la API; falta la DoD) |
@@ -66,13 +66,13 @@ La columna "Sprint" es el reparto previsto en el Excel V11.1, que ya no se cumpl
 | HU-30 | Registro y comunicación de infracciones | 6 | 4 | Media | Sin empezar |
 | HU-31 | Agendar cita dentro del horario de atención | 6 | 4 | Media | Sin empezar |
 | HU-32 | Cambio de horario con alternativas a los afectados | 6 | 8 | Media | Sin empezar |
-| HU-33 | Repositorio de documentos vigentes | 6 | 3 | Media | Sin empezar |
+| HU-33 | Repositorio de documentos vigentes | 6 | 3 | Media | **Parcial** (06/10, sin commit): solo el reglamento del conjunto en PDF, que es lo que exige HU-03. Falta el resto: otros documentos, las actas y que el residente lo descargue |
 | HU-34 | Asignación de parqueaderos de residentes | 6 | 4 | Media | Sin empezar |
 | HU-35 | Reporte de pago de administración | 7 | 4 | Baja | Sin empezar |
 | HU-36 | Importación masiva con dry-run e idempotencia | 7 | 7 | Baja | Sin empezar |
 | HU-37 | Respaldo de información por conjunto | 7 | 5 | Baja | Sin empezar |
 | HU-38 | Registro de actividades sobre la auditoría | Condicional | 7 | Baja | Sin empezar |
-| HU-39 | Estructura de viviendas del conjunto: agrupaciones y generación en lote | Por definir | Por estimar | Por definir | **Definida el 06/10**, sin construir. Historia nueva tras la retroalimentación del docente; **no está en Notion**. Primera parte en [Plan_Estructura_De_Viviendas](../07_Planes/activos/Plan_Estructura_De_Viviendas.md) |
+| HU-39 | Estructura de viviendas del conjunto: agrupaciones y generación en lote | Por definir | Por estimar | Por definir | **Primera parte construida el 06/10, sin commit** (criterios 1 a 5 y 9, y el generador del 6). Falta la segunda parte (criterios 7 y 8, y registrar a mano dentro de una agrupación). Historia nueva tras la retroalimentación del docente; **no está en Notion**. [Plan_Estructura_De_Viviendas](../07_Planes/activos/Plan_Estructura_De_Viviendas.md) |
 
 ## Detalle de las construidas (corte 2026-09-29)
 
@@ -82,7 +82,7 @@ La columna "Sprint" es el reparto previsto en el Excel V11.1, que ya no se cumpl
 |---|---|---|---|
 |HU-01 Login con correo y contraseña|3|5/5 tareas y 5/5 criterios. Incluye la recuperación de contraseña por enlace de un solo uso|La DoD. Además queda un hueco: `send_mail` es síncrono y sin `try` (con SMTP real, un fallo da 500 solo si la cuenta existe). El límite de 3 enlaces por hora y el SMTP real quedaron hechos el 2026-10-05|
 |HU-02 Segundo factor (TOTP)|5|5/5 y 5/5. TOTP con QR y 10 códigos de respaldo. Desde el 2026-10-05, enlace por correo para quitarlo y configurarlo de nuevo (sin commit)|La DoD, y recorrer el enlace a mano con la API encendida y un correo real|
-|HU-03 Asistente para crear un conjunto|6|Parcial. Desde el 27/09 los pasos de Áreas y Reglas son reales|**Está bloqueada**: el reglamento no tiene módulo (HU-33) y cuenta como no cumplido, así que **ningún conjunto puede quedar operativo**. Tampoco verifiqué si registra en la auditoría quién creó el conjunto|
+|HU-03 Asistente para crear un conjunto|6|Completa en código desde el 06/10 (sin commit): siete pasos, con Viviendas y Reglamento, y un conjunto que ya queda operativo|La parte humana de la DoD y actualizar sus criterios en Notion. Dejar operativo un conjunto **no queda en la auditoría**, y sigue sin verificarse si queda quién lo creó. Reservar todavía no exige que el conjunto esté operativo|
 |HU-04 Persona única por documento|3|5/5 y 5/5|La DoD|
 |HU-05 Aislamiento entre conjuntos|2|5/5 y 5/5. Desde el 27/09 ya lo usan tablas reales (áreas, reservas y demás)|La DoD|
 |HU-26 Selector de conjunto activo|6|5/5 y 5/5, conectado a la API|La DoD|
@@ -120,7 +120,7 @@ Verificado en el código el 2026-10-05. No se comparó contra los criterios de N
 | `GET /visitantes/`: los de hoy para quien solo registra; todo el histórico con `visitante.ver_historico` | Parqueadero de visitantes (HU-28) y aviso a quienes residen en el apartamento |
 | Pantalla con el formulario (Vigilancia) y el listado; 6 pruebas en el back, 7 en el front y su listado en la prueba del intruso | Capa de servicio y registro en la auditoría: la vista usa el ORM directo |
 
-### HU-39, definida el 2026-10-06 y sin construir
+### HU-39, definida el 2026-10-06; primera parte construida ese día
 
 *Como Administración, quiero describir cómo está organizado mi conjunto y que el sistema cree sus viviendas, para empezar a usar la plataforma sin registrarlas una por una.* Sale de la retroalimentación del docente sobre HU-03 y HU-08; lo decidido está en [construccion](../06_Decisiones/construccion.md). Sprint, puntos y prioridad los pone el equipo en Notion.
 

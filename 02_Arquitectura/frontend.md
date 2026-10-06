@@ -2,7 +2,7 @@
 resumen: "El frontend por dentro: config sin base de datos, cliente_api, la sesión del front y el estado de cada pantalla."
 tipo: arquitectura
 origen: "guía de estructura §6 (2026-09-30)"
-actualizado: 2026-10-05
+actualizado: 2026-10-06
 ---
 
 # El frontend por dentro
@@ -38,7 +38,7 @@ Cada app del front tiene `views.py` (funciones), `urls.py`, a veces `forms.py` (
 | Sección del lateral | App del front | Estado |
 |---|---|---|
 | Ingreso, recuperar contraseña, segundo factor (con «¿Problemas con la verificación en dos pasos?»: pedir por correo el enlace que lo quita y confirmarlo), **Mi perfil** (ícono de la barra superior: datos personales y tipo de usuario) | `cuentas` | Real, contra la API |
-| Selector de conjunto, asistente de creación, *Color y foto* (8 acentos o color propio, foto 1:1 con recortador) | `conjuntos` | Real. El asistente es parcial (HU-03). **Aquí también está Alpine** (29/09) |
+| Selector de conjunto, asistente de creación, *Color y foto* (8 acentos o color propio, foto 1:1 con recortador) | `conjuntos` | Real. El asistente tiene siete pasos desde el 06/10: datos, viviendas, administración, áreas, reglas (el tablero de `reglas`), reglamento y resumen. **Aquí también está Alpine** (29/09), y desde el 06/10 en el paso de viviendas (`static/js/viviendas.js`): arma la descripción del conjunto, y lo que se crea lo calcula la API |
 | Inicio | `paneles` | **Maqueta** con datos de ejemplo |
 | Zonas comunes (calendario, solicitud) | `reservas` | Real. **Aquí está Alpine** |
 | Áreas comunes | `areas` | Real (solo con `area.gestionar`) |

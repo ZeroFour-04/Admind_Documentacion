@@ -114,7 +114,7 @@ Cuando un residente envía una solicitud, `reglas/evaluador.py` → `evaluar(sol
 - **Un cierre sobre reservas ya apartadas** no las toca: las reglas se evalúan al pedir. Cada regla de días que no abre responde `reservas_afectadas`, cuántas solicitudes apartadas o reservadas, de hoy en adelante, caen en sus renglones, y el tablero lo avisa con enlace a las solicitudes del área.
 - El horario (`hora_apertura`, `hora_cierre`) y `duracion_franja_minutos` no son reglas: son campos de `Area`.
 - **La pantalla** (`/reglas/` en el front) es un tablero: arriba las reglas del conjunto y debajo un bloque por área, con una fila por cada regla posible, su descripción y lo que vale hoy o «Sin definir». El paso de reglas del asistente es el mismo tablero.
-- El requisito `reglas_beta` para quedar operativo no cambió: se cumple con al menos una regla vigente, de cualquier nivel ([abiertas](../06_Decisiones/abiertas.md) 12.10 e).
+- El requisito de reglas para quedar operativo cambió el 2026-10-06 con el plan del asistente: dejó de ser `reglas_beta` («al menos una regla vigente, de cualquier nivel») y es `reglas_del_conjunto`, que se cumple con la **anticipación máxima** del conjunto vigente. El tablero lo dice cuando se abre dentro del asistente ([conjuntos](conjuntos.md)).
 
 **Las migraciones** son `areas/0004_aforo_maximo` (las áreas que existían reciben aforo 1) y `reglas/0002` a `0004`. La `0003` es de datos: cierra **todas** las reglas abiertas del modelo anterior, sin borrarlas, y pasa a cada área el aforo de su regla `AFORO` (el menor si había varias). Las reglas se vuelven a definir en el tablero.
 
