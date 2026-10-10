@@ -40,12 +40,13 @@ Cada app del front tiene `views.py` (funciones), `urls.py`, a veces `forms.py` (
 | Ingreso, recuperar contraseña, segundo factor (con «¿Problemas con la verificación en dos pasos?»: pedir por correo el enlace que lo quita y confirmarlo), **Mi perfil** (ícono de la barra superior: datos personales y tipo de usuario) | `cuentas` | Real, contra la API |
 | Selector de conjunto, asistente de creación, *Color y foto* (8 acentos o color propio, foto 1:1 con recortador) | `conjuntos` | Real. El asistente tiene siete pasos desde el 06/10: datos, viviendas, administración, áreas, reglas (el tablero de `reglas`), reglamento y resumen. **Aquí también está Alpine** (29/09), y desde el 06/10 en el paso de viviendas (`static/js/viviendas.js`): arma la descripción del conjunto, y lo que se crea lo calcula la API |
 | Inicio | `paneles` | **Maqueta** con datos de ejemplo |
-| Zonas comunes (calendario, solicitud) | `reservas` | Real. **Aquí está Alpine** |
-| Áreas comunes | `areas` | Real (solo con `area.gestionar`) |
+| Zonas comunes (la tabla de todas las zonas con su modo y sus cupos, el calendario y la solicitud) | `reservas` | Real. **Aquí está Alpine** |
+| Áreas comunes (con el modo de uso al crear y su columna «Cómo se usa») | `areas` | Real (solo con `area.gestionar`) |
 | Reglas | `reglas` | Real |
 | Anuncios | `anuncios` | Real |
 | Notificaciones | `notificaciones` | Real |
 | Solicitudes | `triage` | **Maqueta** vacía (HU-22, futuro) |
+| Ingreso a zonas (Vigilancia, con `ingreso.registrar`: cupos, registrar en dos pasos, quién está adentro y a quién se le cumplió el tiempo) o Ingresos (con `ingreso.ver_historico`: el historial sin formulario) | `ingresos` | Real, sin historia. Sin JavaScript |
 | Visitantes ("Visitante" para Vigilancia: formulario de ingreso y los de hoy; con `visitante.ver_historico`, el historial sin formulario) | `visitantes` | Real, parcial (HU-27): solo el ingreso, sin salida ni parqueadero |
 | Conjunto | `conjuntos` | Real (resumen del asistente) |
 | Usuarios (lista con su rol, detalle con **un** rol que se asigna o se cambia, "Eliminar usuario" con confirmación, registrar persona) | `usuarios` | Real. `usuarios/nuevo.html` aún muestra la etiqueta "Maqueta" |

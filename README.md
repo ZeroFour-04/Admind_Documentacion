@@ -55,7 +55,7 @@ Una línea por nota: qué tiene y cuándo abrirla. Las reglas para agentes de IA
 |---|---|---|
 | [reservas](05_Modulos/reservas.md) | `reservas` | Estados, bloqueo de 3 minutos, confirmación y el recorrido completo en el código |
 | [motor_reglas](05_Modulos/motor_reglas.md) | `reglas` | Reglas del sistema, alfa (del conjunto) y beta (de la zona): definición del 2026-10-06 y cómo quedó construida para las áreas con reserva |
-| [ingresos](05_Modulos/ingresos.md) | sin app todavía | Zonas con ingreso: registro en la puerta, aforo simultáneo y salida. Definición del 2026-10-06, sin historia y sin construir |
+| [ingresos](05_Modulos/ingresos.md) | `ingresos` | Zonas con ingreso: registro en la puerta, aforo simultáneo y salida. Construido el 2026-10-08 con salvaguardas legales (sin commit ni `migrate`); sin historia; lo legal sigue sin verificar |
 | [personas](05_Modulos/personas.md) | `personas` | Identidad global, UUID y documento normalizado |
 | [permisos](05_Modulos/permisos.md) | `permisos` | Catálogo de roles y permisos, Superusuario, un rol por conjunto |
 | [cuentas](05_Modulos/cuentas.md) | `cuentas` | Sesión, token, conjunto activo y segundo factor |

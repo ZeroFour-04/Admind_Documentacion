@@ -1,10 +1,10 @@
 ---
-resumen: "Motor de reglas: reglas del sistema, alfa (del conjunto) y beta (de la zona), con parámetros y descripciones. Definición del 2026-10-06: lo de las áreas con reserva ya está en el código (sin commit ni `migrate` al 2026-10-06); lo del ingreso, sin construir."
+resumen: "Motor de reglas: reglas del sistema, alfa (del conjunto) y beta (de la zona), con parámetros y descripciones. Definición del 2026-10-06: las áreas con reserva están en el código y con commit; el modo de uso con ingreso y los acompañantes se construyeron el 2026-10-08, sin commit ni `migrate`."
 tipo: modulo
 modulo: reglas
 hu: [HU-10, HU-13]
 origen: "definición con Alejo en chat (2026-10-06) + maestro v1.4 (2026-09-14) §5.10 + guía de estructura §5.6 (2026-09-30)"
-actualizado: 2026-10-06
+actualizado: 2026-10-08
 ---
 
 # Motor de reglas
@@ -13,7 +13,8 @@ actualizado: 2026-10-06
 > - Lo vigente es la sección *Definición vigente*. La decidió Alejo en chat; falta contárselo a Camilo.
 > - **Alfa y beta cambiaron de significado.** Antes: alfa = fija en el código, beta = configurable. Ahora: alfa = regla del conjunto, beta = regla de la zona, y las fijas se llaman reglas del sistema.
 > - **Construido** con [Plan_Motor_De_Reglas](../07_Planes/activos/Plan_Motor_De_Reglas.md): niveles, una sola regla por tipo, descripciones fijas, aforo obligatorio en el área, días que no abre con motivo y el tablero. Al 2026-10-06 está **sin commit** y las migraciones **sin aplicar en `admind_db`**: las corre Alejo, y cierran las reglas que había.
-> - **Sin construir:** todo lo del ingreso (modo de uso, permanencia máxima, acompañantes, un ingreso abierto por persona), que no tiene plan, y *día límite de pago*, que llega con pagos.
+> - **Construido el 2026-10-08, sin commit:** el modo de uso, la permanencia máxima, los acompañantes y un ingreso abierto por persona, con [Plan_Zonas_Con_Ingreso](../07_Planes/hechos/Plan_Zonas_Con_Ingreso.md). Detalle en [ingresos](ingresos.md).
+> - **Sin construir:** *día límite de pago*, que llega con pagos.
 > - El texto del maestro §5.10 queda al final, como antecedente.
 
 ## Definición vigente (2026-10-06)
@@ -54,19 +55,19 @@ Una **zona** es un área común del catálogo (`Area` en el código). Las zonas 
 | **Anticipación mínima** | Horas, entero desde 0 (0 = sin mínimo) | Reserva, igual para todas las zonas | Cuántas horas antes, como mínimo, se pide una reserva. Con 24, nadie reserva para hoy mismo. Con 0 no hay mínimo |
 | **Anticipación máxima** | Días, entero desde 1 | Reserva, igual para todas las zonas | Hasta cuántos días hacia adelante se puede reservar. Con 30, hoy se puede pedir cualquier fecha de los próximos 30 días y ninguna posterior |
 | **Paz y salvo** | Sí o no | Reserva e ingreso, con un solo interruptor *(supuesto)* | Si la activas, una vivienda en mora con la administración no reserva ni ingresa a las zonas comunes hasta ponerse al día |
-| **Acompañantes** | ¿Se permiten? Sí o no. Si es sí: máximo por vivienda a la vez, entero desde 1 | Ingreso | Si los residentes pueden entrar con invitados a las zonas con ingreso, y cuántos puede tener adentro una misma vivienda a la vez. Cada acompañante ocupa un puesto del aforo |
+| **Acompañantes** | Máximo por vivienda a la vez, entero desde 0. **0 es «no se permiten»**, y sin regla definida entran y el aforo es el único tope (D8 a) | Ingreso | Si los residentes pueden entrar con invitados a las zonas con ingreso, y cuántos puede tener adentro una misma vivienda a la vez. Cada acompañante ocupa un puesto del aforo |
 | **Día límite de pago** | Día del mes, de 1 a 28 *(supuesto: el tope)* | No la evalúa el motor: la lee pagos | El día del mes hasta el que se paga la administración sin entrar en mora. Con 10, quien no tenga el pago confirmado el 11 queda en mora |
 
 ### Reglas beta (de la zona)
 
 | Regla | Parámetros | Aplica a | Descripción para el administrador |
 |---|---|---|---|
-| **Modo de uso** | Reserva o ingreso. Se elige al crear la zona y no cambia *(supuesto)* | — | Cómo se usa la zona. Con reserva, se aparta una franja con anticipación (salón, BBQ). Con ingreso, no se aparta: vigilancia registra a quien entra (gimnasio, piscina) |
+| **Modo de uso** | Reserva o ingreso. Se elige al crear la zona y no cambia (confirmado el 2026-10-08) | — | Cómo se usa la zona. Con reserva, se aparta una franja con anticipación (salón, BBQ). Con ingreso, no se aparta: vigilancia registra a quien entra (gimnasio, piscina) |
 | **Horario** | Hora de apertura y hora de cierre; el cierre va después de la apertura | Los dos modos | Desde qué hora y hasta qué hora presta servicio. Fuera de ese horario no se reserva ni se registra ingreso |
 | **Días que no abre** | Lista de renglones, cada uno con motivo obligatorio | Los dos modos | Días de la semana, fechas o periodos en que la zona no presta servicio. Cada uno lleva su motivo, que es lo que lee el residente |
 | **Aforo máximo** | Personas, entero desde 1. Obligatorio | Los dos modos | Cuántas personas caben. Con reserva, es el máximo de asistentes de cada reserva. Con ingreso, es el máximo de personas adentro al mismo tiempo |
 | **Duración de la franja** | Minutos; hoy el mínimo es 120 | Reserva | Cuánto dura cada franja que se puede reservar. Con 180 minutos y horario de 8:00 a 20:00, la zona ofrece cuatro al día |
-| **Permanencia máxima** | Minutos *(supuesto: la unidad)* | Ingreso | Cuánto tiempo puede quedarse una persona desde que entra. Al cumplirse, el sistema registra su salida y avisa al residente y a vigilancia |
+| **Permanencia máxima** | Minutos, de 15 a 1 440 | Ingreso | Cuánto tiempo puede quedarse una persona desde que entra. Al cumplirse, el sistema registra su salida y avisa al residente y a vigilancia |
 | **Límite de reservas por vivienda** | Máximo de reservas y cada cuántos días | Reserva | Cuántas reservas de esta zona puede tener una misma vivienda en un periodo. Con 2 cada 30 días, una vivienda no aparta el salón todos los fines de semana |
 
 **Días que no abre.** Un renglón es de una de tres clases, todas con motivo: día de la semana («lunes — limpieza»), fecha suelta («25 de diciembre — Navidad») o periodo con desde y hasta, sin tope de duración («1 al 30 de noviembre — cambio del piso»). *En mantenimiento* sigue aparte: es el cierre inmediato y sin fecha que ya tiene el área. Agregar un cierre no cancela las reservas ya aprobadas de esos días; qué hace el sistema con ellas está sin decidir ([abiertas](../06_Decisiones/abiertas.md) 12.10). Se descartó una regla alfa que solo encendiera esta beta: dejar la lista vacía ya significa que abre todos los días.
@@ -77,13 +78,22 @@ Una **zona** es un área común del catálogo (`Area` en el código). Las zonas 
 
 ### Supuestos del agente, por confirmar
 
-Alejo no los ha objetado ni confirmado:
+**Confirmados por Alejo el 2026-10-08:**
+
+- El modo de uso no cambia después de crear la zona: para cambiarlo, se desactiva y se crea otra.
+- La permanencia máxima va en minutos y la salida prevista no pasa de la hora de cierre.
+- Un ingreso abierto por persona en el conjunto.
+
+**Confirmados por Alejo el 2026-10-08, con la D9 de [Plan_Zonas_Con_Ingreso](../07_Planes/hechos/Plan_Zonas_Con_Ingreso.md):**
 
 - Un solo interruptor de paz y salvo para reservas e ingresos.
-- El modo de uso no cambia después de crear la zona: para cambiarlo, se desactiva y se crea otra.
-- La permanencia máxima va en minutos; la salida prevista no pasa de la hora de cierre; si se cambia la permanencia, los ingresos abiertos conservan la que tenían.
+- Si se cambia la permanencia, los ingresos abiertos conservan la que tenían.
+
+**Por confirmar:**
+
 - El día límite de pago llega hasta 28, para que exista en todos los meses.
-- Un ingreso abierto por persona en el conjunto.
+
+**Acompañantes sin regla definida.** Decidido el 2026-10-08 (D8 a): entran, con el aforo como único tope. La regla guarda solo un máximo desde 0, donde 0 es «no se permiten», para que todas las reglas sigan solo restringiendo.
 
 Lo que sigue sin decidir está en [abiertas](../06_Decisiones/abiertas.md) 12.10.
 
@@ -104,6 +114,9 @@ Cuando un residente envía una solicitud, `reglas/evaluador.py` → `evaluar(sol
   | `REQUIERE_PAZ_Y_SALVO` | alfa | ninguno: definirla es activarla. Lleva la nota «todavía no restringe» |
   | `DIAS_QUE_NO_ABRE` | beta | `renglones`: cada uno es `{dia_semana, motivo}` o `{desde, hasta, motivo}`. Hasta 60, motivo de hasta 120 caracteres, un día de la semana no se repite |
   | `CUPO_POR_UNIDAD` | beta | `reservas` y `dias`, desde 1 |
+  | `ACOMPANANTES` | alfa | `maximo`, desde 0 (0 = no se permiten) |
+
+  `MODOS_POR_TIPO` dice a qué modo aplica cada tipo y `GET /reglas/catalogo/` lo entrega en `modos`: anticipación mínima y máxima y límite por vivienda, a reserva; acompañantes, a ingreso; paz y salvo y días que no abre, a los dos. Definir una regla de área en un área de otro modo responde 400 bajo `area`. El evaluador de reservas salta los tipos que no conoce, y `ACOMPANANTES` la evalúa el módulo de [ingresos](ingresos.md), con su propio evaluador.
 
 - **Una sola abierta por tipo.** Una regla *abierta* es la que tiene `vigencia_hasta` vacía. Definir una segunda del mismo tipo (en el conjunto, o en la misma área) responde `409`. El servicio lo revisa y la base lo impide con dos índices únicos parciales; un `CHECK` impide además una regla abierta en el nivel equivocado ([restricciones_bd](../02_Arquitectura/restricciones_bd.md)).
 - **Tipos retirados:** `AFORO`, `FRANJA_HORARIA` y `DIAS_NO_RESERVABLES` siguen en `TipoDeRegla` para poder leer el historial. No se crean ni se editan, y el evaluador no los mira.
@@ -115,6 +128,8 @@ Cuando un residente envía una solicitud, `reglas/evaluador.py` → `evaluar(sol
 - El horario (`hora_apertura`, `hora_cierre`) y `duracion_franja_minutos` no son reglas: son campos de `Area`.
 - **La pantalla** (`/reglas/` en el front) es un tablero: arriba las reglas del conjunto y debajo un bloque por área, con una fila por cada regla posible, su descripción y lo que vale hoy o «Sin definir». El paso de reglas del asistente es el mismo tablero.
 - El requisito de reglas para quedar operativo cambió el 2026-10-06 con el plan del asistente: dejó de ser `reglas_beta` («al menos una regla vigente, de cualquier nivel») y es `reglas_del_conjunto`, que se cumple con la **anticipación máxima** del conjunto vigente. El tablero lo dice cuando se abre dentro del asistente ([conjuntos](conjuntos.md)).
+
+**Las migraciones del ingreso (2026-10-08, sin aplicar en `admind_db`)** son `areas/0005_modo_de_uso` (las áreas que existen quedan con reserva) y `reglas/0005_acompanantes` (recoge los dos `CHECK` que cambian, `regla_tipo_valido` y `regla_nivel_coherente`).
 
 **Las migraciones** son `areas/0004_aforo_maximo` (las áreas que existían reciben aforo 1) y `reglas/0002` a `0004`. La `0003` es de datos: cierra **todas** las reglas abiertas del modelo anterior, sin borrarlas, y pasa a cada área el aforo de su regla `AFORO` (el menor si había varias). Las reglas se vuelven a definir en el tablero.
 
@@ -131,7 +146,7 @@ Construido el 2026-10-06, salvo lo que la última fila marca como pendiente.
 | `DIAS_NO_RESERVABLES`: días de la semana y fechas, sin motivo | Gana el motivo obligatorio y los periodos |
 | `CUPO_POR_UNIDAD` | Se conserva por zona, como *límite de reservas por vivienda* |
 | Varias reglas del mismo tipo por área | Una sola por tipo |
-| — | Construidas las descripciones fijas. **Sin construir:** acompañantes y día límite de pago (llegan con el ingreso y con pagos), modo de uso y permanencia máxima (son del ingreso) |
+| — | Construidas las descripciones fijas, y el 2026-10-08 acompañantes, modo de uso y permanencia máxima. **Sin construir:** día límite de pago (llega con pagos) |
 
 El versionado y la copia de la evaluación en la solicitud no se discutieron: siguen como están.
 

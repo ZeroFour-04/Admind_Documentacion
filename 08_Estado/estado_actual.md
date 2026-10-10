@@ -3,7 +3,7 @@ resumen: "Dónde está el proyecto hoy: commits, pruebas, historias por grupo y 
 tipo: estado
 corte: 2026-10-05
 origen: "guía de estructura §1 y §10 (2026-09-30)"
-actualizado: 2026-10-06
+actualizado: 2026-10-08
 ---
 
 # Estado actual
@@ -16,6 +16,8 @@ actualizado: 2026-10-06
 
 | Qué | Estado al 2026-10-05 |
 |---|---|
+| **Cambio del 2026-10-08, sin commit** | **Las zonas con ingreso** ([ingresos](../05_Modulos/ingresos.md), [Plan_Zonas_Con_Ingreso](../07_Planes/hechos/Plan_Zonas_Con_Ingreso.md)), construidas por el agente sobre Backend `279e963` y Frontend `f5b3d08`, con salvaguardas legales y **sin haber verificado lo legal** (D3 a). Backend: **478 pruebas, 477 pasan y 1 falla** (la misma, por las mismas cinco rutas); tres migraciones nuevas (`areas/0005`, `reglas/0005`, `ingresos/0001`) **sin aplicar en `admind_db`**. Frontend: **246 pruebas, todas pasan**. Antes del cambio eran 416 (415 pasan) y 210. Falta el texto del aviso de finalidad, la prueba manual y avisarle a Camilo ([pendientes](pendientes.md)) |
+| **Verificado el 2026-10-08, al abrir el plan de zonas con ingreso** | Backend sigue en `279e963`: 416 pruebas, 415 pasan y 1 falla, la misma. Frontend avanzó a `f5b3d08` («responsive»): **210 pruebas, todas pasan**. Los dos limpios y sin migraciones pendientes en `admind_db`. Es el punto de partida del cambio de arriba |
 | **Verificado el 2026-10-06, al hacer el informe 4** | **Todo tiene commit y está subido:** Backend `desarrollo` en `279e963`, Frontend en `fff4651`, los dos limpios e iguales a GitHub. **Todas las migraciones están aplicadas en `admind_db`** y `makemigrations --check` no encuentra cambios. Backend: **416 pruebas, 415 pasan y 1 falla**, la misma; Frontend: **208, todas pasan**. **HU-14 (aprobar y rechazar) está construida** desde el 05/10 por Camilo y no estaba en esta nota. Las filas de abajo que dicen «sin commit» o «sin aplicar» quedaron atrás |
 | **Cambio del 2026-10-06, sin commit** | **El asistente de creación completo (HU-03) y la estructura de viviendas (HU-39, primera parte)**, sobre Backend `9b3b231` y Frontend `b5d96df`. El asistente tiene siete pasos, genera las viviendas en lote, sube el reglamento en PDF (app nueva `documentos`) y **un conjunto ya puede quedar operativo**; lo activa el Superusuario o Administración. Backend: **415 pruebas, 414 pasan y 1 falla**, la misma de antes; dos migraciones nuevas (`unidades/0002_estructura` y `documentos/0001_initial`) **sin aplicar en `admind_db`**. Frontend: **206 pruebas, todas pasan**. Antes del cambio eran 378 (377 pasan) y 196 |
 | **Motor de reglas (2026-10-06), ya con commit** | El **motor de reglas por niveles** ([motor_reglas](../05_Modulos/motor_reglas.md)) está construido en los dos repositorios, sobre Backend `2d11dbe` y Frontend `a3792d7`; entró a `desarrollo` en Backend `9b3b231` y Frontend `b5d96df`. Backend: **378 pruebas, 377 pasan y 1 falla**, la misma de antes; cuatro migraciones nuevas (`areas/0004`, `reglas/0002` a `0004`) **sin aplicar en `admind_db`**. Frontend: **193 pruebas, todas pasan**. Antes del cambio eran 368 (367 pasan) y 188. El resto de esta tabla es del corte del 05/10 y no se volvió a revisar |

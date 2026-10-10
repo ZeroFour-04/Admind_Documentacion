@@ -2,7 +2,7 @@
 resumen: "Lista de pendientes: lo que frena los story points, lo que hay que corregir en Notion, decisiones de equipo y pendientes técnicos."
 tipo: estado
 origen: "informe por sprints §4 a §6 (2026-09-29) + avance §6 (2026-09-27)"
-actualizado: 2026-10-06
+actualizado: 2026-10-08
 ---
 
 # Pendientes
@@ -63,7 +63,7 @@ Historia nueva, definida con Alejo tras la retroalimentación del docente. La pr
 
 Alejo decidió el tercer tipo de vínculo, `habitante` ([construccion](../06_Decisiones/construccion.md), [unidades](../05_Modulos/unidades.md)). Sin historia, sin plan y sin construir.
 
-- [ ] **Orden:** las zonas con ingreso dependen de esto. Propuesta del agente, sin decidir: que sea la primera fase del plan de ingresos. Qué entra antes de la entrega lo decide Alejo.
+- [x] **Orden:** las zonas con ingreso dependen de esto. Propuesta del agente, sin decidir: que sea la primera fase del plan de ingresos. Qué entra antes de la entrega lo decide Alejo. — Decidido el 2026-10-08: **no entra** en el plan de ingresos; mientras no exista, la familia entra como acompañante de un titular. Sigue sin plan propio.
 - [ ] **Lo legal, antes de construir la pantalla:** qué finalidad se declara, quién autoriza el registro (el adulto responsable, si es un menor) y cuánto tiempo se conserva ([legal](../01_Contexto/legal.md) §4.2). Las pantallas de registro de hoy tampoco muestran la autorización.
 - [ ] **Avisarle a Camilo:** un tipo nuevo de vínculo, una migración en `unidades` y una operación que crea una persona sin cuenta.
 - [ ] **Historia y Notion:** no tiene historia. El agente no toca Notion.
@@ -72,10 +72,20 @@ Alejo decidió el tercer tipo de vínculo, `habitante` ([construccion](../06_Dec
 
 Definición nueva con Alejo: [motor_reglas](../05_Modulos/motor_reglas.md) e [ingresos](../05_Modulos/ingresos.md). El motor para las áreas con reserva se construyó el 2026-10-06; el ingreso sigue sin construir.
 
-- [ ] **Alejo:** confirmar los supuestos del agente (están al final de las dos notas) y decidir los puntos de [abiertas](../06_Decisiones/abiertas.md) 12.10.
+- [x] **Alejo, para destrabar el plan de ingresos:** verificar con la guía legal o el docente los tres puntos de [abiertas](../06_Decisiones/abiertas.md) 12.10 b (si la mora puede restringir el gimnasio o la piscina; finalidad, autorización y plazo de retención del registro de quién entra; la Ley 1209 de piscinas) y cambiar la D3 de [Plan_Zonas_Con_Ingreso](../07_Planes/hechos/Plan_Zonas_Con_Ingreso.md). Desde el 2026-10-08 el plan está escrito y **detenido** ahí.
+- [x] **Alejo:** responder D5 a D9 del mismo plan: qué ve Vigilancia en el menú, quién corre las migraciones, las palabras en pantalla (12.10 d), qué pasa con los acompañantes si la regla no está definida, y tres supuestos que faltó preguntar.
+- [ ] **Alejo:** confirmar los supuestos del agente (están al final de las dos notas) y decidir los puntos de [abiertas](../06_Decisiones/abiertas.md) 12.10. — El 2026-10-08 confirmó seis y decidió los permisos (12.10 c). Quedan 12.10 b y d, y los supuestos de la D9 del plan y del día límite de pago.
 - [ ] **Definir la creación de conjuntos** con las reglas nuevas: qué paso del asistente llena las alfa y qué exige para quedar operativo.
-- [ ] **Avisarle a Camilo:** alfa y beta cambiaron de significado; hay una funcionalidad nueva que usa el rol Vigilancia, pide un permiso nuevo y se parece a HU-27.
+- [ ] **Avisarle a Camilo:** alfa y beta cambiaron de significado; hay una funcionalidad nueva que usa el rol Vigilancia, pide un permiso nuevo y se parece a HU-27. Desde el 2026-10-08 los permisos son dos (`ingreso.registrar` e `ingreso.ver_historico`), y el plan, si D5 queda en a, cambia su prueba del lateral de `tests/test_visitantes.py`.
 - [ ] **Historia y Notion:** el ingreso a zonas no tiene historia, y los criterios de HU-09, HU-10 y HU-13 describen el modelo anterior. El agente no toca Notion.
+- [x] **Zonas con ingreso, construido el 2026-10-08** con [Plan_Zonas_Con_Ingreso](../07_Planes/hechos/Plan_Zonas_Con_Ingreso.md) (F0 a F7, sin commit). Alejo no verificó lo legal y eligió construir con salvaguardas (D3 a); respondió D5 b, D6 a, D7 a, D8 a y D9 a.
+- [ ] **Alejo, lo legal de las zonas con ingreso (12.10 b):** verificar con la guía legal o el docente los tres puntos, y **dar el texto del aviso de finalidad**. Hoy la pantalla de Vigilancia dice «Aviso de finalidad pendiente de la verificación legal»; se reemplaza en `AVISO_DE_FINALIDAD` de `Frontend/Admind_Front-End/apps/ingresos/views.py`. De la verificación sale también qué hacer con el historial al cumplirse el plazo de retención.
+- [ ] **Alejo, para cerrar el plan de ingresos:** correr `migrate` en `admind_db` (D6 a): aplica `areas/0005_modo_de_uso`, `reglas/0005_acompanantes` e `ingresos/0001_initial`. Las áreas que existen quedan **con reserva**. Después, revisar y hacer los commits en los dos repositorios (los mensajes sugeridos están al cierre de cada fase del plan, con `[HU-??]`; sin `push` hasta probarlo).
+- [ ] **Prueba manual** de las zonas con ingreso con el guion del final del plan (12 pasos), por quien no las programó. El agente recorrió el front real contra la API real y la base de pruebas (25 comprobaciones) y revisó las pantallas a 360 px, pero **no a 200 % de zoom** ni con usuarios reales, y no esperó a que pasara el tiempo de una permanencia real (eso lo cubren las pruebas con la hora simulada).
+- [ ] **Avisarle a Camilo, de las zonas con ingreso:** dos permisos nuevos (`ingreso.registrar` e `ingreso.ver_historico`); migraciones en `areas`, `reglas` e `ingresos`; `GET /areas/` trae `modo_uso` y `permanencia_maxima_minutos` y la duración de la franja puede llegar vacía; `POST /reservas/solicitudes/` responde 409 sobre un área con ingreso; una línea nueva en `config/` de cada repositorio (`INSTALLED_APPS` y `urls.py`); y la regla `ACOMPANANTES` en el catálogo de reglas. Con D5 b **no cambia** su prueba del lateral de `test_visitantes.py`.
+- [ ] **Vigilancia ve «Zonas comunes» y «Reglas» en el menú, pero le responden sin permiso** (D5 b la dejó así a propósito). Si se decide quitarlos, cambia `test_vigilancia_solo_ve_las_secciones_permitidas_en_el_lateral`, que es de Camilo.
+- [ ] **Historia y Notion:** el ingreso a zonas sigue sin historia ni número. El agente no toca Notion.
+- [ ] **Fuera del plan de ingresos, para después:** el vínculo `habitante`, las reglas de piscina de la Ley 1209, depurar el historial al cumplirse la retención, que el vigilante confirme que quien venció de verdad salió, cambiar el modo de un área ya creada, cupos que se actualicen solos, áreas típicas con ingreso (gimnasio, piscina) en el paso de áreas del asistente, el panel de Vigilancia como bento y enlazar los acompañantes con los visitantes de portería (HU-27).
 - [x] **Alejo:** responder D1 a D4 de [Plan_Motor_De_Reglas](../07_Planes/activos/Plan_Motor_De_Reglas.md) y ejecutarlo — respondidas (las cuatro en a) y construido por el agente el 2026-10-06, fases F0 a F5. El ingreso a zonas todavía no tiene plan.
 - [ ] **Alejo, para cerrar el plan del motor:** correr `migrate` en `admind_db` (bloque B3.6 del plan): aplica `areas/0004` y `reglas/0002` a `0004`, **cierra todas las reglas que había** y deja con aforo 1 las áreas que no tenían regla de aforo. Después, poner el aforo real de cada área y volver a definir las reglas en el tablero.
 - [ ] **Alejo:** revisar y hacer los commits del motor en los dos repositorios (el agente no hace commits sin que se los pidan; los mensajes sugeridos están al cierre de cada fase del plan). Sin `push` hasta probarlo.

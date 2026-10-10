@@ -26,6 +26,7 @@ Llegaron con el motor de reglas por niveles. Están en el modelo y en las migrac
 | Restricción | Dónde | Qué impide |
 |---|---|---|
 | `CHECK` `area_aforo_maximo_valido` | `areas/models.py` | Un área con aforo menor que 1. El campo es obligatorio |
+| `CHECK` `area_modo_coherente` | `areas/models.py` | Un área con reserva sin duración de franja o con permanencia, o una con ingreso sin permanencia o con duración (2026-10-08) |
 | `CHECK` `regla_nivel_coherente` | `reglas/models.py` | Una regla **abierta** en el nivel equivocado: una del conjunto con área, o una de un área sin ella. Las cerradas son historial y no se revisan |
 | Índice único parcial `regla_alfa_unica_abierta` | ídem | Dos reglas abiertas del mismo tipo en el conjunto |
 | Índice único parcial `regla_beta_unica_abierta` | ídem | Dos reglas abiertas del mismo tipo en la misma área |
@@ -62,3 +63,17 @@ Revisadas directamente en `admind_db`, no solo en el código de Python: las de `
 | `permisos_asignacion` | FK a `personas_persona` y a `conjuntos_conjunto` | Una asignación a una persona o a un conjunto que no existe |
 | `cuentas_tokendesesion` | `UNIQUE (huella)` | Dos sesiones con el mismo token |
 | `cuentas_tokendesesion` | FK a `cuentas_usuario` y a `conjuntos_conjunto` | Una sesión de un usuario que no existe, o con un conjunto activo que no existe |
+
+## Ingresos a zonas (2026-10-08)
+
+Llegaron con la app `ingresos` (`ingresos/0001_initial`, sin aplicar en `admind_db`) y tienen prueba que escribe directo en la base.
+
+| Restricción | Dónde | Qué impide |
+|---|---|---|
+| Índice único parcial `ingreso_uno_abierto_por_persona` | `ingresos/models.py` | Que una persona tenga dos ingresos `ADENTRO` en el conjunto, **aunque dos zonas la registren a la vez** |
+| `CHECK` `ingreso_estado_valido` | ídem | Un estado que no sea `ADENTRO`, `SALIO` o `VENCIDO` |
+| `CHECK` `ingreso_salida_prevista_coherente` | ídem | Una salida prevista que no sea posterior a la entrada |
+| `CHECK` `ingreso_salida_segun_estado` | ídem | Un ingreso `ADENTRO` con hora de salida, o uno que ya salió sin ella |
+| FK compuesta `(area_id, conjunto_id)` y `(unidad_id, conjunto_id)` | migración `ingresos/0001` | Un ingreso que apunte a un área o a una vivienda de otro conjunto |
+
+**El aforo no está aquí.** Es una suma de filas, no una fila única, así que ningún índice lo custodia: lo decide el servicio, que toma la fila del área con `select_for_update` ([ingresos](../05_Modulos/ingresos.md)).

@@ -16,7 +16,7 @@ A D M I N D/
 │   ├── apps/                        ← un módulo por tema del negocio
 │   │   ├── comun/                   ← piezas compartidas: aislamiento, modelo base, bloqueo
 │   │   ├── personas/ cuentas/ conjuntos/ permisos/ unidades/
-│   │   ├── areas/ reglas/ reservas/ anuncios/ notificaciones/ auditoria/ visitantes/ documentos/
+│   │   ├── areas/ reglas/ reservas/ ingresos/ anuncios/ notificaciones/ auditoria/ visitantes/ documentos/
 │   │   └── casos/ citas/ pagos/ …   ← solo README: módulos futuros, sin código
 │   ├── tests/                       ← pruebas transversales (aislamiento, concurrencia, esquema)
 │   ├── bd/                          ← notas sobre la base de datos
@@ -49,9 +49,10 @@ Cada carpeta de `apps/` tiene un `README.md` que dice para qué existe. Las apps
 | `permisos` | Catálogo de 5 roles, `Asignacion` (un rol vigente por persona y conjunto), permisos efectivos | (se usan desde `cuentas`: `/auth/usuarios/<id>/roles/`) | HU-06 |
 | `unidades` | `Agrupacion` (torre, bloque, manzana), `Unidad` (apartamento o casa) y `VinculoUnidad` (propietario, reside…) con histórico; a quién avisar de qué; el generador de viviendas (`estructura.py`, funciones puras) | `/unidades/`, `/unidades/<id>/vinculos/…`, `/unidades/agrupaciones/`, `/unidades/estructura/` y `…/previsualizar/` | HU-08, HU-39 |
 | `documentos` | `Reglamento`: el PDF del reglamento del conjunto, guardado en la base; subir otro no borra el anterior | `GET` y `PUT /documentos/reglamento/`, `GET /documentos/reglamento/archivo/` | HU-33 (solo el reglamento), HU-03 |
-| `areas` | `Area` común: nombre por conjunto, horario por bloques, aforo máximo obligatorio, mantenimiento | `/areas/`, `/areas/<id>/`, `/areas/<id>/desactivar/` | HU-09 |
+| `areas` | `Area` común: nombre por conjunto, **modo de uso** (con reserva o con ingreso, fijo desde que se crea), horario, aforo máximo obligatorio, mantenimiento; la duración de la franja (reserva) o la permanencia máxima (ingreso) | `/areas/`, `/areas/<id>/`, `/areas/<id>/desactivar/` | HU-09 |
 | `reglas` | Reglas por niveles, configurables y versionadas: **alfa** (del conjunto, sin área) y **beta** (de un área), una sola abierta por tipo; reglas **del sistema** fijas (`sistema.py`); el catálogo con las descripciones; el evaluador | `/reglas/`, `/reglas/catalogo/`, `/reglas/<id>/`, `/reglas/<id>/retirar/` | HU-10, HU-13 |
 | `reservas` | `Solicitud`: franjas, bloqueo de 3 min, envío y evaluación | `/reservas/franjas/`, `/reservas/solicitudes/…` | HU-11, HU-12, HU-13 |
+| `ingresos` | `Ingreso`: quién está adentro de una zona con ingreso, con aforo simultáneo, salida manual o por tiempo y su evaluador propio. Sin historia | `/ingresos/`, `/ingresos/zonas/`, `/ingresos/residentes/buscar/`, `/ingresos/<id>/salida/` | — |
 | `anuncios` | Anuncios del conjunto o de una vivienda, con hasta 4 fotos (`FotoDeAnuncio`) | `/anuncios/`, `/anuncios/<id>/`, `/anuncios/<id>/fotos/<foto_id>/` | HU-25 |
 | `notificaciones` | Bandeja en la app + correo; `canal.notificar(aviso, personas)` | `GET /notificaciones/` | HU-25, HU-08 |
 | `visitantes` | `Visitante`: quién entró, a qué apartamento, con qué vehículo y a qué hora. Sin `servicios.py`: la vista usa el ORM | `GET` y `POST /visitantes/` | HU-27 (parcial) |
@@ -66,6 +67,7 @@ Las pantallas del front, sección por sección, están en [frontend](frontend.md
 |---|---|
 | `reservas` | [reservas](../05_Modulos/reservas.md) |
 | `reglas` | [motor_reglas](../05_Modulos/motor_reglas.md) |
+| `ingresos` | [ingresos](../05_Modulos/ingresos.md) |
 | `personas` | [personas](../05_Modulos/personas.md) |
 | `permisos` | [permisos](../05_Modulos/permisos.md) |
 | `cuentas` | [cuentas](../05_Modulos/cuentas.md) |
