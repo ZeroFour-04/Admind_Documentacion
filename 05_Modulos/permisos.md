@@ -50,7 +50,7 @@ Asignación  (persona_id, rol_codigo, conjunto_id)          -- conjunto_id nulo 
 |Personas|`persona.buscar` · `persona.vincular`|
 |Reglas|`regla.ver` · `regla.configurar`|
 |Áreas|`area.ver` · `area.gestionar`|
-|Reservas|`reserva.solicitar` · `reserva.ver_todas` · `reserva.aprobar` · `reserva.rechazar` · `reserva.cancelar_ajena`|
+|Reservas|`reserva.solicitar` · `reserva.ver_todas` · `reserva.aprobar` · `reserva.rechazar` · `reserva.cancelar_ajena` · `reserva.declarar_pago` (desde el 10/10: solo Administración y Superusuario; Secretaría aprueba pero no declara el pago; no es sensible)|
 |Usuarios|`usuario.gestionar` · `rol.asignar` · `vinculo.gestionar`|
 |Visitantes|`visitante.registrar` · `visitante.ver_historico`|
 |Ingresos a zonas|`ingreso.registrar` · `ingreso.ver_historico`|
@@ -61,7 +61,8 @@ Asignación  (persona_id, rol_codigo, conjunto_id)          -- conjunto_id nulo 
 |Citas|`cita.agendar_propia` · `cita.gestionar_horario` · `cita.ver_todas`|
 |Documentos|`documento.subir` · `documento.ver` · `documento.descargar`|
 |Datos|`importacion.ejecutar` · `respaldo.generar` · `auditoria.ver`|
-|Parqueaderos|`parqueadero.ver` · `parqueadero.asignar`|
+|Pagos|`pago.ver` (sensible: Administración y Secretaría) · `pago.confirmar` (Administración) · `pago.reportar` (Residente). Desde el 10/10|
+|Parqueaderos|`parqueadero.ver` · `parqueadero.asignar` · `parqueadero.gestionar` (desde el 10/10, solo Administración y Superusuario: crea y retira parqueaderos del catálogo; `asignar` queda para HU-34; no es sensible)|
 
 **Permisos sensibles (exigen 2FA):** `visitante.ver_historico`, `ingreso.ver_historico`, `documento.descargar`, `respaldo.generar`, `usuario.gestionar`, `rol.asignar`, `auditoria.ver`, `persona.buscar`, `persona.vincular`, `infraccion.*`, `solicitud.bandeja_ver` y **todos los de plataforma**.
 

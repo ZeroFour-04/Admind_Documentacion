@@ -63,6 +63,7 @@ Una línea por nota: qué tiene y cuándo abrirla. Las reglas para agentes de IA
 | [unidades](05_Modulos/unidades.md) | `unidades` | Vínculos de unidad y a quién se notifica cada hecho |
 | [triage](05_Modulos/triage.md) | `triage`, `anuncios` | Secretaría, prioridad, rechazo formal, bandeja y anuncios |
 | [parqueaderos](05_Modulos/parqueaderos.md) | `parqueaderos` | Asignación a apartamentos y parqueaderos de visitantes |
+| [pagos](05_Modulos/pagos.md) | `pagos` | Pago de la administración por vivienda y mes: reporte con comprobante, confirmación y la mora de paz y salvo |
 | [infracciones](05_Modulos/infracciones.md) | `infracciones` | Registro y notificación; el sistema no sanciona |
 | [citas](05_Modulos/citas.md) | `citas` | Citas y cambio de horario con alternativas |
 

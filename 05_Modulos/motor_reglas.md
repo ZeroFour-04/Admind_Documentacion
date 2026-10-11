@@ -4,7 +4,7 @@ tipo: modulo
 modulo: reglas
 hu: [HU-10, HU-13]
 origen: "definición con Alejo en chat (2026-10-06) + maestro v1.4 (2026-09-14) §5.10 + guía de estructura §5.6 (2026-09-30)"
-actualizado: 2026-10-08
+actualizado: 2026-10-10
 ---
 
 # Motor de reglas
@@ -14,7 +14,8 @@ actualizado: 2026-10-08
 > - **Alfa y beta cambiaron de significado.** Antes: alfa = fija en el código, beta = configurable. Ahora: alfa = regla del conjunto, beta = regla de la zona, y las fijas se llaman reglas del sistema.
 > - **Construido** con [Plan_Motor_De_Reglas](../07_Planes/activos/Plan_Motor_De_Reglas.md): niveles, una sola regla por tipo, descripciones fijas, aforo obligatorio en el área, días que no abre con motivo y el tablero. Al 2026-10-06 está **sin commit** y las migraciones **sin aplicar en `admind_db`**: las corre Alejo, y cierran las reglas que había.
 > - **Construido el 2026-10-08, sin commit:** el modo de uso, la permanencia máxima, los acompañantes y un ingreso abierto por persona, con [Plan_Zonas_Con_Ingreso](../07_Planes/hechos/Plan_Zonas_Con_Ingreso.md). Detalle en [ingresos](ingresos.md).
-> - **Sin construir:** *día límite de pago*, que llega con pagos.
+> - **Construido el 2026-10-10, sin commit ni `migrate`:** dos reglas beta para las áreas con reserva, *una reserva al día* y *sin franjas seguidas*.
+> - **Construido el 2026-10-10, sin commit ni `migrate`:** *día límite de pago* (`DIA_LIMITE_DE_PAGO`, migración `reglas/0007`) y la mora real, con la fase F5 de [Plan_Pago_De_Administracion](../07_Planes/hechos/Plan_Pago_De_Administracion.md). *Paz y salvo* **ya restringe**. Se construyó sin haber verificado lo legal ([abiertas](../06_Decisiones/abiertas.md) 12.10 b). Detalle en [pagos](pagos.md).
 > - El texto del maestro §5.10 queda al final, como antecedente.
 
 ## Definición vigente (2026-10-06)
@@ -69,12 +70,16 @@ Una **zona** es un área común del catálogo (`Area` en el código). Las zonas 
 | **Duración de la franja** | Minutos; hoy el mínimo es 120 | Reserva | Cuánto dura cada franja que se puede reservar. Con 180 minutos y horario de 8:00 a 20:00, la zona ofrece cuatro al día |
 | **Permanencia máxima** | Minutos, de 15 a 1 440 | Ingreso | Cuánto tiempo puede quedarse una persona desde que entra. Al cumplirse, el sistema registra su salida y avisa al residente y a vigilancia |
 | **Límite de reservas por vivienda** | Máximo de reservas y cada cuántos días | Reserva | Cuántas reservas de esta zona puede tener una misma vivienda en un periodo. Con 2 cada 30 días, una vivienda no aparta el salón todos los fines de semana |
+| **Una reserva al día** *(2026-10-10)* | Ninguno: definirla la activa | Reserva | Si la activas, el área admite una sola reserva por día: cuando una franja queda apartada o reservada, las demás de ese día dejan de ofrecerse. Sirve para un salón comunal. Sin esta regla, cada franja se reserva por separado |
+| **Sin franjas seguidas** *(2026-10-10)* | Ninguno: definirla la activa | Reserva | Si la activas, una misma vivienda no reserva dos franjas seguidas del mismo día en esta área. Con franjas de 8:00 a 12:00 y de 12:00 a 16:00, quien tiene la primera no toma la segunda. Sin esta regla, puede encadenarlas |
+
+**Una reserva al día y sin franjas seguidas.** Las dos cuentan las solicitudes apartadas y las reservadas; una franja en trámite (los 3 minutos) no cuenta, porque puede vencer. La primera mira las de cualquier vivienda; la segunda, solo las de la vivienda que pide, y solo la franja que termina donde la nueva empieza o empieza donde la nueva termina. Alejo eligió contar por vivienda y no por persona (2026-10-10). Se escribieron en negativo a propósito: una regla «permite varias reservas al día» sería la primera que permite algo, y hoy todas restringen.
 
 **Días que no abre.** Un renglón es de una de tres clases, todas con motivo: día de la semana («lunes — limpieza»), fecha suelta («25 de diciembre — Navidad») o periodo con desde y hasta, sin tope de duración («1 al 30 de noviembre — cambio del piso»). *En mantenimiento* sigue aparte: es el cierre inmediato y sin fecha que ya tiene el área. Agregar un cierre no cancela las reservas ya aprobadas de esos días; qué hace el sistema con ellas está sin decidir ([abiertas](../06_Decisiones/abiertas.md) 12.10). Se descartó una regla alfa que solo encendiera esta beta: dejar la lista vacía ya significa que abre todos los días.
 
 **Acompañantes.** Se cumple si los acompañantes de esa vivienda que ya están adentro, más los que entran, no pasan del máximo. Solo se guarda cuántos son. No aplica a las reservas: ahí los invitados ya son los asistentes.
 
-**La mora.** El motor solo le pregunta al módulo de pagos si la vivienda está en mora; el punto de conexión ya existe (`apps/reglas/mora.py`) y hoy responde siempre que no. La única fuente, por ahora, es el pago de la administración. Las sanciones no lo son: el sistema no impone sanciones ni guarda multas ([legal](../01_Contexto/legal.md) §4.2). Hasta que pagos exista (HU-16, HU-35), *paz y salvo* y *día límite de pago* quedan definidas pero sin efecto.
+**La mora.** El motor solo le pregunta al módulo de pagos si la vivienda está en mora; el punto de conexión es `apps/reglas/mora.py`, que delega (con un `import` tardío, por la dependencia circular) en `apps/pagos/mora.py`. Desde el 2026-10-10 responde de verdad: una vivienda está en mora si le falta el pago confirmado de algún mes vencido, contando desde el mes en que se definió por primera vez el *día límite de pago*; sin esa regla, nadie está en mora. La única fuente es el pago de la administración. Las sanciones no lo son: el sistema no impone sanciones ni guarda multas ([legal](../01_Contexto/legal.md) §4.2). Ver [pagos](pagos.md).
 
 ### Supuestos del agente, por confirmar
 
@@ -115,6 +120,8 @@ Cuando un residente envía una solicitud, `reglas/evaluador.py` → `evaluar(sol
   | `DIAS_QUE_NO_ABRE` | beta | `renglones`: cada uno es `{dia_semana, motivo}` o `{desde, hasta, motivo}`. Hasta 60, motivo de hasta 120 caracteres, un día de la semana no se repite |
   | `CUPO_POR_UNIDAD` | beta | `reservas` y `dias`, desde 1 |
   | `ACOMPANANTES` | alfa | `maximo`, desde 0 (0 = no se permiten) |
+  | `UNA_RESERVA_POR_DIA` | beta | ninguno: definirla es activarla (2026-10-10) |
+  | `SIN_FRANJAS_SEGUIDAS` | beta | ninguno: definirla es activarla (2026-10-10) |
 
   `MODOS_POR_TIPO` dice a qué modo aplica cada tipo y `GET /reglas/catalogo/` lo entrega en `modos`: anticipación mínima y máxima y límite por vivienda, a reserva; acompañantes, a ingreso; paz y salvo y días que no abre, a los dos. Definir una regla de área en un área de otro modo responde 400 bajo `area`. El evaluador de reservas salta los tipos que no conoce, y `ACOMPANANTES` la evalúa el módulo de [ingresos](ingresos.md), con su propio evaluador.
 
@@ -129,7 +136,9 @@ Cuando un residente envía una solicitud, `reglas/evaluador.py` → `evaluar(sol
 - **La pantalla** (`/reglas/` en el front) es un tablero: arriba las reglas del conjunto y debajo un bloque por área, con una fila por cada regla posible, su descripción y lo que vale hoy o «Sin definir». El paso de reglas del asistente es el mismo tablero.
 - El requisito de reglas para quedar operativo cambió el 2026-10-06 con el plan del asistente: dejó de ser `reglas_beta` («al menos una regla vigente, de cualquier nivel») y es `reglas_del_conjunto`, que se cumple con la **anticipación máxima** del conjunto vigente. El tablero lo dice cuando se abre dentro del asistente ([conjuntos](conjuntos.md)).
 
-**Las migraciones del ingreso (2026-10-08, sin aplicar en `admind_db`)** son `areas/0005_modo_de_uso` (las áreas que existen quedan con reserva) y `reglas/0005_acompanantes` (recoge los dos `CHECK` que cambian, `regla_tipo_valido` y `regla_nivel_coherente`).
+**Las dos reglas del 2026-10-10 (sin commit).** `una_reserva_por_dia` y `sin_franjas_seguidas` están en `EVALUADOR_POR_TIPO` de `reglas/evaluador.py`. Solo aplican a áreas con reserva (`MODOS_POR_TIPO`). Además de evaluarse al enviar, la primera cambia lo que se ve: `reservas/servicios.franjas()` devuelve `no_disponible` para las franjas libres de un día que ya tiene una apartada o reservada. Que dos envíos simultáneos sobre franjas distintas del mismo día no pasen los dos lo garantiza `reservas/servicios.enviar`: su `select_for_update().select_related("area")` bloquea también la fila del área, así que los envíos de una misma área se evalúan uno después del otro. Lo prueba `tests/concurrencia/test_bloqueo_de_franjas.py`. La migración es `reglas/0006_reserva_al_dia_y_franjas_seguidas`, **sin aplicar en `admind_db`**: hasta correrla, la base rechaza los dos tipos. En el front son dos formularios sin campos en `apps/reglas/forms.py`; el tablero las pinta solas porque lee el catálogo.
+
+**Las migraciones del ingreso (2026-10-08, aplicadas en `admind_db` al 2026-10-10)** son `areas/0005_modo_de_uso` (las áreas que existen quedan con reserva) y `reglas/0005_acompanantes` (recoge los dos `CHECK` que cambian, `regla_tipo_valido` y `regla_nivel_coherente`).
 
 **Las migraciones** son `areas/0004_aforo_maximo` (las áreas que existían reciben aforo 1) y `reglas/0002` a `0004`. La `0003` es de datos: cierra **todas** las reglas abiertas del modelo anterior, sin borrarlas, y pasa a cada área el aforo de su regla `AFORO` (el menor si había varias). Las reglas se vuelven a definir en el tablero.
 
@@ -146,7 +155,7 @@ Construido el 2026-10-06, salvo lo que la última fila marca como pendiente.
 | `DIAS_NO_RESERVABLES`: días de la semana y fechas, sin motivo | Gana el motivo obligatorio y los periodos |
 | `CUPO_POR_UNIDAD` | Se conserva por zona, como *límite de reservas por vivienda* |
 | Varias reglas del mismo tipo por área | Una sola por tipo |
-| — | Construidas las descripciones fijas, y el 2026-10-08 acompañantes, modo de uso y permanencia máxima. **Sin construir:** día límite de pago (llega con pagos) |
+| — | Construidas las descripciones fijas, y el 2026-10-08 acompañantes, modo de uso y permanencia máxima. Y el 2026-10-10, el día límite de pago y la mora real (llegó con pagos) |
 
 El versionado y la copia de la evaluación en la solicitud no se discutieron: siguen como están.
 
@@ -155,7 +164,7 @@ El versionado y la copia de la evaluación en la solicitud no se discutieron: si
 > [!WARNING] Decisiones posteriores al texto del maestro (2026-09-27)
 > - Catálogo beta vigente: **7 tipos** que solo restringen (anticipación mínima, anticipación máxima, cupo por apartamento, aforo, franja horaria, días no reservables y paz y salvo), sin duración máxima ni depósito (D4 a). Provisional hasta validarlo con un reglamento real.
 > - El *punto abierto* de versionado se resolvió por reemplazo: editar una regla crea una versión nueva y la evaluación se copia en la solicitud (D4 a, P10).
-> - `unidad_en_mora()` devuelve `False` hasta que exista HU-35 (D5 b).
+> - `unidad_en_mora()` devolvía `False` hasta que existió HU-35 (D5 b); desde el 2026-10-10 la responde `pagos`.
 >
 > Detalle en [construccion](../06_Decisiones/construccion.md).
 
