@@ -4,7 +4,7 @@ tipo: modulo
 modulo: reservas
 hu: [HU-11, HU-12, HU-13, HU-14, HU-16]
 origen: "maestro v1.4 (2026-09-14) §5.1 + guía de estructura §7 (2026-09-30)"
-actualizado: 2026-10-10
+actualizado: 2026-10-11
 ---
 
 # Reservas
@@ -14,8 +14,8 @@ actualizado: 2026-10-10
 > - *Un solo bloqueo activo* es **por conjunto**, no en todo el sistema (D3 a): índice único parcial `(conjunto, persona)`.
 > - **2026-10-06:** aprobar y rechazar (HU-14) **ya existe** desde el 05/10 (Camilo, Backend `2d11dbe`): `POST /reservas/solicitudes/<id>/decision/` con `decision` (`RESERVADA` o `RECHAZADA`) y `motivo` obligatorio, `GET /reservas/areas/<id>/solicitudes/` y `GET /reservas/bandeja/`; `servicios.decidir_solicitud` bloquea la fila, solo decide una `APARTADA` (si no, 409) y deja la auditoría. El resto de esta nota todavía lo describe como pendiente.
 > - **2026-10-06:** este flujo pasa a ser el de las zonas *con reserva*; las zonas *con ingreso* no lo usan y siguen sin construir ([ingresos](ingresos.md)). Las reglas que evalúa **ya cambiaron de nivel** en el código: sistema, aforo del área, del conjunto y del área ([motor_reglas](motor_reglas.md)).
-> - **2026-10-10:** con la regla *una reserva al día* definida en un área, `franjas()` devuelve `no_disponible` para las franjas libres de un día que ya tiene una solicitud apartada o reservada. Esa regla y *sin franjas seguidas* se evalúan al enviar, como las demás ([motor_reglas](motor_reglas.md)). Sin commit.
-> - **2026-10-10:** el pago declarado (*El dinero lo valida una persona*, más abajo) **ya está construido**, sin commit: [Plan_Pago_De_Reserva](../07_Planes/hechos/Plan_Pago_De_Reserva.md), HU-16. Aprobar no depende del pago, solo Administración declara (`reserva.declarar_pago`) y el residente puede subir su comprobante sin declarar nada. Los campos son `pago_declarado_por` y `pago_declarado_en` (no `fecha_declaracion`), y el archivo va dentro de la base. Ver *El pago declarado*, al final de *Cómo está construido*.
+> - **2026-10-10:** con la regla *una reserva al día* definida en un área, `franjas()` devuelve `no_disponible` para las franjas libres de un día que ya tiene una solicitud apartada o reservada. Esa regla y *sin franjas seguidas* se evalúan al enviar, como las demás ([motor_reglas](motor_reglas.md)). Ya con commit (`f4c8ae6` y `49c3e80`).
+> - **2026-10-10:** el pago declarado (*El dinero lo valida una persona*, más abajo) **ya está construido** y con commit (`f4c8ae6` y `49c3e80`): [Plan_Pago_De_Reserva](../07_Planes/hechos/Plan_Pago_De_Reserva.md), HU-16. Aprobar no depende del pago, solo Administración declara (`reserva.declarar_pago`) y el residente puede subir su comprobante sin declarar nada. Los campos son `pago_declarado_por` y `pago_declarado_en` (no `fecha_declaracion`), y el archivo va dentro de la base. Ver *El pago declarado*, al final de *Cómo está construido*.
 >
 > Detalle en [construccion](../06_Decisiones/construccion.md).
 

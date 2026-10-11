@@ -4,12 +4,12 @@ tipo: modulo
 modulo: parqueaderos
 hu: [HU-28, HU-34]
 origen: "maestro v1.4 (2026-09-14) §5.6"
-actualizado: 2026-10-10
+actualizado: 2026-10-11
 ---
 
 # Parqueaderos
 
-> [!NOTE] HU-28 construida el 2026-10-10, sin commit; HU-34 sigue sin empezar
+> [!NOTE] HU-28 construida el 2026-10-10, con commit (`f4c8ae6` y `49c3e80`) y migrada; HU-34 sigue sin empezar
 > - **Está construido** el catálogo de parqueaderos y la ocupación de uno de visitantes por una visita ([Plan_Parqueadero_De_Visitantes](../07_Planes/hechos/Plan_Parqueadero_De_Visitantes.md)). **No existe** `AsignacionParqueadero` ni ninguna operación que asigne un parqueadero a una unidad: es de HU-34, y para los de visitantes no existirá nunca.
 > - Los parqueaderos son **puestos con código** que crea Administración (D2 a); el vigilante elige uno de los libres al registrar una visita con vehículo (D4 a). La ocupación **no es una tabla**: es el parqueadero de la visita mientras no tenga salida.
 > - Alejo decidió D3 a (permiso nuevo `parqueadero.gestionar`), D5 a (cualquier visita con vehículo puede ocupar uno), D6 a y D7 a (lo de más de N horas y la Ley 1581 en portería, fuera) y D8 a (`migrate` lo corre él).

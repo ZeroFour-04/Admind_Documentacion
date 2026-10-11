@@ -2,7 +2,7 @@
 resumen: "Cómo correr los dos servidores y las pruebas, qué cubre cada suite y cuál falla hoy."
 tipo: arquitectura
 origen: "guía de estructura §4.8, §8 y §9 (2026-09-30) + plan de los Sprints 2 y 3 §0.4"
-actualizado: 2026-10-10
+actualizado: 2026-10-11
 ---
 
 # Pruebas y ejecución
@@ -52,6 +52,8 @@ Las pruebas se escriben como funciones `def test_…():` con `assert`. `pytest-d
 **Al 2026-10-10 (más tarde), con HU-28, el parqueadero de visitantes, sin commit** (encima de HU-16): Backend **565** (563 pasan y fallan las dos de antes) y Frontend **318**, todas pasan. Antes eran 528 y 288. `apps/parqueaderos/tests.py` cubre el catálogo y que ninguna ruta ni el modelo asignan un parqueadero a una unidad; `apps/visitantes/test_visitantes.py` suma la capa de servicio, la salida, la auditoría y los cinco criterios de HU-28; `tests/concurrencia/test_parqueadero_de_visitantes.py` prueba contra PostgreSQL real que diez registros sobre el mismo puesto dejan a una sola visita con él; el intruso suma `parqueaderos`, `parqueadero-desactivar` y `visitante-salida`. En el front, `tests/test_parqueaderos.py` y las pruebas nuevas de `tests/test_visitantes.py`, que ahora simula la lista de libres con una fixture automática. `static/js/visitantes.js` **no tiene prueba automática**.
 
 **Al 2026-10-10 (al final del día), con HU-35, el pago de la administración, sin commit** (encima de HU-28): Backend **642** (640 pasan y fallan las dos de antes) y Frontend **352**, todas pasan. Antes eran 565 y 318. `apps/pagos/tests.py` cubre los meses (funciones puras), la tabla, el buscador sin tildes y por documento, el check idempotente, el reporte con validación por firma, la descarga por vínculo, «Mis pagos» y la mora con la hora simulada, y de punta a punta que una vivienda en mora no reserva y al confirmar el mes sí; `apps/reglas/tests.py`, el tipo nuevo y su parámetro; el intruso suma cinco rutas. En el front, `tests/test_pagos.py` y dos pruebas nuevas en `tests/test_reglas.py`. `apps/pagos/mora.py` se calcula en el conjunto de la vivienda, así que sus pruebas no necesitan una petición.
+
+**Al 2026-10-11, con todo commiteado** (Backend `f4c8ae6`, Frontend `49c3e80`; los dos iguales a `origin/desarrollo`): Backend **642** (641 pasan y falla una, la de las cinco rutas sin registrar, que empieza por `usuario-perfil`; 84 s) y Frontend **352**, todas pasan (15 s). La de `ingresos` que usa la hora real pasó porque se corrió de día. `makemigrations --check` no encuentra cambios.
 
 Las pruebas automáticas **no reemplazan** la prueba manual de la DoD: nadie ha recorrido HU-06 a HU-13 en el navegador todavía. El recortador de foto y el diálogo de "Eliminar usuario" son JavaScript y **no tienen prueba automática**: solo se prueban a mano.
 

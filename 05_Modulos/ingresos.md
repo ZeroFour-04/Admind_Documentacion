@@ -1,18 +1,18 @@
 ---
-resumen: "Zonas con ingreso: vigilancia registra a quien entra, el aforo es simultáneo y la salida es manual o por tiempo. Construido el 2026-10-08 con salvaguardas legales (D3 a), sin historia y sin commit; lo legal sigue sin verificar."
+resumen: "Zonas con ingreso: vigilancia registra a quien entra, el aforo es simultáneo y la salida es manual o por tiempo. Construido el 2026-10-08 con salvaguardas legales (D3 a), sin historia y ya con commit; lo legal sigue sin verificar."
 tipo: modulo
 modulo: ingresos
 hu: []
 origen: "definición con Alejo en chat (2026-10-06) + Plan_Zonas_Con_Ingreso (2026-10-08)"
-actualizado: 2026-10-08
+actualizado: 2026-10-11
 ---
 
 # Ingreso a zonas con aforo
 
-> [!IMPORTANT] Construido el 2026-10-08, sin historia y sin commit
+> [!IMPORTANT] Construido el 2026-10-08, sin historia y ya con commit
 > Ninguna historia, de HU-01 a HU-39, la cubre. Alejo decidió el 2026-10-06 que se construye antes de la entrega; falta crear la historia y contárselo a Camilo.
 >
-> **Lo construyó el agente** con [Plan_Zonas_Con_Ingreso](../07_Planes/hechos/Plan_Zonas_Con_Ingreso.md), después de que Alejo eligió **D3 a**: construir con salvaguardas, **sin haber verificado** lo legal ([abiertas](../06_Decisiones/abiertas.md) 12.10 b). El texto del aviso de finalidad quedó como un marcador visible, porque no lo redacta el agente. Faltan las migraciones en `admind_db` (las corre Alejo) y la prueba manual.
+> **Lo construyó el agente** con [Plan_Zonas_Con_Ingreso](../07_Planes/hechos/Plan_Zonas_Con_Ingreso.md), después de que Alejo eligió **D3 a**: construir con salvaguardas, **sin haber verificado** lo legal ([abiertas](../06_Decisiones/abiertas.md) 12.10 b). El texto del aviso de finalidad quedó como un marcador visible, porque no lo redacta el agente. Las migraciones están aplicadas en `admind_db` (verificado el 2026-10-11); falta la prueba manual.
 
 ## Qué es
 
@@ -43,7 +43,7 @@ Es el segundo **modo de uso** de una zona. El primero, con reserva, es el flujo 
 | **Reingreso** | Al cumplirse el tiempo la persona puede volver a entrar si hay cupo (D9) |
 | **La salida prevista** | Queda guardada: cambiar la permanencia del área no mueve la de un ingreso abierto (D9) |
 
-## Cómo está construido (2026-10-08, sin commit)
+## Cómo está construido (2026-10-08, ya con commit)
 
 Una app `ingresos` en cada repositorio. Una sola tabla nueva.
 

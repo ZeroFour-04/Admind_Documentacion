@@ -4,13 +4,13 @@ tipo: modulo
 modulo: pagos
 hu: [HU-35]
 origen: "Plan_Pago_De_Administracion (2026-10-10) y lo construido ese día"
-actualizado: 2026-10-10
+actualizado: 2026-10-11
 ---
 
 # Pagos: la administración por vivienda y mes
 
-> [!NOTE] Construido el 2026-10-10, sin commit ni `migrate`
-> - Lo ejecutó el agente con [Plan_Pago_De_Administracion](../07_Planes/hechos/Plan_Pago_De_Administracion.md). Falta que Alejo corra `migrate` (`pagos/0001`, `pagos/0002` y `reglas/0007`), los commits, la prueba manual y avisarle a Camilo.
+> [!NOTE] Construido el 2026-10-10, ya con commit y con sus migraciones aplicadas
+> - Lo ejecutó el agente con [Plan_Pago_De_Administracion](../07_Planes/hechos/Plan_Pago_De_Administracion.md). Commits `f4c8ae6` (Backend) y `49c3e80` (Frontend); `pagos/0001`, `pagos/0002` y `reglas/0007` aplicadas en `admind_db` (verificado el 2026-10-11). Falta la prueba manual y avisarle a Camilo.
 > - Esto es **HU-35**. HU-16, el pago del alquiler de una reserva, es otra cosa y vive en [reservas](reservas.md).
 > - **Lo legal de la mora sigue sin verificar** ([abiertas](../06_Decisiones/abiertas.md) 12.10 b): Alejo eligió conectarla (D3 b) y se construyó con salvaguardas.
 

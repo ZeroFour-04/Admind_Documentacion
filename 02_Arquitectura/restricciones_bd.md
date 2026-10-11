@@ -2,7 +2,7 @@
 resumen: "Restricciones que hace cumplir PostgreSQL: las verificadas en la base y las que sostienen la concurrencia de reservas."
 tipo: arquitectura
 origen: "avance §2.3 (2026-09-15) + guía de estructura §4.4 (2026-09-30)"
-actualizado: 2026-10-10
+actualizado: 2026-10-11
 ---
 
 # Restricciones en PostgreSQL
@@ -38,7 +38,7 @@ Llegaron con el motor de reglas por niveles. Están en el modelo y en las migrac
 | Índice único parcial `regla_alfa_unica_abierta` | ídem | Dos reglas abiertas del mismo tipo en el conjunto |
 | Índice único parcial `regla_beta_unica_abierta` | ídem | Dos reglas abiertas del mismo tipo en la misma área |
 
-Los `CHECK` `regla_tipo_valido` y `regla_nivel_coherente` listan los tipos del catálogo, así que **un tipo de regla nuevo pide migración**: `reglas/0005` (acompañantes) y `reglas/0006` (una reserva al día y sin franjas seguidas, 2026-10-10, sin aplicar en `admind_db`).
+Los `CHECK` `regla_tipo_valido` y `regla_nivel_coherente` listan los tipos del catálogo, así que **un tipo de regla nuevo pide migración**: `reglas/0005` (acompañantes) y `reglas/0006` (una reserva al día y sin franjas seguidas, 2026-10-10, aplicada en `admind_db`).
 
 Una regla *abierta* es la que tiene `vigencia_hasta` vacía. La FK compuesta `(area_id, conjunto_id)` de `Regla` no cambió: PostgreSQL no la revisa cuando `area_id` es nulo, que es el caso de las reglas del conjunto.
 
@@ -75,7 +75,7 @@ Revisadas directamente en `admind_db`, no solo en el código de Python: las de `
 
 ## Ingresos a zonas (2026-10-08)
 
-Llegaron con la app `ingresos` (`ingresos/0001_initial`, sin aplicar en `admind_db`) y tienen prueba que escribe directo en la base.
+Llegaron con la app `ingresos` (`ingresos/0001_initial`, aplicada en `admind_db`) y tienen prueba que escribe directo en la base.
 
 | Restricción | Dónde | Qué impide |
 |---|---|---|

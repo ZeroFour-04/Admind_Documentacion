@@ -1,10 +1,10 @@
 ---
-resumen: "Motor de reglas: reglas del sistema, alfa (del conjunto) y beta (de la zona), con parámetros y descripciones. Definición del 2026-10-06: las áreas con reserva están en el código y con commit; el modo de uso con ingreso y los acompañantes se construyeron el 2026-10-08, sin commit ni `migrate`."
+resumen: "Motor de reglas: reglas del sistema, alfa (del conjunto) y beta (de la zona), con parámetros y descripciones. Definición del 2026-10-06: las áreas con reserva están en el código y con commit; el modo de uso con ingreso y los acompañantes se construyeron el 2026-10-08 y ya tienen commit y `migrate`."
 tipo: modulo
 modulo: reglas
 hu: [HU-10, HU-13]
 origen: "definición con Alejo en chat (2026-10-06) + maestro v1.4 (2026-09-14) §5.10 + guía de estructura §5.6 (2026-09-30)"
-actualizado: 2026-10-10
+actualizado: 2026-10-11
 ---
 
 # Motor de reglas
@@ -12,10 +12,10 @@ actualizado: 2026-10-10
 > [!IMPORTANT] Redefinido el 2026-10-06; construido ese día para las áreas con reserva
 > - Lo vigente es la sección *Definición vigente*. La decidió Alejo en chat; falta contárselo a Camilo.
 > - **Alfa y beta cambiaron de significado.** Antes: alfa = fija en el código, beta = configurable. Ahora: alfa = regla del conjunto, beta = regla de la zona, y las fijas se llaman reglas del sistema.
-> - **Construido** con [Plan_Motor_De_Reglas](../07_Planes/activos/Plan_Motor_De_Reglas.md): niveles, una sola regla por tipo, descripciones fijas, aforo obligatorio en el área, días que no abre con motivo y el tablero. Al 2026-10-06 está **sin commit** y las migraciones **sin aplicar en `admind_db`**: las corre Alejo, y cierran las reglas que había.
-> - **Construido el 2026-10-08, sin commit:** el modo de uso, la permanencia máxima, los acompañantes y un ingreso abierto por persona, con [Plan_Zonas_Con_Ingreso](../07_Planes/hechos/Plan_Zonas_Con_Ingreso.md). Detalle en [ingresos](ingresos.md).
-> - **Construido el 2026-10-10, sin commit ni `migrate`:** dos reglas beta para las áreas con reserva, *una reserva al día* y *sin franjas seguidas*.
-> - **Construido el 2026-10-10, sin commit ni `migrate`:** *día límite de pago* (`DIA_LIMITE_DE_PAGO`, migración `reglas/0007`) y la mora real, con la fase F5 de [Plan_Pago_De_Administracion](../07_Planes/hechos/Plan_Pago_De_Administracion.md). *Paz y salvo* **ya restringe**. Se construyó sin haber verificado lo legal ([abiertas](../06_Decisiones/abiertas.md) 12.10 b). Detalle en [pagos](pagos.md).
+> - **Construido** con [Plan_Motor_De_Reglas](../07_Planes/activos/Plan_Motor_De_Reglas.md): niveles, una sola regla por tipo, descripciones fijas, aforo obligatorio en el área, días que no abre con motivo y el tablero. Ya tiene commit y sus migraciones están aplicadas en `admind_db` (verificado el 2026-10-11); al aplicarse cerraron las reglas que había.
+> - **Construido el 2026-10-08, ya con commit:** el modo de uso, la permanencia máxima, los acompañantes y un ingreso abierto por persona, con [Plan_Zonas_Con_Ingreso](../07_Planes/hechos/Plan_Zonas_Con_Ingreso.md). Detalle en [ingresos](ingresos.md).
+> - **Construido el 2026-10-10, ya con commit y migrado (`reglas/0006`):** dos reglas beta para las áreas con reserva, *una reserva al día* y *sin franjas seguidas*.
+> - **Construido el 2026-10-10, ya con commit y migrado (`reglas/0007`):** *día límite de pago* (`DIA_LIMITE_DE_PAGO`, migración `reglas/0007`) y la mora real, con la fase F5 de [Plan_Pago_De_Administracion](../07_Planes/hechos/Plan_Pago_De_Administracion.md). *Paz y salvo* **ya restringe**. Se construyó sin haber verificado lo legal ([abiertas](../06_Decisiones/abiertas.md) 12.10 b). Detalle en [pagos](pagos.md).
 > - El texto del maestro §5.10 queda al final, como antecedente.
 
 ## Definición vigente (2026-10-06)
@@ -102,7 +102,7 @@ Una **zona** es un área común del catálogo (`Area` en el código). Las zonas 
 
 Lo que sigue sin decidir está en [abiertas](../06_Decisiones/abiertas.md) 12.10.
 
-## Cómo está construido (verificado el 2026-10-06, sin commit)
+## Cómo está construido (verificado el 2026-10-06; ya con commit)
 
 El código tiene el modelo por niveles para las áreas con reserva, con pruebas (HU-09, HU-10 y HU-13).
 
@@ -136,7 +136,7 @@ Cuando un residente envía una solicitud, `reglas/evaluador.py` → `evaluar(sol
 - **La pantalla** (`/reglas/` en el front) es un tablero: arriba las reglas del conjunto y debajo un bloque por área, con una fila por cada regla posible, su descripción y lo que vale hoy o «Sin definir». El paso de reglas del asistente es el mismo tablero.
 - El requisito de reglas para quedar operativo cambió el 2026-10-06 con el plan del asistente: dejó de ser `reglas_beta` («al menos una regla vigente, de cualquier nivel») y es `reglas_del_conjunto`, que se cumple con la **anticipación máxima** del conjunto vigente. El tablero lo dice cuando se abre dentro del asistente ([conjuntos](conjuntos.md)).
 
-**Las dos reglas del 2026-10-10 (sin commit).** `una_reserva_por_dia` y `sin_franjas_seguidas` están en `EVALUADOR_POR_TIPO` de `reglas/evaluador.py`. Solo aplican a áreas con reserva (`MODOS_POR_TIPO`). Además de evaluarse al enviar, la primera cambia lo que se ve: `reservas/servicios.franjas()` devuelve `no_disponible` para las franjas libres de un día que ya tiene una apartada o reservada. Que dos envíos simultáneos sobre franjas distintas del mismo día no pasen los dos lo garantiza `reservas/servicios.enviar`: su `select_for_update().select_related("area")` bloquea también la fila del área, así que los envíos de una misma área se evalúan uno después del otro. Lo prueba `tests/concurrencia/test_bloqueo_de_franjas.py`. La migración es `reglas/0006_reserva_al_dia_y_franjas_seguidas`, **sin aplicar en `admind_db`**: hasta correrla, la base rechaza los dos tipos. En el front son dos formularios sin campos en `apps/reglas/forms.py`; el tablero las pinta solas porque lee el catálogo.
+**Las dos reglas del 2026-10-10 (ya con commit).** `una_reserva_por_dia` y `sin_franjas_seguidas` están en `EVALUADOR_POR_TIPO` de `reglas/evaluador.py`. Solo aplican a áreas con reserva (`MODOS_POR_TIPO`). Además de evaluarse al enviar, la primera cambia lo que se ve: `reservas/servicios.franjas()` devuelve `no_disponible` para las franjas libres de un día que ya tiene una apartada o reservada. Que dos envíos simultáneos sobre franjas distintas del mismo día no pasen los dos lo garantiza `reservas/servicios.enviar`: su `select_for_update().select_related("area")` bloquea también la fila del área, así que los envíos de una misma área se evalúan uno después del otro. Lo prueba `tests/concurrencia/test_bloqueo_de_franjas.py`. La migración es `reglas/0006_reserva_al_dia_y_franjas_seguidas`, **sin aplicar en `admind_db`**: hasta correrla, la base rechaza los dos tipos. En el front son dos formularios sin campos en `apps/reglas/forms.py`; el tablero las pinta solas porque lee el catálogo.
 
 **Las migraciones del ingreso (2026-10-08, aplicadas en `admind_db` al 2026-10-10)** son `areas/0005_modo_de_uso` (las áreas que existen quedan con reserva) y `reglas/0005_acompanantes` (recoge los dos `CHECK` que cambian, `regla_tipo_valido` y `regla_nivel_coherente`).
 

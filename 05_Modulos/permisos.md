@@ -4,7 +4,7 @@ tipo: modulo
 modulo: permisos
 hu: [HU-06]
 origen: "maestro v1.4 (2026-09-14) §5.3 + guía de estructura §5.4 (2026-09-30)"
-actualizado: 2026-10-08
+actualizado: 2026-10-11
 ---
 
 # Roles y permisos
@@ -14,7 +14,8 @@ actualizado: 2026-10-08
 > - El rol **Consejo se eliminó**: el catálogo tiene 5 roles. No se repone aunque el plan de los Sprints 2 y 3 o los avances viejos lo mencionen.
 > - El **Superusuario tiene todos los permisos** del catálogo.
 > - **`conjunto.activar` también lo tiene Administración** (2026-10-06, Alejo, D1 b del plan del asistente): quien administra deja operativo su conjunto al terminar el asistente. Sigue en el grupo Plataforma, igual que `conjunto.crear`, que Administración ya tenía.
-> - **Dos permisos nuevos en el catálogo** (2026-10-08, Alejo; construidos con [Plan_Zonas_Con_Ingreso](../07_Planes/hechos/Plan_Zonas_Con_Ingreso.md), sin commit): `ingreso.registrar` para Vigilancia e `ingreso.ver_historico` para Administración, sensible. El Superusuario los recibe porque su rol tiene todo el catálogo. Falta contárselo a Camilo.
+> - **Dos permisos nuevos en el catálogo** (2026-10-08, Alejo; construidos con [Plan_Zonas_Con_Ingreso](../07_Planes/hechos/Plan_Zonas_Con_Ingreso.md), ya con commit): `ingreso.registrar` para Vigilancia e `ingreso.ver_historico` para Administración, sensible. El Superusuario los recibe porque su rol tiene todo el catálogo. Falta contárselo a Camilo.
+> - **`conjunto.crear` se evalúa por persona, no por conjunto activo** (2026-10-11, Alejo): quien es Administración en cualquiera de sus conjuntos activos puede crear otro apenas inicia sesión, sin entrar a ninguno. Lo calcula `puede_crear_conjuntos` en `apps/permisos/servicios.py` y la API lo manda como `puede_crear_conjunto`, aparte de `permisos`. Antes solo valía dentro de un conjunto activo. Falta contárselo a Camilo.
 >
 > Detalle en [construccion](../06_Decisiones/construccion.md).
 

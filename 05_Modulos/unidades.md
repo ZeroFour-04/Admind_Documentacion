@@ -4,12 +4,12 @@ tipo: modulo
 modulo: unidades
 hu: [HU-08, HU-39]
 origen: "maestro v1.4 (2026-09-14) §5.5"
-actualizado: 2026-10-10
+actualizado: 2026-10-11
 ---
 
 # Unidades y vínculos
 
-> [!NOTE] Decisión del 2026-10-06 (HU-39): primera parte construida ese día, sin commit
+> [!NOTE] Decisión del 2026-10-06 (HU-39): primera parte construida ese día, ya con commit
 > Las viviendas dejan de registrarse solo una por una con nombre libre. El asistente las genera en lote, y cada una pertenece, si el conjunto las agrupa, a una **agrupación** (torre, bloque, manzana). Una unidad puede ser apartamento o casa. Lo decidido está en [construccion](../06_Decisiones/construccion.md) y cómo quedó, en *Estructura de viviendas: cómo está construida*, más abajo. Falta la segunda parte: las palabras del conjunto en las pantallas, registrar a mano dentro de una agrupación y retirar viviendas.
 >
 > Si hay una persona principal de la vivienda sigue sin decidir: [abiertas](../06_Decisiones/abiertas.md) 12.9.
@@ -38,13 +38,20 @@ actualizado: 2026-10-10
 - **En el front,** el paso «2. Viviendas» del asistente. Alpine (`static/js/viviendas.js`) solo arma la descripción y la frase que la resume; la descripción viaja en un campo oculto y la API la valida y calcula.
 - **Lo registrado a mano** (`POST /unidades/`) queda como apartamento, sin agrupación y sin número.
 
-## La pantalla Unidades y su buscador (2026-10-10, sin commit)
+## La pantalla Unidades y su buscador (2026-10-10, ya con commit)
 
 - **Dos vistas.** `/unidades/` muestra un recuadro por agrupación (con cuántas viviendas tiene y cuántas están sin vínculos) y un buscador; un recuadro lleva a `/unidades/agrupacion/<id>/` (o `/unidades/sin-agrupar/`), que es la tabla de esas viviendas con su propio buscador. Si el conjunto no tiene agrupaciones, `/unidades/` va directo a la tabla.
 - **El buscador filtra en el navegador** (`static/js/unidades.js`, Alpine) lo que la API ya entregó. Cada palabra escrita debe empezar una palabra **distinta** de la vivienda (nomenclatura, tipo, número, nombre y documento de quien tiene un vínculo vigente): «Etapa 5 Apartamento 501» no encuentra «Etapa 1 – Apto 501». Sin tildes ni mayúsculas, y «apto» vale por «apartamento». Un documento solo coincide desde 5 caracteres, para que «5» busque la etapa 5 y no a quien tiene una cédula que empieza por 5.
 - **API.** `GET /unidades/` suma por unidad `tipo`, `numero`, `piso` y `agrupacion` (`{id, nombre}`), y **solo con `vinculo.gestionar`** suma `personas` (nombre, documento, tipo de vínculo, `reside`) de los vínculos vigentes. Quien llega por `anuncio.dirigir` o `visitante.registrar` (Secretaría, Vigilancia) no recibe personas ni documentos: cubierto por `test_quien_solo_dirige_anuncios_o_registra_visitantes_no_recibe_personas_ni_documentos`.
 - **Volver desde el detalle.** `GET /unidades/<id>/` (y la respuesta de cerrar un vínculo) suma `agrupacion` (`{id, nombre}` o `null`). El botón del detalle dice «Volver a Torre 1» y lleva a la tabla de esa agrupación; si la vivienda no tiene agrupación, vuelve a Unidades.
 - **El documento no se imprime** en la tabla: viaja en el JSON de la página, para filtrar, a quien gestiona vínculos (el mismo permiso con el que ya puede buscar personas por documento). Si se quiere que no viaje, la alternativa es filtrar en el servidor con `?q=`; se descartó el 2026-10-10 por velocidad y sencillez.
+
+## Agregar un vínculo: buscar a la persona y crear a un residente (2026-10-11, sin commit)
+
+- **La persona se busca, ya no se elige de una lista.** En «Agregar vínculo» del detalle, `static/js/vinculos.js` (Alpine) filtra a las personas con rol en el conjunto por nombre, correo o cédula (la cédula, desde 5 caracteres) con la misma regla de palabras del resto de buscadores (`static/js/busqueda.js`). Se elige tocando a la persona o con Enter, que toma a la primera. Sin JavaScript queda el `<select>` de antes.
+- **«Crear nuevo residente»** abre un modal con el alta de Usuarios sin el campo de rol. La vista (`unidades/views.py: crear_residente`, `POST /unidades/<id>/residentes/`) **pone `rol = residente`** al llamar a `POST /auth/usuarios/`: aunque alguien mande otro valor, no se usa. Lo ve quien tiene `usuario.gestionar` además de `vinculo.gestionar`.
+- **Queda elegido.** Al crearlo, la pantalla vuelve con ese residente ya marcado en el formulario del vínculo y un aviso; el id pasa por la sesión, no por la URL, y se usa una sola vez. El vínculo **no se crea solo**: se elige el tipo (propietario o arrendatario) y si vive ahí.
+- **Si el documento ya existe en AdMind** la API responde 400 y el modal vuelve abierto con ese motivo: a quien ya existe en otro conjunto se le vincula desde Usuarios, en «Registrar persona» (HU-07).
 
 ## Diseño (maestro §5.5)
 

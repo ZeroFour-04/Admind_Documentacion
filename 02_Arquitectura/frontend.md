@@ -2,7 +2,7 @@
 resumen: "El frontend por dentro: config sin base de datos, cliente_api, la sesión del front y el estado de cada pantalla."
 tipo: arquitectura
 origen: "guía de estructura §6 (2026-09-30)"
-actualizado: 2026-10-10
+actualizado: 2026-10-11
 ---
 
 # El frontend por dentro
@@ -51,8 +51,8 @@ Cada app del front tiene `views.py` (funciones), `urls.py`, a veces `forms.py` (
 | Pagos (para Administración y Secretaría, la tabla del mes con buscador, mes en letras, estado en pastilla, enlace al comprobante y, con `pago.confirmar`, el check; para el residente, «Mis pagos» con sus últimos 6 meses y el formulario para subir el comprobante) | `pagos` | Real (HU-35, 10/10). **Aquí también está Alpine**, solo en el check de la tabla (`@change` envía el formulario; sin JavaScript hay un botón «Guardar»). El ítem «Pagos» está en `lateral.html` con `pago.ver` o `pago.reportar` |
 | Parqueaderos (la tabla con «Libre», «Ocupado» o «Sin asignar»; con `parqueadero.gestionar`, crear y «Retirar» con la confirmación que nombra el código) | `parqueaderos` | Real (HU-28, 10/10). Sin JavaScript. El ítem del lateral está en `_enlaces_gestion.html`, con `parqueadero.ver` o `parqueadero.gestionar` |
 | Conjunto | `conjuntos` | Real (resumen del asistente) |
-| Usuarios (lista con su rol, detalle con **un** rol que se asigna o se cambia, "Eliminar usuario" con confirmación, registrar persona) | `usuarios` | Real. `usuarios/nuevo.html` aún muestra la etiqueta "Maqueta" |
-| Unidades | `unidades` | Real (viviendas y vínculos; parqueaderos no). Desde el 10/10: un recuadro por agrupación (Torre, Etapa, Bloque…), la tabla de cada una y un buscador que filtra mientras se escribe. **Aquí también está Alpine** (`static/js/unidades.js`) |
+| Usuarios (la lista en un desplegable por rol —Administración, Secretaría, Vigilancia, Residentes—, con buscador arriba y, en cada grupo, «Ordenar por» nombre, agrupación y vivienda o correo; detalle con **un** rol que se asigna o se cambia, "Eliminar usuario" con confirmación, registrar persona) | `usuarios` | Real. Desde el 11/10 la lista se agrupa, busca y ordena en el navegador (**aquí también está Alpine**, `static/js/directorio-usuarios.js`; la página le entrega las cuentas como JSON). Un grupo de más de 10 personas arranca recogido; al buscar se abren los que tienen resultados. Al registrar a alguien, el rol marcado es **Residente**. `usuarios/nuevo.html` aún muestra la etiqueta "Maqueta" |
+| Unidades | `unidades` | Real (viviendas y vínculos; parqueaderos no). Desde el 10/10: un recuadro por agrupación (Torre, Etapa, Bloque…), la tabla de cada una y un buscador que filtra mientras se escribe. **Aquí también está Alpine** (`static/js/unidades.js`). Desde el 11/10, en el detalle de la vivienda, «Agregar vínculo» busca a la persona (nombre, correo o cédula) y trae el botón «Crear nuevo residente», que abre un modal: desde ahí solo se crean residentes (`static/js/vinculos.js`; la búsqueda por palabras, compartida con la lista de Usuarios, está en `static/js/busqueda.js`) |
 
 **Quién ve Usuarios y Unidades.** El lateral los muestra solo si el rol de la sesión es Superusuario, Administración ("Administrador") o Secretaría; con otro rol, no aparecen. Es solo presentación: la API decide con el permiso de cada petición. "Eliminar usuario" no borra a la persona: cierra sus roles en el conjunto activo (`retirar_roles_del_conjunto`), y es la forma de desvincularla.
 
