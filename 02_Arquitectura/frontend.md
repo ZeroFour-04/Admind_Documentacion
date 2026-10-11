@@ -2,7 +2,7 @@
 resumen: "El frontend por dentro: config sin base de datos, cliente_api, la sesión del front y el estado de cada pantalla."
 tipo: arquitectura
 origen: "guía de estructura §6 (2026-09-30)"
-actualizado: 2026-10-06
+actualizado: 2026-10-10
 ---
 
 # El frontend por dentro
@@ -50,9 +50,9 @@ Cada app del front tiene `views.py` (funciones), `urls.py`, a veces `forms.py` (
 | Visitantes ("Visitante" para Vigilancia: formulario de ingreso y los de hoy; con `visitante.ver_historico`, el historial sin formulario) | `visitantes` | Real, parcial (HU-27): solo el ingreso, sin salida ni parqueadero |
 | Conjunto | `conjuntos` | Real (resumen del asistente) |
 | Usuarios (lista con su rol, detalle con **un** rol que se asigna o se cambia, "Eliminar usuario" con confirmación, registrar persona) | `usuarios` | Real. `usuarios/nuevo.html` aún muestra la etiqueta "Maqueta" |
-| Apartamentos y parqueaderos | `unidades` | Real (apartamentos y vínculos; parqueaderos no) |
+| Unidades | `unidades` | Real (viviendas y vínculos; parqueaderos no). Desde el 10/10: un recuadro por agrupación (Torre, Etapa, Bloque…), la tabla de cada una y un buscador que filtra mientras se escribe. **Aquí también está Alpine** (`static/js/unidades.js`) |
 
-**Quién ve Usuarios y Apartamentos.** El lateral los muestra solo si el rol de la sesión es Superusuario, Administración ("Administrador") o Secretaría; con otro rol, no aparecen. Es solo presentación: la API decide con el permiso de cada petición. "Eliminar usuario" no borra a la persona: cierra sus roles en el conjunto activo (`retirar_roles_del_conjunto`), y es la forma de desvincularla.
+**Quién ve Usuarios y Unidades.** El lateral los muestra solo si el rol de la sesión es Superusuario, Administración ("Administrador") o Secretaría; con otro rol, no aparecen. Es solo presentación: la API decide con el permiso de cada petición. "Eliminar usuario" no borra a la persona: cierra sus roles en el conjunto activo (`retirar_roles_del_conjunto`), y es la forma de desvincularla.
 
 **Qué ve Vigilancia.** Desde el 01/10 el lateral le muestra solo Inicio, Zonas comunes, Reglas, Anuncios y Visitante; Áreas comunes, Notificaciones, Solicitudes, Conjunto y los enlaces de gestión se le ocultan por el rol, no por un permiso.
 

@@ -4,7 +4,7 @@ tipo: modulo
 modulo: unidades
 hu: [HU-08, HU-39]
 origen: "maestro v1.4 (2026-09-14) §5.5"
-actualizado: 2026-10-06
+actualizado: 2026-10-10
 ---
 
 # Unidades y vínculos
@@ -37,6 +37,14 @@ actualizado: 2026-10-06
 - **API,** las tres con `vinculo.gestionar`: `POST /unidades/estructura/previsualizar/` (no guarda), `POST /unidades/estructura/` (201 si creó algo, 200 si todo existía) y `GET /unidades/agrupaciones/`. `GET /unidades/` ordena por agrupación, piso y número.
 - **En el front,** el paso «2. Viviendas» del asistente. Alpine (`static/js/viviendas.js`) solo arma la descripción y la frase que la resume; la descripción viaja en un campo oculto y la API la valida y calcula.
 - **Lo registrado a mano** (`POST /unidades/`) queda como apartamento, sin agrupación y sin número.
+
+## La pantalla Unidades y su buscador (2026-10-10, sin commit)
+
+- **Dos vistas.** `/unidades/` muestra un recuadro por agrupación (con cuántas viviendas tiene y cuántas están sin vínculos) y un buscador; un recuadro lleva a `/unidades/agrupacion/<id>/` (o `/unidades/sin-agrupar/`), que es la tabla de esas viviendas con su propio buscador. Si el conjunto no tiene agrupaciones, `/unidades/` va directo a la tabla.
+- **El buscador filtra en el navegador** (`static/js/unidades.js`, Alpine) lo que la API ya entregó. Cada palabra escrita debe empezar una palabra **distinta** de la vivienda (nomenclatura, tipo, número, nombre y documento de quien tiene un vínculo vigente): «Etapa 5 Apartamento 501» no encuentra «Etapa 1 – Apto 501». Sin tildes ni mayúsculas, y «apto» vale por «apartamento». Un documento solo coincide desde 5 caracteres, para que «5» busque la etapa 5 y no a quien tiene una cédula que empieza por 5.
+- **API.** `GET /unidades/` suma por unidad `tipo`, `numero`, `piso` y `agrupacion` (`{id, nombre}`), y **solo con `vinculo.gestionar`** suma `personas` (nombre, documento, tipo de vínculo, `reside`) de los vínculos vigentes. Quien llega por `anuncio.dirigir` o `visitante.registrar` (Secretaría, Vigilancia) no recibe personas ni documentos: cubierto por `test_quien_solo_dirige_anuncios_o_registra_visitantes_no_recibe_personas_ni_documentos`.
+- **Volver desde el detalle.** `GET /unidades/<id>/` (y la respuesta de cerrar un vínculo) suma `agrupacion` (`{id, nombre}` o `null`). El botón del detalle dice «Volver a Torre 1» y lleva a la tabla de esa agrupación; si la vivienda no tiene agrupación, vuelve a Unidades.
+- **El documento no se imprime** en la tabla: viaja en el JSON de la página, para filtrar, a quien gestiona vínculos (el mismo permiso con el que ya puede buscar personas por documento). Si se quiere que no viaje, la alternativa es filtrar en el servidor con `?q=`; se descartó el 2026-10-10 por velocidad y sencillez.
 
 ## Diseño (maestro §5.5)
 

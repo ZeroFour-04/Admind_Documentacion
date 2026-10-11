@@ -2,7 +2,7 @@
 resumen: "Mapa del código: qué hay en cada carpeta de los tres repos, qué hace cada app del backend y qué nota la explica."
 tipo: arquitectura
 origen: "guía de estructura §2 y §5.5 (2026-09-30)"
-actualizado: 2026-10-06
+actualizado: 2026-10-10
 ---
 
 # Mapa del código
@@ -28,7 +28,7 @@ A D M I N D/
 │   ├── apps/                        ← un módulo por sección de la interfaz: vistas, formularios, plantillas
 │   ├── templates/base/              ← el esqueleto de toda página
 │   ├── templates/componentes/       ← piezas reutilizables: barra, lateral, campo, confirmación
-│   ├── static/css  static/js        ← estilos propios y el JavaScript: reservas.js, identidad.js, usuarios.js, visitantes.js, lateral.js (menú en pantallas angostas) y vendor/alpine.min.js
+│   ├── static/css  static/js        ← estilos propios y el JavaScript: reservas.js, identidad.js, usuarios.js, visitantes.js, unidades.js (buscador de viviendas), lateral.js (menú en pantallas angostas) y vendor/alpine.min.js
 │   ├── design-system/               ← tokens de color, tipografía y componentes CSS (de Claude Design)
 │   └── tests/                       ← pruebas de pantallas con la API simulada
 │

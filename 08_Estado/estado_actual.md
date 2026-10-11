@@ -3,7 +3,7 @@ resumen: "Dónde está el proyecto hoy: commits, pruebas, historias por grupo y 
 tipo: estado
 corte: 2026-10-05
 origen: "guía de estructura §1 y §10 (2026-09-30)"
-actualizado: 2026-10-08
+actualizado: 2026-10-10
 ---
 
 # Estado actual
@@ -16,6 +16,7 @@ actualizado: 2026-10-08
 
 | Qué | Estado al 2026-10-05 |
 |---|---|
+| **Cambio del 2026-10-10, sin commit** | **La pantalla Unidades** ([unidades](../05_Modulos/unidades.md)): recuadros por agrupación, tabla por agrupación y buscador por nomenclatura, nombre o cédula; el lateral dice «Unidades». `GET /unidades/` trae personas con documento solo con `vinculo.gestionar`. Frontend **256 pruebas, todas pasan**; Backend 482, 481 pasan y 1 falla (la misma). Sin migraciones |
 | **Cambio del 2026-10-08, sin commit** | **Las zonas con ingreso** ([ingresos](../05_Modulos/ingresos.md), [Plan_Zonas_Con_Ingreso](../07_Planes/hechos/Plan_Zonas_Con_Ingreso.md)), construidas por el agente sobre Backend `279e963` y Frontend `f5b3d08`, con salvaguardas legales y **sin haber verificado lo legal** (D3 a). Backend: **478 pruebas, 477 pasan y 1 falla** (la misma, por las mismas cinco rutas); tres migraciones nuevas (`areas/0005`, `reglas/0005`, `ingresos/0001`) **sin aplicar en `admind_db`**. Frontend: **246 pruebas, todas pasan**. Antes del cambio eran 416 (415 pasan) y 210. Falta el texto del aviso de finalidad, la prueba manual y avisarle a Camilo ([pendientes](pendientes.md)) |
 | **Verificado el 2026-10-08, al abrir el plan de zonas con ingreso** | Backend sigue en `279e963`: 416 pruebas, 415 pasan y 1 falla, la misma. Frontend avanzó a `f5b3d08` («responsive»): **210 pruebas, todas pasan**. Los dos limpios y sin migraciones pendientes en `admind_db`. Es el punto de partida del cambio de arriba |
 | **Verificado el 2026-10-06, al hacer el informe 4** | **Todo tiene commit y está subido:** Backend `desarrollo` en `279e963`, Frontend en `fff4651`, los dos limpios e iguales a GitHub. **Todas las migraciones están aplicadas en `admind_db`** y `makemigrations --check` no encuentra cambios. Backend: **416 pruebas, 415 pasan y 1 falla**, la misma; Frontend: **208, todas pasan**. **HU-14 (aprobar y rechazar) está construida** desde el 05/10 por Camilo y no estaba en esta nota. Las filas de abajo que dicen «sin commit» o «sin aplicar» quedaron atrás |
