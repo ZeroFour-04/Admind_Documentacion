@@ -2,9 +2,9 @@
 resumen: "Flujo de reserva de zonas comunes: estados, bloqueo de 3 minutos, confirmación, reglas, y el recorrido completo en el código."
 tipo: modulo
 modulo: reservas
-hu: [HU-11, HU-12, HU-13]
+hu: [HU-11, HU-12, HU-13, HU-14, HU-16]
 origen: "maestro v1.4 (2026-09-14) §5.1 + guía de estructura §7 (2026-09-30)"
-actualizado: 2026-10-06
+actualizado: 2026-10-11
 ---
 
 # Reservas
@@ -12,8 +12,10 @@ actualizado: 2026-10-06
 > [!WARNING] Decisiones posteriores al texto del maestro (2026-09-27)
 > - Hay un séptimo estado, no bloqueante: `LIBERADA`, con `motivo_liberacion` `voluntaria` o `reglas` (D2 a). Soltar el bloqueo a tiempo o incumplir las reglas no gasta oportunidad de R9.
 > - *Un solo bloqueo activo* es **por conjunto**, no en todo el sistema (D3 a): índice único parcial `(conjunto, persona)`.
-> - Aprobar y rechazar (HU-14) todavía no existe: una solicitud llega a `APARTADA` y ahí se queda.
+> - **2026-10-06:** aprobar y rechazar (HU-14) **ya existe** desde el 05/10 (Camilo, Backend `2d11dbe`): `POST /reservas/solicitudes/<id>/decision/` con `decision` (`RESERVADA` o `RECHAZADA`) y `motivo` obligatorio, `GET /reservas/areas/<id>/solicitudes/` y `GET /reservas/bandeja/`; `servicios.decidir_solicitud` bloquea la fila, solo decide una `APARTADA` (si no, 409) y deja la auditoría. El resto de esta nota todavía lo describe como pendiente.
 > - **2026-10-06:** este flujo pasa a ser el de las zonas *con reserva*; las zonas *con ingreso* no lo usan y siguen sin construir ([ingresos](ingresos.md)). Las reglas que evalúa **ya cambiaron de nivel** en el código: sistema, aforo del área, del conjunto y del área ([motor_reglas](motor_reglas.md)).
+> - **2026-10-10:** con la regla *una reserva al día* definida en un área, `franjas()` devuelve `no_disponible` para las franjas libres de un día que ya tiene una solicitud apartada o reservada. Esa regla y *sin franjas seguidas* se evalúan al enviar, como las demás ([motor_reglas](motor_reglas.md)). Ya con commit (`f4c8ae6` y `49c3e80`).
+> - **2026-10-10:** el pago declarado (*El dinero lo valida una persona*, más abajo) **ya está construido** y con commit (`f4c8ae6` y `49c3e80`): [Plan_Pago_De_Reserva](../07_Planes/hechos/Plan_Pago_De_Reserva.md), HU-16. Aprobar no depende del pago, solo Administración declara (`reserva.declarar_pago`) y el residente puede subir su comprobante sin declarar nada. Los campos son `pago_declarado_por` y `pago_declarado_en` (no `fecha_declaracion`), y el archivo va dentro de la base. Ver *El pago declarado*, al final de *Cómo está construido*.
 >
 > Detalle en [construccion](../06_Decisiones/construccion.md).
 
@@ -145,6 +147,23 @@ stateDiagram-v2
 ```
 
 `LIBERADA` y `EXPIRADA` se distinguen a propósito: según el maestro (R9), solo **dejar vencer** el bloqueo gasta una "oportunidad" sobre la franja; soltarlo a tiempo no.
+
+### El pago declarado (HU-16, 2026-10-10)
+
+El sistema **no verifica el dinero ni lo cobra**: declarar es dejar constancia de que una persona de la administración dijo haberlo recibido. No hay monto, pasarela ni saldo. El aviso «AdMind no verifica el dinero: el pago lo declara una persona de la administración» va junto al bloque de pago en las dos pantallas (se escribe una sola vez, en `apps/reservas/views.py` del front).
+
+| Qué | Dónde | Cómo |
+|---|---|---|
+| Quién declaró y cuándo | `Solicitud.pago_declarado_por` y `pago_declarado_en` | Van los dos o ninguno: `CHECK` `solicitud_pago_declarado_completo` |
+| Declarar | `POST /reservas/solicitudes/<id>/pago/` (`reserva.declarar_pago`, solo Administración) | `pago.declarar()` bloquea la fila, exige `APARTADA` o `RESERVADA` y que no esté declarado (si no, 409), y audita `reserva.declarar_pago`. Acepta un `archivo` opcional en la misma transacción |
+| Retirar una declaración | `POST …/pago/retirar/` (mismo permiso) | Motivo obligatorio; deja los dos campos en `None` y audita `reserva.retirar_pago` con quién y cuándo había declarado. Los comprobantes no se tocan |
+| Subir un comprobante | `POST …/comprobantes/` (`reserva.solicitar`) | Solo el residente dueño de la solicitud, mientras esté `APARTADA` o `RESERVADA` y el pago no esté declarado; máximo 3 por solicitud. Subirlo **no declara**: el estado del pago no cambia |
+| Ver un comprobante | `GET /reservas/comprobantes/<id>/` | Lo descargan quien tiene `reserva.declarar_pago` o `reserva.aprobar` y el residente dueño. Otro residente y Vigilancia reciben **404**. Se sirve con el tipo guardado, `inline` y `nosniff`; nunca hay una URL directa al archivo |
+| El archivo | `ComprobanteDePago`, dentro de la base | La firma decide el tipo (PDF, JPG o PNG, hasta 5 MB), no la extensión ni el `Content-Type`; se guarda con su SHA-256. La validación vive en `apps/comun/archivos/comprobantes.py` para que la use también el pago de administración |
+
+En las respuestas, `pago` trae `declarado`, `declarado_en` y `comprobantes` (`id`, `nombre`, `subido_en`, `del_residente`). **El residente no ve quién declaró** (igual que no ve quién decidió su solicitud); gestión sí, y ve quién subió cada comprobante. Una solicitud con pago declarado que se **rechaza conserva** la declaración: hay un dinero por devolver fuera del sistema.
+
+Las condiciones del alquiler (valor, depósito, política de cancelación) son HU-15 y siguen sin construir: sin ellas, aquí solo consta que el pago se declaró, no cuánto.
 
 ## Ver también
 

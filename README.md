@@ -55,7 +55,7 @@ Una línea por nota: qué tiene y cuándo abrirla. Las reglas para agentes de IA
 |---|---|---|
 | [reservas](05_Modulos/reservas.md) | `reservas` | Estados, bloqueo de 3 minutos, confirmación y el recorrido completo en el código |
 | [motor_reglas](05_Modulos/motor_reglas.md) | `reglas` | Reglas del sistema, alfa (del conjunto) y beta (de la zona): definición del 2026-10-06 y cómo quedó construida para las áreas con reserva |
-| [ingresos](05_Modulos/ingresos.md) | sin app todavía | Zonas con ingreso: registro en la puerta, aforo simultáneo y salida. Definición del 2026-10-06, sin historia y sin construir |
+| [ingresos](05_Modulos/ingresos.md) | `ingresos` | Zonas con ingreso: registro en la puerta, aforo simultáneo y salida. Construido el 2026-10-08 con salvaguardas legales (sin commit ni `migrate`); sin historia; lo legal sigue sin verificar |
 | [personas](05_Modulos/personas.md) | `personas` | Identidad global, UUID y documento normalizado |
 | [permisos](05_Modulos/permisos.md) | `permisos` | Catálogo de roles y permisos, Superusuario, un rol por conjunto |
 | [cuentas](05_Modulos/cuentas.md) | `cuentas` | Sesión, token, conjunto activo y segundo factor |
@@ -63,6 +63,7 @@ Una línea por nota: qué tiene y cuándo abrirla. Las reglas para agentes de IA
 | [unidades](05_Modulos/unidades.md) | `unidades` | Vínculos de unidad y a quién se notifica cada hecho |
 | [triage](05_Modulos/triage.md) | `triage`, `anuncios` | Secretaría, prioridad, rechazo formal, bandeja y anuncios |
 | [parqueaderos](05_Modulos/parqueaderos.md) | `parqueaderos` | Asignación a apartamentos y parqueaderos de visitantes |
+| [pagos](05_Modulos/pagos.md) | `pagos` | Pago de la administración por vivienda y mes: reporte con comprobante, confirmación y la mora de paz y salvo |
 | [infracciones](05_Modulos/infracciones.md) | `infracciones` | Registro y notificación; el sistema no sanciona |
 | [citas](05_Modulos/citas.md) | `citas` | Citas y cambio de horario con alternativas |
 

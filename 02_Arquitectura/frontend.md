@@ -2,7 +2,7 @@
 resumen: "El frontend por dentro: config sin base de datos, cliente_api, la sesión del front y el estado de cada pantalla."
 tipo: arquitectura
 origen: "guía de estructura §6 (2026-09-30)"
-actualizado: 2026-10-06
+actualizado: 2026-10-11
 ---
 
 # El frontend por dentro
@@ -40,22 +40,22 @@ Cada app del front tiene `views.py` (funciones), `urls.py`, a veces `forms.py` (
 | Ingreso, recuperar contraseña, segundo factor (con «¿Problemas con la verificación en dos pasos?»: pedir por correo el enlace que lo quita y confirmarlo), **Mi perfil** (ícono de la barra superior: datos personales y tipo de usuario) | `cuentas` | Real, contra la API |
 | Selector de conjunto, asistente de creación, *Color y foto* (8 acentos o color propio, foto 1:1 con recortador) | `conjuntos` | Real. El asistente tiene siete pasos desde el 06/10: datos, viviendas, administración, áreas, reglas (el tablero de `reglas`), reglamento y resumen. **Aquí también está Alpine** (29/09), y desde el 06/10 en el paso de viviendas (`static/js/viviendas.js`): arma la descripción del conjunto, y lo que se crea lo calcula la API |
 | Inicio | `paneles` | **Maqueta** con datos de ejemplo |
-| Zonas comunes (calendario, solicitud) | `reservas` | Real. **Aquí está Alpine** |
-| Áreas comunes | `areas` | Real (solo con `area.gestionar`) |
+| Zonas comunes (la tabla de todas las zonas con su modo y sus cupos, el calendario y la solicitud) | `reservas` | Real. **Aquí está Alpine**, solo en la solicitud en trámite. Desde el 10/10 también el bloque «Pago» (`_pago.html`, sin JavaScript): en la tarjeta de las solicitudes del área, para Administración (declarar con comprobante opcional y retirar) y Secretaría (solo ver), y en el detalle del residente (ve si el pago está declarado y sube su comprobante). El archivo del comprobante lo pide el servidor del front a la API y lo entrega por `/reservas/comprobantes/<id>/` |
+| Áreas comunes (con el modo de uso al crear y su columna «Cómo se usa») | `areas` | Real (solo con `area.gestionar`) |
 | Reglas | `reglas` | Real |
 | Anuncios | `anuncios` | Real |
 | Notificaciones | `notificaciones` | Real |
-| Solicitudes | `triage` | Real: catálogo de zonas comunes para Administración, Secretaría y Superusuario, cada una con acción para abrir sus solicitudes; el residente ve su historial. La bandeja de triage HU-22 sigue pendiente |
+| Solicitudes | `triage` | **Maqueta** vacía (HU-22, futuro) |
 | Visitantes ("Visitante" para Vigilancia: formulario de ingreso y los de hoy; con `visitante.ver_historico`, el historial sin formulario) | `visitantes` | Real, parcial (HU-27): solo el ingreso, sin salida ni parqueadero |
 | Conjunto | `conjuntos` | Real (resumen del asistente) |
-| Usuarios (lista con su rol, detalle con **un** rol que se asigna o se cambia, "Eliminar usuario" con confirmación, registrar persona) | `usuarios` | Real. `usuarios/nuevo.html` aún muestra la etiqueta "Maqueta" |
-| Apartamentos y parqueaderos | `unidades` | Real (apartamentos y vínculos; parqueaderos no) |
+| Usuarios (la lista en un desplegable por rol —Administración, Secretaría, Vigilancia, Residentes—, con buscador arriba y, en cada grupo, «Ordenar por» nombre, agrupación y vivienda o correo; detalle con **un** rol que se asigna o se cambia, "Eliminar usuario" con confirmación, registrar persona) | `usuarios` | Real. Desde el 11/10 la lista se agrupa, busca y ordena en el navegador (**aquí también está Alpine**, `static/js/directorio-usuarios.js`; la página le entrega las cuentas como JSON). Un grupo de más de 10 personas arranca recogido; al buscar se abren los que tienen resultados. Al registrar a alguien, el rol marcado es **Residente**. `usuarios/nuevo.html` aún muestra la etiqueta "Maqueta" |
+| Unidades | `unidades` | Real (viviendas y vínculos; parqueaderos no). Desde el 10/10: un recuadro por agrupación (Torre, Etapa, Bloque…), la tabla de cada una y un buscador que filtra mientras se escribe. **Aquí también está Alpine** (`static/js/unidades.js`). Desde el 11/10, en el detalle de la vivienda, «Agregar vínculo» busca a la persona (nombre, correo o cédula) y trae el botón «Crear nuevo residente», que abre un modal: desde ahí solo se crean residentes (`static/js/vinculos.js`; la búsqueda por palabras, compartida con la lista de Usuarios, está en `static/js/busqueda.js`) |
 
-**Quién ve Usuarios y Apartamentos.** El lateral los muestra solo si el rol de la sesión es Superusuario, Administración ("Administrador") o Secretaría; con otro rol, no aparecen. Es solo presentación: la API decide con el permiso de cada petición. "Eliminar usuario" no borra a la persona: cierra sus roles en el conjunto activo (`retirar_roles_del_conjunto`), y es la forma de desvincularla.
+**Quién ve Usuarios y Unidades.** El lateral los muestra solo si el rol de la sesión es Superusuario, Administración ("Administrador") o Secretaría; con otro rol, no aparecen. Es solo presentación: la API decide con el permiso de cada petición. "Eliminar usuario" no borra a la persona: cierra sus roles en el conjunto activo (`retirar_roles_del_conjunto`), y es la forma de desvincularla.
 
 **Qué ve Vigilancia.** Desde el 01/10 el lateral le muestra solo Inicio, Zonas comunes, Reglas, Anuncios y Visitante; Áreas comunes, Notificaciones, Solicitudes, Conjunto y los enlaces de gestión se le ocultan por el rol, no por un permiso.
 
-`templates/componentes/` guarda lo reutilizable: `barra_superior.html` (nombre y foto del conjunto activo o sus iniciales, el tipo de usuario y el ícono del perfil), `lateral.html` (marca solo el ítem activo leyendo la URL), `_enlaces_gestion.html` (los dos enlaces de gestión), `campo.html`, `errores_formulario.html` y `confirmacion_de_contenido.html` (el panel de HU-12).
+`templates/componentes/` guarda lo reutilizable: `barra_superior.html` (nombre y foto del conjunto activo o sus iniciales, el tipo de usuario y el ícono del perfil), `lateral.html` (marca solo el ítem activo leyendo la URL; desde el 06/10, bajo 900px es un panel que sale desde la izquierda: lo abre el botón de menú de la barra y lo maneja `static/js/lateral.js`, que carga `base/aplicacion.html`; en ese ancho la barra queda en una sola fila y el lateral muestra en su pie el tipo de usuario y «Cambiar de conjunto», y bajo 480px la marca en su cabeza), `_enlaces_gestion.html` (los dos enlaces de gestión), `campo.html`, `errores_formulario.html` y `confirmacion_de_contenido.html` (el panel de HU-12).
 
 Cuando una app necesita piezas propias las guarda dentro de ella: `conjuntos/_foto.html` y `conjuntos/_selector_acento.html` (el guion bajo indica "pedazo para incluir, no página"), y las **etiquetas de plantilla** en `apps/conjuntos/templatetags/conjuntos.py` (`atributos_de_acento`, `iniciales`, `color_seguro`, `poco_legible`, `contraste_con_blanco`), que se cargan con `{% load conjuntos %}`.
 

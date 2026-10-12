@@ -4,7 +4,7 @@ tipo: modulo
 modulo: permisos
 hu: [HU-06]
 origen: "maestro v1.4 (2026-09-14) §5.3 + guía de estructura §5.4 (2026-09-30)"
-actualizado: 2026-10-06
+actualizado: 2026-10-11
 ---
 
 # Roles y permisos
@@ -14,6 +14,8 @@ actualizado: 2026-10-06
 > - El rol **Consejo se eliminó**: el catálogo tiene 5 roles. No se repone aunque el plan de los Sprints 2 y 3 o los avances viejos lo mencionen.
 > - El **Superusuario tiene todos los permisos** del catálogo.
 > - **`conjunto.activar` también lo tiene Administración** (2026-10-06, Alejo, D1 b del plan del asistente): quien administra deja operativo su conjunto al terminar el asistente. Sigue en el grupo Plataforma, igual que `conjunto.crear`, que Administración ya tenía.
+> - **Dos permisos nuevos en el catálogo** (2026-10-08, Alejo; construidos con [Plan_Zonas_Con_Ingreso](../07_Planes/hechos/Plan_Zonas_Con_Ingreso.md), ya con commit): `ingreso.registrar` para Vigilancia e `ingreso.ver_historico` para Administración, sensible. El Superusuario los recibe porque su rol tiene todo el catálogo. Falta contárselo a Camilo.
+> - **`conjunto.crear` se evalúa por persona, no por conjunto activo** (2026-10-11, Alejo): quien es Administración en cualquiera de sus conjuntos activos puede crear otro apenas inicia sesión, sin entrar a ninguno. Lo calcula `puede_crear_conjuntos` en `apps/permisos/servicios.py` y la API lo manda como `puede_crear_conjunto`, aparte de `permisos`. Antes solo valía dentro de un conjunto activo. Falta contárselo a Camilo.
 >
 > Detalle en [construccion](../06_Decisiones/construccion.md).
 
@@ -30,7 +32,7 @@ Un conjunto residencial no necesita inventar cargos; necesita que la portería n
 |**Superusuario**|Plataforma|El equipo de desarrollo. Crea y desactiva conjuntos, restaura gobierno, anula registros, ve auditoría técnica, opera el sistema. **Lee datos de residentes sin procedimiento previo**|
 |**Administración**|Conjunto|Gestión del conjunto, reglas, áreas, personas, reservas, infracciones, documentos, parqueaderos, respaldo|
 |**Secretaría**|Conjunto|Triage de solicitudes, prioridad, rechazo formal, anuncios. **No aprueba nada**|
-|**Vigilancia**|Conjunto|Registro de visitantes, consulta de reservas del día, registro de hechos|
+|**Vigilancia**|Conjunto|Registro de visitantes, **registro de ingresos a zonas con aforo**, consulta de reservas del día, registro de hechos|
 |**Residente**|Conjunto|Solicitar reservas, ver las propias, cancelar, abrir casos, ver anuncios y documentos|
 
 ```
@@ -49,9 +51,10 @@ Asignación  (persona_id, rol_codigo, conjunto_id)          -- conjunto_id nulo 
 |Personas|`persona.buscar` · `persona.vincular`|
 |Reglas|`regla.ver` · `regla.configurar`|
 |Áreas|`area.ver` · `area.gestionar`|
-|Reservas|`reserva.solicitar` · `reserva.ver_todas` · `reserva.aprobar` · `reserva.rechazar` · `reserva.cancelar_ajena`|
+|Reservas|`reserva.solicitar` · `reserva.ver_todas` · `reserva.aprobar` · `reserva.rechazar` · `reserva.cancelar_ajena` · `reserva.declarar_pago` (desde el 10/10: solo Administración y Superusuario; Secretaría aprueba pero no declara el pago; no es sensible)|
 |Usuarios|`usuario.gestionar` · `rol.asignar` · `vinculo.gestionar`|
 |Visitantes|`visitante.registrar` · `visitante.ver_historico`|
+|Ingresos a zonas|`ingreso.registrar` · `ingreso.ver_historico`|
 |Casos|`caso.crear` · `caso.ver_todos` · `caso.responder`|
 |Triage|`solicitud.bandeja_ver` · `solicitud.priorizar` · `solicitud.rechazar_formal`|
 |Infracciones|`infraccion.registrar` · `infraccion.ver` · `infraccion.cerrar`|
@@ -59,9 +62,10 @@ Asignación  (persona_id, rol_codigo, conjunto_id)          -- conjunto_id nulo 
 |Citas|`cita.agendar_propia` · `cita.gestionar_horario` · `cita.ver_todas`|
 |Documentos|`documento.subir` · `documento.ver` · `documento.descargar`|
 |Datos|`importacion.ejecutar` · `respaldo.generar` · `auditoria.ver`|
-|Parqueaderos|`parqueadero.ver` · `parqueadero.asignar`|
+|Pagos|`pago.ver` (sensible: Administración y Secretaría) · `pago.confirmar` (Administración) · `pago.reportar` (Residente). Desde el 10/10|
+|Parqueaderos|`parqueadero.ver` · `parqueadero.asignar` · `parqueadero.gestionar` (desde el 10/10, solo Administración y Superusuario: crea y retira parqueaderos del catálogo; `asignar` queda para HU-34; no es sensible)|
 
-**Permisos sensibles (exigen 2FA):** `visitante.ver_historico`, `documento.descargar`, `respaldo.generar`, `usuario.gestionar`, `rol.asignar`, `auditoria.ver`, `persona.buscar`, `persona.vincular`, `infraccion.*`, `solicitud.bandeja_ver` y **todos los de plataforma**.
+**Permisos sensibles (exigen 2FA):** `visitante.ver_historico`, `ingreso.ver_historico`, `documento.descargar`, `respaldo.generar`, `usuario.gestionar`, `rol.asignar`, `auditoria.ver`, `persona.buscar`, `persona.vincular`, `infraccion.*`, `solicitud.bandeja_ver` y **todos los de plataforma**.
 
 Los nombres dicen la verdad de la operación: `reserva.solicitar` porque un residente **solicita**, no crea. `solicitud.rechazar_formal` y no `rechazar` porque el rechazo es **de forma**, y ese matiz es el rol entero.
 
