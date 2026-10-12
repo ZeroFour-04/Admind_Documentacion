@@ -4,7 +4,7 @@ tipo: modulo
 modulo: personas
 hu: [HU-04, HU-07]
 origen: "maestro v1.4 (2026-09-14) §5.2"
-actualizado: 2026-09-14
+actualizado: 2026-10-06
 ---
 
 # Personas (identidad)
@@ -22,7 +22,7 @@ Persona                       -- TABLA GLOBAL: sin conjunto_id (R12)
   numero_documento
   nombres
   apellidos
-  telefono                    (opcional)
+  telefono                    (opcional; vacío o 7–15 dígitos, con `+` inicial opcional)
   activo : bool
   UNIQUE (tipo_documento, numero_documento)
 

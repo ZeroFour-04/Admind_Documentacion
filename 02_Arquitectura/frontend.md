@@ -45,7 +45,7 @@ Cada app del front tiene `views.py` (funciones), `urls.py`, a veces `forms.py` (
 | Reglas | `reglas` | Real |
 | Anuncios | `anuncios` | Real |
 | Notificaciones | `notificaciones` | Real |
-| Solicitudes | `triage` | **Maqueta** vacía (HU-22, futuro) |
+| Solicitudes | `triage` | Real: catálogo de zonas comunes para Administración, Secretaría y Superusuario, cada una con acción para abrir sus solicitudes; el residente ve su historial. La bandeja de triage HU-22 sigue pendiente |
 | Visitantes ("Visitante" para Vigilancia: formulario de ingreso y los de hoy; con `visitante.ver_historico`, el historial sin formulario) | `visitantes` | Real, parcial (HU-27): solo el ingreso, sin salida ni parqueadero |
 | Conjunto | `conjuntos` | Real (resumen del asistente) |
 | Usuarios (lista con su rol, detalle con **un** rol que se asigna o se cambia, "Eliminar usuario" con confirmación, registrar persona) | `usuarios` | Real. `usuarios/nuevo.html` aún muestra la etiqueta "Maqueta" |

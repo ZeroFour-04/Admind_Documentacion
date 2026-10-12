@@ -127,6 +127,8 @@ sequenceDiagram
 - **Cumple todas** → `APARTADA`, se guarda la evaluación y se notifica a Administración por el canal de notificaciones.
 - **Incumple alguna** → `LIBERADA` con motivo "reglas", la franja queda libre y la API responde **400 con todos los motivos**. El front los muestra en lista.
 
+La pantalla **Solicitudes** (`apps/triage/views.bandeja`) muestra a Administración, Secretaría y Superusuario el catálogo de zonas comunes; cada fila ofrece la acción **Solicitudes** que abre la bandeja de esa zona (`GET /reservas/areas/<id>/solicitudes/`). El residente ve solo su historial (`GET /reservas/solicitudes/`). Una solicitud aparece en la bandeja del área tras enviarse y quedar `APARTADA`.
+
 Lo que sigue, **aprobar o rechazar** la solicitud apartada (pasar a `RESERVADA` o `RECHAZADA`), es la HU-14 y todavía no existe.
 
 ### Los estados de una solicitud
