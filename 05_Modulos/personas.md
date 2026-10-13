@@ -26,7 +26,7 @@ Persona                       -- TABLA GLOBAL: sin conjunto_id (R12)
   numero_documento
   nombres
   apellidos
-  telefono                    (opcional)
+  telefono                    (opcional; vacío o 7–15 dígitos, con `+` inicial opcional)
   activo : bool
   UNIQUE (tipo_documento, numero_documento)
 

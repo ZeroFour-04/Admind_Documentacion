@@ -130,7 +130,7 @@ sequenceDiagram
 - **Cumple todas** → `APARTADA`, se guarda la evaluación y se notifica a Administración por el canal de notificaciones.
 - **Incumple alguna** → `LIBERADA` con motivo "reglas", la franja queda libre y la API responde **400 con todos los motivos**. El front los muestra en lista.
 
-Lo que sigue, **aprobar o rechazar** la solicitud apartada (pasar a `RESERVADA` o `RECHAZADA`), es la HU-14 y existe desde el 2026-10-05: `POST /reservas/solicitudes/<id>/decision/`, con motivo obligatorio y auditoría (aviso del inicio). Lo que le falta frente a sus criterios está en [historias](../08_Estado/historias.md).
+Lo que sigue, **aprobar o rechazar** la solicitud apartada (pasar a `RESERVADA` o `RECHAZADA`), es la HU-14 y todavía no existe.
 
 ### Los estados de una solicitud
 
