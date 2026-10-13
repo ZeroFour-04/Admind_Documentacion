@@ -4,8 +4,8 @@ tipo: modulo
 modulo: permisos
 hu: [HU-06]
 origen: "maestro v1.4 (2026-09-14) §5.3 + guía de estructura §5.4 (2026-09-30)"
-actualizado: 2026-10-11
-revisado: 2026-10-11
+actualizado: 2026-10-13
+revisado: 2026-10-13
 ---
 
 # Roles y permisos
@@ -14,7 +14,7 @@ revisado: 2026-10-11
 > - **Un solo rol vigente por persona y conjunto**: se cambia, no se suma. En otro conjunto puede tener otro, y Superusuario más un rol de conjunto sigue siendo posible. Donde el diseño diga *unión de los roles*, lo vigente es esto.
 > - El rol **Consejo se eliminó**: el catálogo tiene 5 roles. No se repone aunque el plan de los Sprints 2 y 3 o los avances viejos lo mencionen.
 > - El **Superusuario tiene todos los permisos** del catálogo.
-> - **Secretaría aprueba y rechaza reservas en el código** (el código manda; verificado el 2026-10-11): desde HU-14 (Camilo, 2026-10-05) su rol tiene `area.ver`, `reserva.ver_todas`, `reserva.aprobar` y `reserva.rechazar` en `apps/permisos/catalogo.py`. El diseño de abajo dice lo contrario (*ningún permiso de aprobación para la Secretaría*, y la decisión 28 de [cerradas](../06_Decisiones/cerradas.md)). Nadie lo decidió como equipo: está en [pendientes](../08_Estado/pendientes.md), sección 5.
+> - **La Secretaría no aprueba** (2026-10-13, Alejo): su rol perdió `reserva.aprobar` y `reserva.rechazar`, que Camilo le había dado con HU-14. Tiene `area.ver`, `reserva.ver_todas`, `solicitud.bandeja_ver`, `solicitud.priorizar`, `solicitud.rechazar_formal` (descartar una reserva), `caso.ver_todos` y `caso.gestionar` (tomar, descartar y redirigir un caso; permiso de Camilo, del 12/10), más anuncios y `pago.ver`. El código volvió a coincidir con el diseño de abajo.
 > - **`conjunto.activar` también lo tiene Administración** (2026-10-06, Alejo, D1 b del plan del asistente): quien administra deja operativo su conjunto al terminar el asistente. Sigue en el grupo Plataforma, igual que `conjunto.crear`, que Administración ya tenía.
 > - **Dos permisos nuevos en el catálogo** (2026-10-08, Alejo; construidos con [Plan_Zonas_Con_Ingreso](../07_Planes/hechos/Plan_Zonas_Con_Ingreso.md), ya con commit): `ingreso.registrar` para Vigilancia e `ingreso.ver_historico` para Administración, sensible. El Superusuario los recibe porque su rol tiene todo el catálogo. Falta contárselo a Camilo.
 > - **`conjunto.crear` se evalúa por persona, no por conjunto activo** (2026-10-11, Alejo): quien es Administración en cualquiera de sus conjuntos activos puede crear otro apenas inicia sesión, sin entrar a ninguno. Lo calcula `puede_crear_conjuntos` en `apps/permisos/servicios.py` y la API lo manda como `puede_crear_conjunto`, aparte de `permisos`. Antes solo valía dentro de un conjunto activo. Falta contárselo a Camilo.
@@ -53,7 +53,7 @@ Asignación  (persona_id, rol_codigo, conjunto_id)          -- conjunto_id nulo 
 |Personas|`persona.buscar` · `persona.vincular`|
 |Reglas|`regla.ver` · `regla.configurar`|
 |Áreas|`area.ver` · `area.gestionar`|
-|Reservas|`reserva.solicitar` · `reserva.ver_todas` · `reserva.aprobar` · `reserva.rechazar` · `reserva.cancelar_ajena` · `reserva.declarar_pago` (desde el 10/10: solo Administración y Superusuario; Secretaría aprueba pero no declara el pago; no es sensible)|
+|Reservas|`reserva.solicitar` · `reserva.ver_todas` · `reserva.aprobar` · `reserva.rechazar` · `reserva.cancelar_ajena` · `reserva.declarar_pago` (desde el 10/10: solo Administración y Superusuario; Secretaría no aprueba ni declara el pago; no es sensible)|
 |Usuarios|`usuario.gestionar` · `rol.asignar` · `vinculo.gestionar`|
 |Visitantes|`visitante.registrar` · `visitante.ver_historico`|
 |Ingresos a zonas|`ingreso.registrar` · `ingreso.ver_historico`|

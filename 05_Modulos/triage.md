@@ -4,17 +4,17 @@ tipo: modulo
 modulo: triage
 hu: [HU-22, HU-23, HU-24, HU-25, HU-29]
 origen: "maestro v1.4 (2026-09-14) §5.7 + plan de anuncios con fotos (2026-10-05)"
-actualizado: 2026-10-11
-revisado: 2026-10-11
+actualizado: 2026-10-13
+revisado: 2026-10-13
 ---
 
 # Secretaría, triage y anuncios
 
-> [!NOTE] Qué hay construido (verificado el 2026-10-11)
+> [!NOTE] Qué hay construido (verificado el 2026-10-13)
 > - **Anuncios (HU-25):** construidos, con fotos. Sección *Cómo está construido*, abajo.
-> - **Triage (HU-22, HU-23, HU-24) y casos (HU-29):** sin construir. En el backend, `apps/triage/` y `apps/casos/` solo tienen README.
-> - **Ojo con el nombre:** en el front, la app `triage` es la pantalla **Solicitudes** de las reservas (HU-14): gestión elige una zona y el residente ve su historial. No es la bandeja de triage ([reservas](reservas.md)).
-> - **El código contradice este diseño en un punto:** Secretaría tiene `reserva.aprobar` y `reserva.rechazar` desde HU-14, es decir, decide el fondo de una reserva. Abajo dice que *el fondo no se delega*. Sin decidir como equipo ([permisos](permisos.md), [pendientes](../08_Estado/pendientes.md) sección 5).
+> - **Casos (HU-29) y el dashboard de gestión:** construidos el 13/10 sobre lo que Camilo subió el 12/10. Sección *Cómo está construido: el dashboard y los casos*, abajo.
+> - **De la bandeja de triage (HU-22 a HU-24) hay una parte:** las pestañas por tipo, la prioridad sobre casos y el descarte por causal formal de reservas y casos. No hay vista combinada (decisión de Alejo del 13/10), ni nada sobre citas, que no existen. En el backend `apps/triage/` sigue con solo README: el dashboard es una pantalla del front que le pide las filas a cada módulo.
+> - **La Secretaría ya no aprueba reservas** (Alejo, 13/10): el código volvió a coincidir con este diseño. Y una diferencia a propósito: el diseño dice que la bandeja no tiene respuesta de fondo; aquí el administrador responde desde el detalle del caso, al que se llega por la fila.
 
 ## Diseño (maestro §5.7)
 
@@ -70,6 +70,40 @@ Es **terminal**: no se reversa, no se edita, el solicitante vuelve a solicitar. 
 
 > [!NOTE] Ampliación del 2026-10-05: los anuncios llevan fotos
 > El maestro §5.7 describe el anuncio como texto. Alejo pidió que pueda llevar fotos; los alcances y la vía única no cambian. Cómo quedó, abajo.
+
+## Cómo está construido: el dashboard y los casos (2026-10-13)
+
+**El dashboard** (`/solicitudes/`, «Dashboard de Gestión de Reservas») es de quien tiene `solicitud.bandeja_ver`: Administración, Secretaría y Superusuario. Tiene una pestaña por tipo, cada una con su tabla y cuántas hay pendientes. Las pestañas no se mezclan y cada una le pide las filas a su módulo. El detalle de las pantallas está en `Frontend/Admind_Front-End/apps/triage/README.md`.
+
+| Pestaña | Orden | La fila lleva a |
+|---|---|---|
+| Reservas | La que más lleva esperando primero. Sin prioridad | La tarjeta de la solicitud en la pantalla de su zona ([reservas](reservas.md)) |
+| Casos | Abiertos primero, por prioridad y luego antigüedad. «Por antigüedad» ignora la prioridad | El detalle del caso |
+| Citas | — | Un estado vacío: el módulo no existe |
+
+**Quién hace qué sobre un caso.** La Secretaría clasifica y la Administración decide; Administración puede atender un caso sin que nadie se lo redirija, porque el sistema tiene que funcionar con cero secretarías.
+
+| Estado | Quién lo produce | Sale hacia |
+|---|---|---|
+| Por revisar (`ABIERTO`) | El residente, al abrirlo | En revisión, Redirigido, Rechazado, Resuelto |
+| En revisión | Quien lo toma. Es opcional: avisa al residente que ya lo ven | Redirigido, Rechazado, Resuelto |
+| Redirigido | Secretaría, con una nota interna opcional | Resuelto, Rechazado |
+| Citado | Nadie todavía: depende de citas | Resuelto, Rechazado |
+| Resuelto | Administración, con respuesta escrita obligatoria | Terminal |
+| Rechazado | Secretaría (descarte: causal de lista cerrada y comentario) o Administración (motivo) | Terminal |
+
+| Regla | Dónde se cumple |
+|---|---|
+| Un caso no se cierra sin algo escrito para el residente | El serializer, el servicio y dos `CHECK`: `caso_resuelto_con_respuesta` y `caso_rechazado_con_motivo` |
+| `NORMAL` la pone el sistema | `default` y `db_default` en `Caso.prioridad` |
+| `URGENTE` exige justificación | El serializer y el `CHECK` `caso_urgente_con_justificacion` |
+| La prioridad tiene historia | `caso.priorizar` en la auditoría, con el valor anterior y el nuevo. No avisa al residente |
+| Cada cambio de estado avisa al residente, por la aplicación y por correo | `servicios.avisar`, dentro de la transacción. No dice quién actuó |
+| Dos personas a la vez no se pisan | `servicios._pasar` bloquea la fila; la segunda recibe 409 |
+| El residente no ve la nota interna, la justificación ni quién actuó | Dos serializers: `CasoSerializer` y `CasoParaGestionSerializer` |
+| El descarte de la Secretaría no tiene «otro» | `CausalDeDescarte`: no es competencia, duplicado o información insuficiente. Lo que no cabe se redirige |
+
+Las rutas están en `Backend/Admind_Backend/apps/casos/README.md`. El caso no guarda la vivienda: se deduce de dónde reside hoy quien lo abrió.
 
 ## Cómo está construido: fotos en los anuncios (2026-10-05)
 

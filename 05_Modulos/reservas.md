@@ -4,8 +4,8 @@ tipo: modulo
 modulo: reservas
 hu: [HU-11, HU-12, HU-13, HU-14, HU-15, HU-16, HU-17, HU-18, HU-19]
 origen: "maestro v1.4 (2026-09-14) §5.1 + guía de estructura §7 (2026-09-30)"
-actualizado: 2026-10-11
-revisado: 2026-10-11
+actualizado: 2026-10-13
+revisado: 2026-10-13
 ---
 
 # Reservas
@@ -18,6 +18,7 @@ revisado: 2026-10-11
 > - **2026-10-10:** con la regla *una reserva al día* definida en un área, `franjas()` devuelve `no_disponible` para las franjas libres de un día que ya tiene una solicitud apartada o reservada. Esa regla y *sin franjas seguidas* se evalúan al enviar, como las demás ([motor_reglas](motor_reglas.md)). Ya con commit (`f4c8ae6` y `49c3e80`).
 > - **2026-10-10:** el pago declarado (*El dinero lo valida una persona*, más abajo) **ya está construido** y con commit (`f4c8ae6` y `49c3e80`): [Plan_Pago_De_Reserva](../07_Planes/hechos/Plan_Pago_De_Reserva.md), HU-16. Aprobar no depende del pago, solo Administración declara (`reserva.declarar_pago`) y el residente puede subir su comprobante sin declarar nada. Los campos son `pago_declarado_por` y `pago_declarado_en` (no `fecha_declaracion`), y el archivo va dentro de la base. Ver *El pago declarado*, al final de *Cómo está construido*.
 >
+> - **2026-10-13:** **la Secretaría ya no aprueba ni rechaza de fondo**: descarta por causal formal. El rechazo lleva categoría obligatoria, decidir avisa al residente y la bandeja va por antigüedad. Ver *Decidir una solicitud*, al final de *Cómo está construido*. Lo que dice el primer punto del 2026-10-06 sobre `motivo` obligatorio vale solo para aprobar.
 > Detalle en [construccion](../06_Decisiones/construccion.md).
 
 ## Diseño (maestro §5.1)
@@ -130,7 +131,7 @@ sequenceDiagram
 - **Cumple todas** → `APARTADA`, se guarda la evaluación y se notifica a Administración por el canal de notificaciones.
 - **Incumple alguna** → `LIBERADA` con motivo "reglas", la franja queda libre y la API responde **400 con todos los motivos**. El front los muestra en lista.
 
-Lo que sigue, **aprobar o rechazar** la solicitud apartada (pasar a `RESERVADA` o `RECHAZADA`), es la HU-14: existe desde el 05/10 (`servicios.decidir_solicitud`) y lo que le falta está en [Plan_Dashboard_De_Solicitudes](../07_Planes/activos/Plan_Dashboard_De_Solicitudes.md).
+Lo que sigue, **aprobar o rechazar** la solicitud apartada (pasar a `RESERVADA` o `RECHAZADA`), es la HU-14: está en *Decidir una solicitud*, más abajo.
 
 ### Los estados de una solicitud
 
@@ -140,8 +141,8 @@ stateDiagram-v2
     EN_SOLICITUD --> EXPIRADA: pasan los 3 min
     EN_SOLICITUD --> LIBERADA: cancela / sale de la página<br/>o no cumple las reglas
     EN_SOLICITUD --> APARTADA: envía y cumple todas las reglas
-    APARTADA --> RESERVADA: Administración o Secretaría aprueba (HU-14)
-    APARTADA --> RECHAZADA: Administración o Secretaría rechaza, con motivo (HU-14)
+    APARTADA --> RESERVADA: Administración aprueba (HU-14)
+    APARTADA --> RECHAZADA: Administración rechaza con categoría,<br/>o Secretaría descarta con causal (HU-14)
     RESERVADA --> CANCELADA: cancelación en firme (HU-17, sin construir)
 ```
 
@@ -163,6 +164,22 @@ El sistema **no verifica el dinero ni lo cobra**: declarar es dejar constancia d
 En las respuestas, `pago` trae `declarado`, `declarado_en` y `comprobantes` (`id`, `nombre`, `subido_en`, `del_residente`). **El residente no ve quién declaró** (igual que no ve quién decidió su solicitud); gestión sí, y ve quién subió cada comprobante. Una solicitud con pago declarado que se **rechaza conserva** la declaración: hay un dinero por devolver fuera del sistema.
 
 Las condiciones del alquiler (valor, depósito, política de cancelación) son HU-15 y siguen sin construir: sin ellas, aquí solo consta que el pago se declaró, no cuánto.
+
+### Decidir una solicitud (HU-14, 2026-10-13)
+
+Gestión llega por la pestaña Reservas del dashboard ([triage](triage.md)): la fila lleva a la tarjeta de la solicitud en la pantalla de su zona. Decidir son dos operaciones distintas:
+
+| Operación | Quién | Qué exige | Ruta de la API |
+|---|---|---|---|
+| Aprobar | Administración (`reserva.aprobar`) | Motivo o condiciones | `POST /reservas/solicitudes/<id>/decision/` |
+| Rechazar, de fondo | Administración (`reserva.rechazar`) | Categoría: no disponible, condiciones no cumplidas, documentación incompleta, incumple el reglamento u otro. Con «otro», el texto | La misma |
+| Descartar, de forma | Secretaría (`solicitud.rechazar_formal`) | Causal: datos incompletos, solicitud duplicada o la vivienda no corresponde. Sin «otro». Y comentario | `POST /reservas/solicitudes/<id>/descarte/` |
+
+- Las tres bloquean la fila y solo actúan sobre una `APARTADA`; si ya se decidió, 409.
+- Rechazar y descartar dejan la solicitud en `RECHAZADA` con su `categoria_rechazo`, y la franja libre. La base no guarda un rechazo sin categoría (`solicitud_rechazada_con_categoria`).
+- Las tres avisan a quien hizo la solicitud, por la aplicación y por correo, sin decir quién decidió. Al rechazar, además, suena la campana de quien marcó la franja (HU-18, de Camilo).
+- La bandeja (`GET /reservas/bandeja/`, con `solicitud.bandeja_ver`) y la de cada zona traen primero las que esperan decisión y, entre ellas, la que más lleva esperando. Entre reservas no hay prioridad.
+- «Completada» no es un estado: es una `RESERVADA` cuya franja ya terminó, y la API lo dice con `completada`. «Cancelada» existe como valor y nada la produce (HU-17).
 
 ## Ver también
 

@@ -2,8 +2,8 @@
 resumen: "Lista de planes de trabajo: cuáles están activos y cuáles ya se ejecutaron, con la historia que cubre cada uno y la nota donde quedó lo vigente."
 tipo: plan
 origen: "reorganización del 2026-09-30; revisada contra el código el 2026-10-11"
-actualizado: 2026-10-11
-revisado: 2026-10-11
+actualizado: 2026-10-13
+revisado: 2026-10-13
 ---
 
 # Planes
@@ -12,11 +12,9 @@ Cómo se escribe y se cierra uno: [abrir_y_cerrar_un_plan](../09_Protocolos/abri
 
 ## Activos
 
-| Plan | Escrito | Historia | Qué cubre | Estado |
-|---|---|---|---|---|
-| [Plan_Dashboard_De_Solicitudes](activos/Plan_Dashboard_De_Solicitudes.md) | 2026-10-13 | HU-14 y HU-29 | El dashboard de gestión con pestañas (Reservas, Casos y Citas sin función): cierra HU-14 con categoría de rechazo, descarte de Secretaría y aviso al residente; construye los casos; y la Secretaría deja de aprobar reservas. F0 a F5, D1 a D9 | Sin empezar. Faltan D5 a D9 y traer lo que hay en GitHub (F0) |
+**Ninguno.** `activos/` está vacía: los once planes escritos están ejecutados.
 
-Los diez planes anteriores están ejecutados, con commit y con sus migraciones aplicadas en `admind_db`.
+Los diez primeros tienen commit y sus migraciones aplicadas en `admind_db`; al del dashboard (13/10) le faltan las dos cosas.
 
 Lo que sigue sin plan está en [pendientes](../08_Estado/pendientes.md), sección 9. Qué entra antes de la entrega sigue sin decidir ([abiertas](../06_Decisiones/abiertas.md), 12.8).
 
@@ -36,6 +34,7 @@ Un plan hecho es histórico y no se edita: menciona el rol Consejo, alfa y beta 
 | [Plan_Pago_De_Reserva](hechos/Plan_Pago_De_Reserva.md) | 2026-10-10 | HU-16 | Administración declara el pago de una reserva, con comprobante opcional; el residente puede subir el suyo; el archivo se valida por su firma y se sirve por una ruta validada. F0 a F4, D1 a D7 | [reservas](../05_Modulos/reservas.md) |
 | [Plan_Parqueadero_De_Visitantes](hechos/Plan_Parqueadero_De_Visitantes.md) | 2026-10-10 | HU-28 y parte de HU-27 | Catálogo de parqueaderos con código, ocupación atada a la visita y liberación al registrar la salida; incluye la salida del visitante y la capa de servicio de `visitantes`. F0 a F5, D1 a D8 | [parqueaderos](../05_Modulos/parqueaderos.md) |
 | [Plan_Pago_De_Administracion](hechos/Plan_Pago_De_Administracion.md) | 2026-10-10 | HU-35 | Tabla por vivienda y mes con buscador, check que pone Administración, comprobante que sube el residente y la mora que alimenta *paz y salvo* (F5, construida sin verificar lo legal). F0 a F5, D1 a D10 | [pagos](../05_Modulos/pagos.md) |
+| [Plan_Dashboard_De_Solicitudes](hechos/Plan_Dashboard_De_Solicitudes.md) | 2026-10-13 | HU-14 y HU-29 | El dashboard de gestión con pestañas (Reservas, Casos y Citas sin función): categoría de rechazo, descarte de Secretaría, aviso al residente y orden por antigüedad; el ciclo completo de los casos sobre lo que subió Camilo; y la Secretaría deja de aprobar. F0 a F5, D1 a D9. Lo construyó el agente | [reservas](../05_Modulos/reservas.md), [triage](../05_Modulos/triage.md), [permisos](../05_Modulos/permisos.md) |
 
 Los seis planes del 06/10 y del 10/10 se escribieron como guiados y Alejo pidió en todos que **los construyera el agente**; el de zonas con ingreso (08/10) no era guiado.
 

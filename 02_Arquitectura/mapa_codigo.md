@@ -3,7 +3,7 @@ resumen: "Mapa del código: qué hay en cada carpeta de los tres repos, qué hac
 tipo: arquitectura
 origen: "guía de estructura §2 y §5.5 (2026-09-30)"
 actualizado: 2026-10-13
-revisado: 2026-10-11
+revisado: 2026-10-13
 ---
 
 # Mapa del código
@@ -18,7 +18,7 @@ A D M I N D/
 │   │   ├── comun/                   ← piezas compartidas: aislamiento, modelo base, bloqueo, archivos (validación de comprobantes)
 │   │   ├── personas/ cuentas/ conjuntos/ permisos/ unidades/
 │   │   ├── areas/ reglas/ reservas/ ingresos/ anuncios/ notificaciones/ auditoria/ visitantes/ parqueaderos/ pagos/ documentos/
-│   │   └── casos/ citas/ …         ← solo README: módulos futuros, sin código
+│   │   └── citas/ infracciones/ …  ← solo README: módulos futuros, sin código
 │   ├── tests/                       ← pruebas transversales (aislamiento, concurrencia, esquema, archivos)
 │   ├── bd/                          ← notas sobre la base de datos
 │   ├── manage.py  requirements.txt  pytest.ini  .env
@@ -38,7 +38,7 @@ A D M I N D/
 └── .claude/launch.json              ← cómo arranca Claude los dos servidores
 ```
 
-Cada carpeta de `apps/` tiene un `README.md` que dice para qué existe. Las apps que **solo** tienen README (`casos`, `citas`, `infracciones`, `triage` en el back, `importacion_respaldo`) son el lugar reservado para historias futuras.
+Cada carpeta de `apps/` tiene un `README.md` que dice para qué existe. Las apps que **solo** tienen README (`citas`, `infracciones`, `triage` en el back, `importacion_respaldo`) son el lugar reservado para historias futuras.
 
 ## Apps del backend
 
@@ -78,7 +78,7 @@ Las pantallas del front, sección por sección, están en [frontend](frontend.md
 | `unidades` | [unidades](../05_Modulos/unidades.md) |
 | `pagos` | [pagos](../05_Modulos/pagos.md) |
 | `parqueaderos` | [parqueaderos](../05_Modulos/parqueaderos.md) |
-| `triage, anuncios` | [triage](../05_Modulos/triage.md) |
+| `triage, anuncios, casos` | [triage](../05_Modulos/triage.md). En el front, `triage` es el dashboard de gestión y `casos` tiene la lista del residente y el detalle |
 | `infracciones` | [infracciones](../05_Modulos/infracciones.md) |
 | `citas` | [citas](../05_Modulos/citas.md) |
 | `areas` | [motor_reglas](../05_Modulos/motor_reglas.md) (modo de uso y aforo) e [ingresos](../05_Modulos/ingresos.md) |

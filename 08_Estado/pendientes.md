@@ -1,10 +1,10 @@
 ---
 resumen: "Todo lo que falta, ordenado por tipo: lo que frena los story points, pruebas manuales, avisos a Camilo, lo legal, decisiones de equipo, Notion, textos desactualizados y deuda técnica."
 tipo: estado
-corte: 2026-10-11
+corte: 2026-10-13
 origen: "listas anteriores (2026-09-27 a 2026-10-11), reordenadas por tipo y contrastadas con el código el 2026-10-11"
 actualizado: 2026-10-13
-revisado: 2026-10-11
+revisado: 2026-10-13
 ---
 
 # Pendientes
@@ -16,7 +16,7 @@ La fecha entre paréntesis es cuándo se anotó. *Verificado el 11/10* quiere de
 ## 1. Qué frena que se cuenten story points
 
 - [ ] **La rama `pruebas` del backend no existe en GitHub** (solo en local, y en un commit viejo). En el front existe, igual a `main`. Sin ella no hay PR `desarrollo → pruebas`. *(29/09, verificado el 11/10)*
-- [ ] **La prueba que falla en el backend.** Registrar en `tests/aislamiento/test_intruso.py`: `usuario-perfil` (ruta sin conjunto, en `RUTAS_SIN_CONJUNTO`), `usuario-eliminar`, `solicitudes-bandeja`, `solicitudes-area` y `solicitud-decision`. *(29/09 y 05/10, verificado el 11/10)*
+- [ ] **Migrar `admind_db` y hacer los commits del dashboard.** Faltan `reservas/0006_categoria_de_rechazo` y `casos/0004_ciclo_del_caso`; hasta correr `migrate`, las pantallas de solicitudes de reserva y de casos fallan contra esa base. Lo de HU-14 y HU-29 está sin commit en Backend y Frontend. *(13/10)*
 - [ ] **PR `desarrollo → pruebas` revisado** por quien no programó. Ninguna historia ha pasado por uno.
 - [ ] **Pruebas manuales** de quien no programó: sección 2.
 - [ ] **Decidir el alcance** que entra antes de la entrega: sección 5.
@@ -42,6 +42,8 @@ El agente no las hace: no tiene la contraseña ni el segundo factor de los usuar
 | Cambiar el modo de uso de un área (13/10) | Sin guion: en «Editar área», pasar una con reservas apartadas y reglas propias a «Con ingreso» y volver | El agente lo recorrió con un guion contra la base de pruebas, no en el navegador ni con usuarios reales |
 | Usuarios, detalle de la vivienda y «Crear conjunto» (11/10) | Sin guion | Usuarios y el detalle de la vivienda se vieron en el navegador con datos inventados, no con usuarios reales |
 
+- [ ] **Dashboard de gestión (HU-14 y HU-29):** el guion de [Plan_Dashboard_De_Solicitudes](../07_Planes/hechos/Plan_Dashboard_De_Solicitudes.md), con Administración, Secretaría, dos residentes y Vigilancia. Lo recorrió el agente con el front real contra la API de pruebas (43 comprobaciones); falta la prueba de una persona en el navegador. *(13/10)*
+
 ## 3. Avisarle a Camilo
 
 En la bóveda no consta que se le haya avisado de nada de esto. Lo que tiene que saber, por tema:
@@ -57,6 +59,8 @@ En la bóveda no consta que se le haya avisado de nada de esto. Lo que tiene que
 - [ ] **Alfa y beta cambiaron de significado** (alfa = del conjunto, beta = del área) y *paz y salvo* **restringe de verdad** desde el 10/10.
 - [ ] **El asistente tiene siete pasos**, un conjunto ya puede quedar operativo y hay una historia nueva, HU-39.
 - [ ] **Vistas y no tocadas, suyas:** la prueba de `ingresos` que usa la hora real y `visitantes/0001` sin la FK compuesta de `unidad_id` (sección 8).
+
+- [ ] **Dashboard y casos (13/10):** la Secretaría ya no aprueba ni rechaza reservas (su rol pierde `reserva.aprobar` y `reserva.rechazar`; descarta con `solicitud.rechazar_formal`), y cambiaron las pruebas suyas que afirmaban lo contrario. `POST …/decision/` pide `categoria` al rechazar. `/reservas/bandeja/` exige `solicitud.bandeja_ver` y ordena por antigüedad. Su app `casos` se amplió sin tocar sus migraciones: estados nuevos, `APROBADO` ya no existe, la ruta de Secretaría es `/casos/<id>/descartar/` (con causal) y `/casos/<id>/rechazar/` pasó a ser de Administración; Administración ve todos los casos, no solo los redirigidos. En el front, `/solicitudes/` de gestión es el dashboard y `/casos/` de gestión redirige allá. Se corrigió su prueba `test_el_detalle_de_solicitud_incluye_condiciones_de_renta_de_su_area`, que guardaba sin conjunto activo.
 
 ## 4. Lo legal sin verificar
 
@@ -76,7 +80,6 @@ Un agente no las resuelve ([abiertas](../06_Decisiones/abiertas.md)).
 - [ ] **Fecha exacta de entrega y qué historias entran** (12.8). *(27/09)*
 - [ ] **Stack del frontend** (12.1): el front está construido sobre plantillas de Django y Alpine; falta cerrarlo por escrito con Camilo. *(27/09)*
 - [ ] **HU-39, lo que queda de 12.9:** persona principal, cómo se cumple lo legal con los datos de quienes se mudan, y retiro de varias viviendas a la vez. *(06/10)*
-- [ ] **¿Secretaría aprueba y rechaza reservas?** El código se lo permite desde HU-14 (`reserva.aprobar` y `reserva.rechazar` en su rol, de Camilo). El diseño dice que la Secretaría clasifica y no decide el fondo (decisión 28, [triage](../05_Modulos/triage.md), [permisos](../05_Modulos/permisos.md)). O se cambia el catálogo o se registra como reversión. *(05/10, verificado el 11/10)*
 - [ ] **¿Reservar exige que el conjunto esté operativo?** Hoy no se revisa (plan D7 a del 27/09). *(06/10, verificado el 11/10)*
 - [ ] **Dejar operativo un conjunto no queda en la auditoría,** y un conjunto operativo no se vuelve a revisar si después deja de cumplir un requisito. *(06/10)*
 - [ ] **Días que no abre:** Alejo dijo en el chat del asistente que el motivo y los periodos quedaban para después, y el plan del motor los construyó. Falta que confirme que así lo quería. *(06/10)*
@@ -97,8 +100,7 @@ Un agente no las resuelve ([abiertas](../06_Decisiones/abiertas.md)).
 
 El agente no toca Notion por su cuenta. Alejo decidió el 11/10 que refleje la realidad ([construccion](../06_Decisiones/construccion.md)).
 
-- [ ] **HU-14, para cerrarla:** categorías de motivo de rechazo, aviso al residente por ambos canales, hilo de mensajes y la bandeja ordenada por antigüedad. Está «En progreso»; el informe 4 la contó como terminada con un criterio menos estricto.
-- [ ] **HU-29 (Camilo):** dos tareas finalizadas y sin código en el repositorio. Cuando lo suba: verificarlo, compararlo con sus criterios y actualizar [historias](historias.md).
+- [ ] **HU-14 y HU-29:** pasarlas de estado en Notion. En HU-29, la tarea «Tablero de tres columnas con filtros e hilo» ya no describe lo construido (es una tabla con pestañas, sin hilo) y la de la FK desde la infracción figura «Finalizada» sin estar en el código. *(13/10)*
 - [ ] **HU-21 y HU-25** siguen «Finalizado» sin *PR revisado* ni *Probada por el otro*. Las corrige Alejo.
 - [ ] **HU-16 (tarea 5) y HU-35 (tarea 3):** «almacenamiento fuera de la base» contradice lo construido. El equipo decide si se reformulan o se cierran con esa decisión.
 - [ ] **Criterios que describen el modelo anterior:** HU-03 (siete pasos, seis requisitos, activa Administración), HU-06 (un solo rol), HU-09, HU-10 y HU-13 (motor por niveles y las dos reglas nuevas), HU-21 (color propio), HU-25 (fotos) y HU-33 (solo el reglamento).
@@ -149,7 +151,7 @@ El agente no toca Notion por su cuenta. Alejo decidió el 11/10 que refleje la r
 
 **Frontend**
 
-- [ ] `usuarios/nuevo.html` y `triage/bandeja.html` no sobreescriben `estado_vista`: muestran la pastilla «Maqueta con datos de ejemplo» aunque son pantallas reales. `paneles/inicio.html` sí es maqueta. *(verificado el 11/10)*
+- [ ] `usuarios/nuevo.html` no sobreescribe `estado_vista`: muestra la pastilla «Maqueta con datos de ejemplo» aunque es una pantalla real. `paneles/inicio.html` sí es maqueta. *(verificado el 13/10)*
 - [ ] En el tablero, una regla sin valores (paz y salvo y las dos del 10/10) muestra «Cambiar», que abre un formulario sin campos y guarda una versión idéntica.
 - [ ] `alpine.min.js` se versionó con `core.autocrlf=true`: en otra máquina con Windows puede quedar con CRLF y su SHA-256 no coincidir con el del README de `vendor/`. Un `.gitattributes` lo evitaría. *(verificado el 11/10: no existe)*
 

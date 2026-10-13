@@ -3,7 +3,7 @@ resumen: "Cómo correr los dos servidores y las pruebas, cuántas hay, qué cubr
 tipo: arquitectura
 origen: "guía de estructura §4.8, §8 y §9 (2026-09-30) + plan de los Sprints 2 y 3 §0.4; conteos y archivos verificados el 2026-10-11"
 actualizado: 2026-10-13
-revisado: 2026-10-11
+revisado: 2026-10-13
 ---
 
 # Pruebas y ejecución
@@ -26,19 +26,19 @@ cd "/c/Users/Alejandro/Documents/A D M I N D/Frontend/Admind_Front-End"
 - **Aplicar en `admind_db`:** solo si el pedido o el plan lo autorizan ([convenciones](../03_Reglas/convenciones.md)). En los últimos planes las corrió Alejo.
 - **Migraciones pendientes:** `./.venv/Scripts/python.exe manage.py showmigrations` marca con `[ ]` las que faltan por aplicar.
 
-## Cómo están hoy (2026-10-11)
+## Cómo están hoy (2026-10-13)
 
-Sobre Backend `d4e98e5` y Frontend `a946880`, más los cambios sin commit del 13/10:
+Sobre Backend `87d67c5` y Frontend `0adf5eb`, más lo del dashboard de gestión del 13/10 (HU-14 y HU-29), que está sin commit:
 
 | Suite | Pruebas | Resultado | Tiempo |
 |---|---|---|---|
-| Backend | **672** | 670 pasan y **2 fallan** | 85 s |
-| Frontend | **397** | Todas pasan | 14 s |
+| Backend | **706** | Todas pasan | 96 s |
+| Frontend | **414** | Todas pasan | 14 s |
 
-Las dos del backend vienen del commit `0b627d1` de Camilo (ver [estado_actual](../08_Estado/estado_actual.md)). `makemigrations --check` no encuentra cambios; en `admind_db` quedan cinco migraciones de Camilo sin aplicar (`areas/0006`, `reservas/0005`, `casos/0001` a `0003`).
+`makemigrations --check` no encuentra cambios. En `admind_db` faltan por aplicar `reservas/0006_categoria_de_rechazo` y `casos/0004_ciclo_del_caso`.
 
-> [!WARNING] La que falla
-> `tests/aislamiento/test_intruso.py::test_toda_ruta_de_la_api_esta_cubierta`. No están en las listas de la prueba cinco rutas: `usuario-perfil` y `usuario-eliminar` (desde el 29/09), y `solicitudes-bandeja`, `solicitudes-area` y `solicitud-decision` (HU-14, desde el 05/10). Se arregla registrándolas, no tocando la prueba ([pendientes](../08_Estado/pendientes.md)).
+> [!NOTE] La prueba del intruso ya pasa
+> Desde el 13/10 todas las rutas de la API están registradas en `tests/aislamiento/test_intruso.py`: las de HU-14, las de casos, `campanas`, `usuario-eliminar` y `usuario-perfil` (esta, como ruta sin conjunto). Una ruta nueva que no se registre vuelve a poner en rojo `test_toda_ruta_de_la_api_esta_cubierta`.
 
 > [!NOTE] La que falla de noche
 > `apps/ingresos/tests.py::test_un_registro_que_no_cumple_responde_400_con_todos_los_motivos_y_no_deja_fila` usa la hora real: la zona de prueba abre de 05:00 a 22:00 y entre las 22:00 y las 05:00 responde tres motivos en vez de dos. De día pasa.

@@ -3,7 +3,8 @@ resumen: "Plan del dashboard de gestión con pestañas (Reservas, Casos, Citas):
 titulo: "AdMind — Plan guiado del Dashboard de Gestión de Reservas"
 tipo: plan
 modo: guiado
-estado: activo
+estado: hecho
+ejecutado: 2026-10-13
 hu: [HU-14, HU-29]
 fecha: 2026-10-13
 para: "Alejo, con un agente que guía según 09_Protocolos/ejecutar_plan_guiado.md si Alejo lo aprueba; si no, el agente lo construye"
@@ -21,16 +22,16 @@ punto_de_partida: "Backend d4e98e5 y Frontend a946880, los dos con cambios sin c
 
 ## 1. Seguimiento
 
-**Dónde voy:** **detenido en F0 (B0.2) el 2026-10-13.** Alejo pidió que lo construyera el agente y aceptó las recomendadas (D5 a D9 en a). Lo que hay en GitHub trae código de casos y cambios en reservas, triage, el catálogo y el lateral: es la condición de parada. No se tocó código. Falta que Alejo diga cómo se integra (ver *Desviaciones*).
+**Dónde voy:** **construido por el agente el 2026-10-13** (F0 a F5), sin commit. Alejo pidió que lo construyera el agente y aceptó las recomendadas (D5 a D9 en a). El código de Camilo del 12/10 ya estaba integrado cuando se empezó, así que F4 y F5 ampliaron sus casos en vez de crearlos (ver *Desviaciones*). Falta de Alejo: `migrate` en `admind_db` (`reservas/0006` y `casos/0004`), los commits, la prueba manual en el navegador y avisarle a Camilo.
 
 | Fase | Deja funcionando | Estado | Modo | Explicada de vuelta | Verificación | Commit | Fecha |
 |---|---|---|---|---|---|---|---|
-| F0 | Punto de partida confirmado, con lo de GitHub | en curso | construida | — | `git fetch` hecho en los dos repositorios; sin `pull`, sin suites | — | 2026-10-13 |
-| F1 | Secretaría ya no aprueba reservas; el catálogo tiene los permisos del plan | pendiente | | | | | |
-| F2 | La API de reservas cierra HU-14: orden, categoría, descarte y aviso | pendiente | | | | | |
-| F3 | El dashboard con sus tres pestañas y la de Reservas completa | pendiente | | | | | |
-| F4 | La API de casos (HU-29) | pendiente | | | | | |
-| F5 | La pestaña Casos, el detalle del caso y los casos del residente | pendiente | | | | | |
+| F0 | Punto de partida confirmado, con lo de GitHub | hecha | construida | — | Backend `87d67c5` y Frontend `0adf5eb`, ya con lo de Camilo. Back 672 (2 fallas que venían de su commit), front 397, `makemigrations --check` limpio | — | 2026-10-13 |
+| F1 | Secretaría ya no aprueba reservas; el catálogo tiene los permisos del plan | hecha | construida | saltada | `pytest apps/permisos apps/cuentas apps/reservas` en verde | — | 2026-10-13 |
+| F2 | La API de reservas cierra HU-14: orden, categoría, descarte y aviso | hecha | construida | saltada | `pytest apps/reservas tests/aislamiento` en verde; la prueba del intruso vuelve a pasar | — | 2026-10-13 |
+| F3 | El dashboard con sus tres pestañas y la de Reservas completa | hecha | construida | saltada | Front en verde; medido en el navegador a 1280 y 375 px: la tabla no se desborda, la fila entera lleva a la tarjeta | — | 2026-10-13 |
+| F4 | La API de casos (HU-29) | hecha | construida | saltada | `pytest apps/casos tests/aislamiento`: 105 pasan. Suite completa: 706, todas pasan | — | 2026-10-13 |
+| F5 | La pestaña Casos, el detalle del caso y los casos del residente | hecha | construida | saltada | Front 414, todas pasan. Recorrido de punta a punta, front real contra la API de pruebas: 43 comprobaciones sin fallas | — | 2026-10-13 |
 
 ### Desviaciones
 
@@ -44,9 +45,31 @@ punto_de_partida: "Backend d4e98e5 y Frontend a946880, los dos con cambios sin c
 - **Cómo queda el plan si se integra:** F1 a F3 valen con ajustes (la migración de B2.1 pasa a `0006`; `caso.gestionar` reemplaza a `caso.redirigir`). F4 y F5 dejan de crear la app y pasan a **ampliar la de Camilo**, con sus nombres (`titulo`, `cuerpo`, `autor`) y sin tocar sus migraciones.
 - **Integrar no es un `pull` limpio.** Los dos repositorios tienen cambios sin commit sobre archivos que el commit de Camilo también cambia. Simulado sin tocar nada (`git stash create` y `git merge-tree`): el backend mezcla solo; el front deja **un conflicto, en `apps/areas/views.py`**. Hace falta guardar antes el trabajo local (commit o `stash`), y eso lo decide Alejo: el árbol tiene además cambios de otro chat (`conjuntos`, `personas`, `cuentas`, «límites de texto»).
 
+- **2026-10-13 · B0.1 · la integración ya estaba hecha.** Al retomar, el otro chat había hecho commit de lo local y traído lo de Camilo: no hubo `stash` ni conflicto que resolver.
+- **F1 · `caso.redirigir` no se creó (P17).** Camilo ya había puesto `caso.gestionar` a la Secretaría para rechazar y redirigir: se usa ese, también para tomar y descartar un caso. El descarte de una **reserva** sí usa `solicitud.rechazar_formal`.
+- **B2.1 · la migración es `reservas/0006`**, porque `0005` es la campana de Camilo. El dato viejo se arregla con `RunSQL`, no con `RunPython`: el manager de `Solicitud` filtra por conjunto y en una migración no hay conjunto activo.
+- **B2.3 · el servicio conserva sus propias comprobaciones** (motivo al aprobar, categoría al rechazar) aunque el serializer ya las haga: `decidir_solicitud` se puede llamar sin pasar por HTTP. Rechazar y descartar comparten una función, `_cerrar`.
+- **F2 · dos pruebas ajenas creaban reservas rechazadas sin categoría** (`areas/tests.py` y `reglas/tests.py`) y la restricción nueva las rechazó: se les puso `OTRO`. Además se corrigió `test_el_detalle_de_solicitud_incluye_condiciones_de_renta_de_su_area`, de Camilo, que guardaba un área sin conjunto activo.
+- **B2.6 · la prueba del intruso quedó en verde entera.** Además de las rutas del plan se registraron `campanas`, `usuario-eliminar` y `usuario-perfil` (esta, como ruta sin conjunto), que el plan dejaba fuera: eran tres líneas y con ellas la suite completa pasa.
+- **F4 · los casos se ampliaron, no se crearon.** Se conservan los nombres de Camilo (`titulo`, `cuerpo`, `autor`, `motivo_rechazo`, estado `ABIERTO` para «Por revisar») y sus migraciones `0001` a `0003`; lo nuevo va en `casos/0004`. `APROBADO`, que ninguna operación producía, deja de existir. La prioridad sigue siendo texto y el orden se arma con `Case/When` (P11 pedía un entero). **La vivienda no se guarda en el caso** (P10): se sigue deduciendo de dónde reside quien lo abre, como lo dejó Camilo. La foto del caso, que el plan no traía, se conserva.
+- **B4.5 · rutas.** No hay `/casos/bandeja/`: `GET /casos/` responde los propios o todos según el permiso, como ya hacía. Las acciones se llaman `tomar`, `prioridad`, `redirigir`, `descartar`, `responder` y `rechazar`. `rechazar` era de la Secretaría en lo de Camilo: ahora es de Administración y el de Secretaría es `descartar`, con causal.
+- **F5 · el residente consulta en su lista, no en el detalle.** La lista de Camilo ya abría cada caso con su texto; ahí se ve también la respuesta. El detalle (`/casos/<id>/`) es de gestión. `/casos/` de gestión redirige a la pestaña Casos del dashboard.
+- **B3.1 · el dashboard pide las dos listas siempre**, para poder decir cuántas hay pendientes en cada pestaña.
+- **B3.4 · un solo formulario para aceptar y rechazar**, con la categoría como desplegable opcional («Solo si vas a rechazar»): sin JavaScript no se puede pedir un campo según el botón. El front valida antes de llamar a la API.
+- **Visual.** Tras medir en el navegador se ajustó `solicitudes.css`: la tabla se desbordaba 57 px a 1280 px y los filtros medían 36 px de alto, menos del mínimo táctil. Las capturas del panel se agotaron casi siempre; quedó una del dashboard.
+- **No se probó contra `admind_db`** ni con usuarios reales: `migrate` es de Alejo (D9). El recorrido se hizo con un pytest desechable, fuera del repositorio.
+
 ### Conceptos por repasar
 
-Ninguno.
+Las cinco fases las construyó el agente y la explicación de vuelta quedó saltada. Para la sustentación, con la pregunta de cada una:
+
+- **F1, un catálogo de permisos en vez de un `if` por rol.** ¿Qué hace la Secretaría que no pueda hacer el administrador, y en qué archivo se decidió que no aprueba?
+- **F2, una regla escrita en tres capas.** ¿En qué tres sitios dice que un rechazo lleva categoría y qué pasaría si se quitara cada uno? ¿Por qué el descarte de la Secretaría no tiene «Otro» y el rechazo del administrador sí?
+- **F2, ordenar por una condición.** ¿Por qué la bandeja de reservas va por antigüedad y no por prioridad? (La promesa de equidad sobre un bien escaso.)
+- **F3, un front que muestra y no decide.** Si la secretaria le quita el `hidden` al botón Aceptar en el navegador, ¿qué pasa? ¿Por qué las pestañas y los filtros son enlaces?
+- **F4, una máquina de estados.** ¿Qué hace `_pasar` y por qué dos personas que responden el mismo caso a la vez no dejan dos respuestas? ¿Qué garantiza que un caso no quede cerrado sin respuesta aunque el código falle?
+- **F4, funcionar con cero secretarías.** ¿Por qué redirigir no es un requisito para que el administrador responda?
+- **F5, la misma información con menos permisos.** ¿Por qué hay dos serializers de caso? ¿Por qué los casos, las citas y las reservas no son una sola tabla con un campo `tipo`?
 
 ## 2. Instrucciones para el agente
 
@@ -84,11 +107,11 @@ D1 a D4 las respondió Alejo en el chat de planeación (2026-10-13). D5 a D9 est
 | D2 | Qué hace la Secretaría | a) Decide igual que Administración b) No aprueba: en reservas solo descarta; en casos ve, prioriza, descarta con comentario y redirige al administrador; en citas descarta o reagenda | — | **b** (2026-10-13). Revierte lo que el código hace desde HU-14 y cierra la pregunta de [pendientes](../../08_Estado/pendientes.md) sección 5 |
 | D3 | Estados que ve la gente | Los de la tabla de la sección 6 | — | **Los de Alejo** (2026-10-13) |
 | D4 | Alcance | a) HU-14, HU-29 y la base del dashboard; Citas sin función b) También citas | — | **a** (2026-10-13). El profesor amplió el plazo una semana |
-| D5 | ¿Las reservas llevan prioridad? | a) No: la pestaña Reservas no tiene esa columna y entre reservas manda la antigüedad b) Sí | a: es la regla escrita en [triage](../../05_Modulos/triage.md) (nadie adelanta una reserva) y no toca el modelo | |
-| D6 | Qué es «En revisión» en un caso | a) Un paso opcional: Secretaría o Administración oprimen «Tomar» para avisar que alguien lo está viendo; se puede redirigir o cerrar sin pasar por ahí b) Solo lo pone Administración al tomar un caso redirigido c) No existe el botón: el estado se quita | a: no obliga a un clic más en la cola con más tráfico y le dice al residente que ya lo están viendo | |
-| D7 | Causales de descarte de la Secretaría (lista cerrada, sin «Otro») | a) Reservas: datos incompletos, solicitud duplicada, la vivienda no corresponde. Casos: no es competencia de la administración, duplicado, información insuficiente b) Otras, que escribe Alejo aquí | a | |
-| D8 | El ID que se ve en la tabla | a) Prefijo y los seis primeros caracteres del identificador (`RES-3C4D5E`, `CAS-9A1B2C`), calculado al mostrar b) Un consecutivo por conjunto (`CAS-0012`): pide una columna, una migración que numere lo que ya existe y un candado para no repetir | a: no toca la base y sirve igual para citar una solicitud | |
-| D9 | Quién corre `migrate` en `admind_db` | a) Alejo, al final b) El agente | a | |
+| D5 | ¿Las reservas llevan prioridad? | a) No: la pestaña Reservas no tiene esa columna y entre reservas manda la antigüedad b) Sí | a: es la regla escrita en [triage](../../05_Modulos/triage.md) (nadie adelanta una reserva) y no toca el modelo | **a** (2026-10-13) |
+| D6 | Qué es «En revisión» en un caso | a) Un paso opcional: Secretaría o Administración oprimen «Tomar» para avisar que alguien lo está viendo; se puede redirigir o cerrar sin pasar por ahí b) Solo lo pone Administración al tomar un caso redirigido c) No existe el botón: el estado se quita | a: no obliga a un clic más en la cola con más tráfico y le dice al residente que ya lo están viendo | **a** (2026-10-13) |
+| D7 | Causales de descarte de la Secretaría (lista cerrada, sin «Otro») | a) Reservas: datos incompletos, solicitud duplicada, la vivienda no corresponde. Casos: no es competencia de la administración, duplicado, información insuficiente b) Otras, que escribe Alejo aquí | a | **a** (2026-10-13) |
+| D8 | El ID que se ve en la tabla | a) Prefijo y los seis primeros caracteres del identificador (`RES-3C4D5E`, `CAS-9A1B2C`), calculado al mostrar b) Un consecutivo por conjunto (`CAS-0012`): pide una columna, una migración que numere lo que ya existe y un candado para no repetir | a: no toca la base y sirve igual para citar una solicitud | **a** (2026-10-13) |
+| D9 | Quién corre `migrate` en `admind_db` | a) Alejo, al final b) El agente | a | **a** (2026-10-13) |
 
 Si D5 queda en b, se para: hay que agregar el campo a `Solicitud` y este plan no lo detalla. Si D6 queda en c, no existen B4.4 (`tomar`) ni el botón «Tomar» de F5, y `EN_REVISION` sale del modelo. Si D8 queda en b, se para y se detalla antes de F2.
 

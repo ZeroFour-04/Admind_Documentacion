@@ -1,10 +1,10 @@
 ---
 resumen: "Las 40 historias de usuario: sprint previsto, story points, estado en el código, la nota de su módulo, su plan y lo que le falta a cada una."
 tipo: estado
-corte: 2026-10-11
+corte: 2026-10-13
 origen: "Notion (títulos, puntos y sprint) + código verificado el 2026-10-11"
 actualizado: 2026-10-13
-revisado: 2026-10-11
+revisado: 2026-10-13
 ---
 
 # Historias de usuario
@@ -19,13 +19,13 @@ Títulos, story points y sprint previsto salen de Notion (`Gestión Scrum — Ad
 
 Con la DoD **ninguna está Terminada**. Cómo se reportan al docente: [estado_actual](estado_actual.md).
 
-## Totales (corte 2026-10-11)
+## Totales (corte 2026-10-13)
 
 | | Historias | SP |
 |---|---|---|
-| Construidas | 20 | 100 |
+| Construidas | 21 | 105 |
 | Parciales (HU-27, HU-33) | 2 | 8 |
-| Sin empezar | 16 | 80 |
+| Sin empezar | 15 | 75 |
 | **Las 38 del backlog** | **38** | **188** |
 | Nuevas, sin puntos (HU-39, HU-40) | 2 | — |
 
@@ -51,7 +51,7 @@ El reparto por sprint está en [estado_actual](estado_actual.md).
 | HU-11 | Bloqueo exclusivo de 3 minutos sobre una franja | 3 | 7 | Alta | Construida | [reservas](../05_Modulos/reservas.md) | [Sprints_2_3](../07_Planes/hechos/Admind_Plan_Sprints_2_3.md) |
 | HU-12 | Confirmación de contenido antes de enviar | 3 | 2 | Alta | Construida | [reservas](../05_Modulos/reservas.md) | [Sprints_2_3](../07_Planes/hechos/Admind_Plan_Sprints_2_3.md) |
 | HU-13 | Envío de solicitud y motor de reglas alfa/beta | 3 | 8 | Alta | Construida | [reservas](../05_Modulos/reservas.md), [motor_reglas](../05_Modulos/motor_reglas.md) | [Sprints_2_3](../07_Planes/hechos/Admind_Plan_Sprints_2_3.md), [Motor_De_Reglas](../07_Planes/hechos/Plan_Motor_De_Reglas.md) |
-| HU-14 | Bandeja del administrador: aprobar o rechazar | 4 | 8 | Alta | Construida (Camilo) | [reservas](../05_Modulos/reservas.md) | — |
+| HU-14 | Bandeja del administrador: aprobar o rechazar | 4 | 8 | Alta | Construida | [reservas](../05_Modulos/reservas.md) | [Plan_Dashboard_De_Solicitudes](../07_Planes/hechos/Plan_Dashboard_De_Solicitudes.md) |
 | HU-15 | Condiciones del alquiler congeladas y versionadas | 4 | 4 | Alta | Sin empezar | [reservas](../05_Modulos/reservas.md) | — |
 | HU-16 | Registro de pago declarado y comprobante | 4 | 4 | Media | Construida | [reservas](../05_Modulos/reservas.md) | [Pago_De_Reserva](../07_Planes/hechos/Plan_Pago_De_Reserva.md) |
 | HU-17 | Cancelación de reservas en firme | 4 | 3 | Media | Sin empezar | [reservas](../05_Modulos/reservas.md) | — |
@@ -62,7 +62,7 @@ El reparto por sprint está en [estado_actual](estado_actual.md).
 | HU-25 | Anuncios con alcance de conjunto o vivienda | 5 | 6 | Media | Construida | [triage](../05_Modulos/triage.md) | [Anuncios_Con_Fotos](../07_Planes/hechos/Plan_Anuncios_Con_Fotos.md) |
 | HU-27 | Registro de visitantes y vehículos | 5 | 5 | Media | Parcial (Camilo) | [parqueaderos](../05_Modulos/parqueaderos.md) | [Parqueadero_De_Visitantes](../07_Planes/hechos/Plan_Parqueadero_De_Visitantes.md) |
 | HU-28 | Parqueadero de visitantes atado a la visita | 5 | 3 | Media | Construida | [parqueaderos](../05_Modulos/parqueaderos.md) | [Parqueadero_De_Visitantes](../07_Planes/hechos/Plan_Parqueadero_De_Visitantes.md) |
-| HU-29 | Tablero de casos con respuesta obligatoria | 5 | 5 | Media | Sin empezar | [triage](../05_Modulos/triage.md) | — |
+| HU-29 | Tablero de casos con respuesta obligatoria | 5 | 5 | Media | Construida | [triage](../05_Modulos/triage.md) | [Plan_Dashboard_De_Solicitudes](../07_Planes/hechos/Plan_Dashboard_De_Solicitudes.md) |
 | HU-22 | Bandeja de triage de la Secretaría | 6 | 7 | Media | Sin empezar | [triage](../05_Modulos/triage.md) | — |
 | HU-23 | Prioridad sobre citas y casos | 6 | 5 | Media | Sin empezar | [triage](../05_Modulos/triage.md) | — |
 | HU-24 | Rechazo por causal formal de la Secretaría | 6 | 3 | Media | Sin empezar | [triage](../05_Modulos/triage.md) | — |
@@ -114,7 +114,7 @@ Construidos el 27/09 con el plan F0 a F10. Cada criterio de aceptación tiene un
 
 | HU | Qué hay | Qué le falta |
 |---|---|---|
-| HU-14 | Camilo, 05/10 (Backend `2d11dbe`, Frontend `d76ac0f` y `fff4651`): solicitudes por área y bandeja del conjunto, aceptar o rechazar con motivo obligatorio, auditoría y 409 si ya se decidió. Deciden Administración, Secretaría y Superusuario. Una solicitud `APARTADA` pasa a `RESERVADA` o `RECHAZADA` | **Comparada el 11/10 con sus cinco criterios de Notion, ninguno se cumple entero:** dos son parciales (aprobar no avisa al residente; rechazar libera la franja, pero la campana es HU-18) y tres no (la bandeja ordena por la más reciente y no por antigüedad, y no hay categorías de motivo). Faltan también las condiciones del alquiler (HU-15) y registrar sus tres rutas en la prueba del intruso. En Notion: «En progreso», 1 de 5 tareas |
+| HU-14 | Camilo, 05/10: solicitudes por área y bandeja del conjunto, aceptar o rechazar, auditoría y 409 si ya se decidió. Agente, 13/10: la bandeja trae primero la que más lleva esperando; rechazar exige categoría y, con «Otro motivo», el texto (lo exige también la base); la Secretaría ya no aprueba, solo descarta por causal formal; aprobar, rechazar y descartar avisan al residente por la aplicación y por correo; las rutas están en la prueba del intruso; y gestión entra por la pestaña Reservas del dashboard. La campana al liberarse la franja la subió Camilo el 12/10 | **Contra sus cinco criterios de Notion (13/10): se cumplen los cinco.** Fuera quedan el hilo de mensajes y las condiciones congeladas y versionadas (HU-15). Sin commit, y falta `migrate` de `reservas/0006`. En Notion sigue «En progreso» |
 | HU-16 | Agente, 10/10. Es el pago del **alquiler de una reserva**, declarado por Administración (`reserva.declarar_pago`); el pago de administración es HU-35. Declarar guarda quién y cuándo, con auditoría. El comprobante es opcional (PDF, JPG o PNG de hasta 5 MB, validado por su firma, dentro de la base) y solo se sirve por una ruta validada. El residente puede subir el suyo sin declarar nada. Administración puede retirar una declaración con motivo | En Notion: «En revisión», 4 de 5 tareas. La de «almacenamiento fuera de la base» contradice lo construido. Sus tareas se compararon con el código; sus criterios, no |
 
 Del ciclo de la reserva falta la cancelación en firme (HU-17).
@@ -127,7 +127,7 @@ Del ciclo de la reserva falta la cancelación en firme (HU-17).
 | HU-25 | Construida el 22/09 con lo mínimo del canal de notificaciones (bandeja y correo). Desde el 05/10, hasta 4 fotos por anuncio | La prueba manual del plan de fotos. En Notion figura «Finalizado» sin la DoD |
 | HU-27 | Camilo, 01/10: registra el ingreso y lista los visitantes. Agente, 10/10: capa de servicio, auditoría y **salida**. Quien solo registra ve los de hoy y los que siguen adentro; con `visitante.ver_historico`, todo | Sin la Ley 1581 (finalidad, autorización y retención), sin el aviso al apartamento y sin bicicleta sin placa. **Contra sus cinco criterios de Notion (11/10):** tres se cumplen, uno es parcial (el vigilante del ingreso queda en la auditoría, no en el listado) y uno no (el tipo de vehículo no es obligatorio). En Notion: «En progreso» |
 | HU-28 | Agente, 10/10: catálogo de parqueaderos con código (`parqueadero.gestionar`), el vigilante elige uno de los libres al registrar una visita con vehículo, la salida lo libera, y diez registros simultáneos sobre un puesto dejan a una sola visita con él | En Notion: «En revisión», 5 de 5 tareas |
-| HU-29 | **Sin código en el repositorio** | En Notion lleva dos de cinco tareas en «Finalizada» y la historia «En progreso»: Alejo cree que es de Camilo y que no la ha subido. No verificado hasta que suba |
+| HU-29 | Camilo, 12/10: crear un caso con foto opcional, la lista, y que la Secretaría rechace o redirija. Agente, 13/10: el ciclo completo (Por revisar, En revisión, Redirigido, Resuelto, Rechazado; Citado existe y nada lo produce), prioridad con justificación obligatoria para Urgente, respuesta escrita obligatoria que también exige la base, aviso al residente en cada cambio, auditoría, el detalle con las acciones de cada rol y la pestaña Casos del dashboard. Administración atiende un caso sin que nadie se lo redirija | **Contra sus cinco criterios de Notion (13/10):** cuatro se cumplen; el de la infracción que nace de un caso depende de HU-30. El caso no guarda la vivienda: se deduce de dónde reside quien lo abrió. Sin commit, y falta `migrate` de `casos/0004`. En Notion: «En progreso», y la tarea «Tablero de tres columnas» ya no describe lo construido |
 
 ### Sprints 6 y 7
 
