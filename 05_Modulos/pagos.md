@@ -5,6 +5,7 @@ modulo: pagos
 hu: [HU-35]
 origen: "Plan_Pago_De_Administracion (2026-10-10) y lo construido ese día"
 actualizado: 2026-10-11
+revisado: 2026-10-11
 ---
 
 # Pagos: la administración por vivienda y mes
@@ -84,3 +85,9 @@ La respuesta a «¿está en mora?» la da `apps/pagos/mora.py`; `apps/reglas/mor
 - [motor_reglas](motor_reglas.md) — paz y salvo, día límite de pago y la mora
 - [reservas](reservas.md) — el pago declarado de una reserva (HU-16), que es otra cosa
 - [unidades](unidades.md) — vínculos vigentes: a quién corresponde cada hecho
+- [ingresos](ingresos.md) — la mora también impide ingresar a una zona
+- [legal](../01_Contexto/legal.md) y [abiertas](../06_Decisiones/abiertas.md) 12.10 b — lo legal de la mora, sin verificar
+- [backend](../02_Arquitectura/backend.md) — la validación del comprobante por su firma
+- [Plan_Pago_De_Administracion](../07_Planes/hechos/Plan_Pago_De_Administracion.md) — el plan con que se construyó
+- [historias](../08_Estado/historias.md) — HU-35
+- `Backend/Admind_Backend/apps/pagos/README.md`

@@ -5,6 +5,7 @@ modulo: cuentas
 hu: [HU-01, HU-02, HU-26]
 origen: "guía de estructura §5.3 (2026-09-30)"
 actualizado: 2026-10-11
+revisado: 2026-10-11
 ---
 
 # Cuentas: sesión, token y segundo factor
@@ -27,3 +28,8 @@ Se eligió **token opaco guardado en la base** y no JWT: se puede revocar al ins
 - [permisos](permisos.md) — qué permisos son sensibles y exigen segundo factor
 - [frontend](../02_Arquitectura/frontend.md) — la sesión del lado del front (`apps/cuentas/sesion.py`)
 - [construccion](../06_Decisiones/construccion.md) — por qué token con registro en la base (2026-09-15)
+- [personas](personas.md) — la persona dueña de la cuenta
+- [conjuntos](conjuntos.md) — «Crear conjunto» en el selector
+- [Plan_Recuperacion_Contrasena](../07_Planes/hechos/Plan_Recuperacion_Contrasena.md) — el plan del límite de enlaces y el SMTP
+- [historias](../08_Estado/historias.md) — HU-01, HU-02 y HU-26
+- `Backend/Admind_Backend/apps/cuentas/README.md`

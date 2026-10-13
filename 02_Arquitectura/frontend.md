@@ -3,6 +3,7 @@ resumen: "El frontend por dentro: config sin base de datos, cliente_api, la sesi
 tipo: arquitectura
 origen: "guía de estructura §6 (2026-09-30)"
 actualizado: 2026-10-11
+revisado: 2026-10-11
 ---
 
 # El frontend por dentro
@@ -67,3 +68,7 @@ Cuando una app necesita piezas propias las guarda dentro de ella: `conjuntos/_fo
 - [reglas_frontend](../03_Reglas/reglas_frontend.md) — lo que el front nunca hace
 - [implementacion](../04_Diseno/implementacion.md) — tokens, componentes `am-*`, acento y foto
 - [reservas](../05_Modulos/reservas.md) — la pantalla que usa Alpine, paso a paso
+- [mapa_codigo](mapa_codigo.md) — las carpetas del front y las apps de la API
+- [cuentas](../05_Modulos/cuentas.md) — la sesión, del lado de la API
+- [permisos](../05_Modulos/permisos.md) — de dónde salen los permisos que muestran u ocultan
+- [pruebas_y_ejecucion](pruebas_y_ejecucion.md) — qué prueba cubre cada pantalla

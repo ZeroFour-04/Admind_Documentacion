@@ -4,7 +4,8 @@ tipo: regla
 modulo: comun/aislamiento
 hu: [HU-05]
 origen: "maestro v1.4 (2026-09-14) §5.4 + guía de estructura §5.2 a (2026-09-30) + avance §6 (2026-09-27)"
-actualizado: 2026-09-30
+actualizado: 2026-10-11
+revisado: 2026-10-11
 ---
 
 # Aislamiento entre conjuntos (blindaje de datos)
@@ -82,3 +83,9 @@ No son errores, pero hay que tenerlos presentes:
 ## Ver también
 
 - [invariantes](invariantes.md) — cómo se aplica al escribir código nuevo
+- [restricciones_bd](../02_Arquitectura/restricciones_bd.md) — las FK compuestas, tabla por tabla
+- [personas](../05_Modulos/personas.md) — la tabla global que perfora el aislamiento a propósito
+- [pruebas_y_ejecucion](../02_Arquitectura/pruebas_y_ejecucion.md) — la prueba del intruso y la de tablas globales
+- [cerradas](../06_Decisiones/cerradas.md) — decisiones 1, 14 y 25
+- [riesgos](../06_Decisiones/riesgos.md) — R6 y R12
+- `Backend/Admind_Backend/apps/comun/README.md` y `tests/aislamiento/README.md`

@@ -2,7 +2,8 @@
 resumen: "Quiénes son Alejo y Camilo, su punto de partida técnico y la disponibilidad."
 tipo: contexto
 origen: "maestro v1.4 (2026-09-14) §2"
-actualizado: 2026-09-14
+actualizado: 2026-10-11
+revisado: 2026-10-11
 ---
 
 # El equipo
@@ -25,3 +26,5 @@ Dos personas: **Alejo** y **Camilo**.
 
 - [trabajo_con_ia](../03_Reglas/trabajo_con_ia.md) — maestro §8.4
 - [abiertas](../06_Decisiones/abiertas.md) — maestro §12.1
+- [que_es_admind](que_es_admind.md) — el proyecto
+- [scrum_y_dod](../03_Reglas/scrum_y_dod.md) — quién prueba lo que programó el otro

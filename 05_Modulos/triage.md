@@ -2,12 +2,19 @@
 resumen: "La Secretaría clasifica y no decide: prioridad, rechazo formal, bandeja y anuncios con alcance."
 tipo: modulo
 modulo: triage
-hu: [HU-22, HU-23, HU-24, HU-25]
+hu: [HU-22, HU-23, HU-24, HU-25, HU-29]
 origen: "maestro v1.4 (2026-09-14) §5.7 + plan de anuncios con fotos (2026-10-05)"
-actualizado: 2026-10-05
+actualizado: 2026-10-11
+revisado: 2026-10-11
 ---
 
 # Secretaría, triage y anuncios
+
+> [!NOTE] Qué hay construido (verificado el 2026-10-11)
+> - **Anuncios (HU-25):** construidos, con fotos. Sección *Cómo está construido*, abajo.
+> - **Triage (HU-22, HU-23, HU-24) y casos (HU-29):** sin construir. En el backend, `apps/triage/` y `apps/casos/` solo tienen README.
+> - **Ojo con el nombre:** en el front, la app `triage` es la pantalla **Solicitudes** de las reservas (HU-14): gestión elige una zona y el residente ve su historial. No es la bandeja de triage ([reservas](reservas.md)).
+> - **El código contradice este diseño en un punto:** Secretaría tiene `reserva.aprobar` y `reserva.rechazar` desde HU-14, es decir, decide el fondo de una reserva. Abajo dice que *el fondo no se delega*. Sin decidir como equipo ([permisos](permisos.md), [pendientes](../08_Estado/pendientes.md) sección 5).
 
 ## Diseño (maestro §5.7)
 
@@ -81,4 +88,10 @@ Las fotos van en una tabla aparte, con `BinaryField`, para que listar anuncios n
 
 ## Ver también
 
-- [riesgos](../06_Decisiones/riesgos.md) — R9
+- [riesgos](../06_Decisiones/riesgos.md) — R9, R13 y R14
+- [unidades](unidades.md) — el enrutamiento por vínculos del anuncio a una vivienda
+- [reservas](reservas.md) — el Evento: la solicitud de reserva
+- [citas](citas.md) e [infracciones](infracciones.md) — los otros módulos que pasan por la Secretaría
+- [Plan_Anuncios_Con_Fotos](../07_Planes/hechos/Plan_Anuncios_Con_Fotos.md) — el plan de las fotos
+- [historias](../08_Estado/historias.md) — HU-22 a HU-25 y HU-29
+- `Backend/Admind_Backend/apps/anuncios/README.md`

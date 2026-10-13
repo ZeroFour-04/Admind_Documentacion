@@ -2,7 +2,8 @@
 resumen: "Qué va en cada carpeta del frontend, lo que nunca hace cada una y las reglas visuales que no se rompen."
 tipo: regla
 origen: "guía de desarrollo §4.1 y §4.3 (2026-09-15)"
-actualizado: 2026-09-15
+actualizado: 2026-10-11
+revisado: 2026-10-11
 ---
 
 # Reglas del frontend
@@ -29,7 +30,7 @@ actualizado: 2026-09-15
 **Decidido.** Cada una con su fuente:
 
 - **Ningún hex fuera de `design-system/tokens/paleta.css`**, y ningún token nuevo en `static/css/` (maestro §6.6).
-- **Un solo acento por ahora**, sin `data-acento` (maestro §6.3).
+- **Acento por conjunto:** uno de los 8 del catálogo, con `data-acento`, o un color propio. Así quedó con las decisiones del 2026-09-21 y del 2026-09-29; antes era un solo acento (maestro §6.3).
 - **El acento aparece en cuatro sitios y en ninguno más:** botón primario, ítem activo del lateral y pestaña seleccionada, anillo de foco y franja del conjunto activo (maestro §6.1). Un quinto sitio es un error, no una variante.
 - **Acción y estado no comparten forma.** Botón: relleno sólido y verbo (`Confirmar reserva`). Pastilla: fondo suave y participio (`Confirmada`). Nunca al revés (maestro §6.1).
 - **El inventario de componentes es cerrado:** `Boton`, `Campo`, `Pastilla`, `EstadoVacio`, `Modal`, `Tabla`, `Tesela`, `BarraSuperior`, `Lateral` y `Pestanas`. Un componente nuevo es decisión de equipo.
@@ -39,11 +40,13 @@ actualizado: 2026-09-15
 
 > [!IMPORTANT]
 > **Abierto.**
-> - **Sesión o token (maestro §12.7 b):** cómo le dice `cliente_api` a la API quién es el usuario. Es la decisión que más afecta a esa carpeta.
 > - **`design-system/` o el §6 del maestro:** fuentes (Archivo + Inter o solo Inter), radios (4px o 6px) y ruta de los tokens. Mientras tanto se usa lo que ya está en `design-system/`.
-> - **El proyecto Django del frontend todavía no existe.** Antes de la primera pantalla hay que crearlo.
+>
+> Ya no están abiertos: *sesión o token* (maestro §12.7 b) se resolvió el 2026-09-15 con token registrado en la base ([cuentas](../05_Modulos/cuentas.md)), y el proyecto Django del frontend existe desde ese día.
 
 ## Ver también
 
 - [frontend](../02_Arquitectura/frontend.md) — cómo está construido hoy
 - [sistema_visual](../04_Diseno/sistema_visual.md) — los principios y tokens que citan estas reglas
+- [implementacion](../04_Diseno/implementacion.md) — cómo están en el código
+- [invariantes](invariantes.md) — la fila del front

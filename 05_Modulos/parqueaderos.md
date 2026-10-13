@@ -2,9 +2,10 @@
 resumen: "Parqueaderos de residentes asignados a un apartamento y de visitantes atados a la visita."
 tipo: modulo
 modulo: parqueaderos
-hu: [HU-28, HU-34]
+hu: [HU-27, HU-28, HU-34]
 origen: "maestro v1.4 (2026-09-14) §5.6"
 actualizado: 2026-10-11
+revisado: 2026-10-11
 ---
 
 # Parqueaderos
@@ -67,3 +68,14 @@ sequenceDiagram
 **Lo que no existe.** Ninguna ruta, función ni campo asigna un parqueadero a una unidad (`apps/parqueaderos/tests.py` recorre las rutas y el modelo). Un parqueadero de `residentes` se crea en el catálogo pero este plan no hace nada más con él: en la pantalla dice «Sin asignar».
 
 **Pruebas.** `apps/parqueaderos/tests.py`, `apps/visitantes/test_visitantes.py` (los cinco criterios de HU-28 y la salida), `tests/concurrencia/test_parqueadero_de_visitantes.py` (diez registros sobre un mismo puesto: uno lo obtiene y las otras nueve no) y las tres rutas registradas en la prueba del intruso.
+
+## Ver también
+
+- [legal](../01_Contexto/legal.md) — un parqueadero de visitantes no se destina a una unidad (4.2)
+- [unidades](unidades.md) — la unidad a la que se asignará uno de residentes (HU-34)
+- [ingresos](ingresos.md) — el otro registro que hace Vigilancia
+- [backend](../02_Arquitectura/backend.md) — el mecanismo de bloqueo compartido
+- [restricciones_bd](../02_Arquitectura/restricciones_bd.md) — el índice que deja a una sola visita con el puesto
+- [Plan_Parqueadero_De_Visitantes](../07_Planes/hechos/Plan_Parqueadero_De_Visitantes.md) — el plan con que se construyó
+- [historias](../08_Estado/historias.md) — HU-27, HU-28 y HU-34
+- `Backend/Admind_Backend/apps/parqueaderos/README.md` y `apps/visitantes/README.md`

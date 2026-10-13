@@ -2,7 +2,8 @@
 resumen: "Invariantes de eliminación: sin borrado físico, baja lógica, auditoría de solo inserción y anulación."
 tipo: regla
 origen: "maestro v1.4 (2026-09-14) §5.11"
-actualizado: 2026-09-14
+actualizado: 2026-10-11
+revisado: 2026-10-11
 ---
 
 # Invariantes de eliminación
@@ -21,3 +22,10 @@ El equipo también se equivoca. Ninguno de estos depende de que alguien recuerde
 |**Doble confirmación escrita** para desactivar un conjunto|Backend|Escribir el nombre exacto|
 |**Nunca cero gobierno**, en la misma transacción|Backend|La comprobación y el cambio ocurren juntos, o no ocurre ninguno|
 |**Desactivar una Persona no la desvincula** de sus conjuntos|Backend|`activo = false` corta el acceso; las asignaciones se cierran una por una con su propio registro|
+
+## Ver también
+
+- [invariantes](invariantes.md) — *sin borrado físico*, en el código
+- [backend](../02_Arquitectura/backend.md) — la auditoría de solo inserción
+- [cerradas](../06_Decisiones/cerradas.md) — decisiones 16 y 21
+- [historias](../08_Estado/historias.md) — HU-20, la anulación, sin empezar

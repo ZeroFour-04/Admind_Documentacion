@@ -2,7 +2,8 @@
 resumen: "Pasos para hacer un Documento Avance: la foto fechada del proyecto para el equipo y los agentes, solo texto."
 tipo: protocolo
 origen: "Avance 22092026 §11 (2026-09-22)"
-actualizado: 2026-09-30
+actualizado: 2026-10-11
+revisado: 2026-10-11
 ---
 
 # Protocolo: generar un Documento Avance
@@ -34,3 +35,10 @@ Una **foto fija** del proyecto en una fecha. Es para el equipo y para agentes de
 - **Sin contraseñas, tokens ni valores de `.env`.** Si hace falta decir que un secreto está expuesto, se dice dónde, nunca cuál es.
 - Si una historia cambia de estado, se cambia también en Notion y en [historias](../08_Estado/historias.md): este documento no reemplaza a ninguno de los dos.
 - Si el documento y el código no coinciden después, manda el código: pudo cambiar tras el corte.
+
+## Ver también
+
+- [documento_de_avance](Plantillas/documento_de_avance.md) — la plantilla
+- [generar_informe_de_avance](generar_informe_de_avance.md) — el entregable para el docente
+- [estado_actual](../08_Estado/estado_actual.md) — el registro vivo, que este documento no reemplaza
+- [actualizar_contexto](actualizar_contexto.md) — si el corte encuentra algo nuevo

@@ -3,13 +3,14 @@ resumen: "Restricciones que hace cumplir PostgreSQL: las verificadas en la base 
 tipo: arquitectura
 origen: "avance §2.3 (2026-09-15) + guía de estructura §4.4 (2026-09-30)"
 actualizado: 2026-10-11
+revisado: 2026-10-11
 ---
 
 # Restricciones en PostgreSQL
 
 ## Las que sostienen reservas y el aislamiento (2026-09-30)
 
-AdMind no confía solo en Python para las reglas importantes: las repite como **restricciones en la base**, porque la base es la única que ve todas las peticiones a la vez. Tres ejemplos reales:
+AdMind no confía solo en Python para las reglas importantes: las repite como **restricciones en la base**, porque la base es la única que ve todas las peticiones a la vez. Las principales:
 
 | Restricción | Dónde | Qué impide |
 |---|---|---|
@@ -28,7 +29,7 @@ AdMind no confía solo en Python para las reglas importantes: las repite como **
 
 ## Áreas y reglas (2026-10-06)
 
-Llegaron con el motor de reglas por niveles. Están en el modelo y en las migraciones `areas/0004` y `reglas/0004`, y tienen prueba que escribe directo en la base. En `admind_db` existen desde que se corra `migrate`.
+Llegaron con el motor de reglas por niveles. Están en el modelo y en las migraciones `areas/0004` y `reglas/0004`, y tienen prueba que escribe directo en la base. Aplicadas en `admind_db` (verificado el 2026-10-11).
 
 | Restricción | Dónde | Qué impide |
 |---|---|---|
@@ -44,7 +45,7 @@ Una regla *abierta* es la que tiene `vigencia_hasta` vacía. La FK compuesta `(a
 
 ## Viviendas y documentos (2026-10-06)
 
-Las trae `unidades/0002_estructura`; el reglamento solo lleva las de toda tabla de conjunto. Sin aplicar todavía en `admind_db`.
+Las trae `unidades/0002_estructura`; el reglamento solo lleva las de toda tabla de conjunto. Aplicadas en `admind_db` (verificado el 2026-10-11).
 
 | Restricción | Dónde | Qué impide |
 |---|---|---|
@@ -54,9 +55,9 @@ Las trae `unidades/0002_estructura`; el reglamento solo lleva las de toda tabla 
 
 ## Verificadas en `admind_db` (2026-09-14 y 2026-09-15)
 
-Faltan aquí las de las tablas creadas después (áreas, reglas, reservas, auditoría, unidades): están en el `models.py` de cada app.
+Esta sección es la revisión a mano de las primeras tablas. Las de las tablas creadas después están en las otras secciones de esta nota y en el `models.py` de cada app.
 
-Revisadas directamente en `admind_db`, no solo en el código de Python: las de `personas` y `cuentas_usuario` el 2026-09-14, las de `permisos` y `cuentas_tokendesesion` el 2026-09-15. La FK compuesta de HU-05 todavía no existe en `admind_db` porque ninguna tabla del producto la usa; se verifica en la base de pruebas (§5.3).
+Revisadas directamente en `admind_db`, no solo en el código de Python: las de `personas` y `cuentas_usuario` el 2026-09-14, las de `permisos` y `cuentas_tokendesesion` el 2026-09-15. La FK compuesta de HU-05 no existía entonces en `admind_db`; hoy la traen las migraciones de `reglas`, `reservas`, `unidades`, `anuncios`, `ingresos`, `pagos` y `visitantes`.
 
 | Tabla | Restricción | Qué impide |
 |---|---|---|
@@ -86,3 +87,10 @@ Llegaron con la app `ingresos` (`ingresos/0001_initial`, aplicada en `admind_db`
 | FK compuesta `(area_id, conjunto_id)` y `(unidad_id, conjunto_id)` | migración `ingresos/0001` | Un ingreso que apunte a un área o a una vivienda de otro conjunto |
 
 **El aforo no está aquí.** Es una suma de filas, no una fila única, así que ningún índice lo custodia: lo decide el servicio, que toma la fila del área con `select_for_update` ([ingresos](../05_Modulos/ingresos.md)).
+
+## Ver también
+
+- [aislamiento](../03_Reglas/aislamiento.md) — por qué las FK son compuestas
+- [invariantes](../03_Reglas/invariantes.md) — cómo se declara una restricción al crear una tabla
+- [backend](backend.md) — el bloqueo compartido, que se apoya en los índices únicos parciales
+- [reservas](../05_Modulos/reservas.md), [motor_reglas](../05_Modulos/motor_reglas.md), [ingresos](../05_Modulos/ingresos.md), [pagos](../05_Modulos/pagos.md), [parqueaderos](../05_Modulos/parqueaderos.md), [unidades](../05_Modulos/unidades.md) — el módulo de cada restricción

@@ -2,13 +2,14 @@
 resumen: "Ramas del curso (main, desarrollo, pruebas, sin ramas por historia), formato de commit y rutina diaria."
 tipo: regla
 origen: "maestro v1.4 (2026-09-14) §8.5 + guía de desarrollo §10 (2026-09-15)"
-actualizado: 2026-09-15
+actualizado: 2026-10-11
+revisado: 2026-10-11
 ---
 
 # Git: ramas, commits y día a día
 
-> [!NOTE] Estado de las ramas al 2026-09-30
-> En GitHub el backend **no tiene rama `pruebas`** (existe solo en local) y en el front existe pero igual a `main`. Ninguna historia ha pasado por un PR `desarrollo → pruebas`.
+> [!NOTE] Estado de las ramas al 2026-10-11
+> En GitHub el backend tiene `main` y `desarrollo`, y **no tiene rama `pruebas`** (existe solo en local, en un commit viejo). El front tiene las tres, con `pruebas` igual a `main`. `lab` existe solo en local, en los dos. Ninguna historia ha pasado por un PR `desarrollo → pruebas`.
 
 ## Modelo de ramas — requisito del curso (maestro §8.5)
 

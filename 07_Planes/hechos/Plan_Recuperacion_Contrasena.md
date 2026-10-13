@@ -1,6 +1,10 @@
 ---
+resumen: "Plan de la recuperación de contraseña: límite de enlaces por hora, correo real por SMTP y pruebas del front."
 titulo: AdMind — Plan guiado de la terminación de la recuperación de contraseña
 tipo: plan
+estado: hecho
+ejecutado: 2026-10-05
+hu: [HU-01]
 modo: mixto (F0, F1 y F4 guiadas; F2 y F3 construidas por el agente)
 fecha: 2026-10-04
 para: Alejo, con un agente que guía según 09_Protocolos/ejecutar_plan_guiado.md si Alejo lo aprueba; si no, el agente lo construye

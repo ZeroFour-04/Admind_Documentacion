@@ -1,5 +1,10 @@
 ---
+resumen: "Plan de los Sprints 2 y 3: roles, vínculos, áreas, reglas, bloqueo, confirmación y envío, con las decisiones D1 a D12 y el guion de prueba manual."
 titulo: "AdMind — Plan de ejecución de los Sprints 2 y 3"
+tipo: plan
+estado: hecho
+ejecutado: 2026-09-27
+hu: [HU-06, HU-07, HU-08, HU-09, HU-10, HU-11, HU-12, HU-13]
 fecha: 2026-09-27
 para: "Un agente de IA (Claude Sonnet) que construye; Alejo decide y revisa"
 alcance: "HU-06, HU-07, HU-08, HU-09 (Sprint 2) y HU-10, HU-11, HU-12, HU-13 (Sprint 3), más la auditoría mínima que piden"

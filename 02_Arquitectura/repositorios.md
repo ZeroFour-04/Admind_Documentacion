@@ -2,7 +2,8 @@
 resumen: "Los tres repositorios hermanos, por qué no submódulos y la regla de los routers."
 tipo: arquitectura
 origen: "maestro v1.4 (2026-09-14) §8.2 + nombres reales verificados el 2026-09-30"
-actualizado: 2026-09-30
+actualizado: 2026-10-11
+revisado: 2026-10-11
 ---
 
 # Repositorios y documentación
@@ -44,3 +45,5 @@ Se descartaron los submódulos de Git a pesar de resolver bien la sincronizació
 ## Ver también
 
 - [documentacion](../03_Reglas/documentacion.md) — cómo está organizada esta bóveda
+- [mapa_codigo](mapa_codigo.md) — qué hay dentro de cada repositorio
+- [git](../03_Reglas/git.md) — las ramas de cada uno

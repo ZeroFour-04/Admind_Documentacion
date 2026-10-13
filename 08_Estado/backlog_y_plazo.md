@@ -2,7 +2,8 @@
 resumen: "El plan original: reparto del backlog en 7 sprints, velocidad, el plazo de un mes, el bloqueante único y los pendientes para la sustentación."
 tipo: estado
 origen: "maestro v1.4 (2026-09-14) §11"
-actualizado: 2026-09-14
+actualizado: 2026-10-11
+revisado: 2026-10-11
 ---
 
 # Backlog, velocidad y plazo
@@ -82,6 +83,14 @@ El avance real del desarrollo está en [estado_actual](estado_actual.md) e [hist
 > 3. La **asignación de permisos** de los cinco roles fijos — con **Secretaría como el caso más urgente**, porque es el único rol cuyos permisos se definieron desde el diseño y no desde la observación
 
 ## 11.5 Pendientes que afectan la sustentación
+
+> [!NOTE] Cómo van al 2026-10-11
+> La lista de abajo es del 2026-09-14 y se conserva como estaba. Desde entonces:
+> - **Resueltos en el código:** el stack del frontend (plantillas de Django y Alpine; falta cerrarlo por escrito), la lista cerrada de tablas globales con su prueba, el límite de búsquedas por documento (20 por hora, por conjunto), el versionado del motor de reglas (cada cambio es una versión nueva y la evaluación se copia en la solicitud) y `expensa_mensual` (HU-35 registra si el mes se pagó, no cuánto).
+> - **Cambió de forma:** la lista de reglas alfa y beta se redefinió el 2026-10-06 ([motor_reglas](../05_Modulos/motor_reglas.md)); sigue sin validarse contra un reglamento real (11.4).
+> - **Siguen abiertos:** la fecha exacta y el alcance, las entrevistas documentadas, las consultas del Superusuario en la auditoría (R10), la retención de datos (R2), quién es PO y quién SM, la DoD frente a las ramas del curso, el ambiente de pruebas y los dos usuarios de la base de datos.
+>
+> Lo que falta hoy, completo: [pendientes](pendientes.md).
 
 - [ ] **Confirmar la fecha exacta de entrega y decidir qué se entrega en ese mes** (§12.8). Añadido el 2026-09-14; condiciona el orden de todo lo demás en esta lista
 - [ ] **Cerrar la decisión del stack de frontend** (§12.1). Bloquea el arranque del Sprint 1

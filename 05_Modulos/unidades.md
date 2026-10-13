@@ -5,6 +5,7 @@ modulo: unidades
 hu: [HU-08, HU-39]
 origen: "maestro v1.4 (2026-09-14) §5.5"
 actualizado: 2026-10-11
+revisado: 2026-10-11
 ---
 
 # Unidades y vínculos
@@ -46,7 +47,7 @@ actualizado: 2026-10-11
 - **Volver desde el detalle.** `GET /unidades/<id>/` (y la respuesta de cerrar un vínculo) suma `agrupacion` (`{id, nombre}` o `null`). El botón del detalle dice «Volver a Torre 1» y lleva a la tabla de esa agrupación; si la vivienda no tiene agrupación, vuelve a Unidades.
 - **El documento no se imprime** en la tabla: viaja en el JSON de la página, para filtrar, a quien gestiona vínculos (el mismo permiso con el que ya puede buscar personas por documento). Si se quiere que no viaje, la alternativa es filtrar en el servidor con `?q=`; se descartó el 2026-10-10 por velocidad y sencillez.
 
-## Agregar un vínculo: buscar a la persona y crear a un residente (2026-10-11, sin commit)
+## Agregar un vínculo: buscar a la persona y crear a un residente (2026-10-11, ya con commit)
 
 - **La persona se busca, ya no se elige de una lista.** En «Agregar vínculo» del detalle, `static/js/vinculos.js` (Alpine) filtra a las personas con rol en el conjunto por nombre, correo o cédula (la cédula, desde 5 caracteres) con la misma regla de palabras del resto de buscadores (`static/js/busqueda.js`). Se elige tocando a la persona o con Enter, que toma a la primera. Sin JavaScript queda el `<select>` de antes.
 - **«Crear nuevo residente»** abre un modal con el alta de Usuarios sin el campo de rol. La vista (`unidades/views.py: crear_residente`, `POST /unidades/<id>/residentes/`) **pone `rol = residente`** al llamar a `POST /auth/usuarios/`: aunque alguien mande otro valor, no se usa. Lo ve quien tiene `usuario.gestionar` además de `vinculo.gestionar`.
@@ -90,3 +91,16 @@ VinculoUnidad
 |Mora y paz y salvo|**Propietario** — es el obligado|
 
 El enrutamiento decide **a quién**; el canal decide **por dónde**.
+
+## Ver también
+
+- [personas](personas.md) — quién es la persona que se vincula
+- [conjuntos](conjuntos.md) — el paso «Viviendas» del asistente
+- [triage](triage.md) — el anuncio a una vivienda usa este enrutamiento
+- [ingresos](ingresos.md) — quién reside decide quién puede ingresar a una zona
+- [pagos](pagos.md) — el pago es por vivienda y mes
+- [parqueaderos](parqueaderos.md) — HU-34 asignará parqueaderos a una unidad
+- [abiertas](../06_Decisiones/abiertas.md) — 12.9: lo que falta decidir de las viviendas
+- [Plan_Estructura_De_Viviendas](../07_Planes/hechos/Plan_Estructura_De_Viviendas.md) — el plan de la primera parte de HU-39
+- [historias](../08_Estado/historias.md) — HU-08 y los criterios de HU-39
+- `Backend/Admind_Backend/apps/unidades/README.md`

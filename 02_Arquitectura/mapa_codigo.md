@@ -3,6 +3,7 @@ resumen: "Mapa del código: qué hay en cada carpeta de los tres repos, qué hac
 tipo: arquitectura
 origen: "guía de estructura §2 y §5.5 (2026-09-30)"
 actualizado: 2026-10-11
+revisado: 2026-10-11
 ---
 
 # Mapa del código
@@ -18,7 +19,7 @@ A D M I N D/
 │   │   ├── personas/ cuentas/ conjuntos/ permisos/ unidades/
 │   │   ├── areas/ reglas/ reservas/ ingresos/ anuncios/ notificaciones/ auditoria/ visitantes/ parqueaderos/ pagos/ documentos/
 │   │   └── casos/ citas/ …         ← solo README: módulos futuros, sin código
-│   ├── tests/                       ← pruebas transversales (aislamiento, concurrencia, esquema)
+│   ├── tests/                       ← pruebas transversales (aislamiento, concurrencia, esquema, archivos)
 │   ├── bd/                          ← notas sobre la base de datos
 │   ├── manage.py  requirements.txt  pytest.ini  .env
 │
@@ -28,7 +29,7 @@ A D M I N D/
 │   ├── apps/                        ← un módulo por sección de la interfaz: vistas, formularios, plantillas
 │   ├── templates/base/              ← el esqueleto de toda página
 │   ├── templates/componentes/       ← piezas reutilizables: barra, lateral, campo, confirmación
-│   ├── static/css  static/js        ← estilos propios y el JavaScript: reservas.js, identidad.js, usuarios.js, directorio-usuarios.js (la lista de usuarios por rol), busqueda.js (la búsqueda por palabras que comparten los buscadores nuevos), vinculos.js (el buscador de personas y el modal de residente en la vivienda), visitantes.js, unidades.js (buscador de viviendas), lateral.js (menú en pantallas angostas) y vendor/alpine.min.js
+│   ├── static/css  static/js        ← estilos propios y el JavaScript: reservas.js, calendario-reservas.js (el calendario, de Camilo), viviendas.js (el paso de viviendas del asistente), identidad.js, usuarios.js, directorio-usuarios.js (la lista de usuarios por rol), busqueda.js (la búsqueda por palabras que comparten los buscadores nuevos), vinculos.js (el buscador de personas y el modal de residente en la vivienda), visitantes.js, unidades.js (buscador de viviendas), lateral.js (menú en pantallas angostas) y vendor/alpine.min.js
 │   ├── design-system/               ← tokens de color, tipografía y componentes CSS (de Claude Design)
 │   └── tests/                       ← pruebas de pantallas con la API simulada
 │
@@ -80,5 +81,17 @@ Las pantallas del front, sección por sección, están en [frontend](frontend.md
 | `triage, anuncios` | [triage](../05_Modulos/triage.md) |
 | `infracciones` | [infracciones](../05_Modulos/infracciones.md) |
 | `citas` | [citas](../05_Modulos/citas.md) |
+| `areas` | [motor_reglas](../05_Modulos/motor_reglas.md) (modo de uso y aforo) e [ingresos](../05_Modulos/ingresos.md) |
+| `documentos` | [conjuntos](../05_Modulos/conjuntos.md) (el reglamento) |
+| `visitantes` | [parqueaderos](../05_Modulos/parqueaderos.md) (la salida y el parqueadero) e [historias](../08_Estado/historias.md) (HU-27) |
+| `notificaciones` | [unidades](../05_Modulos/unidades.md) (a quién se le avisa cada hecho) |
 | `comun/aislamiento` | [aislamiento](../03_Reglas/aislamiento.md) |
 | `comun/bloqueo, auditoria` | [backend](backend.md) |
+
+## Ver también
+
+- [backend](backend.md) y [frontend](frontend.md) — cada servidor por dentro
+- [vision_general](vision_general.md) — el diagrama y el flujo por capas
+- [pruebas_y_ejecucion](pruebas_y_ejecucion.md) — qué prueba cubre cada app
+- [historias](../08_Estado/historias.md) — de la historia a su módulo y a su plan
+- [repositorios](repositorios.md) — los tres repositorios

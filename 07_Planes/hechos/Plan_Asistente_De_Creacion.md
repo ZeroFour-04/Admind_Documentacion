@@ -1,6 +1,10 @@
 ---
+resumen: "Plan del asistente de creación completo: el reglamento en PDF, los requisitos para quedar operativo y el resumen de siete pasos."
 titulo: "AdMind — Plan guiado del asistente de creación de conjuntos: reglamento, requisitos y resumen"
 tipo: plan
+estado: hecho
+ejecutado: 2026-10-06
+hu: [HU-03, HU-33]
 modo: guiado
 fecha: 2026-10-06
 para: "Alejo, con un agente que guía según 09_Protocolos/ejecutar_plan_guiado.md si Alejo lo aprueba; si no, el agente lo construye"

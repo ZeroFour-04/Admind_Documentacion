@@ -3,6 +3,7 @@ resumen: "Prompt de arranque para un chat nuevo de planeación: quien lo lee rec
 tipo: protocolo
 origen: "proceso acordado con Alejo el 2026-10-04"
 actualizado: 2026-10-04
+revisado: 2026-10-11
 ---
 
 # Inicio — chat de planeación

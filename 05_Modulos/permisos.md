@@ -5,6 +5,7 @@ modulo: permisos
 hu: [HU-06]
 origen: "maestro v1.4 (2026-09-14) §5.3 + guía de estructura §5.4 (2026-09-30)"
 actualizado: 2026-10-11
+revisado: 2026-10-11
 ---
 
 # Roles y permisos
@@ -13,6 +14,7 @@ actualizado: 2026-10-11
 > - **Un solo rol vigente por persona y conjunto**: se cambia, no se suma. En otro conjunto puede tener otro, y Superusuario más un rol de conjunto sigue siendo posible. Donde el diseño diga *unión de los roles*, lo vigente es esto.
 > - El rol **Consejo se eliminó**: el catálogo tiene 5 roles. No se repone aunque el plan de los Sprints 2 y 3 o los avances viejos lo mencionen.
 > - El **Superusuario tiene todos los permisos** del catálogo.
+> - **Secretaría aprueba y rechaza reservas en el código** (el código manda; verificado el 2026-10-11): desde HU-14 (Camilo, 2026-10-05) su rol tiene `area.ver`, `reserva.ver_todas`, `reserva.aprobar` y `reserva.rechazar` en `apps/permisos/catalogo.py`. El diseño de abajo dice lo contrario (*ningún permiso de aprobación para la Secretaría*, y la decisión 28 de [cerradas](../06_Decisiones/cerradas.md)). Nadie lo decidió como equipo: está en [pendientes](../08_Estado/pendientes.md), sección 5.
 > - **`conjunto.activar` también lo tiene Administración** (2026-10-06, Alejo, D1 b del plan del asistente): quien administra deja operativo su conjunto al terminar el asistente. Sigue en el grupo Plataforma, igual que `conjunto.crear`, que Administración ya tenía.
 > - **Dos permisos nuevos en el catálogo** (2026-10-08, Alejo; construidos con [Plan_Zonas_Con_Ingreso](../07_Planes/hechos/Plan_Zonas_Con_Ingreso.md), ya con commit): `ingreso.registrar` para Vigilancia e `ingreso.ver_historico` para Administración, sensible. El Superusuario los recibe porque su rol tiene todo el catálogo. Falta contárselo a Camilo.
 > - **`conjunto.crear` se evalúa por persona, no por conjunto activo** (2026-10-11, Alejo): quien es Administración en cualquiera de sus conjuntos activos puede crear otro apenas inicia sesión, sin entrar a ninguno. Lo calcula `puede_crear_conjuntos` en `apps/permisos/servicios.py` y la API lo manda como `puede_crear_conjunto`, aparte de `permisos`. Antes solo valía dentro de un conjunto activo. Falta contárselo a Camilo.
@@ -101,5 +103,13 @@ Existe por tres razones: el administrador se equivoca y el diseño no perdona (n
 
 ## Ver también
 
-- [riesgos](../06_Decisiones/riesgos.md) — R10, R12
+- [riesgos](../06_Decisiones/riesgos.md) — R5, R10 y R12
 - [cuentas](cuentas.md) — sesión, token y segundo factor
+- [personas](personas.md) — a quién se le asigna el rol
+- [unidades](unidades.md) — propietario y arrendatario no son roles: son vínculos
+- [triage](triage.md) — qué hace la Secretaría
+- [cerradas](../06_Decisiones/cerradas.md) — decisiones 8, 9, 22 y 26
+- [invariantes](../03_Reglas/invariantes.md) — cómo exige una vista su permiso
+- [frontend](../02_Arquitectura/frontend.md) — qué ve cada rol en el lateral
+- [historias](../08_Estado/historias.md) — HU-06
+- `Backend/Admind_Backend/apps/permisos/catalogo.py` — el catálogo vigente

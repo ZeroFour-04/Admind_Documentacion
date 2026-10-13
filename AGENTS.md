@@ -29,6 +29,8 @@ Tres repositorios hermanos dentro de `A D M I N D/` (la carpeta tiene espacios: 
 | Crear una tabla, un endpoint o una pantalla | Además `03_Reglas/capas.md`, `03_Reglas/aislamiento.md` y `03_Reglas/reglas_frontend.md` |
 | Correr los servidores o las pruebas | `02_Arquitectura/pruebas_y_ejecucion.md` |
 | Saber cómo va el proyecto | `08_Estado/estado_actual.md` |
+| Trabajar una historia (HU-NN) | `08_Estado/historias.md`: su estado, la nota de su módulo, su plan y lo que le falta |
+| Saber qué falta (pruebas manuales, avisos, lo legal, deuda) | `08_Estado/pendientes.md`, ordenada por tipo |
 | Algo que suene a decisión de equipo | `06_Decisiones/abiertas.md` y `06_Decisiones/construccion.md` |
 | Un informe de avance, una foto de avance o un plan | `09_Protocolos/` |
 | Resolver una cita como *maestro §5.4*, *R12* o *decisión 24* | `Admin_Master.md`, que es la tabla de equivalencias |

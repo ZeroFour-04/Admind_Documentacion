@@ -2,10 +2,17 @@
 resumen: "Tabla de dos columnas: lo decidido por el equipo frente a lo propuesto sin confirmar."
 tipo: decision
 origen: "maestro v1.4 (2026-09-14) §13"
-actualizado: 2026-09-14
+actualizado: 2026-10-11
+revisado: 2026-10-11
 ---
 
 # Qué está decidido y qué está propuesto
+
+> [!WARNING] Corte de esta tabla: 2026-09-14
+> Cambió después, y está en [construccion](construccion.md):
+> - El acento por conjunto se reactivó el 2026-09-21 y ganó color propio el 2026-09-29: la fila del sistema visual ya no rige.
+> - Desde el 2026-10-04 las funcionalidades se trabajan con planes guiados ([trabajo_con_ia](../03_Reglas/trabajo_con_ia.md)).
+> - Los repositorios se llaman `Admind_Backend`, `Admind_Front-End` y `Admind_Documentacion` ([repositorios](../02_Arquitectura/repositorios.md)).
 
 > [!IMPORTANT] Un agente no debe tratar estas dos columnas igual Lo de la izquierda son hechos del proyecto. Lo de la derecha son sugerencias sin confirmar por el equipo.
 

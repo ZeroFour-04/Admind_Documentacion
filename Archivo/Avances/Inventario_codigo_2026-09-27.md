@@ -8,9 +8,9 @@ actualizado: 2026-09-27
 # Inventario del código, pieza por pieza
 
 > [!WARNING] Es histórico
-> 2.1, 2.2 y 2.4 son del **2026-09-15**; 2.5, del **2026-09-27**. Lo construido entre el 15/09 y el 25/09 y después del 27/09 no está aquí. Para saber qué hay hoy y dónde: [mapa_codigo](../02_Arquitectura/mapa_codigo.md).
+> 2.1, 2.2 y 2.4 son del **2026-09-15**; 2.5, del **2026-09-27**. Lo construido entre el 15/09 y el 25/09 y después del 27/09 no está aquí. Para saber qué hay hoy y dónde: [mapa_codigo](../../02_Arquitectura/mapa_codigo.md).
 
-Referencias sin nombre de documento (*§2*, *§4*, *§6*…) son del antiguo `Admind_Avance.md`: §2 → [inventario_codigo](inventario_codigo.md) · §3 → [bitacora](bitacora.md) · §4 → [construccion](../06_Decisiones/construccion.md) · §5 → [historias](historias.md) y [historias_evidencia](historias_evidencia.md) · §6 → [pendientes](pendientes.md). *Maestro §N* se resuelve en `Admin_Master.md`.
+Referencias sin nombre de documento (*§2*, *§4*, *§6*…) son del antiguo `Admind_Avance.md`: §2 → este archivo · §3 → [bitacora](../../08_Estado/bitacora.md) · §4 → [construccion](../../06_Decisiones/construccion.md) · §5 → [historias](../../08_Estado/historias.md) y [historias_evidencia](../../08_Estado/historias_evidencia.md) · §6 → [pendientes](../../08_Estado/pendientes.md). *Maestro §N* se resuelve en `Admin_Master.md`.
 
 ## 2.1 Repositorios
 

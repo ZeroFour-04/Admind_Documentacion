@@ -1,156 +1,167 @@
 ---
-resumen: "Las 38 historias de usuario y HU-39 (nueva, 2026-10-06): sprint previsto, story points y avance de cada una, con lo que le falta a las construidas."
+resumen: "Las 40 historias de usuario: sprint previsto, story points, estado en el código, la nota de su módulo, su plan y lo que le falta a cada una."
 tipo: estado
-corte: 2026-09-29
-origen: "avance §5.2 (2026-09-27) actualizado con el informe por sprints del 2026-09-29 y la guía de estructura del 2026-09-30"
+corte: 2026-10-11
+origen: "Notion (títulos, puntos y sprint) + código verificado el 2026-10-11"
 actualizado: 2026-10-11
+revisado: 2026-10-11
 ---
 
 # Historias de usuario
 
-Títulos, story points y sprint previsto salen de Notion (`Gestión Scrum — AdMind` → `Historias de Usuario`). Aquí va el avance verificado en el código.
+Títulos, story points y sprint previsto salen de Notion (`Gestión Scrum — AdMind` → `Historias de Usuario`). El estado es el del código, verificado el 2026-10-11 sobre Backend `d4e98e5` y Frontend `a946880`: todo lo que aparece aquí como construido **tiene commit, está subido y migrado**.
 
-**Construida** = el código y sus pruebas existen, pero falta la parte humana de la DoD. Para cómo se reportan al docente, ver [estado_actual](estado_actual.md).
+| Estado | Significa |
+|---|---|
+| **Construida** | El código y sus pruebas existen. Falta la parte humana de la DoD: PR `desarrollo → pruebas` revisado y prueba manual de quien no la programó |
+| **Parcial** | Hay código, pero no cubre todos sus criterios |
+| **Sin empezar** | Solo el README de su app, o nada |
 
-## Por sprint (corte 2026-09-29)
+Con la DoD **ninguna está Terminada**. Cómo se reportan al docente: [estado_actual](estado_actual.md).
 
-La columna "Sprint" es el reparto previsto en el Excel V11.1, que ya no se cumple con el plazo de un mes.
+## Totales (corte 2026-10-11)
 
-|Sprint|Historias|SP|Construido (sin DoD)|Sin empezar|
-|---|---|---|---|---|
-|**1**|HU-01 a HU-05, HU-26|25|6 de 6 (HU-03 parcial)|—|
-|**2**|HU-06 a HU-09|20|4 de 4|—|
-|**3**|HU-10 a HU-13|26|4 de 4|—|
-|**4**|HU-14 a HU-19|28|0|6|
-|**5**|HU-20, 21, 25, 27, 28, 29|28|2 (HU-21, HU-25, 10 SP) y HU-27 parcial|3|
-|**6**|HU-22 a 24, HU-30 a 34|38|0|8|
-|**7**|HU-35, 36, 37|16|0|3|
-|Condicional|HU-38|7|0|1|
-|**Total**|**38**|**188**|**16 (81 SP)** y HU-27 parcial (5 SP)|**21 (102 SP)**|
+| | Historias | SP |
+|---|---|---|
+| Construidas | 20 | 100 |
+| Parciales (HU-27, HU-33) | 2 | 8 |
+| Sin empezar | 16 | 80 |
+| **Las 38 del backlog** | **38** | **188** |
+| Nuevas, sin puntos (HU-39, HU-40) | 2 | — |
 
-*Actualización del 2026-10-05:* HU-27 pasó de sin empezar a parcial con el commit de Camilo. Lo demás sigue como el 29/09.
-
-*Actualización del 2026-10-06 (corte del informe 4):* **HU-14 está construida** (8 SP, Sprint 4), así que la tabla de arriba queda corta: son 17 historias construidas (89 SP), HU-27 y HU-33 parciales (8 SP) y 19 sin empezar (91 SP). Todo lo que las filas de abajo marcan como «sin commit» **ya tiene commit y está subido** (Backend hasta `279e963`, Frontend hasta `fff4651`), y sus migraciones están aplicadas en `admind_db`.
-
-*Actualización del 2026-10-11:* HU-16, HU-28 y HU-35 (10/10) ya tienen commit (Backend `f4c8ae6`, Frontend `49c3e80`) y sus migraciones están aplicadas en `admind_db`; todas las marcas «sin commit» que quedan en esta tabla (05/10 a 10/10) ya tienen commit. Contando el código: **20 historias construidas (100 SP)**, HU-27 y HU-33 parciales (8 SP) y **16 sin empezar (80 SP)**; HU-29 está entre las 16, pero en Notion lleva dos tareas finalizadas (probablemente de Camilo, sin commit). Con la DoD sigue sin terminar ninguna. Ese día Notion se puso al día contra el código ([bitacora](bitacora.md)).
+El reparto por sprint está en [estado_actual](estado_actual.md).
 
 ## Todas las historias
 
-| HU | Historia | Sprint | SP | Prioridad | Avance |
-|---|---|---|---|---|---|
-| HU-01 | Inicio de sesión con correo y contraseña | 1 | 3 | Alta | **Construida** (5/5 tareas y criterios, con recuperación de contraseña; falta la DoD) |
-| HU-02 | Segundo factor (TOTP) para permisos sensibles | 1 | 5 | Alta | **Construida** (5/5; TOTP con QR, códigos de respaldo y, desde el 05/10, enlace por correo para quitarlo si se pierde la aplicación; falta la DoD) |
-| HU-03 | Asistente por pasos para crear un conjunto | 1 | 6 | Alta | **Construida completa el 06/10, ya con commit**: siete pasos (datos, viviendas, administración, áreas, reglas, reglamento y resumen) y seis requisitos; un conjunto ya puede quedar operativo y lo activa el Superusuario o Administración. Falta la parte humana de la DoD. Sus criterios en Notion describen el asistente anterior. Tres planes: [planes](../07_Planes/planes.md) |
-| HU-04 | Persona global única por documento | 1 | 3 | Alta | **Construida** (5/5, falta la DoD) |
-| HU-05 | Aislamiento de datos entre conjuntos | 1 | 2 | Alta | **Construida** (5/5, falta la DoD) |
-| HU-26 | Selector de conjunto activo | 1 | 6 | Alta | **Construida** (5/5, conectada a la API; falta la DoD) |
-| HU-06 | Asignación de roles del catálogo fijo | 2 | 6 | Alta | **Construida** (criterios en código, falta la DoD). Desde el 29/09, un solo rol por conjunto |
-| HU-07 | Vincular persona existente por búsqueda de documento | 2 | 3 | Alta | **Construida** (criterios en código, falta la DoD) |
-| HU-08 | Vínculos de unidad y enrutamiento de notificaciones | 2 | 7 | Alta | **Construida** (criterios en código, falta la DoD) |
-| HU-09 | Catálogo de áreas comunes del conjunto | 2 | 4 | Alta | **Construida** (criterios en código, falta la DoD). Desde el 06/10 cada área lleva **aforo máximo obligatorio** (sin commit). El modo de uso de la zona sigue sin construir |
-| HU-10 | Configuración de reglas beta de reserva | 3 | 9 | Alta | **Construida** (criterios en código, falta la DoD). El 06/10 se redefinió y se **reconstruyó por niveles**, sin commit: reglas del conjunto y del área, una sola por tipo, con descripción fija y días que no abre con motivo ([motor_reglas](../05_Modulos/motor_reglas.md)). Sus criterios en Notion describen el modelo anterior. El 10/10 ganó dos reglas de área, *una reserva al día* y *sin franjas seguidas*, sin commit |
-| HU-11 | Bloqueo exclusivo de 3 minutos sobre una franja | 3 | 7 | Alta | **Construida** (criterios en código, falta la DoD) |
-| HU-12 | Confirmación de contenido antes de enviar | 3 | 2 | Alta | **Construida** (criterios en código, falta la DoD) |
-| HU-13 | Envío de solicitud y motor de reglas alfa/beta | 3 | 8 | Alta | **Construida** (criterios en código, falta la DoD). Desde el 06/10 el evaluador junta reglas del sistema, aforo del área, reglas del conjunto y reglas del área (sin commit) |
-| HU-14 | Bandeja del administrador: aprobar o rechazar | 4 | 8 | Alta | **Construida** el 05/10 por Camilo (Backend `2d11dbe`, Frontend `d76ac0f` y `fff4651`): solicitudes por área y bandeja del conjunto, aceptar o rechazar con motivo obligatorio, auditoría y 409 si ya se decidió; Administración, Secretaría y Superusuario. Falta la DoD, el aviso al residente al decidir, la causal de lista cerrada, las condiciones del alquiler (HU-15) y registrar sus tres rutas en la prueba del intruso. **Comparada el 11/10 con sus cinco criterios de Notion, ninguno se cumple entero**: dos son parciales (aprobar no avisa al residente; rechazar libera la franja, pero la campana es HU-18) y tres no (la bandeja ordena por la más reciente, no por antigüedad, y no hay categorías de motivo). En Notion está «En progreso», con 1 de 5 tareas finalizada |
-| HU-15 | Condiciones del alquiler congeladas y versionadas | 4 | 4 | Alta | Sin empezar |
-| HU-16 | Registro de pago declarado y comprobante | 4 | 4 | Media | **Construida** el 10/10 por el agente, con commit ([Plan_Pago_De_Reserva](../07_Planes/hechos/Plan_Pago_De_Reserva.md)). Es el pago del **alquiler de una reserva**, declarado por Administración (`reserva.declarar_pago`); el pago de administración es HU-35. Declarar guarda quién y cuándo con auditoría, el comprobante es opcional (PDF, JPG o PNG de hasta 5 MB, validado por su firma, dentro de la base) y solo se sirve por una ruta validada; el residente puede subir el suyo, sin declarar nada; Administración puede retirar una declaración con motivo. Las migraciones `reservas/0003` y `0004` ya están aplicadas. Falta la DoD humana y avisarle a Camilo. En Notion (11/10): «En revisión» con 4 de 5 tareas finalizadas; la del almacenamiento fuera de la base contradice lo construido. Sus tareas se compararon con el código; sus criterios, no |
-| HU-17 | Cancelación de reservas en firme | 4 | 3 | Media | Sin empezar |
-| HU-18 | Aviso de disponibilidad de franja (campana) | 4 | 6 | Media | Sin empezar |
-| HU-19 | Dos oportunidades por franja y aviso de última | 4 | 3 | Media | Sin empezar |
-| HU-20 | Anulación de registros por el Superusuario | 5 | 5 | Media | Sin empezar |
-| HU-21 | Identidad visual del conjunto: color y logo | 5 | 4 | Baja | **Construida** el 22/09 y ampliada el 29/09 con color propio y foto 1:1 (falta la DoD) |
-| HU-25 | Anuncios con alcance de conjunto o vivienda | 5 | 6 | Media | **Construida** el 22/09, con lo mínimo del canal de notificaciones (falta la DoD). El 05/10 se amplió: hasta 4 fotos por anuncio, sin commit |
-| HU-27 | Registro de visitantes y vehículos | 5 | 5 | Media | **Parcial** desde el 01/10 (Camilo): registra el ingreso y lista los visitantes. Desde el 10/10 (agente, con commit) tiene **capa de servicio, auditoría y salida**; sigue sin la Ley 1581 (finalidad, autorización, retención), el aviso al apartamento y la bicicleta sin placa. **Comparada el 11/10 con sus cinco criterios de Notion:** tres se cumplen (apartamento obligatorio, visita nueva sin crear una Persona, 403 sin el permiso), uno es parcial (el vigilante del ingreso queda en la auditoría, no en el listado) y uno no (el tipo de vehículo no es obligatorio). En Notion: «En progreso» |
-| HU-28 | Parqueadero de visitantes atado a la visita | 5 | 3 | Media | **Construida** el 10/10 por el agente, con commit ([Plan_Parqueadero_De_Visitantes](../07_Planes/hechos/Plan_Parqueadero_De_Visitantes.md)): catálogo de parqueaderos con código (`parqueadero.gestionar`), el vigilante elige uno de los libres al registrar una visita con vehículo, la salida lo libera y diez registros simultáneos sobre un puesto dejan a una sola visita con él. Las migraciones `parqueaderos/0001`, `visitantes/0002` y `0003` ya están aplicadas. Falta la DoD humana y avisarle a Camilo. En Notion (11/10): «En revisión» con sus 5 tareas finalizadas |
-| HU-29 | Tablero de casos con respuesta obligatoria | 5 | 5 | Media | **Sin código en el repositorio.** En Notion (11/10) lleva dos de sus cinco tareas en «Finalizada» (el vínculo con infracciones y el tablero del front) y la historia en «En progreso»: Alejo cree que es de Camilo y que no la ha commiteado. **No verificado en el código** hasta que suba |
-| HU-22 | Bandeja de triage de la Secretaría | 6 | 7 | Media | Sin empezar |
-| HU-23 | Prioridad sobre citas y casos | 6 | 5 | Media | Sin empezar |
-| HU-24 | Rechazo por causal formal de la Secretaría | 6 | 3 | Media | Sin empezar |
-| HU-30 | Registro y comunicación de infracciones | 6 | 4 | Media | Sin empezar |
-| HU-31 | Agendar cita dentro del horario de atención | 6 | 4 | Media | Sin empezar |
-| HU-32 | Cambio de horario con alternativas a los afectados | 6 | 8 | Media | Sin empezar |
-| HU-33 | Repositorio de documentos vigentes | 6 | 3 | Media | **Parcial** (06/10, ya con commit): solo el reglamento del conjunto en PDF, que es lo que exige HU-03. Falta el resto: otros documentos, las actas y que el residente lo descargue. **Comparada el 11/10 con sus cinco criterios de Notion:** uno se cumple (rechaza un archivo que no es PDF por su firma), uno es parcial (subir otro reglamento no borra el anterior, pero no hay vista de versiones) y tres no (el residente no lo descarga porque `documento.descargar` es de Administración, no hay actas ni manual, y la descarga no se audita). En Notion: «En progreso» |
-| HU-34 | Asignación de parqueaderos de residentes | 6 | 4 | Media | Sin empezar |
-| HU-35 | Reporte de pago de administración | 7 | 4 | Baja | **Construida** el 10/10 por el agente, con commit ([Plan_Pago_De_Administracion](../07_Planes/hechos/Plan_Pago_De_Administracion.md), [pagos](../05_Modulos/pagos.md)): el residente sube el comprobante de un mes de su vivienda, Administración confirma con un check por vivienda y mes (Secretaría ve y busca), el buscador filtra en el servidor y ninguna fila trae la cédula; y el pago confirmado alimenta la mora de *paz y salvo* con el *día límite de pago*. Las migraciones `pagos/0001`, `0002` y `reglas/0007` ya están aplicadas. Falta la DoD humana y avisarle a Camilo. La mora se construyó **sin haber verificado lo legal**. En Notion (11/10): «En revisión» con 4 de 5 tareas finalizadas; la del almacenamiento fuera de la base contradice lo construido |
-| HU-36 | Importación masiva con dry-run e idempotencia | 7 | 7 | Baja | Sin empezar |
-| HU-37 | Respaldo de información por conjunto | 7 | 5 | Baja | Sin empezar |
-| HU-38 | Registro de actividades sobre la auditoría | Condicional | 7 | Baja | Sin empezar |
-| HU-39 | Estructura de viviendas del conjunto: agrupaciones y generación en lote | Por definir | Por estimar | Por definir | **Primera parte construida el 06/10, ya con commit** (criterios 1 a 5 y 9, y el generador del 6). Falta la segunda parte (criterios 7 y 8, y registrar a mano dentro de una agrupación). Historia nueva tras la retroalimentación del docente; **desde el 11/10 está en Notion** («En progreso», sin sprint, puntos ni prioridad, que pone el equipo). [Plan_Estructura_De_Viviendas](../07_Planes/activos/Plan_Estructura_De_Viviendas.md) |
-| HU-40 | Implementar accesibilidad | Por definir | Por estimar | Por definir | **Solo existe en Notion**: se creó el 07/10 como «HU 39 - Implementar accesibilidad» y **se renumeró a HU-40 el 11/10**, porque HU-39 ya era la de viviendas. Sin estado, puntos, criterios, código ni plan |
+*Sprint* es el reparto previsto en el Excel V11.1, que ya no se cumple con el plazo de un mes. *Módulo* enlaza la nota con sus reglas de negocio; la app del código está en [mapa_codigo](../02_Arquitectura/mapa_codigo.md).
 
-## Detalle de las construidas (corte 2026-09-29)
+| HU | Historia | Sprint | SP | Prioridad | Estado | Módulo | Plan |
+|---|---|---|---|---|---|---|---|
+| HU-01 | Inicio de sesión con correo y contraseña | 1 | 3 | Alta | Construida | [cuentas](../05_Modulos/cuentas.md) | [Recuperacion_Contrasena](../07_Planes/hechos/Plan_Recuperacion_Contrasena.md) |
+| HU-02 | Segundo factor (TOTP) para permisos sensibles | 1 | 5 | Alta | Construida | [cuentas](../05_Modulos/cuentas.md) | — |
+| HU-03 | Asistente por pasos para crear un conjunto | 1 | 6 | Alta | Construida | [conjuntos](../05_Modulos/conjuntos.md) | [Asistente_De_Creacion](../07_Planes/hechos/Plan_Asistente_De_Creacion.md) |
+| HU-04 | Persona global única por documento | 1 | 3 | Alta | Construida | [personas](../05_Modulos/personas.md) | — |
+| HU-05 | Aislamiento de datos entre conjuntos | 1 | 2 | Alta | Construida | [aislamiento](../03_Reglas/aislamiento.md) | — |
+| HU-26 | Selector de conjunto activo | 1 | 6 | Alta | Construida | [cuentas](../05_Modulos/cuentas.md) | — |
+| HU-06 | Asignación de roles del catálogo fijo | 2 | 6 | Alta | Construida | [permisos](../05_Modulos/permisos.md) | [Sprints_2_3](../07_Planes/hechos/Admind_Plan_Sprints_2_3.md) |
+| HU-07 | Vincular persona existente por búsqueda de documento | 2 | 3 | Alta | Construida | [personas](../05_Modulos/personas.md) | [Sprints_2_3](../07_Planes/hechos/Admind_Plan_Sprints_2_3.md) |
+| HU-08 | Vínculos de unidad y enrutamiento de notificaciones | 2 | 7 | Alta | Construida | [unidades](../05_Modulos/unidades.md) | [Sprints_2_3](../07_Planes/hechos/Admind_Plan_Sprints_2_3.md) |
+| HU-09 | Catálogo de áreas comunes del conjunto | 2 | 4 | Alta | Construida | [motor_reglas](../05_Modulos/motor_reglas.md) (modo de uso y aforo) | [Sprints_2_3](../07_Planes/hechos/Admind_Plan_Sprints_2_3.md), [Motor_De_Reglas](../07_Planes/hechos/Plan_Motor_De_Reglas.md) |
+| HU-10 | Configuración de reglas beta de reserva | 3 | 9 | Alta | Construida | [motor_reglas](../05_Modulos/motor_reglas.md) | [Sprints_2_3](../07_Planes/hechos/Admind_Plan_Sprints_2_3.md), [Motor_De_Reglas](../07_Planes/hechos/Plan_Motor_De_Reglas.md) |
+| HU-11 | Bloqueo exclusivo de 3 minutos sobre una franja | 3 | 7 | Alta | Construida | [reservas](../05_Modulos/reservas.md) | [Sprints_2_3](../07_Planes/hechos/Admind_Plan_Sprints_2_3.md) |
+| HU-12 | Confirmación de contenido antes de enviar | 3 | 2 | Alta | Construida | [reservas](../05_Modulos/reservas.md) | [Sprints_2_3](../07_Planes/hechos/Admind_Plan_Sprints_2_3.md) |
+| HU-13 | Envío de solicitud y motor de reglas alfa/beta | 3 | 8 | Alta | Construida | [reservas](../05_Modulos/reservas.md), [motor_reglas](../05_Modulos/motor_reglas.md) | [Sprints_2_3](../07_Planes/hechos/Admind_Plan_Sprints_2_3.md), [Motor_De_Reglas](../07_Planes/hechos/Plan_Motor_De_Reglas.md) |
+| HU-14 | Bandeja del administrador: aprobar o rechazar | 4 | 8 | Alta | Construida (Camilo) | [reservas](../05_Modulos/reservas.md) | — |
+| HU-15 | Condiciones del alquiler congeladas y versionadas | 4 | 4 | Alta | Sin empezar | [reservas](../05_Modulos/reservas.md) | — |
+| HU-16 | Registro de pago declarado y comprobante | 4 | 4 | Media | Construida | [reservas](../05_Modulos/reservas.md) | [Pago_De_Reserva](../07_Planes/hechos/Plan_Pago_De_Reserva.md) |
+| HU-17 | Cancelación de reservas en firme | 4 | 3 | Media | Sin empezar | [reservas](../05_Modulos/reservas.md) | — |
+| HU-18 | Aviso de disponibilidad de franja (campana) | 4 | 6 | Media | Sin empezar | [reservas](../05_Modulos/reservas.md) | — |
+| HU-19 | Dos oportunidades por franja y aviso de última | 4 | 3 | Media | Sin empezar | [reservas](../05_Modulos/reservas.md) | — |
+| HU-20 | Anulación de registros por el Superusuario | 5 | 5 | Media | Sin empezar | [eliminacion](../03_Reglas/eliminacion.md) | — |
+| HU-21 | Identidad visual del conjunto: color y logo | 5 | 4 | Baja | Construida | [conjuntos](../05_Modulos/conjuntos.md) | — |
+| HU-25 | Anuncios con alcance de conjunto o vivienda | 5 | 6 | Media | Construida | [triage](../05_Modulos/triage.md) | [Anuncios_Con_Fotos](../07_Planes/hechos/Plan_Anuncios_Con_Fotos.md) |
+| HU-27 | Registro de visitantes y vehículos | 5 | 5 | Media | Parcial (Camilo) | [parqueaderos](../05_Modulos/parqueaderos.md) | [Parqueadero_De_Visitantes](../07_Planes/hechos/Plan_Parqueadero_De_Visitantes.md) |
+| HU-28 | Parqueadero de visitantes atado a la visita | 5 | 3 | Media | Construida | [parqueaderos](../05_Modulos/parqueaderos.md) | [Parqueadero_De_Visitantes](../07_Planes/hechos/Plan_Parqueadero_De_Visitantes.md) |
+| HU-29 | Tablero de casos con respuesta obligatoria | 5 | 5 | Media | Sin empezar | [triage](../05_Modulos/triage.md) | — |
+| HU-22 | Bandeja de triage de la Secretaría | 6 | 7 | Media | Sin empezar | [triage](../05_Modulos/triage.md) | — |
+| HU-23 | Prioridad sobre citas y casos | 6 | 5 | Media | Sin empezar | [triage](../05_Modulos/triage.md) | — |
+| HU-24 | Rechazo por causal formal de la Secretaría | 6 | 3 | Media | Sin empezar | [triage](../05_Modulos/triage.md) | — |
+| HU-30 | Registro y comunicación de infracciones | 6 | 4 | Media | Sin empezar | [infracciones](../05_Modulos/infracciones.md) | — |
+| HU-31 | Agendar cita dentro del horario de atención | 6 | 4 | Media | Sin empezar | [citas](../05_Modulos/citas.md) | — |
+| HU-32 | Cambio de horario con alternativas a los afectados | 6 | 8 | Media | Sin empezar | [citas](../05_Modulos/citas.md) | — |
+| HU-33 | Repositorio de documentos vigentes | 6 | 3 | Media | Parcial | [conjuntos](../05_Modulos/conjuntos.md) (el reglamento) | [Asistente_De_Creacion](../07_Planes/hechos/Plan_Asistente_De_Creacion.md) |
+| HU-34 | Asignación de parqueaderos de residentes | 6 | 4 | Media | Sin empezar | [parqueaderos](../05_Modulos/parqueaderos.md) | — |
+| HU-35 | Reporte de pago de administración | 7 | 4 | Baja | Construida | [pagos](../05_Modulos/pagos.md) | [Pago_De_Administracion](../07_Planes/hechos/Plan_Pago_De_Administracion.md) |
+| HU-36 | Importación masiva con dry-run e idempotencia | 7 | 7 | Baja | Sin empezar | [alcance](../01_Contexto/alcance.md) 3.2 | — |
+| HU-37 | Respaldo de información por conjunto | 7 | 5 | Baja | Sin empezar | [alcance](../01_Contexto/alcance.md) 3.2 | — |
+| HU-38 | Registro de actividades sobre la auditoría | Condicional | 7 | Baja | Sin empezar | [alcance](../01_Contexto/alcance.md) 3.3 | — |
+| HU-39 | Estructura de viviendas del conjunto: agrupaciones y generación en lote | Por definir | Por estimar | Por definir | Parcial (primera parte) | [unidades](../05_Modulos/unidades.md) | [Estructura_De_Viviendas](../07_Planes/hechos/Plan_Estructura_De_Viviendas.md) |
+| HU-40 | Implementar accesibilidad | Por definir | Por estimar | Por definir | Solo existe en Notion | — | — |
 
-### Sprint 1: todo construido entre el 15/09 y el 21/09 (commits "sprint 1 terminado", `eab833e` y `c796773`)
+**Sin historia:** el ingreso a zonas con aforo ([ingresos](../05_Modulos/ingresos.md), [Plan_Zonas_Con_Ingreso](../07_Planes/hechos/Plan_Zonas_Con_Ingreso.md)) está construido desde el 08/10 y no tiene historia ni número en Notion.
 
-|HU|SP|Estado|Qué le falta|
-|---|---|---|---|
-|HU-01 Login con correo y contraseña|3|5/5 tareas y 5/5 criterios. Incluye la recuperación de contraseña por enlace de un solo uso|La DoD. Además queda un hueco: `send_mail` es síncrono y sin `try` (con SMTP real, un fallo da 500 solo si la cuenta existe). El límite de 3 enlaces por hora y el SMTP real quedaron hechos el 2026-10-05|
-|HU-02 Segundo factor (TOTP)|5|5/5 y 5/5. TOTP con QR y 10 códigos de respaldo. Desde el 2026-10-05, enlace por correo para quitarlo y configurarlo de nuevo (sin commit)|La DoD, y recorrer el enlace a mano con la API encendida y un correo real|
-|HU-03 Asistente para crear un conjunto|6|Completa en código desde el 06/10 (sin commit): siete pasos, con Viviendas y Reglamento, y un conjunto que ya queda operativo|La parte humana de la DoD y actualizar sus criterios en Notion. Dejar operativo un conjunto **no queda en la auditoría**, y sigue sin verificarse si queda quién lo creó. Reservar todavía no exige que el conjunto esté operativo|
-|HU-04 Persona única por documento|3|5/5 y 5/5|La DoD|
-|HU-05 Aislamiento entre conjuntos|2|5/5 y 5/5. Desde el 27/09 ya lo usan tablas reales (áreas, reservas y demás)|La DoD|
-|HU-26 Selector de conjunto activo|6|5/5 y 5/5, conectado a la API|La DoD|
+## Qué hay y qué le falta a cada una
 
-### Sprints 2 y 3: construidos el 27/09 con el plan F0–F10 (15 commits en el backend y 9 en el front)
+A todas las construidas les falta la parte humana de la DoD; aquí va lo demás.
 
-Cada criterio de aceptación tiene una prueba automática con nombre propio.
+### Sprint 1
 
-|HU|SP|Estado|Observaciones|
-|---|---|---|---|
-|HU-06 Asignar y retirar roles|6|Todos los criterios con prueba|"Nunca cero Administración" responde 409 y hay una prueba con dos hilos a la vez|
-|HU-07 Vincular persona por documento|3|Todos los criterios con prueba|Máximo 20 búsquedas por hora, contadas **por conjunto** (falta decidir si el límite debe ser global)|
-|HU-08 Unidades y vínculos|7|Todos los criterios con prueba|Solo se vincula a quien ya tiene un rol en el conjunto|
-|HU-09 Áreas comunes|4|Todos los criterios con prueba|Franjas por bloques fijos (D1 a). Aforo máximo obligatorio desde el 06/10|
-|HU-10 Reglas beta|9|Todos los criterios con prueba|Desde el 06/10: 5 tipos vigentes en dos niveles (3 del conjunto y 2 del área), una sola abierta por tipo, con versionado; 3 tipos retirados quedan para el historial|
-|HU-11 Bloqueo de 3 minutos|7|Todos los criterios con prueba, incluida la de concurrencia con 10 hilos|Falta probar a mano el `sendBeacon` que libera el bloqueo al cerrar la pestaña|
-|HU-12 Confirmación antes de enviar|2|3 de 5 criterios con prueba automática|"Corregir sin perder lo escrito" y "el reloj no se detiene" necesitan prueba manual. La alta demanda depende de PB-24, que no existe|
-|HU-13 Envío y motor de reglas|8|Todos los criterios con prueba|La mora siempre daba `False`; desde el 10/10 la responde `pagos` con el día límite de pago (HU-35). Las reglas de piscina y de cobro quedan fuera|
-
-### Adelantadas del Sprint 5
-
-| HU                           | SP  | Estado                                                                                                                                                                                                                                                       |
-| ---------------------------- | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| HU-21 Identidad del conjunto | 4   | Construida el 22/09 (8 acentos y logo). **Hoy se amplió** con color propio en hex y foto cuadrada 1:1, commiteado y subido (`f053d31` y `96a30b4`). Esto **revierte** la decisión de "solo 8 acentos, sin hex libre", y el maestro §6.3 todavía no lo recoge |
-| HU-25 Anuncios               | 6   | Construida el 22/09, con lo mínimo del canal de notificaciones (bandeja y correo) y de HU-08. El 05/10 se amplió con hasta 4 fotos por anuncio (sin commit)                                                                                                                                                                 |
-
-### HU-27, parcial (Camilo, commits del 2026-10-01)
-
-Verificado en el código el 2026-10-05. No se comparó contra los criterios de Notion.
-
-| Qué hay | Qué no hay |
-|---|---|
-| `Visitante`: nombre, cédula, placa y tipo de vehículo (opcionales), apartamento visitado y hora de entrada, que pone el servidor | ~~Registro de la **salida**~~ Desde el 10/10: `hora_salida` y `POST /visitantes/<id>/salida/` |
-| `POST /visitantes/`: solo el rol Vigilancia, con `visitante.registrar` | Finalidad declarada, autorización y plazo de retención (Ley 1581, R2), que pide el README de la app |
-| `GET /visitantes/`: los de hoy para quien solo registra (y las que siguen adentro de días anteriores desde el 10/10); todo el histórico con `visitante.ver_historico` | ~~Parqueadero de visitantes (HU-28)~~ Construido el 10/10. Sigue sin el aviso a quienes residen en el apartamento |
-| Pantalla con el formulario (Vigilancia) y el listado; 6 pruebas en el back, 7 en el front y su listado en la prueba del intruso | ~~Capa de servicio y registro en la auditoría~~ Desde el 10/10: `visitantes/servicios.py` y las acciones `visitante.registrar` y `visitante.salida` |
-
-### HU-39, definida el 2026-10-06; primera parte construida ese día
-
-*Como Administración, quiero describir cómo está organizado mi conjunto y que el sistema cree sus viviendas, para empezar a usar la plataforma sin registrarlas una por una.* Sale de la retroalimentación del docente sobre HU-03 y HU-08; lo decidido está en [construccion](../06_Decisiones/construccion.md). Sprint, puntos y prioridad los pone el equipo en Notion.
-
-| # | Criterio | Plan |
+| HU | Qué hay | Qué le falta |
 |---|---|---|
-| 1 | El asistente tiene un paso «Viviendas» que pregunta: apartamentos, casas o las dos cosas; si se agrupan y con qué palabra (torre, bloque, manzana, otra, o no se agrupan); cómo se identifican las agrupaciones (números, letras o nombres propios); cuántas viviendas tiene cada una, iguales o distintas; y cómo se numeran | Primera parte |
-| 2 | Antes de crear, el sistema muestra la vista previa: cuántas viviendas, en qué agrupaciones y con qué nombres. Nada se guarda sin confirmar | Primera parte |
-| 3 | Las viviendas se crean todas o ninguna, con el nombre armado con las palabras del conjunto. Las que ya existen se omiten y se informa cuántas | Primera parte |
-| 4 | Un conjunto mixto registra apartamentos y casas, cada grupo con su agrupación | Primera parte |
-| 5 | Un conjunto sin viviendas no puede quedar operativo | Primera parte |
-| 6 | Después de creado, se pueden agregar agrupaciones y viviendas (ampliaciones), con el generador o a mano | El generador, en la primera parte; a mano con agrupación, en la segunda |
-| 7 | Las pantallas usan las palabras del conjunto: Apartamentos, Casas o Viviendas, y Torre, Manzana… Hoy «Apartamento» está fijo en unas 70 menciones de 12 plantillas | Segunda parte |
-| 8 | Retirar una vivienda o una agrupación pide siempre confirmación. Es baja lógica y una por una; no hay borrado | Segunda parte |
-| 9 | Aislamiento por conjunto y registro en la auditoría, como toda pieza nueva | Primera parte |
+| HU-01 | 5 de 5 tareas y criterios. Recuperación de contraseña por enlace de un solo uso, con límite de 3 enlaces por hora y correo real por SMTP (05/10) | `send_mail` es síncrono y sin `try`: con SMTP real, un fallo da 500 solo si la cuenta existe. `/auth/login/` no limita los intentos |
+| HU-02 | 5 de 5. TOTP con QR, 10 códigos de respaldo y, desde el 05/10, enlace por correo para quitarlo si se pierde la aplicación | Recorrer el enlace a mano con la API encendida y un correo real |
+| HU-03 | Completa desde el 06/10: siete pasos (datos, viviendas, administración, áreas, reglas, reglamento y resumen) y seis requisitos. Un conjunto ya puede quedar operativo y lo activa el Superusuario o Administración. Desde el 11/10 Administración ve «Crear conjunto» en el selector | Sus criterios en Notion describen el asistente anterior. Dejar operativo un conjunto no queda en la auditoría, y reservar no exige que el conjunto esté operativo |
+| HU-04 | 5 de 5 | — |
+| HU-05 | 5 de 5. Desde el 27/09 lo usan tablas reales | Cinco rutas sin registrar en la prueba del intruso ([estado_actual](estado_actual.md)) |
+| HU-26 | 5 de 5, conectada a la API | — |
 
-### Sin empezar
+### Sprints 2 y 3
 
-- **Sprint 4:** HU-15 a HU-19.
-- **Sprint 5:** HU-20 y HU-29 (HU-28 se construyó el 10/10).
-- **Sprints 6 y 7:** todas.
-- **Condicional:** HU-38.
+Construidos el 27/09 con el plan F0 a F10. Cada criterio de aceptación tiene una prueba automática con nombre propio; el detalle está en [historias_evidencia](historias_evidencia.md).
 
-**HU-14 (aprobar o rechazar, 8 SP)** ya está construida (05/10): una solicitud `APARTADA` pasa a `RESERVADA` o `RECHAZADA`. Del ciclo de la reserva falta la cancelación en firme (HU-17).
+| HU | Qué hay | Qué le falta u observaciones |
+|---|---|---|
+| HU-06 | Todos los criterios con prueba. «Nunca cero Administración» responde 409 y tiene prueba con dos hilos. Desde el 29/09, **un solo rol por conjunto**; desde el 11/10, al registrar a alguien el rol marcado es Residente | Su criterio en Notion y en el Excel todavía dice varios roles |
+| HU-07 | Todos los criterios con prueba | El máximo de 20 búsquedas por hora se cuenta **por conjunto**; falta decidir si debe ser global |
+| HU-08 | Todos los criterios con prueba. Solo se vincula a quien ya tiene un rol en el conjunto. Desde el 11/10, en el detalle de la vivienda se busca a la persona y se puede crear un residente | — |
+| HU-09 | Todos los criterios con prueba. Franjas por bloques fijos (D1 a). Desde el 06/10, **aforo máximo obligatorio**; desde el 08/10, **modo de uso** (con reserva o con ingreso), fijo desde que se crea | Sus criterios en Notion describen el modelo anterior |
+| HU-10 | Reconstruida por niveles el 06/10: reglas del conjunto (alfa) y del área (beta), una sola abierta por tipo, con descripción fija, versionado y días que no abre con motivo. El 10/10 ganó dos reglas de área, *una reserva al día* y *sin franjas seguidas* | Sus criterios en Notion describen el modelo anterior y no traen las dos reglas nuevas |
+| HU-11 | Todos los criterios con prueba, incluida la de concurrencia con 10 hilos | Probar a mano el `sendBeacon` que libera el bloqueo al cerrar la pestaña |
+| HU-12 | 3 de 5 criterios con prueba automática | «Corregir sin perder lo escrito» y «el reloj no se detiene» necesitan prueba manual. La alta demanda depende de PB-24, que no existe |
+| HU-13 | Todos los criterios con prueba. El evaluador junta reglas del sistema, aforo del área, reglas del conjunto y reglas del área. Desde el 10/10 la mora la responde `pagos` con el día límite de pago | Las reglas de piscina y de cobro quedan fuera |
+
+### Sprint 4
+
+| HU | Qué hay | Qué le falta |
+|---|---|---|
+| HU-14 | Camilo, 05/10 (Backend `2d11dbe`, Frontend `d76ac0f` y `fff4651`): solicitudes por área y bandeja del conjunto, aceptar o rechazar con motivo obligatorio, auditoría y 409 si ya se decidió. Deciden Administración, Secretaría y Superusuario. Una solicitud `APARTADA` pasa a `RESERVADA` o `RECHAZADA` | **Comparada el 11/10 con sus cinco criterios de Notion, ninguno se cumple entero:** dos son parciales (aprobar no avisa al residente; rechazar libera la franja, pero la campana es HU-18) y tres no (la bandeja ordena por la más reciente y no por antigüedad, y no hay categorías de motivo). Faltan también las condiciones del alquiler (HU-15) y registrar sus tres rutas en la prueba del intruso. En Notion: «En progreso», 1 de 5 tareas |
+| HU-16 | Agente, 10/10. Es el pago del **alquiler de una reserva**, declarado por Administración (`reserva.declarar_pago`); el pago de administración es HU-35. Declarar guarda quién y cuándo, con auditoría. El comprobante es opcional (PDF, JPG o PNG de hasta 5 MB, validado por su firma, dentro de la base) y solo se sirve por una ruta validada. El residente puede subir el suyo sin declarar nada. Administración puede retirar una declaración con motivo | En Notion: «En revisión», 4 de 5 tareas. La de «almacenamiento fuera de la base» contradice lo construido. Sus tareas se compararon con el código; sus criterios, no |
+
+Del ciclo de la reserva falta la cancelación en firme (HU-17).
+
+### Sprint 5
+
+| HU | Qué hay | Qué le falta |
+|---|---|---|
+| HU-21 | Construida el 22/09 con 8 acentos y logo; ampliada el 29/09 con color propio en hex y foto cuadrada 1:1. Revierte «solo 8 acentos, sin hex libre» | El texto de diseño (maestro §6.3) todavía no lo recoge. En Notion figura «Finalizado» sin la DoD |
+| HU-25 | Construida el 22/09 con lo mínimo del canal de notificaciones (bandeja y correo). Desde el 05/10, hasta 4 fotos por anuncio | La prueba manual del plan de fotos. En Notion figura «Finalizado» sin la DoD |
+| HU-27 | Camilo, 01/10: registra el ingreso y lista los visitantes. Agente, 10/10: capa de servicio, auditoría y **salida**. Quien solo registra ve los de hoy y los que siguen adentro; con `visitante.ver_historico`, todo | Sin la Ley 1581 (finalidad, autorización y retención), sin el aviso al apartamento y sin bicicleta sin placa. **Contra sus cinco criterios de Notion (11/10):** tres se cumplen, uno es parcial (el vigilante del ingreso queda en la auditoría, no en el listado) y uno no (el tipo de vehículo no es obligatorio). En Notion: «En progreso» |
+| HU-28 | Agente, 10/10: catálogo de parqueaderos con código (`parqueadero.gestionar`), el vigilante elige uno de los libres al registrar una visita con vehículo, la salida lo libera, y diez registros simultáneos sobre un puesto dejan a una sola visita con él | En Notion: «En revisión», 5 de 5 tareas |
+| HU-29 | **Sin código en el repositorio** | En Notion lleva dos de cinco tareas en «Finalizada» y la historia «En progreso»: Alejo cree que es de Camilo y que no la ha subido. No verificado hasta que suba |
+
+### Sprints 6 y 7
+
+| HU | Qué hay | Qué le falta |
+|---|---|---|
+| HU-33 | Solo el reglamento del conjunto en PDF (06/10), que es lo que exige HU-03 | Otros documentos, las actas y que el residente lo descargue. **Contra sus cinco criterios de Notion (11/10):** uno se cumple (rechaza por su firma un archivo que no es PDF), uno es parcial (subir otro no borra el anterior, pero no hay vista de versiones) y tres no (`documento.descargar` es de Administración, no hay actas ni manual, y la descarga no se audita). En Notion: «En progreso» |
+| HU-35 | Agente, 10/10: el residente sube el comprobante de un mes de su vivienda; Administración confirma con un check por vivienda y mes (Secretaría ve y busca); el buscador filtra en el servidor y ninguna fila trae la cédula; el pago confirmado alimenta la mora de *paz y salvo* con el *día límite de pago* | La mora se construyó **sin haber verificado lo legal** ([abiertas](../06_Decisiones/abiertas.md) 12.10 b). En Notion: «En revisión», 4 de 5 tareas; la de «almacenamiento fuera de la base» contradice lo construido |
+
+### HU-39, definida el 2026-10-06
+
+*Como Administración, quiero describir cómo está organizado mi conjunto y que el sistema cree sus viviendas, para empezar a usar la plataforma sin registrarlas una por una.* Sale de la retroalimentación del docente sobre HU-03 y HU-08; lo decidido está en [construccion](../06_Decisiones/construccion.md). Desde el 11/10 está en Notion («En progreso»); sprint, puntos y prioridad los pone el equipo.
+
+| # | Criterio | Estado |
+|---|---|---|
+| 1 | El asistente tiene un paso «Viviendas» que pregunta: apartamentos, casas o las dos cosas; si se agrupan y con qué palabra (torre, bloque, manzana, otra, o no se agrupan); cómo se identifican las agrupaciones (números, letras o nombres propios); cuántas viviendas tiene cada una, iguales o distintas; y cómo se numeran | Construido |
+| 2 | Antes de crear, el sistema muestra la vista previa: cuántas viviendas, en qué agrupaciones y con qué nombres. Nada se guarda sin confirmar | Construido |
+| 3 | Las viviendas se crean todas o ninguna, con el nombre armado con las palabras del conjunto. Las que ya existen se omiten y se informa cuántas | Construido |
+| 4 | Un conjunto mixto registra apartamentos y casas, cada grupo con su agrupación | Construido |
+| 5 | Un conjunto sin viviendas no puede quedar operativo | Construido |
+| 6 | Después de creado, se pueden agregar agrupaciones y viviendas (ampliaciones), con el generador o a mano | El generador, construido; a mano con agrupación, falta |
+| 7 | Las pantallas usan las palabras del conjunto: Apartamentos, Casas o Viviendas, y Torre, Manzana… «Apartamento» está fijo en unas 70 menciones de 12 plantillas (contadas el 06/10) | Falta |
+| 8 | Retirar una vivienda o una agrupación pide siempre confirmación. Es baja lógica y una por una; no hay borrado | Falta |
+| 9 | Aislamiento por conjunto y registro en la auditoría, como toda pieza nueva | Construido |
+
+La segunda parte (criterios 7 y 8, y registrar a mano dentro de una agrupación) no tiene plan.
+
+### HU-40
+
+Solo existe en Notion: se creó el 07/10 como «HU 39 - Implementar accesibilidad» y se renumeró a HU-40 el 11/10, porque HU-39 ya era la de viviendas. Sin estado, puntos, criterios, código ni plan.
 
 ## Ver también
 
-- [historias_evidencia](historias_evidencia.md) — tarea por tarea y criterio por criterio, con el commit de cada una
+- [estado_actual](estado_actual.md) — el resumen y el reparto por sprint
 - [pendientes](pendientes.md) — lo que falta para que cuenten SP
+- [historias_evidencia](historias_evidencia.md) — tarea por tarea y criterio por criterio de HU-01 a HU-13 y HU-26
+- [mapa_codigo](../02_Arquitectura/mapa_codigo.md) — de la historia a la app del código
+- [planes](../07_Planes/planes.md) — los planes con que se construyeron

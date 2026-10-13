@@ -2,7 +2,8 @@
 resumen: "Estilo del código, nombres, terminal y la lista de lo que no se toca ni se instala sin preguntar."
 tipo: regla
 origen: "plan de los Sprints 2 y 3 §0.2 (2026-09-27) + Avance 22092026 §0 (2026-09-22)"
-actualizado: 2026-09-27
+actualizado: 2026-10-11
+revisado: 2026-10-11
 ---
 
 # Convenciones de código y de trabajo
@@ -42,3 +43,5 @@ Estas reglas se escribieron para el plan de los Sprints 2 y 3 y para la foto de 
 
 - [invariantes](invariantes.md) — lo que toda pieza nueva respeta
 - [trabajo_con_ia](trabajo_con_ia.md) — el alcance exacto del pedido y qué se pregunta
+- [git](git.md) — ramas y formato del commit
+- [pruebas_y_ejecucion](../02_Arquitectura/pruebas_y_ejecucion.md) — los comandos de verificación

@@ -1,6 +1,10 @@
 ---
+resumen: "Plan del pago de administración por vivienda y mes, y la mora que alimenta la regla de paz y salvo."
 titulo: "AdMind — Plan guiado del pago de administración"
 tipo: plan
+estado: hecho
+ejecutado: 2026-10-10
+hu: [HU-35]
 modo: guiado
 fecha: 2026-10-10
 para: "Alejo, con un agente que guía según 09_Protocolos/ejecutar_plan_guiado.md si Alejo lo aprueba; si no, el agente lo construye"

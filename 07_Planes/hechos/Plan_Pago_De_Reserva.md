@@ -1,6 +1,10 @@
 ---
+resumen: "Plan del pago declarado de una reserva, con comprobante validado por su firma."
 titulo: "AdMind — Plan guiado del pago declarado de una reserva"
 tipo: plan
+estado: hecho
+ejecutado: 2026-10-10
+hu: [HU-16]
 modo: guiado
 fecha: 2026-10-10
 para: "Alejo, con un agente que guía según 09_Protocolos/ejecutar_plan_guiado.md si Alejo lo aprueba; si no, el agente lo construye"

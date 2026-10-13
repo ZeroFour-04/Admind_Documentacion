@@ -2,12 +2,13 @@
 resumen: "Contradicciones abiertas entre documentos (12.1 a 12.8) y vacíos sin decidir sobre las viviendas (12.9) y sobre el motor de reglas y las zonas con ingreso (12.10). Ningún agente las resuelve por su cuenta."
 tipo: decision
 origen: "maestro v1.4 (2026-09-14) §12; 12.9 y 12.10 agregadas el 2026-10-06"
-actualizado: 2026-10-10
+actualizado: 2026-10-11
+revisado: 2026-10-11
 ---
 
 # Contradicciones abiertas entre documentos
 
-> [!NOTE] Cómo va cada una al 2026-09-30
+> [!NOTE] Cómo va cada una al 2026-10-11
 > - **12.1 (stack del front):** en el código, plantillas de Django + Alpine desde el 2026-09-13. Falta cerrarlo por escrito con Camilo.
 > - **12.3 (personalización visual):** superada por la decisión del 2026-09-29 (color propio y foto 1:1).
 > - **12.7 b (token o sesión):** resuelta el 2026-09-15 con token registrado en la base.
@@ -114,18 +115,18 @@ _Tampoco son contradicciones entre documentos: son vacíos que quedaron al defin
 
 **a) Un cierre que cae sobre reservas ya aprobadas.** *Días que no abre* admite periodos sin tope, y las reglas se evalúan al pedir, así que un cierre nuevo no toca las reservas aprobadas de esos días. Falta decidir qué hace el sistema al guardarlo: avisar cuántas quedan dentro y dejar que Administración las cancele (la que recomendó el agente), no dejar guardar mientras existan, o cancelarlas todas con aviso a cada residente. **Resuelta el 2026-10-06:** Alejo eligió avisar (D2 a del plan del motor). El tablero de reglas dice cuántas reservas apartadas o aprobadas caen en los días que el área no abre y enlaza a las solicitudes del área; cancelarlas sigue siendo decisión de Administración, caso por caso.
 
-**b) Lo legal, por verificar antes de programar.** Con duda legal no se implementa. **El 2026-10-08 Alejo decidió primero no construir hasta verificar estos puntos y después, en la misma fecha, construir con salvaguardas (D3 a), sin haberlos verificado.** Las salvaguardas están en [ingresos](../05_Modulos/ingresos.md): el texto del aviso de finalidad sigue pendiente y de él depende cerrar este punto. Es la D3 de [Plan_Zonas_Con_Ingreso](../07_Planes/hechos/Plan_Zonas_Con_Ingreso.md), que queda detenido. **El 2026-10-10 Alejo decidió además conectar la mora real con *paz y salvo*** (D3 b de [Plan_Pago_De_Administracion](../07_Planes/hechos/Plan_Pago_De_Administracion.md), fase F5, sin construir), otra vez sin verificar el primer punto de abajo.
+**b) Lo legal, por verificar antes de programar.** Con duda legal no se implementa. **El 2026-10-08 Alejo decidió primero no construir hasta verificar estos puntos y después, en la misma fecha, construir con salvaguardas (D3 a), sin haberlos verificado.** Las salvaguardas están en [ingresos](../05_Modulos/ingresos.md): el texto del aviso de finalidad sigue pendiente y de él depende cerrar este punto. Es la D3 de [Plan_Zonas_Con_Ingreso](../07_Planes/hechos/Plan_Zonas_Con_Ingreso.md), que se ejecutó ese mismo día. **El 2026-10-10 Alejo decidió además conectar la mora real con *paz y salvo*** (D3 b de [Plan_Pago_De_Administracion](../07_Planes/hechos/Plan_Pago_De_Administracion.md), fase F5, construida ese mismo día), otra vez sin verificar el primer punto de abajo.
 
 - **Actualización del 2026-10-10:** la mora **ya es real**. Alejo eligió conectarla con los pagos (D3 b de [Plan_Pago_De_Administracion](../07_Planes/hechos/Plan_Pago_De_Administracion.md)) y la reconfirmó al empezar F5, sin haber verificado esto. Las salvaguardas: *paz y salvo* está apagada por defecto, la enciende Administración a conciencia y su descripción advierte que se aplique solo si el reglamento lo permite; sin *día límite de pago* no hay mora; y la mora solo toca reservas e ingresos a zonas comunes.
 - Que restringir por mora el ingreso al gimnasio o a la piscina procede. El agente citó **de memoria** que el art. 59 de la Ley 675 nombra las zonas de recreación y deporte como bienes no esenciales; [legal](../01_Contexto/legal.md) §4.2 solo trae la referencia. Sigue vigente el aviso del 2026-10-05: nada impide crear una zona que sea un bien esencial y exigirle paz y salvo.
 - Que registrar quién entra a una zona, y cuándo, es un dato personal: la Ley 1581 pide finalidad declarada, autorización y plazo de retención. No se definió ninguno de los tres.
 - Las reglas de piscina de la Ley 1209 (menores de 12 años con un adulto, salvavidas) no se definieron para el modo con ingreso.
 
-**c) El permiso y el rol de quien registra el ingreso.** Alejo eligió Vigilancia «por ahora» y dudó si debía ser un rol aparte. Hace falta un permiso nuevo en el catálogo; el agente propuso `ingreso.registrar`. El catálogo de roles y permisos es de equipo. **Resuelta el 2026-10-08:** Alejo eligió dos permisos, como en visitantes: `ingreso.registrar` para Vigilancia e `ingreso.ver_historico` para Administración, sensible. Sin construir; falta contárselo a Camilo ([construccion](construccion.md)).
+**c) El permiso y el rol de quien registra el ingreso.** Alejo eligió Vigilancia «por ahora» y dudó si debía ser un rol aparte. Hace falta un permiso nuevo en el catálogo; el agente propuso `ingreso.registrar`. El catálogo de roles y permisos es de equipo. **Resuelta el 2026-10-08:** Alejo eligió dos permisos, como en visitantes: `ingreso.registrar` para Vigilancia e `ingreso.ver_historico` para Administración, sensible. Construidos el 2026-10-08; falta contárselo a Camilo ([construccion](construccion.md)).
 
 **d) Las palabras en pantalla.** La definición dice *zona* y el código y los textos actuales dicen *área*; las descripciones se escribieron una vez con *turno* y el glosario dice *franja*. Falta quedarse con un solo par. **Resuelta el 2026-10-08:** Alejo eligió D7 a: las palabras quedan como están («área» en gestión, «Zonas comunes» para el residente) y el modo se dice «Con reserva» y «Con ingreso». Pasar todo a «zona» tocaría unas 15 plantillas más y sería un plan aparte.
 
-**e) Cómo entran las reglas al asistente de creación.** Qué paso llena las alfa, cuáles son obligatorias y qué reemplaza al requisito actual de «al menos una regla beta vigente» para quedar operativo. Es lo siguiente por definir con Alejo. **Decidido en parte el 2026-10-06:** el paso de reglas es el tablero del plan del motor; para quedar operativo se exigen al menos un área activa y las reglas del conjunto, en vez de «al menos una regla beta vigente». Falta precisar qué cuenta como reglas del conjunto definidas: es la D3 de [Plan_Asistente_De_Creacion](../07_Planes/activos/Plan_Asistente_De_Creacion.md). **Resuelta el 2026-10-06:** Alejo eligió D3 a: cuenta tener vigente la anticipación máxima del conjunto. Ya está construido ([construccion](construccion.md)).
+**e) Cómo entran las reglas al asistente de creación.** Qué paso llena las alfa, cuáles son obligatorias y qué reemplaza al requisito actual de «al menos una regla beta vigente» para quedar operativo. Es lo siguiente por definir con Alejo. **Decidido en parte el 2026-10-06:** el paso de reglas es el tablero del plan del motor; para quedar operativo se exigen al menos un área activa y las reglas del conjunto, en vez de «al menos una regla beta vigente». Falta precisar qué cuenta como reglas del conjunto definidas: es la D3 de [Plan_Asistente_De_Creacion](../07_Planes/hechos/Plan_Asistente_De_Creacion.md). **Resuelta el 2026-10-06:** Alejo eligió D3 a: cuenta tener vigente la anticipación máxima del conjunto. Ya está construido ([construccion](construccion.md)).
 
 ## Ver también
 

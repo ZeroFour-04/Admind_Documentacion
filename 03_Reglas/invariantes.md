@@ -3,6 +3,7 @@ resumen: "Lo que toda pieza nueva de código respeta, y cómo se hace en este c�
 tipo: regla
 origen: "plan de los Sprints 2 y 3 §0.3 (2026-09-27)"
 actualizado: 2026-09-27
+revisado: 2026-10-11
 ---
 
 # Invariantes que toda pieza nueva respeta

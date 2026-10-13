@@ -1,6 +1,10 @@
 ---
+resumen: "Plan de las zonas con ingreso: modo de uso, permanencia, acompañantes y registro de entrada y salida por Vigilancia con aforo simultáneo."
 titulo: "AdMind — Plan de zonas con ingreso"
 tipo: plan
+estado: hecho
+ejecutado: 2026-10-08
+hu: []
 fecha: 2026-10-08
 para: "Un agente que construye (no es un plan guiado); Alejo decide y revisa. Sin commits"
 alcance: "El segundo modo de uso de una zona: con ingreso. Modo de uso y permanencia máxima en el área, regla de acompañantes, registro de entrada y salida por Vigilancia con aforo simultáneo, cupos a la vista antes de reservar y pantallas separadas por rol. Sin historia todavía. No incluye el vínculo habitante"

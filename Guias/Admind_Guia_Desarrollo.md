@@ -1,4 +1,6 @@
 ---
+resumen: "Tutorial del 2026-09-15: cómo se agrega una pantalla, una funcionalidad o una app respetando la arquitectura."
+tipo: guia
 titulo: "AdMind — Guía para trabajar en el proyecto"
 proyecto: "Proyecto de Ingeniería de Software II — Universidad de Cundinamarca, Facatativá"
 fecha: 2026-09-15

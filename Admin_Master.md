@@ -2,7 +2,8 @@
 resumen: "Tabla de equivalencias: en qué nota quedó cada sección del documento maestro y cada documento anterior."
 tipo: indice
 origen: "maestro v1.4 (2026-09-14), partido en notas el 2026-09-30"
-actualizado: 2026-09-30
+actualizado: 2026-10-11
+revisado: 2026-10-11
 ---
 
 # AdMind — Documento maestro (tabla de equivalencias)
@@ -54,7 +55,10 @@ El texto de cada sección se movió tal cual. Cuando una decisión posterior lo 
 | D1 a D12 | Decisiones que Alejo tomó para el plan de los Sprints 2 y 3 | [construccion](06_Decisiones/construccion.md); el texto completo, en `07_Planes/hechos/Admind_Plan_Sprints_2_3.md` §2 |
 | P1 a P15 | Decisiones menores que fijó ese plan | `07_Planes/hechos/Admind_Plan_Sprints_2_3.md` §3 |
 | F0 a F10 | Fases de ese plan | `07_Planes/hechos/Admind_Plan_Sprints_2_3.md` |
-| HU-01 a HU-38 | Historias de usuario | [historias](08_Estado/historias.md) |
+| HU-01 a HU-40 | Historias de usuario. HU-39 (viviendas) y HU-40 (accesibilidad) se agregaron en octubre | [historias](08_Estado/historias.md) |
+| 12.1 a 12.10 | Contradicciones y vacíos sin decidir | [abiertas](06_Decisiones/abiertas.md) |
+| D1, D2… con el nombre de un plan | Cada plan numera sus decisiones desde D1. Fuera del plan de los Sprints 2 y 3 se citan con su plan: *D3 a del plan de zonas con ingreso* | [planes](07_Planes/planes.md) y la fila de esa fecha en [construccion](06_Decisiones/construccion.md) |
+| PB-NN | Ítems del Product Backlog del Excel V11.1, que no está en esta bóveda | [backlog_y_plazo](08_Estado/backlog_y_plazo.md) |
 | M1 a M6 | Criterios del proyecto espejo | [Maestro_7.3_rama_lab](Archivo/Lab/Maestro_7.3_rama_lab.md) |
 | `REQ-<MODULO>-<NN>` | Requisitos de la guía legal v1.0, que no está en esta bóveda | [legal](01_Contexto/legal.md) |
 
@@ -63,7 +67,7 @@ El texto de cada sección se movió tal cual. Cuando una decisión posterior lo 
 | Documento | Dónde quedó |
 |---|---|
 | `Avance/Admind_Avance.md` §1 | [resúmenes de corte](Archivo/Avances/Admind_Avance_resumenes_de_corte.md) |
-| `Admind_Avance.md` §2 | [inventario_codigo](08_Estado/inventario_codigo.md); §2.3, en [restricciones_bd](02_Arquitectura/restricciones_bd.md) |
+| `Admind_Avance.md` §2 | [inventario del 27/09](Archivo/Avances/Inventario_codigo_2026-09-27.md), histórico; lo vigente, en [mapa_codigo](02_Arquitectura/mapa_codigo.md); §2.3, en [restricciones_bd](02_Arquitectura/restricciones_bd.md) |
 | `Admind_Avance.md` §3 | [bitacora](08_Estado/bitacora.md) |
 | `Admind_Avance.md` §4 | [construccion](06_Decisiones/construccion.md) |
 | `Admind_Avance.md` §5 | [historias](08_Estado/historias.md) e [historias_evidencia](08_Estado/historias_evidencia.md) |
@@ -79,3 +83,12 @@ El texto de cada sección se movió tal cual. Cuando una decisión posterior lo 
 | `Guias/Admind_Guia_Desarrollo.md` | Sigue en `Guias/` como tutorial. Sus reglas se copiaron a `03_Reglas/` (capas, reglas_frontend, lista_de_salida, git, trabajo_con_ia) |
 | `Notas/`, `Sin título.md` | `Archivo/Notas/` |
 | `Usuarios prueba.md` | `Credenciales/` |
+| `08_Estado/inventario_codigo.md` (hasta el 2026-10-11) | `Archivo/Avances/Inventario_codigo_2026-09-27.md` |
+| `Motor de Reglas def beta.md` y `Nuevas reglas.md`, apuntes de Alejo que estaban en la raíz (hasta el 2026-10-11) | `Archivo/Notas/`. La definición vigente, en [motor_reglas](05_Modulos/motor_reglas.md) |
+| `07_Planes/activos/Plan_*.md` | `07_Planes/hechos/`: todos los planes están ejecutados |
+
+## Ver también
+
+- [README](README.md) — el índice de las notas
+- [glosario](01_Contexto/glosario.md) — los términos
+- [documentacion](03_Reglas/documentacion.md) — cómo se cita y cómo se relacionan las notas

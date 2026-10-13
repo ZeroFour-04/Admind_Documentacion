@@ -1,6 +1,10 @@
 ---
+resumen: "Plan del motor de reglas por niveles para las áreas con reserva: reglas del sistema, alfa y beta, aforo obligatorio y días que no abre."
 titulo: "AdMind — Plan guiado del motor de reglas por niveles"
 tipo: plan
+estado: hecho
+ejecutado: 2026-10-06
+hu: [HU-09, HU-10, HU-13]
 modo: guiado
 fecha: 2026-10-06
 para: "Alejo, con un agente que guía según 09_Protocolos/ejecutar_plan_guiado.md si Alejo lo aprueba; si no, el agente lo construye"

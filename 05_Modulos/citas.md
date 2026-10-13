@@ -4,10 +4,14 @@ tipo: modulo
 modulo: citas
 hu: [HU-31, HU-32]
 origen: "maestro v1.4 (2026-09-14) §5.9"
-actualizado: 2026-09-14
+actualizado: 2026-10-11
+revisado: 2026-10-11
 ---
 
 # Citas con el administrador
+
+> [!NOTE] Sin construir (verificado el 2026-10-11)
+> `apps/citas/` solo tiene README en los dos repositorios. HU-31 y HU-32 están sin empezar ([historias](../08_Estado/historias.md)).
 
 ## Diseño (maestro §5.9)
 
@@ -26,3 +30,6 @@ Las alternativas son cercanas en el tiempo, dentro del nuevo horario y libres, y
 ## Ver también
 
 - [riesgos](../06_Decisiones/riesgos.md) — R1
+- [backend](../02_Arquitectura/backend.md) — el mecanismo de bloqueo compartido que reutilizaría
+- [triage](triage.md) — la prioridad y el rechazo formal de una cita
+- [reservas](reservas.md) — el panel de confirmación que comparte (HU-12)

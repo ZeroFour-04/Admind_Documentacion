@@ -1,4 +1,6 @@
 ---
+resumen: "Tutorial del 2026-09-14: cómo se creó el proyecto Django del backend, paso a paso."
+tipo: guia
 titulo: "AdMind — Backend: inicialización desde cero"
 proyecto: "Proyecto de Ingeniería de Software II — Universidad de Cundinamarca, Facatativá"
 fecha: 2026-09-14

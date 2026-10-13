@@ -3,6 +3,7 @@ resumen: "La arquitectura en una imagen: dos servidores Django, las tres reglas 
 tipo: arquitectura
 origen: "guía de estructura §1 y §3 (2026-09-30)"
 actualizado: 2026-09-30
+revisado: 2026-10-11
 ---
 
 # Visión general de la arquitectura

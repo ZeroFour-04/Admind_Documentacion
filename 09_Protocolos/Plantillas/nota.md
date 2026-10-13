@@ -3,6 +3,7 @@ resumen: "Una frase: qué tiene la nota."
 tipo: contexto
 origen: "de dónde salió el contenido"
 actualizado: AAAA-MM-DD
+revisado: AAAA-MM-DD
 ---
 
 # Título
@@ -11,4 +12,6 @@ actualizado: AAAA-MM-DD
 
 ## Ver también
 
-<!-- Un enlace markdown con ruta relativa por cada nota relacionada, y por qué se relaciona. -->
+<!-- Un enlace markdown con ruta relativa por cada nota relacionada, y por qué se relaciona:
+- `[nota](../carpeta/nota.md)` y, después de la raya, por qué se relaciona.
+Si la nota habla de código, la última línea es la ruta al README.md de esa carpeta. -->

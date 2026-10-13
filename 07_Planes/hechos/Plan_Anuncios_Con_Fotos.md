@@ -1,6 +1,10 @@
 ---
+resumen: "Plan de los anuncios con hasta 4 fotos y su galería en el tablón."
 titulo: "AdMind — Plan de anuncios con fotos"
 tipo: plan
+estado: hecho
+ejecutado: 2026-10-05
+hu: [HU-25]
 fecha: 2026-10-05
 para: "Un agente que construye (no es un plan guiado); Alejo decide y revisa"
 alcance: "HU-25, ampliación: un anuncio se publica con solo texto o con texto y hasta 4 fotos, y las fotos se ven en el tablón"

@@ -2,9 +2,10 @@
 resumen: "Flujo de reserva de zonas comunes: estados, bloqueo de 3 minutos, confirmación, reglas, y el recorrido completo en el código."
 tipo: modulo
 modulo: reservas
-hu: [HU-11, HU-12, HU-13, HU-14, HU-16]
+hu: [HU-11, HU-12, HU-13, HU-14, HU-15, HU-16, HU-17, HU-18, HU-19]
 origen: "maestro v1.4 (2026-09-14) §5.1 + guía de estructura §7 (2026-09-30)"
 actualizado: 2026-10-11
+revisado: 2026-10-11
 ---
 
 # Reservas
@@ -12,8 +13,8 @@ actualizado: 2026-10-11
 > [!WARNING] Decisiones posteriores al texto del maestro (2026-09-27)
 > - Hay un séptimo estado, no bloqueante: `LIBERADA`, con `motivo_liberacion` `voluntaria` o `reglas` (D2 a). Soltar el bloqueo a tiempo o incumplir las reglas no gasta oportunidad de R9.
 > - *Un solo bloqueo activo* es **por conjunto**, no en todo el sistema (D3 a): índice único parcial `(conjunto, persona)`.
-> - **2026-10-06:** aprobar y rechazar (HU-14) **ya existe** desde el 05/10 (Camilo, Backend `2d11dbe`): `POST /reservas/solicitudes/<id>/decision/` con `decision` (`RESERVADA` o `RECHAZADA`) y `motivo` obligatorio, `GET /reservas/areas/<id>/solicitudes/` y `GET /reservas/bandeja/`; `servicios.decidir_solicitud` bloquea la fila, solo decide una `APARTADA` (si no, 409) y deja la auditoría. El resto de esta nota todavía lo describe como pendiente.
-> - **2026-10-06:** este flujo pasa a ser el de las zonas *con reserva*; las zonas *con ingreso* no lo usan y siguen sin construir ([ingresos](ingresos.md)). Las reglas que evalúa **ya cambiaron de nivel** en el código: sistema, aforo del área, del conjunto y del área ([motor_reglas](motor_reglas.md)).
+> - **2026-10-06:** aprobar y rechazar (HU-14) **ya existe** desde el 05/10 (Camilo, Backend `2d11dbe`): `POST /reservas/solicitudes/<id>/decision/` con `decision` (`RESERVADA` o `RECHAZADA`) y `motivo` obligatorio, `GET /reservas/areas/<id>/solicitudes/` y `GET /reservas/bandeja/`; `servicios.decidir_solicitud` bloquea la fila, solo decide una `APARTADA` (si no, 409) y deja la auditoría. El paso 4, más abajo, ya lo recoge.
+> - **2026-10-06:** este flujo pasa a ser el de las zonas *con reserva*; las zonas *con ingreso* no lo usan (construidas el 2026-10-08: [ingresos](ingresos.md)). Las reglas que evalúa **ya cambiaron de nivel** en el código: sistema, aforo del área, del conjunto y del área ([motor_reglas](motor_reglas.md)).
 > - **2026-10-10:** con la regla *una reserva al día* definida en un área, `franjas()` devuelve `no_disponible` para las franjas libres de un día que ya tiene una solicitud apartada o reservada. Esa regla y *sin franjas seguidas* se evalúan al enviar, como las demás ([motor_reglas](motor_reglas.md)). Ya con commit (`f4c8ae6` y `49c3e80`).
 > - **2026-10-10:** el pago declarado (*El dinero lo valida una persona*, más abajo) **ya está construido** y con commit (`f4c8ae6` y `49c3e80`): [Plan_Pago_De_Reserva](../07_Planes/hechos/Plan_Pago_De_Reserva.md), HU-16. Aprobar no depende del pago, solo Administración declara (`reserva.declarar_pago`) y el residente puede subir su comprobante sin declarar nada. Los campos son `pago_declarado_por` y `pago_declarado_en` (no `fecha_declaracion`), y el archivo va dentro de la base. Ver *El pago declarado*, al final de *Cómo está construido*.
 >
@@ -129,7 +130,7 @@ sequenceDiagram
 - **Cumple todas** → `APARTADA`, se guarda la evaluación y se notifica a Administración por el canal de notificaciones.
 - **Incumple alguna** → `LIBERADA` con motivo "reglas", la franja queda libre y la API responde **400 con todos los motivos**. El front los muestra en lista.
 
-Lo que sigue, **aprobar o rechazar** la solicitud apartada (pasar a `RESERVADA` o `RECHAZADA`), es la HU-14 y todavía no existe.
+Lo que sigue, **aprobar o rechazar** la solicitud apartada (pasar a `RESERVADA` o `RECHAZADA`), es la HU-14 y existe desde el 2026-10-05: `POST /reservas/solicitudes/<id>/decision/`, con motivo obligatorio y auditoría (aviso del inicio). Lo que le falta frente a sus criterios está en [historias](../08_Estado/historias.md).
 
 ### Los estados de una solicitud
 
@@ -139,9 +140,9 @@ stateDiagram-v2
     EN_SOLICITUD --> EXPIRADA: pasan los 3 min
     EN_SOLICITUD --> LIBERADA: cancela / sale de la página<br/>o no cumple las reglas
     EN_SOLICITUD --> APARTADA: envía y cumple todas las reglas
-    APARTADA --> RESERVADA: Administración aprueba (HU-14, pendiente)
-    APARTADA --> RECHAZADA: Administración rechaza (HU-14, pendiente)
-    RESERVADA --> CANCELADA: cancelación en firme (HU-17, pendiente)
+    APARTADA --> RESERVADA: Administración o Secretaría aprueba (HU-14)
+    APARTADA --> RECHAZADA: Administración o Secretaría rechaza, con motivo (HU-14)
+    RESERVADA --> CANCELADA: cancelación en firme (HU-17, sin construir)
 ```
 
 `LIBERADA` y `EXPIRADA` se distinguen a propósito: según el maestro (R9), solo **dejar vencer** el bloqueo gasta una "oportunidad" sobre la franja; soltarlo a tiempo no.
@@ -167,4 +168,11 @@ Las condiciones del alquiler (valor, depósito, política de cancelación) son H
 
 - [riesgos](../06_Decisiones/riesgos.md) — R1, R7, R9
 - [motor_reglas](motor_reglas.md) — la evaluación al enviar
+- [ingresos](ingresos.md) — el otro modo de uso de una zona
+- [pagos](pagos.md) — la mora de paz y salvo, que puede impedir reservar
+- [triage](triage.md) — por qué una reserva no lleva prioridad
 - [backend](../02_Arquitectura/backend.md) — el mecanismo compartido de bloqueo
+- [restricciones_bd](../02_Arquitectura/restricciones_bd.md) — los índices únicos parciales que sostienen la concurrencia
+- [Plan_Pago_De_Reserva](../07_Planes/hechos/Plan_Pago_De_Reserva.md) y [Admind_Plan_Sprints_2_3](../07_Planes/hechos/Admind_Plan_Sprints_2_3.md) — los planes con que se construyó
+- [historias](../08_Estado/historias.md) — HU-11 a HU-19
+- `Backend/Admind_Backend/apps/reservas/README.md` y `Frontend/Admind_Front-End/apps/reservas/README.md`

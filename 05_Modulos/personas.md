@@ -4,10 +4,14 @@ tipo: modulo
 modulo: personas
 hu: [HU-04, HU-07]
 origen: "maestro v1.4 (2026-09-14) §5.2"
-actualizado: 2026-09-14
+actualizado: 2026-10-11
+revisado: 2026-10-11
 ---
 
 # Personas (identidad)
+
+> [!NOTE] Construido: HU-04 y HU-07 (verificado el 2026-10-11)
+> `apps/personas/` del backend: `GET /personas/buscar/` y `POST /personas/vincular/`, con un máximo de 20 búsquedas por hora contadas por conjunto. El front no tiene app `personas`: registrar y vincular a alguien se hace desde **Usuarios** (`apps/usuarios/`).
 
 ## Diseño (maestro §5.2)
 
@@ -63,4 +67,10 @@ El UUID **referencia**; el par `(tipo, número)` **identifica**. Son decisiones 
 
 ## Ver también
 
-- [riesgos](../06_Decisiones/riesgos.md) — R12
+- [riesgos](../06_Decisiones/riesgos.md) — R2 y R12
+- [cuentas](cuentas.md) — el `Usuario`: la cuenta con que entra una persona
+- [permisos](permisos.md) — el rol de la persona en cada conjunto
+- [unidades](unidades.md) — sus vínculos con una vivienda
+- [aislamiento](../03_Reglas/aislamiento.md) — por qué `Persona` es una tabla global
+- [restricciones_bd](../02_Arquitectura/restricciones_bd.md) — documento único y normalizado, en la base
+- `Backend/Admind_Backend/apps/personas/README.md`

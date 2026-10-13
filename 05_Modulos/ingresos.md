@@ -5,6 +5,7 @@ modulo: ingresos
 hu: []
 origen: "definición con Alejo en chat (2026-10-06) + Plan_Zonas_Con_Ingreso (2026-10-08)"
 actualizado: 2026-10-11
+revisado: 2026-10-11
 ---
 
 # Ingreso a zonas con aforo
@@ -79,7 +80,7 @@ El plan se construyó con estas salvaguardas, **sin** que lo legal estuviera ver
 ## Con qué se conecta
 
 - **El último puesto es un caso de concurrencia.** Es el mismo problema que resuelve el bloqueo de reservas, con otra herramienta: aquí la fila del área.
-- `apps/visitantes/` (HU-27, de Camilo): también registra ingresos en portería con el rol Vigilancia y todavía no tiene salida.
+- `apps/visitantes/` (HU-27, de Camilo): también registra ingresos en portería con el rol Vigilancia; desde el 2026-10-10 tiene salida y parqueadero de visitantes ([parqueaderos](parqueaderos.md)).
 - `apps/permisos/`: `ingreso.registrar` e `ingreso.ver_historico`. Vigilancia no tiene `area.ver`: la lista de zonas con sus cupos se la da el propio módulo.
 - `apps/notificaciones/`: el canal que ya usan las reservas (`canal.py`, `notificar`).
 - `apps/unidades/`: quién reside en el conjunto sale de los vínculos vigentes.
@@ -100,3 +101,9 @@ El plan se construyó con estas salvaguardas, **sin** que lo legal estuviera ver
 - [reservas](reservas.md) — el otro modo de uso
 - [construccion](../06_Decisiones/construccion.md) — las decisiones del 2026-10-06 y del 2026-10-08
 - [Plan_Zonas_Con_Ingreso](../07_Planes/hechos/Plan_Zonas_Con_Ingreso.md) — el plan con el que se construyó
+- [pagos](pagos.md) — la mora de paz y salvo, que impide ingresar
+- [unidades](unidades.md) — quién reside, y el vínculo `habitante` que falta
+- [parqueaderos](parqueaderos.md) — el otro registro de portería: visitantes
+- [legal](../01_Contexto/legal.md) y [abiertas](../06_Decisiones/abiertas.md) 12.10 b — lo legal, sin verificar
+- [restricciones_bd](../02_Arquitectura/restricciones_bd.md) — un ingreso abierto por persona, en la base
+- `Backend/Admind_Backend/apps/ingresos/README.md`

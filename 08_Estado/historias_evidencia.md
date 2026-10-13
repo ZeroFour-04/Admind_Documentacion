@@ -2,15 +2,18 @@
 resumen: "Evidencia por historia en progreso: cada tarea técnica y cada criterio de aceptación con su estado y su commit."
 tipo: estado
 origen: "avance §5.3 (cortes 2026-09-15 y 2026-09-27)"
-actualizado: 2026-09-27
+actualizado: 2026-10-11
+revisado: 2026-10-11
 ---
 
 # Historias: evidencia tarea por tarea
 
-> [!WARNING] Filas viejas
-> HU-06 a HU-13 están al corte del 2026-09-27. **HU-01, HU-02, HU-03 y HU-26 quedaron en el corte del 2026-09-15** y hoy tienen todas sus tareas hechas (HU-03, parcial): su estado real está en [historias](historias.md).
+> [!NOTE] Qué cubre y de cuándo es
+> - **HU-01, HU-02, HU-03 y HU-26:** revisadas contra el código el 2026-10-11.
+> - **HU-04 y HU-05:** corte del 2026-09-15. **HU-06 a HU-13:** corte del 2026-09-27; desde entonces cambiaron HU-06 (un solo rol), HU-09, HU-10 y HU-13 (motor por niveles), como dice [historias](historias.md).
+> - **HU-14 en adelante no están aquí.** Su evidencia está en la nota de su módulo, en su plan ([planes](../07_Planes/planes.md)) y en [historias](historias.md).
 
-Referencias sin nombre de documento (*§2*, *§4*, *§6*…) son del antiguo `Admind_Avance.md`: §2 → [inventario_codigo](inventario_codigo.md) · §3 → [bitacora](bitacora.md) · §4 → [construccion](../06_Decisiones/construccion.md) · §5 → [historias](historias.md) y [historias_evidencia](historias_evidencia.md) · §6 → [pendientes](pendientes.md). *Maestro §N* se resuelve en `Admin_Master.md`. *El plan* es `07_Planes/hechos/Admind_Plan_Sprints_2_3.md`.
+Referencias sin nombre de documento (*§2*, *§4*, *§6*…) son del antiguo `Admind_Avance.md`: §2 → [inventario del 27/09](../Archivo/Avances/Inventario_codigo_2026-09-27.md) · §3 → [bitacora](bitacora.md) · §4 → [construccion](../06_Decisiones/construccion.md) · §5 → [historias](historias.md) y [historias_evidencia](historias_evidencia.md) · §6 → [pendientes](pendientes.md). *Maestro §N* se resuelve en `Admin_Master.md`. *El plan* es `07_Planes/hechos/Admind_Plan_Sprints_2_3.md`.
 
 Las tareas y criterios salen de Notion, que coincide con la copia local del Excel V11.1 (hoja `HU`). Las casillas de las tareas en Notion se marcaron el 2026-09-15 09:00 con lo que se describe aquí, y la pantalla de login de HU-01 a las 10:34, con su commit.
 
@@ -54,23 +57,27 @@ Para pasar a Terminada (maestro §8.1) le falta: el criterio de la API, el PR `d
 
 Todo se prueba con las tablas y endpoints de apoyo, porque todavía no existen áreas ni reservas reales. Para pasar a Terminada le falta el PR revisado por Camilo y la prueba manual. Cuando exista el PR, puede pasar a "En revisión" en Notion.
 
-## HU-26 · Selector de conjunto activo — 3 de 5 tareas
+## HU-26 · Selector de conjunto activo — 5 de 5 tareas, falta la DoD
+
+Verificado el 2026-10-11.
 
 | Tarea técnica (Notion) | Estado | Evidencia |
 |---|---|---|
 | Consulta de los conjuntos con asignación vigente de la persona autenticada (backend) | Hecha (`d9b6271`) | `conjuntos_disponibles()` en `apps/permisos/servicios.py` y `GET /auth/conjuntos/` |
 | Escritura del conjunto activo en la sesión como contexto de solo lectura, nunca como parámetro de la petición | Hecha (`d9b6271`) | `POST /auth/conjunto-activo/` escribe en `TokenDeSesion.conjunto_activo`; `VistaDeConjunto` rechaza el conjunto en cualquier otra petición |
 | Selección automática y sin pantalla cuando la persona pertenece a un solo conjunto | Hecha (`d9b6271`) | `iniciar_sesion()` en `apps/cuentas/servicios.py` |
-| Pantalla de selección con nombre, logo y color base de cada conjunto (frontend) | Pendiente | Hay una **maqueta** con datos de ejemplo que no llama a la API (§2.4). El backend solo entrega `id` y `nombre`: logo y color están fuera de v1 (maestro §6.3, §12.3) |
-| Cambio de conjunto activo desde la barra superior, con recálculo de permisos efectivos | **A medias** | El backend cambia el conjunto y devuelve los permisos del nuevo. La barra superior del front ya tiene "Cambiar de conjunto", pero lleva al selector maqueta sin llamar a la API |
+| Pantalla de selección con nombre, logo y color base de cada conjunto (frontend) | Hecha | `conjuntos/selector.html` pide la lista con `cliente_api.cuentas.listar_conjuntos()` y pinta cada tarjeta con su color (`atributos_de_acento`) y su foto o sus iniciales (`_foto.html`). La foto y el color llegaron con HU-21 |
+| Cambio de conjunto activo desde la barra superior, con recálculo de permisos efectivos | Hecha | «Cambiar de conjunto» lleva al selector, que llama `cliente_api.cuentas.elegir_conjunto()`; la sesión del front guarda los permisos y el rol del conjunto nuevo |
 
 | Criterio de aceptación | Estado |
 |---|---|
 | Con asignaciones vigentes en tres conjuntos, al iniciar sesión los ve y debe elegir uno antes de continuar | Hecho y probado: entra sin conjunto activo, ve los tres y una vista de conjunto responde 403 hasta que elija |
 | Con un solo conjunto entra directo, sin pantalla de selección | Hecho y probado |
-| Con un conjunto activo, cualquier módulo muestra solo datos de ese conjunto | Hecho y probado con los endpoints de apoyo, también al cambiar de conjunto |
-| Al cambiar de conjunto, los permisos pasan a ser los de sus roles en el nuevo y ninguno del anterior | Hecho y probado (Administración en un conjunto, Residente en otro) |
-| Un conjunto desactivado o sin asignación vigente no aparece en la lista | Hecho y probado. Un conjunto no operativo sí aparece (§6) |
+| Con un conjunto activo, cualquier módulo muestra solo datos de ese conjunto | Hecho y probado, también al cambiar de conjunto |
+| Al cambiar de conjunto, los permisos pasan a ser los de su rol en el nuevo y ninguno del anterior | Hecho y probado (Administración en un conjunto, Residente en otro) |
+| Un conjunto desactivado o sin asignación vigente no aparece en la lista | Hecho y probado. Un conjunto no operativo sí aparece ([pendientes](pendientes.md), sección 5) |
+
+Desde el 2026-10-11 el selector ofrece «Crear conjunto» a quien es Administración en alguno de sus conjuntos (`puede_crear_conjunto`), con cuatro pruebas en `tests/test_identidad.py` del front.
 
 ## HU-06 · Asignación de roles del catálogo fijo — 5 de 5 tareas, falta la DoD
 
@@ -186,50 +193,67 @@ Extras: cada quien ve la franja propia como "Tuya" y la ajena sin saber de quié
 
 Extras: enviar vencida → `EXPIRADA` y 409; la de otra persona → 404; dos veces → 409; sin motivo o con 0 asistentes → 400. Las alfas de piscina y de cobro quedan fuera: no hay datos con qué evaluarlas.
 
-## HU-01 · Inicio de sesión con correo y contraseña — 4 de 5 tareas
+## HU-01 · Inicio de sesión con correo y contraseña — 5 de 5 tareas, falta la DoD
+
+Verificado el 2026-10-11.
 
 | Tarea técnica (Notion) | Estado | Evidencia |
 |---|---|---|
 | Modelo Usuario y hash de contraseña (backend) | Hecha | `apps/cuentas/models.py`, `962853f`. Contraseña con el hash de Django, login por correo sin distinguir mayúsculas |
 | Endpoint `POST /auth/login` con emisión de token de sesión | Hecha | `POST /auth/login/`, `0b0c4f8` |
-| Flujo de recuperación de contraseña por SMTP | Pendiente | — |
-| Pantalla de login y manejo de errores (frontend) | Hecha | `557bc9f`. `apps/cuentas/` y `cliente_api/` del front: errores por campo, mensaje genérico y aviso si la API no responde. Verificada contra el backend real con el usuario de prueba |
-| Pruebas unitarias de autenticación y expiración de token | Hecha | 11 pruebas en `apps/cuentas/tests.py`, `0b0c4f8` |
+| Flujo de recuperación de contraseña por SMTP | Hecha | `POST /auth/recuperar/` y `POST /auth/recuperar/confirmar/` (`eab833e`, 21/09). Desde el 05/10 (`1c82605`), 3 enlaces por hora por correo (`limites.py`) y correo real por SMTP cuando el `.env` trae `EMAIL_HOST` |
+| Pantalla de login y manejo de errores (frontend) | Hecha | `557bc9f`. `apps/cuentas/` y `cliente_api/` del front: errores por campo, mensaje genérico y aviso si la API no responde |
+| Pruebas unitarias de autenticación y expiración de token | Hecha | `apps/cuentas/tests.py`; la recuperación tiene nueve pruebas propias ahí y `tests/test_recuperacion.py` en el front |
 
 | Criterio de aceptación | Estado |
 |---|---|
-| Con credenciales válidas accede y ve el selector de conjunto activo | Entra por la pantalla del front y llega al selector, pero **el selector es maqueta**: no usa `GET /auth/conjuntos/` ni el `conjunto_activo` del login |
-| Con credenciales inválidas ve un mensaje genérico sin revelar si el correo existe | Hecho y probado en la API; la pantalla muestra ese mismo mensaje (verificado, `557bc9f`) |
+| Con credenciales válidas accede y ve el selector de conjunto activo | Hecho: el selector es real (HU-26) |
+| Con credenciales inválidas ve un mensaje genérico sin revelar si el correo existe | Hecho y probado en la API; la pantalla muestra ese mismo mensaje |
 | Un usuario desactivado no puede entrar | Hecho y probado, también si se desactiva la persona o se desactiva con la sesión abierta |
-| Quien olvidó la contraseña recibe un enlace de un solo uso por correo | Pendiente |
-| Con un token vencido el sistema exige iniciar sesión de nuevo | Hecho y probado en la API (401). En el front la sesión vence a la misma hora que el token y vuelve al ingreso (verificado, `557bc9f`) |
+| Quien olvidó la contraseña recibe un enlace de un solo uso por correo | Hecho y probado: `test_quien_olvido_la_contrasena_recibe_un_enlace_por_correo`, `test_el_enlace_sirve_una_sola_vez` y `test_el_enlace_vencido_no_sirve` |
+| Con un token vencido el sistema exige iniciar sesión de nuevo | Hecho y probado en la API (401). En el front la sesión vence a la misma hora que el token y vuelve al ingreso |
 
-## HU-03 · Asistente por pasos para crear un conjunto — 1 de 5 tareas
+Lo que queda abierto, que no es de ningún criterio: `send_mail` síncrono y sin `try`, y `/auth/login/` sin límite de intentos ([pendientes](pendientes.md), sección 8).
+
+## HU-03 · Asistente por pasos para crear un conjunto — 5 de 5 tareas, falta la DoD
+
+Verificado el 2026-10-11. Cómo quedó: [conjuntos](../05_Modulos/conjuntos.md).
 
 | Tarea técnica (Notion) | Estado | Evidencia |
 |---|---|---|
 | Modelo Conjunto con campo `activo` y `conjunto_id NOT NULL` en toda tabla salvo las globales declaradas | Hecha | `apps/conjuntos/models.py` (`activo`, y `operativo`, que nace en falso). El `NOT NULL` lo imponen `ModeloDeConjunto` y la prueba transversal |
-| Endpoints del asistente por pasos con guardado parcial | Pendiente | — |
-| Validación de mínimos para marcar el conjunto como operativo | Pendiente | — |
-| Asistente multipaso en frontend con resumen final | Pendiente | — |
-| Pruebas del invariante: conjunto incompleto no queda operativo | Pendiente | Solo hay prueba de que un conjunto nuevo nace no operativo |
+| Endpoints del asistente por pasos con guardado parcial | Hecha | `POST /conjuntos/` crea el conjunto en el paso 1 y cada paso siguiente guarda en su propia app (`unidades`, `cuentas`, `areas`, `reglas`, `documentos`): se puede salir y volver |
+| Validación de mínimos para marcar el conjunto como operativo | Hecha | `servicios.requisitos_para_operar()` con seis requisitos y `POST /conjuntos/actual/activar/`, que responde 400 con los `faltantes` |
+| Asistente multipaso en frontend con resumen final | Hecha | Siete pasos en `apps/conjuntos/` del front (`asistente_datos`, `_viviendas`, `_administracion`, `_areas`, el tablero de reglas, `_reglamento` y `_resumen`) |
+| Pruebas del invariante: conjunto incompleto no queda operativo | Hecha | `test_conjunto_incompleto_no_queda_operativo`, `test_sin_viviendas_el_conjunto_no_queda_operativo`, `test_sin_reglamento_el_conjunto_no_queda_operativo` y `test_un_conjunto_completo_queda_operativo`, en `apps/conjuntos/tests.py` |
 
-Ningún criterio de aceptación se cumple todavía: todos dependen del asistente, de áreas, reglamento, reglas beta o auditoría. El permiso `conjunto.crear` ya existe en el catálogo. En el plan del Sprint 1 entra como "HU-03 mínima" (paso 7), con el alcance por decidir (§6).
+**Criterios de aceptación: sin comparar uno por uno.** Los de Notion describen el asistente anterior, de cinco pasos; el de hoy tiene siete pasos, seis requisitos y lo activa también Administración ([pendientes](pendientes.md), sección 6).
 
-## HU-02 · Segundo factor (TOTP) para permisos sensibles — 1 de 5 tareas
+## HU-02 · Segundo factor (TOTP) para permisos sensibles — 5 de 5 tareas, falta la DoD
+
+Verificado el 2026-10-11. Las pruebas citadas están en `apps/cuentas/test_dos_factores.py`.
 
 | Tarea técnica (Notion) | Estado | Evidencia |
 |---|---|---|
-| Marcar permisos sensibles en el catálogo fijo (backend) | Hecha | `PERMISOS_SENSIBLES` en `apps/permisos/catalogo.py`, `531e854`: 18 permisos, todos los de plataforma incluidos |
-| Generación de secreto TOTP y código QR de vinculación | Pendiente | — |
-| Verificación del código en el login y códigos de respaldo | Pendiente | `TokenDeSesion` ya tiene el campo `dos_factores_verificado`, sin uso |
-| Pantallas de activación y de verificación (frontend) | Pendiente | — |
-| Pruebas: usuario con permiso sensible no puede operar sin 2FA activo | Pendiente | — |
+| Marcar permisos sensibles en el catálogo fijo (backend) | Hecha | `PERMISOS_SENSIBLES` en `apps/permisos/catalogo.py`: hoy son 20, todos los de plataforma incluidos |
+| Generación de secreto TOTP y código QR de vinculación | Hecha | `POST /auth/dos-factores/configurar/` y `…/activar/` (`eab833e`, 21/09), con `django-otp` y `qrcode`. `test_configurar_entrega_el_qr_y_la_clave_para_la_aplicacion` |
+| Verificación del código en el login y códigos de respaldo | Hecha | `POST /auth/dos-factores/verificar/`; al activar entrega 10 códigos de respaldo. `test_un_codigo_de_respaldo_sirve_una_sola_vez` |
+| Pantallas de activación y de verificación (frontend) | Hecha | `apps/cuentas/` del front: configurar, verificar, códigos de respaldo y, desde el 05/10, pedir y confirmar el enlace que lo quita. `tests/test_segundo_factor.py` |
+| Pruebas: usuario con permiso sensible no puede operar sin 2FA activo | Hecha | `test_con_permiso_sensible_y_sin_configurar_no_puede_continuar` |
 
 | Criterio de aceptación | Estado |
 |---|---|
-| Con un permiso sensible y sin 2FA configurado, debe configurarlo antes de continuar | Pendiente |
-| Con 2FA activo y un código válido, accede | Pendiente |
-| Un código expirado o repetido se rechaza | Pendiente |
-| Un usuario solo con rol Residente no necesita 2FA | Preparado: hay prueba de que Residente no tiene permisos sensibles. Falta el flujo de 2FA |
-| Un Superusuario siempre necesita 2FA | Preparado: todos los permisos de plataforma son sensibles. Falta el flujo de 2FA |
+| Con un permiso sensible y sin 2FA configurado, debe configurarlo antes de continuar | Hecho y probado: `test_con_permiso_sensible_y_sin_configurar_no_puede_continuar` |
+| Con 2FA activo y un código válido, accede | Hecho y probado: `test_con_un_codigo_valido_accede` |
+| Un código expirado o repetido se rechaza | Hecho y probado: `test_un_codigo_vencido_se_rechaza` y `test_un_codigo_repetido_se_rechaza` |
+| Un usuario solo con rol Residente no necesita 2FA | Hecho y probado: `test_residente_no_necesita_segundo_factor` |
+| Un Superusuario siempre necesita 2FA | Hecho y probado: `test_superusuario_siempre_necesita_segundo_factor` |
+
+El enlace por correo que quita el segundo factor (05/10) no es de ningún criterio y tiene ocho pruebas en el mismo archivo.
+
+## Ver también
+
+- [historias](historias.md) — el estado de las 40 historias, con su módulo y su plan
+- [pruebas_y_ejecucion](../02_Arquitectura/pruebas_y_ejecucion.md) — qué cubre cada archivo de pruebas
+- [scrum_y_dod](../03_Reglas/scrum_y_dod.md) — la Definition of Done que les falta a todas
+- [Admind_Plan_Sprints_2_3](../07_Planes/hechos/Admind_Plan_Sprints_2_3.md) — el plan de HU-06 a HU-13

@@ -1,6 +1,10 @@
 ---
+resumen: "Plan de la primera parte de HU-39: agrupaciones, generador de viviendas con vista previa y el paso «Viviendas» del asistente."
 titulo: "AdMind — Plan guiado de la estructura de viviendas (HU-39), primera parte"
 tipo: plan
+estado: hecho
+ejecutado: 2026-10-06
+hu: [HU-39]
 modo: guiado
 fecha: 2026-10-06
 para: "Alejo, con un agente que guía según 09_Protocolos/ejecutar_plan_guiado.md si Alejo lo aprueba; si no, el agente lo construye"

@@ -1,6 +1,9 @@
 ---
+resumen: "Una frase: qué construye el plan."
 titulo: "AdMind — Plan de <qué cubre>"
 tipo: plan
+estado: activo
+hu: [HU-XX]
 fecha: AAAA-MM-DD
 para: "Quién lo ejecuta; Alejo decide y revisa"
 alcance: "Historias o piezas que cubre"

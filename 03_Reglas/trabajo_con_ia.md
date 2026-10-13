@@ -2,7 +2,8 @@
 resumen: "Cómo trabaja un agente de IA en AdMind: construir solo lo pedido, qué no hacer, qué preguntar en vez de decidir y cómo pedirle."
 tipo: regla
 origen: "maestro v1.4 (2026-09-14) cabecera y §8.4 + Lab §2, §8 y §9 (2026-09-14) + guía de desarrollo §11 y §12 (2026-09-15)"
-actualizado: 2026-10-04
+actualizado: 2026-10-11
+revisado: 2026-10-11
 ---
 
 # Trabajo con agentes de IA
@@ -136,3 +137,7 @@ Construir no autoriza a decidir. Hay dos niveles:
 ## Ver también
 
 - [backlog_y_plazo](../08_Estado/backlog_y_plazo.md) — maestro §11
+- [Inicio](../Inicio.md) y [ejecutar_plan_guiado](../09_Protocolos/ejecutar_plan_guiado.md) — los planes guiados
+- [convenciones](convenciones.md) — lo que no se toca ni se instala sin preguntar
+- [abiertas](../06_Decisiones/abiertas.md) y [decidido_y_propuesto](../06_Decisiones/decidido_y_propuesto.md) — lo que un agente no decide
+- [equipo](../01_Contexto/equipo.md) — quién tiene que poder defender el código

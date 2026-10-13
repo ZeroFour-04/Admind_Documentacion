@@ -1,4 +1,6 @@
 ---
+resumen: "Tutorial del 2026-09-30: la estructura del proyecto explicada de corrido, con el recorrido de una reserva."
+tipo: guia
 titulo: "AdMind — Cómo está hecho hoy"
 proyecto: "Proyecto de Ingeniería de Software II — Universidad de Cundinamarca, Facatativá"
 fecha: 2026-09-30

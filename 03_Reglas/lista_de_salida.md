@@ -2,7 +2,8 @@
 resumen: "Lista de comprobación antes de dar algo por terminado: código, pruebas, pantalla y proceso."
 tipo: regla
 origen: "guía de desarrollo §9 (2026-09-15)"
-actualizado: 2026-09-15
+actualizado: 2026-10-11
+revisado: 2026-10-11
 ---
 
 # La lista de salida
@@ -17,7 +18,7 @@ Antes de decir "terminé", repasa esto. Mezcla la Definition of Done (maestro §
 - [ ] Toda tabla nueva tiene conjunto, o está en la lista cerrada de globales
 - [ ] Ninguna FK con `CASCADE` y ninguna operación de borrado sobre las entidades del maestro §5.11
 - [ ] La vista declara el permiso que exige
-- [ ] Toda escritura deja auditoría (cuando exista `apps/auditoria/`)
+- [ ] Toda escritura deja auditoría: `auditoria.servicios.registrar(...)`
 - [ ] Los errores no llevan datos de la fila: "No encontrado"
 
 **Las pruebas**
@@ -44,4 +45,12 @@ Antes de decir "terminé", repasa esto. Mezcla la Definition of Done (maestro §
 - [ ] **Puedes explicar en voz alta qué hace cada archivo que tocaste**
 
 > [!WARNING]
-> **Abierto — la DoD y las ramas no están alineadas (maestro §12.7 a).** La DoD pide PR aprobado y "desplegada en el ambiente de pruebas", pero todavía no se decidió qué PR cuenta como revisión ni qué es exactamente la rama `pruebas`. Mientras tanto, esa parte de la DoD queda pendiente y **una historia no se marca Terminada en el Avance** sin cumplirla completa.
+> **Abierto — la DoD y las ramas no están alineadas (maestro §12.7 a).** La DoD pide PR aprobado y "desplegada en el ambiente de pruebas", pero todavía no se decidió qué PR cuenta como revisión ni qué es exactamente la rama `pruebas`. Mientras tanto, esa parte de la DoD queda pendiente y **una historia no se marca Terminada** en [historias](../08_Estado/historias.md) sin cumplirla completa.
+
+## Ver también
+
+- [invariantes](invariantes.md) y [capas](capas.md) — lo que revisa la parte del código
+- [pruebas_y_ejecucion](../02_Arquitectura/pruebas_y_ejecucion.md) — los comandos de verificación
+- [sistema_visual](../04_Diseno/sistema_visual.md) — la DoD visual (6.6)
+- [scrum_y_dod](scrum_y_dod.md) — la Definition of Done completa
+- [git](git.md) — el formato del commit

@@ -2,7 +2,8 @@
 resumen: "Tecnologías y versiones en uso, y por qué Django, PostgreSQL y las cuatro piezas técnicas propias de AdMind."
 tipo: arquitectura
 origen: "guía de estructura §4.1 (2026-09-30) + maestro v1.4 (2026-09-14) §7.1 y §7.2"
-actualizado: 2026-09-30
+actualizado: 2026-10-11
+revisado: 2026-10-11
 ---
 
 # Stack técnico
@@ -14,7 +15,7 @@ actualizado: 2026-09-30
 >
 > Detalle en [construccion](../06_Decisiones/construccion.md).
 
-## Versiones en uso (2026-09-30)
+## Versiones en uso (verificadas el 2026-10-11)
 
 | Tecnología | Versión | Dónde | Para qué |
 |---|---|---|---|
@@ -27,7 +28,7 @@ actualizado: 2026-09-30
 | **django-otp** + **qrcode** | 1.7 / 8.2 | back | Segundo factor (códigos de 6 dígitos tipo Google Authenticator) y su QR |
 | **requests** | 2.34 | front | Hace las peticiones HTTP del front a la API |
 | **Plantillas de Django** | — | front | Generan el HTML en el servidor |
-| **Alpine.js** | 3.17.4 | front | Interactividad pequeña dentro del HTML (hoy, en la solicitud de reserva y en el color y la foto del conjunto) |
+| **Alpine.js** | 3.17.4 | front | Interactividad pequeña dentro del HTML (en la solicitud de reserva, el color y la foto, el paso de viviendas, Unidades, Usuarios, el detalle de la vivienda y el check de Pagos: [frontend](frontend.md)) |
 | **CSS propio** (design system) | — | front | Colores, tipografías (Archivo e Inter) y componentes `am-*`. Sin Tailwind ni Bootstrap |
 | **pytest** + **pytest-django** | 9.1 / 4.14 | back y front | Pruebas automáticas |
 | **Git + GitHub** | — | los tres repos | Ramas `main`, `desarrollo`, `pruebas` (las fijó el profesor) |
@@ -93,3 +94,7 @@ Aquí no hay tutorial que copiar. **Esta parte es el proyecto**, y es lo que se 
 
 - [abiertas](../06_Decisiones/abiertas.md) — maestro §12.1
 - [riesgos](../06_Decisiones/riesgos.md) — R1, R6, R7, R12
+- [entorno_local](entorno_local.md) — la máquina donde corre
+- [frontend](frontend.md) — dónde se usa Alpine
+- [cuentas](../05_Modulos/cuentas.md) — el token y el segundo factor, construidos
+- [restricciones_bd](restricciones_bd.md) — los índices parciales y las FK compuestas, en uso

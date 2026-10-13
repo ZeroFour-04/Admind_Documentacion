@@ -1,7 +1,10 @@
 ---
+resumen: "Una frase: qué construye el plan."
 titulo: "AdMind — Plan guiado de <qué cubre>"
 tipo: plan
 modo: guiado
+estado: activo
+hu: [HU-XX]
 fecha: AAAA-MM-DD
 para: "Alejo, con un agente que guía según 09_Protocolos/ejecutar_plan_guiado.md si Alejo lo aprueba; si no, el agente lo construye"
 alcance: "Historia, sección o vista que cubre"

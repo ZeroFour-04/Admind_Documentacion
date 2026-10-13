@@ -2,7 +2,8 @@
 resumen: "Sistema visual v1: los tres principios, tokens, catálogo de acentos, bento, voz de la interfaz y DoD visual."
 tipo: diseno
 origen: "maestro v1.4 (2026-09-14) §6"
-actualizado: 2026-09-14
+actualizado: 2026-10-11
+revisado: 2026-10-11
 ---
 
 # Sistema visual
@@ -124,3 +125,7 @@ Cuatro tamaños fijos es lo que separa un bento de un collage. Si un contenido n
 ## Ver también
 
 - [abiertas](../06_Decisiones/abiertas.md) — maestro §12
+- [implementacion](implementacion.md) — cómo quedó en el código
+- [reglas_frontend](../03_Reglas/reglas_frontend.md) — lo que una pantalla no rompe
+- [conjuntos](../05_Modulos/conjuntos.md) — el color propio y la foto 1:1
+- [lista_de_salida](../03_Reglas/lista_de_salida.md) — la DoD visual, al entregar

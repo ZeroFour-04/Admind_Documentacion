@@ -2,7 +2,8 @@
 resumen: "Restricciones legales: jerarquía, marco normativo y reglas duras. Están por encima de todo."
 tipo: contexto
 origen: "maestro v1.4 (2026-09-14) §4"
-actualizado: 2026-09-14
+actualizado: 2026-10-11
+revisado: 2026-10-11
 ---
 
 # Restricciones legales — jerárquicamente superiores a todo
@@ -50,3 +51,14 @@ La Ley 675 de 2001 es la norma eje —vigente, modificada solo por la Ley 2079 d
 Circula contenido de blogs que presenta el **Decreto 768 de 2025** como "la nueva ley de propiedad horizontal", atribuyéndole reglas de videovigilancia, registro digital de visitantes y prohibición de alquiler corto. **Ninguna de esas reglas está en el decreto** — es un decreto de procedimiento único de policía. No usar fuentes secundarias como fundamento normativo.
 
 Hay reformas en trámite (PL 067/2025 Cámara, reforma integral de la Ley 675, aprobada en primer debate el 7 de abril de 2026). **Vigilar, no implementar.**
+
+## Ver también
+
+- [alcance](alcance.md) — lo que queda fuera por razones legales (3.4)
+- [infracciones](../05_Modulos/infracciones.md) — el sistema no sanciona
+- [parqueaderos](../05_Modulos/parqueaderos.md) — el de visitantes no se destina a una unidad
+- [unidades](../05_Modulos/unidades.md) — a quién se notifica cada hecho
+- [ingresos](../05_Modulos/ingresos.md) y [pagos](../05_Modulos/pagos.md) — construidos sin haber verificado lo legal
+- [abiertas](../06_Decisiones/abiertas.md) — 12.10 b: lo que falta verificar
+- [riesgos](../06_Decisiones/riesgos.md) — R2, R10 y R11
+- [pendientes](../08_Estado/pendientes.md) — sección 4: lo legal sin verificar

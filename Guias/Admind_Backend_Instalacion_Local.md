@@ -1,4 +1,6 @@
 ---
+resumen: "Tutorial del 2026-09-14: cómo dejar el backend corriendo en otra máquina."
+tipo: guia
 titulo: "AdMind — Backend: instalación local"
 proyecto: "Proyecto de Ingeniería de Software II — Universidad de Cundinamarca, Facatativá"
 fecha: 2026-09-14

@@ -4,7 +4,8 @@ tipo: modulo
 modulo: conjuntos
 hu: [HU-03, HU-21, HU-33]
 origen: "guía de estructura §5.7 (2026-09-30)"
-actualizado: 2026-10-06
+actualizado: 2026-10-11
+revisado: 2026-10-11
 ---
 
 # Conjuntos: asistente de creación e identidad
@@ -68,3 +69,8 @@ El backend **no calcula** la paleta ni el contraste: guarda el hex y ya. Pintarl
 - [motor_reglas](motor_reglas.md) — el tablero del paso 5
 - [implementacion](../04_Diseno/implementacion.md) — cómo pinta el front el color y la foto
 - [sistema_visual](../04_Diseno/sistema_visual.md) — el catálogo de 8 acentos y sus cuatro sitios
+- [permisos](permisos.md) — `conjunto.crear` y `conjunto.activar`
+- [alcance](../01_Contexto/alcance.md) — qué es un conjunto operativo (3.1)
+- [Plan_Asistente_De_Creacion](../07_Planes/hechos/Plan_Asistente_De_Creacion.md) — el plan del asistente completo
+- [historias](../08_Estado/historias.md) — HU-03, HU-21 y HU-33
+- `Backend/Admind_Backend/apps/conjuntos/README.md` y `apps/documentos/README.md`

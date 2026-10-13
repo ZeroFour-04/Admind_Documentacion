@@ -2,7 +2,8 @@
 resumen: "Scrum del equipo: sprints, eventos, la Definition of Done y las evidencias que pide el jurado."
 tipo: regla
 origen: "maestro v1.4 (2026-09-14) §8.1"
-actualizado: 2026-09-14
+actualizado: 2026-10-11
+revisado: 2026-10-11
 ---
 
 # Scrum y Definition of Done
@@ -52,3 +53,6 @@ Sin DoD, "terminado" significa cosas distintas para cada uno y el proyecto acumu
 
 - [git](git.md) — maestro §8.5
 - [abiertas](../06_Decisiones/abiertas.md) — maestro §12.7
+- [lista_de_salida](lista_de_salida.md) — la DoD, como lista de comprobación
+- [historias](../08_Estado/historias.md) — ninguna cumple todavía la DoD
+- [backlog_y_plazo](../08_Estado/backlog_y_plazo.md) — el reparto en sprints y la velocidad

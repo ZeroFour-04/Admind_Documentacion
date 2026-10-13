@@ -4,10 +4,14 @@ tipo: modulo
 modulo: infracciones
 hu: [HU-30]
 origen: "maestro v1.4 (2026-09-14) §5.8"
-actualizado: 2026-09-14
+actualizado: 2026-10-11
+revisado: 2026-10-11
 ---
 
 # Infracciones
+
+> [!NOTE] Sin construir (verificado el 2026-10-11)
+> `apps/infracciones/` solo tiene README en los dos repositorios. HU-30 está sin empezar ([historias](../08_Estado/historias.md)).
 
 ## Diseño (maestro §5.8)
 
@@ -48,3 +52,7 @@ RegistroDeInfraccion
 ## Ver también
 
 - [riesgos](../06_Decisiones/riesgos.md) — R11
+- [legal](../01_Contexto/legal.md) — por qué el sistema no sanciona (4.2)
+- [unidades](unidades.md) — a quién se notifica: propietario y arrendatario
+- [eliminacion](../03_Reglas/eliminacion.md) — la anulación en vez del borrado
+- [motor_reglas](motor_reglas.md) — la regla de sanción vigente que salió del catálogo

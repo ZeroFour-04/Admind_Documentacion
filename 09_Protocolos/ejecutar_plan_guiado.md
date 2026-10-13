@@ -3,6 +3,7 @@ resumen: "Cómo ejecuta un agente un plan guiado, solo si Alejo lo aprueba al pr
 tipo: protocolo
 origen: "proceso acordado con Alejo el 2026-10-04"
 actualizado: 2026-10-04
+revisado: 2026-10-11
 ---
 
 # Protocolo: ejecutar un plan guiado

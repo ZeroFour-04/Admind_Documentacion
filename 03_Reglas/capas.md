@@ -2,7 +2,8 @@
 resumen: "Las capas del backend: la regla de dirección, qué código HTTP usar, en qué archivo va cada regla y cómo se hablan las apps."
 tipo: regla
 origen: "guía de desarrollo §3.2, §3.3, §3.5, §5 y §8.5 (2026-09-15)"
-actualizado: 2026-09-15
+actualizado: 2026-10-11
+revisado: 2026-10-11
 ---
 
 # Capas: qué va en cada archivo
@@ -91,3 +92,6 @@ Con ejemplos reales de AdMind:
 
 - [vision_general](../02_Arquitectura/vision_general.md) — el flujo controlador → servicio → repositorio que pide el profesor
 - [invariantes](invariantes.md) — cómo se aplica en este código
+- [backend](../02_Arquitectura/backend.md) — la anatomía real de una app
+- [reglas_frontend](reglas_frontend.md) — lo mismo, del lado del front
+- [legal](../01_Contexto/legal.md) — la pregunta 1: lo que la ley prohíbe

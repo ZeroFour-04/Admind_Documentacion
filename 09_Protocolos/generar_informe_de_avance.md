@@ -2,14 +2,15 @@
 resumen: "Pasos para hacer el informe de avance que se entrega al docente, con capturas, a partir de la plantilla."
 tipo: protocolo
 origen: "estructura de los informes 1 a 3 (2026-09-15, 2026-09-21 y 2026-09-29)"
-actualizado: 2026-09-30
+actualizado: 2026-10-11
+revisado: 2026-10-11
 ---
 
 # Protocolo: generar un informe de avance
 
 ## Qué es
 
-El **entregable para el docente**. Cuenta qué es AdMind, cómo está armado y cuánto avanzó desde el informe anterior, con capturas del sistema funcionando. Se han entregado tres: 15/09, 21/09 y 29/09.
+El **entregable para el docente**. Cuenta qué es AdMind, cómo está armado y cuánto avanzó desde el informe anterior, con capturas del sistema funcionando. Hay cuatro: 15/09, 21/09, 29/09 y 06/10 (el cuarto quedó con las capturas por pegar; en la bóveda no consta si ya se entregó).
 
 ## Qué produce
 
@@ -19,7 +20,7 @@ El **entregable para el docente**. Cuenta qué es AdMind, cómo está armado y c
 
 ## Pasos
 
-1. **Preguntarle a Alejo qué historias se reportan como terminadas.** En el informe 3 decidió reportar los Sprints 1 y 2 como terminados aunque les faltara la parte humana de la DoD. Esa decisión es suya en cada informe ([estado_actual](../08_Estado/estado_actual.md)).
+1. **Preguntarle a Alejo qué historias se reportan como terminadas.** En el informe 3 decidió reportar los Sprints 1 y 2 como terminados aunque les faltara la parte humana de la DoD. En el informe 4 (06/10) pidió repartirlas según lo que hay en el código, con un criterio menos estricto que la DoD. Esa decisión es suya en cada informe ([estado_actual](../08_Estado/estado_actual.md)).
 2. **Verificar en el corte:**
    - `git fetch` y `git log` en los tres repositorios, para la tabla de commits desde el informe anterior;
    - `pytest` en backend y frontend, con el número de pruebas que pasan y las que fallan;
@@ -39,4 +40,11 @@ El **entregable para el docente**. Cuenta qué es AdMind, cómo está armado y c
 - Los informes ya entregados usan `[[enlaces]]` de Obsidian para el índice y las imágenes. En los nuevos, el índice va con enlaces markdown a los títulos y las imágenes como las pegue Obsidian.
 
 > [!NOTE] Por definir con Alejo
-> En qué formato se entrega al docente (PDF exportado desde Obsidian u otro) y si lleva una portada distinta. Los tres informes anteriores no lo dejan escrito.
+> En qué formato se entrega al docente (PDF exportado desde Obsidian u otro) y si lleva una portada distinta. Los informes anteriores no lo dejan escrito.
+
+## Ver también
+
+- [informe_de_avance](Plantillas/informe_de_avance.md) — la plantilla
+- [generar_documento_de_avance](generar_documento_de_avance.md) — la foto para el equipo, que no es este informe
+- [estado_actual](../08_Estado/estado_actual.md) e [historias](../08_Estado/historias.md) — de dónde salen los números
+- [vision_general](../02_Arquitectura/vision_general.md) — la equivalencia con la plantilla del profesor

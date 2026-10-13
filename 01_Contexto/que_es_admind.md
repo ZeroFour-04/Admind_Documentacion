@@ -2,7 +2,8 @@
 resumen: "Qué es AdMind, de dónde sale, los cuatro pilares y el diferenciador."
 tipo: contexto
 origen: "maestro v1.4 (2026-09-14) §1"
-actualizado: 2026-09-14
+actualizado: 2026-10-11
+revisado: 2026-10-11
 ---
 
 # Qué es AdMind
@@ -31,3 +32,8 @@ Que la competencia por una franja se resuelva por orden de llegada y validación
 ## Ver también
 
 - [backlog_y_plazo](../08_Estado/backlog_y_plazo.md) — maestro §11
+- [alcance](alcance.md) — qué entra y qué no
+- [equipo](equipo.md) — quiénes lo hacen
+- [legal](legal.md) — por qué el sistema registra y no decide
+- [cerradas](../06_Decisiones/cerradas.md) — la decisión 11: orden de llegada, por las entrevistas
+- [estado_actual](../08_Estado/estado_actual.md) — cómo va hoy

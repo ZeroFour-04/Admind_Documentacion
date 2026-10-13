@@ -2,7 +2,8 @@
 resumen: "Las 30 decisiones de arquitectura cerradas (numeradas) y los dos principios transversales. No se rediscuten."
 tipo: decision
 origen: "maestro v1.4 (2026-09-14) §9"
-actualizado: 2026-09-14
+actualizado: 2026-10-11
+revisado: 2026-10-11
 ---
 
 # Decisiones cerradas — no se rediscuten
@@ -50,3 +51,7 @@ _(La 15 fue revertida por la 22 y no se conserva como vigente.)_
 ## Ver también
 
 - [construccion](construccion.md) — decisiones tomadas después, al construir
+- [abiertas](abiertas.md) — lo que sigue sin decidir
+- [riesgos](riesgos.md) — el riesgo que mitiga cada una
+- [decidido_y_propuesto](decidido_y_propuesto.md) — qué es un hecho y qué una sugerencia
+- [Admin_Master](../Admin_Master.md) — cómo se cita una decisión

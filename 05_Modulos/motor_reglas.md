@@ -2,9 +2,10 @@
 resumen: "Motor de reglas: reglas del sistema, alfa (del conjunto) y beta (de la zona), con parámetros y descripciones. Definición del 2026-10-06: las áreas con reserva están en el código y con commit; el modo de uso con ingreso y los acompañantes se construyeron el 2026-10-08 y ya tienen commit y `migrate`."
 tipo: modulo
 modulo: reglas
-hu: [HU-10, HU-13]
+hu: [HU-09, HU-10, HU-13]
 origen: "definición con Alejo en chat (2026-10-06) + maestro v1.4 (2026-09-14) §5.10 + guía de estructura §5.6 (2026-09-30)"
 actualizado: 2026-10-11
+revisado: 2026-10-11
 ---
 
 # Motor de reglas
@@ -12,7 +13,7 @@ actualizado: 2026-10-11
 > [!IMPORTANT] Redefinido el 2026-10-06; construido ese día para las áreas con reserva
 > - Lo vigente es la sección *Definición vigente*. La decidió Alejo en chat; falta contárselo a Camilo.
 > - **Alfa y beta cambiaron de significado.** Antes: alfa = fija en el código, beta = configurable. Ahora: alfa = regla del conjunto, beta = regla de la zona, y las fijas se llaman reglas del sistema.
-> - **Construido** con [Plan_Motor_De_Reglas](../07_Planes/activos/Plan_Motor_De_Reglas.md): niveles, una sola regla por tipo, descripciones fijas, aforo obligatorio en el área, días que no abre con motivo y el tablero. Ya tiene commit y sus migraciones están aplicadas en `admind_db` (verificado el 2026-10-11); al aplicarse cerraron las reglas que había.
+> - **Construido** con [Plan_Motor_De_Reglas](../07_Planes/hechos/Plan_Motor_De_Reglas.md): niveles, una sola regla por tipo, descripciones fijas, aforo obligatorio en el área, días que no abre con motivo y el tablero. Ya tiene commit y sus migraciones están aplicadas en `admind_db` (verificado el 2026-10-11); al aplicarse cerraron las reglas que había.
 > - **Construido el 2026-10-08, ya con commit:** el modo de uso, la permanencia máxima, los acompañantes y un ingreso abierto por persona, con [Plan_Zonas_Con_Ingreso](../07_Planes/hechos/Plan_Zonas_Con_Ingreso.md). Detalle en [ingresos](ingresos.md).
 > - **Construido el 2026-10-10, ya con commit y migrado (`reglas/0006`):** dos reglas beta para las áreas con reserva, *una reserva al día* y *sin franjas seguidas*.
 > - **Construido el 2026-10-10, ya con commit y migrado (`reglas/0007`):** *día límite de pago* (`DIA_LIMITE_DE_PAGO`, migración `reglas/0007`) y la mora real, con la fase F5 de [Plan_Pago_De_Administracion](../07_Planes/hechos/Plan_Pago_De_Administracion.md). *Paz y salvo* **ya restringe**. Se construyó sin haber verificado lo legal ([abiertas](../06_Decisiones/abiertas.md) 12.10 b). Detalle en [pagos](pagos.md).
@@ -116,12 +117,13 @@ Cuando un residente envía una solicitud, `reglas/evaluador.py` → `evaluar(sol
   |---|---|---|
   | `ANTICIPACION_MINIMA` | alfa | `horas`, desde 0 |
   | `ANTICIPACION_MAXIMA` | alfa | `dias`, desde 1 |
-  | `REQUIERE_PAZ_Y_SALVO` | alfa | ninguno: definirla es activarla. Lleva la nota «todavía no restringe» |
+  | `REQUIERE_PAZ_Y_SALVO` | alfa | ninguno: definirla es activarla. Lleva la nota «Solo restringe si también defines el día límite de pago» |
   | `DIAS_QUE_NO_ABRE` | beta | `renglones`: cada uno es `{dia_semana, motivo}` o `{desde, hasta, motivo}`. Hasta 60, motivo de hasta 120 caracteres, un día de la semana no se repite |
   | `CUPO_POR_UNIDAD` | beta | `reservas` y `dias`, desde 1 |
   | `ACOMPANANTES` | alfa | `maximo`, desde 0 (0 = no se permiten) |
   | `UNA_RESERVA_POR_DIA` | beta | ninguno: definirla es activarla (2026-10-10) |
   | `SIN_FRANJAS_SEGUIDAS` | beta | ninguno: definirla es activarla (2026-10-10) |
+  | `DIA_LIMITE_DE_PAGO` | alfa | `dia`, de 1 a 28. No la evalúa el motor: la lee `pagos` (2026-10-10) |
 
   `MODOS_POR_TIPO` dice a qué modo aplica cada tipo y `GET /reglas/catalogo/` lo entrega en `modos`: anticipación mínima y máxima y límite por vivienda, a reserva; acompañantes, a ingreso; paz y salvo y días que no abre, a los dos. Definir una regla de área en un área de otro modo responde 400 bajo `area`. El evaluador de reservas salta los tipos que no conoce, y `ACOMPANANTES` la evalúa el módulo de [ingresos](ingresos.md), con su propio evaluador.
 
@@ -193,4 +195,10 @@ Los mensajes de rechazo reportan **todas** las reglas que fallaron, no la primer
 
 - [reservas](reservas.md) — dónde se llama al evaluador
 - [ingresos](ingresos.md) — el modo de uso con ingreso
+- [pagos](pagos.md) — la mora que lee *paz y salvo*
+- [conjuntos](conjuntos.md) — el tablero dentro del asistente y el requisito `reglas_del_conjunto`
+- [restricciones_bd](../02_Arquitectura/restricciones_bd.md) — una regla abierta por tipo, en la base
 - [construccion](../06_Decisiones/construccion.md) — las decisiones del 2026-10-06
+- [Plan_Motor_De_Reglas](../07_Planes/hechos/Plan_Motor_De_Reglas.md) — el plan con que se construyó
+- [historias](../08_Estado/historias.md) — HU-09, HU-10 y HU-13
+- `Backend/Admind_Backend/apps/reglas/README.md` y `apps/areas/README.md`
