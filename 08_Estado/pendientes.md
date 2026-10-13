@@ -3,7 +3,7 @@ resumen: "Todo lo que falta, ordenado por tipo: lo que frena los story points, p
 tipo: estado
 corte: 2026-10-11
 origen: "listas anteriores (2026-09-27 a 2026-10-11), reordenadas por tipo y contrastadas con el código el 2026-10-11"
-actualizado: 2026-10-11
+actualizado: 2026-10-13
 revisado: 2026-10-11
 ---
 
@@ -39,6 +39,7 @@ El agente no las hace: no tiene la contraseña ni el segundo factor de los usuar
 | Pago de una reserva (HU-16) | [Plan_Pago_De_Reserva](../07_Planes/hechos/Plan_Pago_De_Reserva.md) | — |
 | Parqueadero de visitantes (HU-28) | [Plan_Parqueadero_De_Visitantes](../07_Planes/hechos/Plan_Parqueadero_De_Visitantes.md) | Dos navegadores con un solo puesto libre. `static/js/visitantes.js` no tiene prueba automática |
 | Pago de administración (HU-35) | [Plan_Pago_De_Administracion](../07_Planes/hechos/Plan_Pago_De_Administracion.md) | — |
+| Cambiar el modo de uso de un área (13/10) | Sin guion: en «Editar área», pasar una con reservas apartadas y reglas propias a «Con ingreso» y volver | El agente lo recorrió con un guion contra la base de pruebas, no en el navegador ni con usuarios reales |
 | Usuarios, detalle de la vivienda y «Crear conjunto» (11/10) | Sin guion | Usuarios y el detalle de la vivienda se vieron en el navegador con datos inventados, no con usuarios reales |
 
 ## 3. Avisarle a Camilo
@@ -51,6 +52,8 @@ En la bóveda no consta que se le haya avisado de nada de esto. Lo que tiene que
 - [ ] **Su app `visitantes` cambió** (HU-28): `servicios.py` nuevo y su vista quedó delgada; `POST /visitantes/` acepta `parqueadero`; `GET /visitantes/` trae `hora_salida` y `parqueadero`; ruta nueva `POST /visitantes/<id>/salida/`; el vigilante ve también las visitas de días anteriores sin salida. Cambiaron su `lista.html`, `forms.py`, `views.py` y `visitantes.js`, y su `tests/test_visitantes.py` ganó una fixture automática, sin tocar ninguna aserción.
 - [ ] **Sus pantallas de solicitudes cambiaron** (HU-16): `solicitudes_area.html` y `triage/bandeja.html` muestran el bloque «Pago», y las respuestas de solicitudes traen el campo `pago`.
 - [ ] **Contratos que cambiaron:** crear un área exige `aforo_maximo` y trae `modo_uso` y `permanencia_maxima_minutos` (la duración de la franja puede llegar vacía); `POST /reglas/` ya no exige `area` y responde 409 si la regla ya está definida; `GET /reglas/catalogo/` trae los tipos nuevos; `POST /reservas/solicitudes/` responde 409 sobre un área con ingreso; `GET /reservas/franjas/` puede responder `no_disponible` en franjas libres; `/anuncios/` trae `fotos`; `/unidades/` tiene tres rutas nuevas y más campos; `GET /auth/usuarios/` trae `unidades`.
+- [ ] **Límites de texto** (13/10): nombre del conjunto, nombres y apellidos hasta 30 caracteres y teléfono hasta 10; la restricción `persona_telefono_valido` que él escribió pasa de 7–15 a 7–10 dígitos y hay dos migraciones nuevas (`conjuntos/0005`, `personas/0002`). `componentes/campo.html` ahora emite `maxlength`, así que sus campos (cédula, nombre del visitante, placa) también cortan al límite que ya tenían.
+- [ ] **El modo de uso de un área ya se puede cambiar** (13/10): `PATCH /areas/<id>/` acepta `modo_uso` y su respuesta trae siempre `cambio_de_modo` (vacío si el modo no cambió); se revirtió la decisión del 08/10.
 - [ ] **Alfa y beta cambiaron de significado** (alfa = del conjunto, beta = del área) y *paz y salvo* **restringe de verdad** desde el 10/10.
 - [ ] **El asistente tiene siete pasos**, un conjunto ya puede quedar operativo y hay una historia nueva, HU-39.
 - [ ] **Vistas y no tocadas, suyas:** la prueba de `ingresos` que usa la hora real y `visitantes/0001` sin la FK compuesta de `unidad_id` (sección 8).
@@ -78,7 +81,7 @@ Un agente no las resuelve ([abiertas](../06_Decisiones/abiertas.md)).
 - [ ] **Dejar operativo un conjunto no queda en la auditoría,** y un conjunto operativo no se vuelve a revisar si después deja de cumplir un requisito. *(06/10)*
 - [ ] **Días que no abre:** Alejo dijo en el chat del asistente que el motivo y los periodos quedaban para después, y el plan del motor los construyó. Falta que confirme que así lo quería. *(06/10)*
 - [ ] **Supuestos del agente por confirmar:** los de la D9 del plan de ingresos y los del día límite de pago, al final de [motor_reglas](../05_Modulos/motor_reglas.md) e [ingresos](../05_Modulos/ingresos.md). *(08/10)*
-- [ ] **Vigilancia ve «Zonas comunes» y «Reglas» en el menú, pero la API le responde sin permiso** (D5 b lo dejó así a propósito). Quitarlos cambia `test_vigilancia_solo_ve_las_secciones_permitidas_en_el_lateral`, que es de Camilo. *(08/10)*
+- [ ] **Vigilancia ve «Zonas comunes» en el menú, pero la API le responde sin permiso** (D5 b lo dejó así a propósito). «Reglas» se le quitó el 13/10 a pedido de Alejo; quitar también «Zonas comunes» cambia otra vez `test_vigilancia_solo_ve_las_secciones_permitidas_en_el_lateral`, que es de Camilo y ya se tocó una vez. Falta avisarle. *(08/10, 13/10)*
 - [ ] **El buscador de «Pagos» es un formulario `GET`:** lo que se escribe, incluida una cédula, queda en la dirección, en el historial y en el registro del servidor. Pasarlo a `POST` lo evita a cambio de no poder compartir ni recargar la búsqueda (Ley 1581). *(10/10)*
 - [ ] **Tope de peso en el front para los archivos:** `cliente_api/reservas.py`, `documentos.py` y `pagos.py` leen el archivo entero con `archivo.read()` y lo reenvían; la API es la que rechaza por peso. *(10/10, verificado el 11/10)*
 - [ ] **Límite de búsquedas de personas:** cuenta por conjunto, así que un administrador de dos conjuntos puede hacer 20 en cada uno. ¿Debe ser global? *(27/09)*
@@ -156,7 +159,7 @@ El agente no toca Notion por su cuenta. Alejo decidió el 11/10 que refleje la r
 
 - **Segunda parte de HU-39:** las palabras del conjunto en las pantallas, registrar una vivienda a mano dentro de una agrupación, y retirar viviendas y agrupaciones con confirmación ([historias](historias.md)).
 - **El vínculo `habitante`** ([unidades](../05_Modulos/unidades.md)): decidido el 06/10, sin historia, sin plan y sin construir. Mientras no exista, la familia entra a una zona como acompañante de un titular.
-- **Después de las zonas con ingreso:** las reglas de piscina de la Ley 1209, depurar el historial al cumplirse la retención, que el vigilante confirme que quien venció de verdad salió, cambiar el modo de un área ya creada, cupos que se actualicen solos, áreas típicas con ingreso en el asistente, el panel de Vigilancia como bento y enlazar los acompañantes con los visitantes de portería.
+- **Después de las zonas con ingreso:** las reglas de piscina de la Ley 1209, depurar el historial al cumplirse la retención, que el vigilante confirme que quien venció de verdad salió, cupos que se actualicen solos, áreas típicas con ingreso en el asistente, el panel de Vigilancia como bento y enlazar los acompañantes con los visitantes de portería.
 - **De HU-27:** el aviso a quienes residen en el apartamento, la liberación manual de un parqueadero sin salida y el listado de ocupaciones de más de N horas.
 - **Preguntas sueltas de Alejo** (`Archivo/Notas/Nuevas reglas.md`, 06/10): cuántos parqueaderos tiene y puede tener cada vivienda (toca HU-34), y las correcciones del docente.
 

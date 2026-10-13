@@ -4,8 +4,8 @@ tipo: modulo
 modulo: reglas
 hu: [HU-09, HU-10, HU-13]
 origen: "definición con Alejo en chat (2026-10-06) + maestro v1.4 (2026-09-14) §5.10 + guía de estructura §5.6 (2026-09-30)"
-actualizado: 2026-10-11
-revisado: 2026-10-11
+actualizado: 2026-10-13
+revisado: 2026-10-13
 ---
 
 # Motor de reglas
@@ -17,6 +17,7 @@ revisado: 2026-10-11
 > - **Construido el 2026-10-08, ya con commit:** el modo de uso, la permanencia máxima, los acompañantes y un ingreso abierto por persona, con [Plan_Zonas_Con_Ingreso](../07_Planes/hechos/Plan_Zonas_Con_Ingreso.md). Detalle en [ingresos](ingresos.md).
 > - **Construido el 2026-10-10, ya con commit y migrado (`reglas/0006`):** dos reglas beta para las áreas con reserva, *una reserva al día* y *sin franjas seguidas*.
 > - **Construido el 2026-10-10, ya con commit y migrado (`reglas/0007`):** *día límite de pago* (`DIA_LIMITE_DE_PAGO`, migración `reglas/0007`) y la mora real, con la fase F5 de [Plan_Pago_De_Administracion](../07_Planes/hechos/Plan_Pago_De_Administracion.md). *Paz y salvo* **ya restringe**. Se construyó sin haber verificado lo legal ([abiertas](../06_Decisiones/abiertas.md) 12.10 b). Detalle en [pagos](pagos.md).
+> - **Construido el 2026-10-13, sin commit:** el modo de uso de un área se puede cambiar al editarla. Revierte lo confirmado el 2026-10-08; detalle en *Cómo está construido*.
 > - El texto del maestro §5.10 queda al final, como antecedente.
 
 ## Definición vigente (2026-10-06)
@@ -64,7 +65,7 @@ Una **zona** es un área común del catálogo (`Area` en el código). Las zonas 
 
 | Regla | Parámetros | Aplica a | Descripción para el administrador |
 |---|---|---|---|
-| **Modo de uso** | Reserva o ingreso. Se elige al crear la zona y no cambia (confirmado el 2026-10-08) | — | Cómo se usa la zona. Con reserva, se aparta una franja con anticipación (salón, BBQ). Con ingreso, no se aparta: vigilancia registra a quien entra (gimnasio, piscina) |
+| **Modo de uso** | Reserva o ingreso. Se elige al crear la zona y **se puede cambiar al editarla** (2026-10-13; antes era fijo) | — | Cómo se usa la zona. Con reserva, se aparta una franja con anticipación (salón, BBQ). Con ingreso, no se aparta: vigilancia registra a quien entra (gimnasio, piscina) |
 | **Horario** | Hora de apertura y hora de cierre; el cierre va después de la apertura | Los dos modos | Desde qué hora y hasta qué hora presta servicio. Fuera de ese horario no se reserva ni se registra ingreso |
 | **Días que no abre** | Lista de renglones, cada uno con motivo obligatorio | Los dos modos | Días de la semana, fechas o periodos en que la zona no presta servicio. Cada uno lleva su motivo, que es lo que lee el residente |
 | **Aforo máximo** | Personas, entero desde 1. Obligatorio | Los dos modos | Cuántas personas caben. Con reserva, es el máximo de asistentes de cada reserva. Con ingreso, es el máximo de personas adentro al mismo tiempo |
@@ -86,7 +87,7 @@ Una **zona** es un área común del catálogo (`Area` en el código). Las zonas 
 
 **Confirmados por Alejo el 2026-10-08:**
 
-- El modo de uso no cambia después de crear la zona: para cambiarlo, se desactiva y se crea otra.
+- ~~El modo de uso no cambia después de crear la zona: para cambiarlo, se desactiva y se crea otra.~~ **Revertido por Alejo el 2026-10-13:** el modo se cambia al editar el área ([construccion](../06_Decisiones/construccion.md)).
 - La permanencia máxima va en minutos y la salida prevista no pasa de la hora de cierre.
 - Un ingreso abierto por persona en el conjunto.
 
@@ -109,7 +110,7 @@ El código tiene el modelo por niveles para las áreas con reserva, con pruebas 
 
 Cuando un residente envía una solicitud, `reglas/evaluador.py` → `evaluar(solicitud)` revisa **todas** las reglas y devuelve un resultado por cada una (no se detiene en la primera que falla, para poder decirle a la persona **todos** los motivos). El orden es: reglas del sistema, aforo del área, reglas del conjunto y reglas del área. Cada resultado dice su `nivel`: `sistema`, `alfa` o `beta`.
 
-- **Reglas del sistema** (`sistema.py`, antes `alfa.py`): están en el código, siempre activas, nadie las apaga. Son tres: quien solicita reside en la unidad, la franja no está en el pasado, y el área está activa y sin mantenimiento. «Dentro del horario» no está ahí: lo garantiza tomar el bloqueo, que rechaza una franja fuera del horario.
+- **Reglas del sistema** (`sistema.py`, antes `alfa.py`): están en el código, siempre activas, nadie las apaga. Son tres: quien solicita reside en la unidad, la franja no está en el pasado, y el área está activa, sin mantenimiento y se usa con reserva. «Dentro del horario» no está ahí: lo garantiza tomar el bloqueo, que rechaza una franja fuera del horario.
 - **El aforo** es un campo obligatorio del área, `Area.aforo_maximo` (de 1 a 10 000). Se evalúa siempre, como resultado de nivel `beta` y sin id de regla.
 - **Reglas alfa y beta** (`catalogo.py` + modelo `Regla`): las define Administración. Una regla **sin área** es del conjunto (alfa); **con área**, de esa área (beta). El nivel no lo escoge quien la crea: lo dice `NIVEL_POR_TIPO`.
 
@@ -139,6 +140,14 @@ Cuando un residente envía una solicitud, `reglas/evaluador.py` → `evaluar(sol
 - El requisito de reglas para quedar operativo cambió el 2026-10-06 con el plan del asistente: dejó de ser `reglas_beta` («al menos una regla vigente, de cualquier nivel») y es `reglas_del_conjunto`, que se cumple con la **anticipación máxima** del conjunto vigente. El tablero lo dice cuando se abre dentro del asistente ([conjuntos](conjuntos.md)).
 
 **Las dos reglas del 2026-10-10 (ya con commit).** `una_reserva_por_dia` y `sin_franjas_seguidas` están en `EVALUADOR_POR_TIPO` de `reglas/evaluador.py`. Solo aplican a áreas con reserva (`MODOS_POR_TIPO`). Además de evaluarse al enviar, la primera cambia lo que se ve: `reservas/servicios.franjas()` devuelve `no_disponible` para las franjas libres de un día que ya tiene una apartada o reservada. Que dos envíos simultáneos sobre franjas distintas del mismo día no pasen los dos lo garantiza `reservas/servicios.enviar`: su `select_for_update().select_related("area")` bloquea también la fila del área, así que los envíos de una misma área se evalúan uno después del otro. Lo prueba `tests/concurrencia/test_bloqueo_de_franjas.py`. La migración es `reglas/0006_reserva_al_dia_y_franjas_seguidas`, **sin aplicar en `admind_db`**: hasta correrla, la base rechaza los dos tipos. En el front son dos formularios sin campos en `apps/reglas/forms.py`; el tablero las pinta solas porque lee el catálogo.
+
+**Cambiar el modo de uso de un área (2026-10-13, sin commit).** `PATCH /areas/<id>/` acepta `modo_uso` y exige el dato del modo nuevo (la permanencia al pasar a ingreso, la duración de la franja al pasar a reserva); el del modo anterior queda vacío, como pide `area_modo_coherente`. No hubo migración: el modo sigue siendo un campo de `Area`, no un tipo del catálogo. Lo hace `areas/servicios.cambiar_modo`, en una transacción que toma la fila del área (la misma que toman `ingresos.registrar` y `reservas.enviar`, que así pasan antes o después del cambio):
+
+- **Lo que ya existe no se toca.** Las solicitudes apartadas o reservadas siguen válidas y quien está adentro sigue adentro hasta su salida o hasta que se le cumpla el tiempo. La respuesta trae `cambio_de_modo` con `reservas_por_cumplir` (apartadas o reservadas de hoy en adelante), `personas_adentro` y `reglas_retiradas`; si el modo no cambió, llega vacío. El front lo muestra una vez, en la lista de áreas, con enlace a las solicitudes del área.
+- **Las reglas del área que no aplican al modo nuevo se retiran**, una por una, con `reglas.servicios.retirar_las_de_otro_modo` (lee `MODOS_POR_TIPO`): cada una deja su `regla.retirar` en la auditoría y queda en el historial. *Días que no abre* aplica a los dos modos y se conserva. El cambio mismo queda como `area.cambiar_modo`.
+- **Una solicitud en trámite no se aparta** si su área pasó a ser con ingreso: la regla del sistema `area_disponible` exige también que el área sea con reserva, así que el envío se libera por reglas.
+- **Límite que se acepta:** una reserva que quedó en un área que ya es con ingreso no descuenta puestos del aforo de ese día.
+- `areas` importa `reglas`, `reservas` e `ingresos` dentro de la función, con `import` tardío, porque las tres ya importan `areas`.
 
 **Las migraciones del ingreso (2026-10-08, aplicadas en `admind_db` al 2026-10-10)** son `areas/0005_modo_de_uso` (las áreas que existen quedan con reserva) y `reglas/0005_acompanantes` (recoge los dos `CHECK` que cambian, `regla_tipo_valido` y `regla_nivel_coherente`).
 

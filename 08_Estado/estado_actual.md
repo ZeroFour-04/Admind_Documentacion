@@ -3,7 +3,7 @@ resumen: "Dónde está el proyecto hoy: commits, pruebas, migraciones, historias
 tipo: estado
 corte: 2026-10-11
 origen: "verificado en los tres repositorios y en admind_db el 2026-10-11"
-actualizado: 2026-10-11
+actualizado: 2026-10-13
 revisado: 2026-10-11
 ---
 
@@ -19,16 +19,16 @@ Esta nota dice **cómo está hoy**. Cómo se llegó aquí, día por día, está 
 
 | Qué | Cómo está |
 |---|---|
-| **Backend** (la API) | Rama `desarrollo` en **`d4e98e5`** («Correccion usuarios y correcciones minimas», 11/10), árbol limpio e igual a `origin/desarrollo`. 16 apps con código más `comun`; 5 solo con README (`casos`, `citas`, `infracciones`, `triage`, `importacion_respaldo`). 71 rutas en `apps/*/urls.py` |
-| **Frontend** (las pantallas) | Rama `desarrollo` en **`a946880`** (mismo mensaje, 11/10), árbol limpio e igual a `origin/desarrollo`. 15 apps con pantallas |
+| **Backend** (la API) | Rama `desarrollo` en **`87d67c5`** («limitar nombre de conjunto, nombres, apellidos y teléfono», 13/10), igual a `origin/desarrollo`. Sobre `0b627d1` de Camilo («sprint 4,5 y casos», 12/10) van el cambio de modo de uso de un área (`287621c`) y los límites de texto (`87d67c5`). 17 apps con código más `comun`; 4 solo con README (`citas`, `infracciones`, `triage`, `importacion_respaldo`). El conteo de rutas (71) es anterior a `casos` y a las campañas de reserva |
+| **Frontend** (las pantallas) | Rama `desarrollo` en **`0adf5eb`** («ocultar «Reglas» del menú de Vigilancia», 13/10), igual a `origin/desarrollo`. Sobre `7cd762c` de Camilo («Sprint 4,5 y casos», 12/10) van el cambio de modo de uso (`6c61ac4`), los límites de texto (`7121d94`) y el menú de Vigilancia (`0adf5eb`). 15 apps con pantallas, más `casos` |
 | **Documentación** | Rama `main` en `7566556`, igual a `origin/main`. La reorganización del 11/10 ([bitacora](bitacora.md)) está sin commit |
-| **Base de datos** | **Todas las migraciones están aplicadas en `admind_db`** y `makemigrations --check` no encuentra cambios |
-| **Pruebas del backend** | **650: 649 pasan y 1 falla** (64 s). La que falla es `test_toda_ruta_de_la_api_esta_cubierta`: cinco rutas sin registrar en la prueba del intruso ([pruebas_y_ejecucion](../02_Arquitectura/pruebas_y_ejecucion.md)) |
-| **Pruebas del frontend** | **373, todas pasan** (10 s) |
+| **Base de datos** | **Cinco migraciones sin aplicar en `admind_db`**, todas de Camilo: `areas/0006_area_condiciones_alquiler`, `reservas/0005_campana` y `casos/0001` a `0003`. Hasta correr `migrate`, el área sin la columna `condiciones_alquiler` rompe en tiempo de ejecución. Los límites de texto (`conjuntos/0005`, `personas/0002`) sí están aplicados. `makemigrations --check` no encuentra cambios |
+| **Pruebas del backend** | **672: 670 pasan y 2 fallan** (85 s). Las dos ya fallaban en `origin/desarrollo` `0b627d1` sola, es decir, vienen del commit de Camilo: `test_el_detalle_de_solicitud_incluye_condiciones_de_renta_de_su_area` (`reservas/tests.py` hace `salon.save()` sin conjunto activo) y `test_toda_ruta_de_la_api_esta_cubierta` (rutas nuevas sin registrar en la prueba del intruso) ([pruebas_y_ejecucion](../02_Arquitectura/pruebas_y_ejecucion.md)) |
+| **Pruebas del frontend** | **397, todas pasan** (14 s) |
 | **Historias con código** | **20 construidas (100 SP)**, 2 parciales (HU-27 y HU-33, 8 SP) y **16 sin empezar (80 SP)**, de 38 historias y 188 SP. Aparte: HU-39 (primera parte construida, sin puntos) y HU-40 (solo en Notion). Detalle en [historias](historias.md) |
 | **Sin historia** | El ingreso a zonas con aforo ([ingresos](../05_Modulos/ingresos.md)) está construido y no tiene historia ni número |
 | **Planes** | Ninguno activo. Los diez escritos están ejecutados ([planes](../07_Planes/planes.md)) |
-| **Plazo** | Entrega cerca del 2026-10-14 (fecha exacta sin confirmar). No hay que entregar las 38 historias ([backlog_y_plazo](backlog_y_plazo.md)) |
+| **Plazo** | Entrega cerca del 2026-10-21: el profesor la amplió una semana (Alejo, 2026-10-13); antes era cerca del 14/10. Fecha exacta sin confirmar. No hay que entregar las 38 historias ([backlog_y_plazo](backlog_y_plazo.md)) |
 
 ## Historias por grupo
 

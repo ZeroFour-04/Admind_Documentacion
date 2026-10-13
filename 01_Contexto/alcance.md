@@ -9,7 +9,7 @@ revisado: 2026-10-11
 # Alcance, en cuatro niveles
 
 > [!WARNING] Decisiones posteriores a este texto
-> - **Plazo:** entrega cerca del 2026-10-14 y no se entrega completo. Qué entra sigue abierto ([abiertas](../06_Decisiones/abiertas.md), §12.8); ningún agente recorta alcance por su cuenta.
+> - **Plazo:** entrega cerca del 2026-10-21 (ampliada una semana el 2026-10-13; antes, cerca del 14/10) y no se entrega completo. Qué entra sigue abierto ([abiertas](../06_Decisiones/abiertas.md), §12.8); ningún agente recorta alcance por su cuenta.
 > - **Roles (2026-09-29):** una persona tiene un solo rol vigente por conjunto. Donde 3.1 dice *unión de todos los roles*, ver [permisos](../05_Modulos/permisos.md).
 > - **Logo por conjunto (3.3):** desde el 2026-09-29 existe la foto 1:1 del conjunto (HU-21). Ver [conjuntos](../05_Modulos/conjuntos.md).
 > - **Viviendas (2026-10-06):** el asistente gana un paso que genera las viviendas del conjunto, y **tener al menos una vivienda pasa a ser requisito para quedar operativo**, además de los que lista 3.1. Es HU-39; la primera parte se construyó el 2026-10-06. Ver [construccion](../06_Decisiones/construccion.md).

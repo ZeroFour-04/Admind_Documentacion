@@ -1,6 +1,6 @@
 # AdMind — router para agentes de IA
 
-AdMind es una aplicación web para administrar conjuntos residenciales en Colombia (Ley 675 de 2001). Proyecto de semestre de dos personas, Alejo y Camilo, con entrega cerca del 2026-10-14 y sustentación ante jurado.
+AdMind es una aplicación web para administrar conjuntos residenciales en Colombia (Ley 675 de 2001). Proyecto de semestre de dos personas, Alejo y Camilo, con entrega cerca del 2026-10-21 (el profesor la amplió una semana el 2026-10-13) y sustentación ante jurado.
 
 **Este archivo solo enruta.** Toda la documentación vive en esta carpeta (`Admind_Documentacion/`, una bóveda de Obsidian) y las rutas de abajo son relativas a ella.
 

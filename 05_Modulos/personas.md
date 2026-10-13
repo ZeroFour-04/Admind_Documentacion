@@ -4,8 +4,8 @@ tipo: modulo
 modulo: personas
 hu: [HU-04, HU-07]
 origen: "maestro v1.4 (2026-09-14) §5.2"
-actualizado: 2026-10-11
-revisado: 2026-10-11
+actualizado: 2026-10-13
+revisado: 2026-10-13
 ---
 
 # Personas (identidad)
@@ -24,9 +24,9 @@ Persona                       -- TABLA GLOBAL: sin conjunto_id (R12)
   id : UUID                   (PK)
   tipo_documento ∈ {CC, TI, CE, PAS, PPT}
   numero_documento
-  nombres
-  apellidos
-  telefono                    (opcional; vacío o 7–15 dígitos, con `+` inicial opcional)
+  nombres                     (hasta 30 caracteres)
+  apellidos                   (hasta 30 caracteres)
+  telefono                    (opcional; hasta 10 caracteres: vacío o de 7 a 10 dígitos, con `+` inicial opcional)
   activo : bool
   UNIQUE (tipo_documento, numero_documento)
 

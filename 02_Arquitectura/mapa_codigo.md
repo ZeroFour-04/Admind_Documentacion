@@ -2,7 +2,7 @@
 resumen: "Mapa del código: qué hay en cada carpeta de los tres repos, qué hace cada app del backend y qué nota la explica."
 tipo: arquitectura
 origen: "guía de estructura §2 y §5.5 (2026-09-30)"
-actualizado: 2026-10-11
+actualizado: 2026-10-13
 revisado: 2026-10-11
 ---
 
@@ -50,7 +50,7 @@ Cada carpeta de `apps/` tiene un `README.md` que dice para qué existe. Las apps
 | `permisos` | Catálogo de 5 roles, `Asignacion` (un rol vigente por persona y conjunto), permisos efectivos | (se usan desde `cuentas`: `/auth/usuarios/<id>/roles/`) | HU-06 |
 | `unidades` | `Agrupacion` (torre, bloque, manzana), `Unidad` (apartamento o casa) y `VinculoUnidad` (propietario, reside…) con histórico; a quién avisar de qué; el generador de viviendas (`estructura.py`, funciones puras) | `/unidades/`, `/unidades/<id>/vinculos/…`, `/unidades/agrupaciones/`, `/unidades/estructura/` y `…/previsualizar/` | HU-08, HU-39 |
 | `documentos` | `Reglamento`: el PDF del reglamento del conjunto, guardado en la base; subir otro no borra el anterior | `GET` y `PUT /documentos/reglamento/`, `GET /documentos/reglamento/archivo/` | HU-33 (solo el reglamento), HU-03 |
-| `areas` | `Area` común: nombre por conjunto, **modo de uso** (con reserva o con ingreso, fijo desde que se crea), horario, aforo máximo obligatorio, mantenimiento; la duración de la franja (reserva) o la permanencia máxima (ingreso) | `/areas/`, `/areas/<id>/`, `/areas/<id>/desactivar/` | HU-09 |
+| `areas` | `Area` común: nombre por conjunto, **modo de uso** (con reserva o con ingreso; se puede cambiar al editar), horario, aforo máximo obligatorio, mantenimiento; la duración de la franja (reserva) o la permanencia máxima (ingreso) | `/areas/`, `/areas/<id>/`, `/areas/<id>/desactivar/` | HU-09 |
 | `reglas` | Reglas por niveles, configurables y versionadas: **alfa** (del conjunto, sin área) y **beta** (de un área), una sola abierta por tipo; reglas **del sistema** fijas (`sistema.py`); el catálogo con las descripciones; el evaluador | `/reglas/`, `/reglas/catalogo/`, `/reglas/<id>/`, `/reglas/<id>/retirar/` | HU-10, HU-13 |
 | `reservas` | `Solicitud`: franjas, bloqueo de 3 min, envío y evaluación; el pago declarado (`pago.py`, `pago_declarado_por` y `pago_declarado_en`) y `ComprobanteDePago`, el archivo dentro de la base. La validación del archivo por su firma está en `apps/comun/archivos/comprobantes.py` | `/reservas/franjas/`, `/reservas/solicitudes/…`, `…/<id>/pago/`, `…/<id>/pago/retirar/`, `…/<id>/comprobantes/` y `GET /reservas/comprobantes/<id>/` | HU-11, HU-12, HU-13, HU-14, HU-16 |
 | `ingresos` | `Ingreso`: quién está adentro de una zona con ingreso, con aforo simultáneo, salida manual o por tiempo y su evaluador propio. Sin historia | `/ingresos/`, `/ingresos/zonas/`, `/ingresos/residentes/buscar/`, `/ingresos/<id>/salida/` | — |

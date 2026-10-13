@@ -2,7 +2,7 @@
 resumen: "Cómo correr los dos servidores y las pruebas, cuántas hay, qué cubre cada archivo de pruebas y cuál falla hoy."
 tipo: arquitectura
 origen: "guía de estructura §4.8, §8 y §9 (2026-09-30) + plan de los Sprints 2 y 3 §0.4; conteos y archivos verificados el 2026-10-11"
-actualizado: 2026-10-11
+actualizado: 2026-10-13
 revisado: 2026-10-11
 ---
 
@@ -28,14 +28,14 @@ cd "/c/Users/Alejandro/Documents/A D M I N D/Frontend/Admind_Front-End"
 
 ## Cómo están hoy (2026-10-11)
 
-Sobre Backend `d4e98e5` y Frontend `a946880`, con los dos árboles limpios:
+Sobre Backend `d4e98e5` y Frontend `a946880`, más los cambios sin commit del 13/10:
 
 | Suite | Pruebas | Resultado | Tiempo |
 |---|---|---|---|
-| Backend | **650** | 649 pasan y **1 falla** | 64 s |
-| Frontend | **373** | Todas pasan | 10 s |
+| Backend | **672** | 670 pasan y **2 fallan** | 85 s |
+| Frontend | **397** | Todas pasan | 14 s |
 
-`makemigrations --check` no encuentra cambios y `showmigrations` no deja ninguna sin aplicar en `admind_db`.
+Las dos del backend vienen del commit `0b627d1` de Camilo (ver [estado_actual](../08_Estado/estado_actual.md)). `makemigrations --check` no encuentra cambios; en `admind_db` quedan cinco migraciones de Camilo sin aplicar (`areas/0006`, `reservas/0005`, `casos/0001` a `0003`).
 
 > [!WARNING] La que falla
 > `tests/aislamiento/test_intruso.py::test_toda_ruta_de_la_api_esta_cubierta`. No están en las listas de la prueba cinco rutas: `usuario-perfil` y `usuario-eliminar` (desde el 29/09), y `solicitudes-bandeja`, `solicitudes-area` y `solicitud-decision` (HU-14, desde el 05/10). Se arregla registrándolas, no tocando la prueba ([pendientes](../08_Estado/pendientes.md)).
@@ -67,7 +67,7 @@ Rutas relativas a `Backend/Admind_Backend/`.
 | `apps/unidades/tests.py` | Vínculos y la API de la estructura: vista previa que no guarda, generar, repetir sin duplicar, mixtos, topes y orden natural |
 | `apps/unidades/test_estructura.py` | El generador de viviendas, **sin base de datos**: son funciones puras |
 | `apps/documentos/tests.py` | Subir, ver y descargar el reglamento, los rechazos y quién puede |
-| `apps/areas/tests.py` | El catálogo de áreas, el aforo obligatorio y el modo de uso |
+| `apps/areas/tests.py` | El catálogo de áreas, el aforo obligatorio, el modo de uso y su cambio (qué queda y qué reglas se retiran) |
 | `apps/reglas/tests.py` | Los niveles, la regla única por tipo, los tipos retirados, el catálogo, las restricciones de la base y el evaluador |
 | `apps/reservas/tests.py` | Franjas, bloqueo, envío, las reglas de reserva, la decisión, y declarar, retirar, subir y descargar el pago |
 | `apps/ingresos/tests.py` | Aforo, acompañantes, horario, vencimiento con la hora simulada, búsqueda, restricciones de la base y la API por rol |

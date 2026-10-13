@@ -2,8 +2,8 @@
 resumen: "El frontend por dentro: config sin base de datos, cliente_api, la sesión del front y el estado de cada pantalla."
 tipo: arquitectura
 origen: "guía de estructura §6 (2026-09-30)"
-actualizado: 2026-10-11
-revisado: 2026-10-11
+actualizado: 2026-10-13
+revisado: 2026-10-13
 ---
 
 # El frontend por dentro
@@ -42,7 +42,7 @@ Cada app del front tiene `views.py` (funciones), `urls.py`, a veces `forms.py` (
 | Selector de conjunto, asistente de creación, *Color y foto* (8 acentos o color propio, foto 1:1 con recortador) | `conjuntos` | Real. El asistente tiene siete pasos desde el 06/10: datos, viviendas, administración, áreas, reglas (el tablero de `reglas`), reglamento y resumen. **Aquí también está Alpine** (29/09), y desde el 06/10 en el paso de viviendas (`static/js/viviendas.js`): arma la descripción del conjunto, y lo que se crea lo calcula la API |
 | Inicio | `paneles` | **Maqueta** con datos de ejemplo |
 | Zonas comunes (la tabla de todas las zonas con su modo y sus cupos, el calendario y la solicitud) | `reservas` | Real. **Aquí está Alpine**, solo en la solicitud en trámite. Desde el 10/10 también el bloque «Pago» (`_pago.html`, sin JavaScript): en la tarjeta de las solicitudes del área, para Administración (declarar con comprobante opcional y retirar) y Secretaría (solo ver), y en el detalle del residente (ve si el pago está declarado y sube su comprobante). El archivo del comprobante lo pide el servidor del front a la API y lo entrega por `/reservas/comprobantes/<id>/` |
-| Áreas comunes (con el modo de uso al crear y su columna «Cómo se usa») | `areas` | Real (solo con `area.gestionar`) |
+| Áreas comunes (con el modo de uso al crear y al editar, su columna «Cómo se usa» y el aviso de lo que quedó al cambiar de modo) | `areas` | Real (solo con `area.gestionar`) |
 | Reglas | `reglas` | Real |
 | Anuncios | `anuncios` | Real |
 | Notificaciones | `notificaciones` | Real |
@@ -54,7 +54,7 @@ Cada app del front tiene `views.py` (funciones), `urls.py`, a veces `forms.py` (
 
 **Quién ve Usuarios y Unidades.** El lateral los muestra solo si el rol de la sesión es Superusuario, Administración ("Administrador") o Secretaría; con otro rol, no aparecen. Es solo presentación: la API decide con el permiso de cada petición. "Eliminar usuario" no borra a la persona: cierra sus roles en el conjunto activo (`retirar_roles_del_conjunto`), y es la forma de desvincularla.
 
-**Qué ve Vigilancia.** Desde el 01/10 el lateral le muestra solo Inicio, Zonas comunes, Reglas, Anuncios y Visitante; Áreas comunes, Notificaciones, Solicitudes, Conjunto y los enlaces de gestión se le ocultan por el rol, no por un permiso.
+**Qué ve Vigilancia.** El lateral le muestra Inicio, Zonas comunes, Anuncios, Visitante y, desde el 08/10, «Ingreso a zonas»; Áreas comunes, Notificaciones, Solicitudes, Conjunto y los enlaces de gestión se le ocultan por el rol, no por un permiso. **Desde el 13/10 tampoco ve «Reglas»** (pedido de Alejo): el ítem se oculta por el rol, la ruta `/reglas/` no se cierra y, si la abre a mano, la API le responde sin `regla.ver`.
 
 `templates/componentes/` guarda lo reutilizable: `barra_superior.html` (nombre y foto del conjunto activo o sus iniciales, el tipo de usuario y el ícono del perfil), `lateral.html` (marca solo el ítem activo leyendo la URL; desde el 06/10, bajo 900px es un panel que sale desde la izquierda: lo abre el botón de menú de la barra y lo maneja `static/js/lateral.js`, que carga `base/aplicacion.html`; en ese ancho la barra queda en una sola fila y el lateral muestra en su pie el tipo de usuario y «Cambiar de conjunto», y bajo 480px la marca en su cabeza), `_enlaces_gestion.html` (los dos enlaces de gestión), `campo.html`, `errores_formulario.html` y `confirmacion_de_contenido.html` (el panel de HU-12).
 

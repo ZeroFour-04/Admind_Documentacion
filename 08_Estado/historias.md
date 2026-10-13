@@ -3,7 +3,7 @@ resumen: "Las 40 historias de usuario: sprint previsto, story points, estado en 
 tipo: estado
 corte: 2026-10-11
 origen: "Notion (títulos, puntos y sprint) + código verificado el 2026-10-11"
-actualizado: 2026-10-11
+actualizado: 2026-10-13
 revisado: 2026-10-11
 ---
 
@@ -104,7 +104,7 @@ Construidos el 27/09 con el plan F0 a F10. Cada criterio de aceptación tiene un
 | HU-06 | Todos los criterios con prueba. «Nunca cero Administración» responde 409 y tiene prueba con dos hilos. Desde el 29/09, **un solo rol por conjunto**; desde el 11/10, al registrar a alguien el rol marcado es Residente | Su criterio en Notion y en el Excel todavía dice varios roles |
 | HU-07 | Todos los criterios con prueba | El máximo de 20 búsquedas por hora se cuenta **por conjunto**; falta decidir si debe ser global |
 | HU-08 | Todos los criterios con prueba. Solo se vincula a quien ya tiene un rol en el conjunto. Desde el 11/10, en el detalle de la vivienda se busca a la persona y se puede crear un residente | — |
-| HU-09 | Todos los criterios con prueba. Franjas por bloques fijos (D1 a). Desde el 06/10, **aforo máximo obligatorio**; desde el 08/10, **modo de uso** (con reserva o con ingreso), fijo desde que se crea | Sus criterios en Notion describen el modelo anterior |
+| HU-09 | Todos los criterios con prueba. Franjas por bloques fijos (D1 a). Desde el 06/10, **aforo máximo obligatorio**; desde el 08/10, **modo de uso** (con reserva o con ingreso), que desde el 13/10 se puede cambiar al editar | Sus criterios en Notion describen el modelo anterior |
 | HU-10 | Reconstruida por niveles el 06/10: reglas del conjunto (alfa) y del área (beta), una sola abierta por tipo, con descripción fija, versionado y días que no abre con motivo. El 10/10 ganó dos reglas de área, *una reserva al día* y *sin franjas seguidas* | Sus criterios en Notion describen el modelo anterior y no traen las dos reglas nuevas |
 | HU-11 | Todos los criterios con prueba, incluida la de concurrencia con 10 hilos | Probar a mano el `sendBeacon` que libera el bloqueo al cerrar la pestaña |
 | HU-12 | 3 de 5 criterios con prueba automática | «Corregir sin perder lo escrito» y «el reloj no se detiene» necesitan prueba manual. La alta demanda depende de PB-24, que no existe |

@@ -12,7 +12,11 @@ Cómo se escribe y se cierra uno: [abrir_y_cerrar_un_plan](../09_Protocolos/abri
 
 ## Activos
 
-**Ninguno.** `activos/` está vacía desde el 2026-10-11: los diez planes escritos están ejecutados, con commit y con sus migraciones aplicadas en `admind_db`.
+| Plan | Escrito | Historia | Qué cubre | Estado |
+|---|---|---|---|---|
+| [Plan_Dashboard_De_Solicitudes](activos/Plan_Dashboard_De_Solicitudes.md) | 2026-10-13 | HU-14 y HU-29 | El dashboard de gestión con pestañas (Reservas, Casos y Citas sin función): cierra HU-14 con categoría de rechazo, descarte de Secretaría y aviso al residente; construye los casos; y la Secretaría deja de aprobar reservas. F0 a F5, D1 a D9 | Sin empezar. Faltan D5 a D9 y traer lo que hay en GitHub (F0) |
+
+Los diez planes anteriores están ejecutados, con commit y con sus migraciones aplicadas en `admind_db`.
 
 Lo que sigue sin plan está en [pendientes](../08_Estado/pendientes.md), sección 9. Qué entra antes de la entrega sigue sin decidir ([abiertas](../06_Decisiones/abiertas.md), 12.8).
 
