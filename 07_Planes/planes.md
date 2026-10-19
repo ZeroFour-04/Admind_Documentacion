@@ -14,7 +14,7 @@ Cómo se escribe y se cierra uno: [abrir_y_cerrar_un_plan](../09_Protocolos/abri
 
 **Ninguno.** `activos/` está vacía: los once planes escritos están ejecutados.
 
-Los diez primeros tienen commit y sus migraciones aplicadas en `admind_db`; al del dashboard (13/10) le faltan las dos cosas.
+Los once tienen commit y sus migraciones aplicadas en `admind_db`; el del dashboard (13/10) quedó en Backend `85f9f23` y Frontend `d0e4af7`.
 
 Lo que sigue sin plan está en [pendientes](../08_Estado/pendientes.md), sección 9. Qué entra antes de la entrega sigue sin decidir ([abiertas](../06_Decisiones/abiertas.md), 12.8).
 

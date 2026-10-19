@@ -17,7 +17,7 @@ A D M I N D/
 │   ├── apps/                        ← un módulo por tema del negocio
 │   │   ├── comun/                   ← piezas compartidas: aislamiento, modelo base, bloqueo, archivos (validación de comprobantes)
 │   │   ├── personas/ cuentas/ conjuntos/ permisos/ unidades/
-│   │   ├── areas/ reglas/ reservas/ ingresos/ anuncios/ notificaciones/ auditoria/ visitantes/ parqueaderos/ pagos/ documentos/
+│   │   ├── areas/ reglas/ reservas/ casos/ ingresos/ anuncios/ notificaciones/ auditoria/ visitantes/ parqueaderos/ pagos/ documentos/
 │   │   └── citas/ infracciones/ …  ← solo README: módulos futuros, sin código
 │   ├── tests/                       ← pruebas transversales (aislamiento, concurrencia, esquema, archivos)
 │   ├── bd/                          ← notas sobre la base de datos
@@ -29,7 +29,7 @@ A D M I N D/
 │   ├── apps/                        ← un módulo por sección de la interfaz: vistas, formularios, plantillas
 │   ├── templates/base/              ← el esqueleto de toda página
 │   ├── templates/componentes/       ← piezas reutilizables: barra, lateral, campo, confirmación
-│   ├── static/css  static/js        ← estilos propios y el JavaScript: reservas.js, calendario-reservas.js (el calendario, de Camilo), viviendas.js (el paso de viviendas del asistente), identidad.js, usuarios.js, directorio-usuarios.js (la lista de usuarios por rol), busqueda.js (la búsqueda por palabras que comparten los buscadores nuevos), vinculos.js (el buscador de personas y el modal de residente en la vivienda), visitantes.js, unidades.js (buscador de viviendas), lateral.js (menú en pantallas angostas) y vendor/alpine.min.js
+│   ├── static/css  static/js        ← estilos propios y el JavaScript: reservas.js, calendario-reservas.js (el calendario, de Camilo), viviendas.js (el paso de viviendas del asistente), identidad.js, conjuntos.js (el diálogo de «Eliminar conjunto» del resumen), usuarios.js, directorio-usuarios.js (la lista de usuarios por rol), busqueda.js (la búsqueda por palabras que comparten los buscadores nuevos), vinculos.js (el buscador de personas y el modal de residente en la vivienda), visitantes.js, unidades.js (buscador de viviendas), lateral.js (menú en pantallas angostas) y vendor/alpine.min.js
 │   ├── design-system/               ← tokens de color, tipografía y componentes CSS (de Claude Design)
 │   └── tests/                       ← pruebas de pantallas con la API simulada
 │
@@ -46,13 +46,14 @@ Cada carpeta de `apps/` tiene un `README.md` que dice para qué existe. Las apps
 |---|---|---|---|
 | `personas` | `Persona` global, única por tipo y número de documento (normalizado) | `GET /personas/buscar/`, `POST /personas/vincular/` | HU-04, HU-07 |
 | `cuentas` | `Usuario` (entra con correo), `TokenDeSesion`, 2FA, recuperación, usuarios del conjunto | `/auth/login/`, `/auth/logout/`, `/auth/conjuntos/`, `/auth/conjunto-activo/`, `/auth/usuarios/…` (incluye `perfil/`, `<id>/eliminar/` y `<id>/roles/<asignación>/cambiar/`), `/auth/recuperar/…`, `/auth/dos-factores/…` | HU-01, HU-02, HU-06, HU-26 |
-| `conjuntos` | `Conjunto` (acento y `color_personalizado`), `LogoDeConjunto` (la foto 1:1), asistente de creación con sus seis requisitos para quedar operativo | `POST /conjuntos/`, `/conjuntos/actual/…` (activar, identidad, logo), `/conjuntos/logos/<huella>/` | HU-03, HU-21 |
+| `conjuntos` | `Conjunto` (acento y `color_personalizado`), `LogoDeConjunto` (la foto 1:1), asistente de creación con sus seis requisitos para quedar operativo | `POST /conjuntos/`, `/conjuntos/actual/…` (activar, identidad, logo; `DELETE` da de baja el conjunto activo, solo el Superusuario), `/conjuntos/logos/<huella>/` | HU-03, HU-21 |
 | `permisos` | Catálogo de 5 roles, `Asignacion` (un rol vigente por persona y conjunto), permisos efectivos | (se usan desde `cuentas`: `/auth/usuarios/<id>/roles/`) | HU-06 |
 | `unidades` | `Agrupacion` (torre, bloque, manzana), `Unidad` (apartamento o casa) y `VinculoUnidad` (propietario, reside…) con histórico; a quién avisar de qué; el generador de viviendas (`estructura.py`, funciones puras) | `/unidades/`, `/unidades/<id>/vinculos/…`, `/unidades/agrupaciones/`, `/unidades/estructura/` y `…/previsualizar/` | HU-08, HU-39 |
 | `documentos` | `Reglamento`: el PDF del reglamento del conjunto, guardado en la base; subir otro no borra el anterior | `GET` y `PUT /documentos/reglamento/`, `GET /documentos/reglamento/archivo/` | HU-33 (solo el reglamento), HU-03 |
 | `areas` | `Area` común: nombre por conjunto, **modo de uso** (con reserva o con ingreso; se puede cambiar al editar), horario, aforo máximo obligatorio, mantenimiento; la duración de la franja (reserva) o la permanencia máxima (ingreso) | `/areas/`, `/areas/<id>/`, `/areas/<id>/desactivar/` | HU-09 |
 | `reglas` | Reglas por niveles, configurables y versionadas: **alfa** (del conjunto, sin área) y **beta** (de un área), una sola abierta por tipo; reglas **del sistema** fijas (`sistema.py`); el catálogo con las descripciones; el evaluador | `/reglas/`, `/reglas/catalogo/`, `/reglas/<id>/`, `/reglas/<id>/retirar/` | HU-10, HU-13 |
 | `reservas` | `Solicitud`: franjas, bloqueo de 3 min, envío y evaluación; el pago declarado (`pago.py`, `pago_declarado_por` y `pago_declarado_en`) y `ComprobanteDePago`, el archivo dentro de la base. La validación del archivo por su firma está en `apps/comun/archivos/comprobantes.py` | `/reservas/franjas/`, `/reservas/solicitudes/…`, `…/<id>/pago/`, `…/<id>/pago/retirar/`, `…/<id>/comprobantes/` y `GET /reservas/comprobantes/<id>/` | HU-11, HU-12, HU-13, HU-14, HU-16 |
+| `casos` | `Caso` y `FotoDeCaso`: el residente abre un caso (con una foto opcional); la Secretaría lo prioriza, lo descarta con causal o lo redirige; Administración lo atiende, lo responde (respuesta obligatoria) o lo rechaza. Estados: Por revisar, En revisión, Redirigido, Resuelto y Rechazado; cada cambio avisa y queda en la auditoría | `GET` y `POST /casos/`, `/casos/<id>/`, `…/tomar/`, `…/prioridad/`, `…/redirigir/`, `…/descartar/`, `…/responder/`, `…/rechazar/` y `…/fotos/<id>/` | HU-29 |
 | `ingresos` | `Ingreso`: quién está adentro de una zona con ingreso, con aforo simultáneo, salida manual o por tiempo y su evaluador propio. Sin historia | `/ingresos/`, `/ingresos/zonas/`, `/ingresos/residentes/buscar/`, `/ingresos/<id>/salida/` | — |
 | `anuncios` | Anuncios del conjunto o de una vivienda, con hasta 4 fotos (`FotoDeAnuncio`) | `/anuncios/`, `/anuncios/<id>/`, `/anuncios/<id>/fotos/<foto_id>/` | HU-25 |
 | `notificaciones` | Bandeja en la app + correo; `canal.notificar(aviso, personas)` | `GET /notificaciones/` | HU-25, HU-08 |

@@ -1,11 +1,11 @@
 ---
-resumen: "El asistente de creación (siete pasos, seis requisitos para quedar operativo, el reglamento en PDF) y la identidad del conjunto: acento o color propio y foto 1:1."
+resumen: "El asistente de creación (siete pasos, seis requisitos para quedar operativo, el reglamento en PDF), la identidad del conjunto (acento o color propio y foto 1:1) y la baja del conjunto."
 tipo: modulo
 modulo: conjuntos
 hu: [HU-03, HU-21, HU-33]
-origen: "guía de estructura §5.7 (2026-09-30)"
-actualizado: 2026-10-11
-revisado: 2026-10-11
+origen: "guía de estructura §5.7 (2026-09-30); la baja, del código al 2026-10-13"
+actualizado: 2026-10-13
+revisado: 2026-10-13
 ---
 
 # Conjuntos: asistente de creación e identidad
@@ -44,6 +44,18 @@ Cada paso se guarda apenas se completa: se puede salir y volver.
 > [!WARNING] Lo que no hace todavía
 > Dejar operativo un conjunto no queda en la auditoría. Un conjunto operativo no se vuelve a revisar si después deja de cumplir un requisito. Y reservar no exige que el conjunto esté operativo (plan D7 a del 27/09). Los tres están en [pendientes](../08_Estado/pendientes.md).
 
+## Dar de baja un conjunto (2026-10-13, de Camilo)
+
+Lo subió Camilo en `7eb5b5a` (backend) y `8279616` (front), sin que hubiera historia ni plan.
+
+- **API:** `DELETE /conjuntos/actual/` llama a `servicios.eliminar(conjunto)`. En una sola transacción deja `activo = false` y `operativo = false` y pone en `None` el conjunto activo de **todas** las sesiones que lo tenían. No borra ninguna fila: es baja lógica ([eliminacion](../03_Reglas/eliminacion.md)). Responde 204; si ya estaba dado de baja, 400 «Este conjunto ya fue eliminado.».
+- **Quién:** solo el Superusuario, dentro del conjunto. La vista pregunta `es_superusuario(request.user.persona)`; **no es un permiso del catálogo** (no existe `conjunto.eliminar`).
+- **Front:** en el bloque «Datos básicos» del resumen, el Superusuario ve «Eliminar conjunto»; un diálogo pregunta «¿Está seguro de eliminar el conjunto …?» con «Sí, eliminar» y «No». Al confirmar, la vista limpia el conjunto activo y los permisos de la sesión y lleva al selector. Quien no es Superusuario no ve el botón, y si manda el `POST` a mano, la pantalla responde «No tienes permiso para eliminar este conjunto.» sin llamar a la API.
+- **El selector cambió con esto.** `permisos.servicios.conjuntos_disponibles` ya no filtra por `activo` para el Superusuario: ve **todos** los conjuntos, también los dados de baja y los que todavía no son operativos (prueba `test_superusuario_ve_todos_los_conjuntos_creados_incluidos_los_inactivos`). Quien no es Superusuario sigue viendo solo los activos donde tiene un rol vigente. Como `puede_operar_en` usa esa misma consulta, el Superusuario puede **volver a entrar** a un conjunto dado de baja, y el selector no lo marca.
+
+> [!WARNING] Contra lo diseñado
+> [eliminacion](../03_Reglas/eliminacion.md) pide para desactivar un conjunto una **doble confirmación escrita** (el nombre exacto) y que sea reversible 30 días. Lo construido pide un «Sí / No» en el front y nada en la API; no hay cómo reactivarlo, y la baja **no deja fila en la auditoría**. Está anotado en [pendientes](../08_Estado/pendientes.md) (sección 5) para que Alejo decida; la nota de diseño no se tocó.
+
 ## Identidad: color y foto (HU-21)
 
 **El color.** `Acento` suma una novena opción, `personalizado`, y `Conjunto` un campo `color_personalizado` (hex `#rrggbb` en minúsculas). La regla se cumple en tres capas:
@@ -70,6 +82,7 @@ El backend **no calcula** la paleta ni el contraste: guarda el hex y ya. Pintarl
 - [implementacion](../04_Diseno/implementacion.md) — cómo pinta el front el color y la foto
 - [sistema_visual](../04_Diseno/sistema_visual.md) — el catálogo de 8 acentos y sus cuatro sitios
 - [permisos](permisos.md) — `conjunto.crear` y `conjunto.activar`
+- [eliminacion](../03_Reglas/eliminacion.md) — la baja lógica y la doble confirmación que pide el diseño
 - [alcance](../01_Contexto/alcance.md) — qué es un conjunto operativo (3.1)
 - [Plan_Asistente_De_Creacion](../07_Planes/hechos/Plan_Asistente_De_Creacion.md) — el plan del asistente completo
 - [historias](../08_Estado/historias.md) — HU-03, HU-21 y HU-33

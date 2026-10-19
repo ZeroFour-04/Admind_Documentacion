@@ -1,7 +1,7 @@
 ---
 resumen: "Cómo correr los dos servidores y las pruebas, cuántas hay, qué cubre cada archivo de pruebas y cuál falla hoy."
 tipo: arquitectura
-origen: "guía de estructura §4.8, §8 y §9 (2026-09-30) + plan de los Sprints 2 y 3 §0.4; conteos y archivos verificados el 2026-10-11"
+origen: "guía de estructura §4.8, §8 y §9 (2026-09-30) + plan de los Sprints 2 y 3 §0.4; archivos verificados el 2026-10-11 y conteos el 2026-10-13"
 actualizado: 2026-10-13
 revisado: 2026-10-13
 ---
@@ -28,14 +28,14 @@ cd "/c/Users/Alejandro/Documents/A D M I N D/Frontend/Admind_Front-End"
 
 ## Cómo están hoy (2026-10-13)
 
-Sobre Backend `87d67c5` y Frontend `0adf5eb`, más lo del dashboard de gestión del 13/10 (HU-14 y HU-29), que está sin commit:
+Sobre Backend `7eb5b5a` y Frontend `8279616`, con el árbol de trabajo limpio:
 
 | Suite | Pruebas | Resultado | Tiempo |
 |---|---|---|---|
-| Backend | **706** | Todas pasan | 96 s |
-| Frontend | **414** | Todas pasan | 14 s |
+| Backend | **708** | Todas pasan | 47 s |
+| Frontend | **417** | Todas pasan | 9 s |
 
-`makemigrations --check` no encuentra cambios. En `admind_db` faltan por aplicar `reservas/0006_categoria_de_rechazo` y `casos/0004_ciclo_del_caso`.
+`showmigrations` no deja ninguna sin aplicar en `admind_db`. **`makemigrations --check` falla:** pide `personas/0003`, porque la restricción `persona_telefono_valido` del modelo (7 a 10 dígitos) ya no coincide con la `personas/0002`, que Camilo editó a mano el 13/10 después de aplicada (7 a 15) ([pendientes](../08_Estado/pendientes.md), sección 8). Las pruebas pasan porque su base se crea desde las migraciones, y la de `admind_db` quedó con la versión vieja.
 
 > [!NOTE] La prueba del intruso ya pasa
 > Desde el 13/10 todas las rutas de la API están registradas en `tests/aislamiento/test_intruso.py`: las de HU-14, las de casos, `campanas`, `usuario-eliminar` y `usuario-perfil` (esta, como ruta sin conjunto). Una ruta nueva que no se registre vuelve a poner en rojo `test_toda_ruta_de_la_api_esta_cubierta`.
@@ -62,7 +62,7 @@ Rutas relativas a `Backend/Admind_Backend/`.
 | `apps/cuentas/tests.py` | Login, token, conjunto activo, usuarios del conjunto, recuperación de contraseña y su límite de 3 enlaces por hora (con la caché vaciada antes de cada prueba) |
 | `apps/cuentas/test_dos_factores.py` | El segundo factor y el enlace por correo que lo quita |
 | `apps/permisos/tests.py`, `test_roles.py` | Catálogo, permisos efectivos, el rol único por conjunto, el cambio de rol y quién puede crear conjuntos |
-| `apps/conjuntos/tests.py` | El asistente: que un conjunto completo queda operativo y qué falta cuando no |
+| `apps/conjuntos/tests.py` | El asistente: que un conjunto completo queda operativo y qué falta cuando no; que el Superusuario ve todos los conjuntos, también los inactivos, y que puede darlo de baja (204) |
 | `apps/conjuntos/test_identidad.py` | El color propio y la foto 1:1 (PNG, JPG y WebP no cuadrados) |
 | `apps/unidades/tests.py` | Vínculos y la API de la estructura: vista previa que no guarda, generar, repetir sin duplicar, mixtos, topes y orden natural |
 | `apps/unidades/test_estructura.py` | El generador de viviendas, **sin base de datos**: son funciones puras |
@@ -94,7 +94,7 @@ En `Frontend/Admind_Front-End/tests/`. Cada uno prueba sus pantallas con la API 
 |---|---|
 | `test_recuperacion.py`, `test_segundo_factor.py`, `test_cuenta_perfil.py` | Recuperar la contraseña, pedir y confirmar el enlace que quita el segundo factor, y el perfil |
 | `test_identidad.py`, `test_acentos.py` | Selector, barra, lateral, la rampa del color propio, la advertencia de contraste y el marcador con iniciales |
-| `test_asistente_viviendas.py`, `test_asistente_reglamento.py` | Los pasos 2 y 6 del asistente |
+| `test_asistente_viviendas.py`, `test_asistente_reglamento.py` | Los pasos 2 y 6 del asistente y el botón «Eliminar conjunto» del resumen (solo el Superusuario, vuelve al selector) |
 | `test_usuarios.py`, `test_unidades.py` | Usuarios por rol, el rol por defecto, viviendas, vínculos y crear un residente |
 | `test_areas.py`, `test_reglas.py`, `test_reservas.py`, `test_triage.py` | Áreas con su modo de uso, el tablero de reglas, la reserva con el bloque de pago y las solicitudes |
 | `test_ingresos.py`, `test_visitantes.py`, `test_parqueaderos.py`, `test_pagos.py` | Vigilancia y su historial, portería con parqueadero y salida, el catálogo de parqueaderos y los pagos |
@@ -103,7 +103,7 @@ En `Frontend/Admind_Front-End/tests/`. Cada uno prueba sus pantallas con la API 
 ## Lo que las pruebas automáticas no cubren
 
 - **La prueba manual de la DoD.** Nadie ha recorrido las historias en el navegador con usuarios reales ([pendientes](../08_Estado/pendientes.md), sección 2).
-- **JavaScript sin prueba automática:** el recortador de foto (`identidad.js`), el diálogo de «Eliminar usuario», `viviendas.js`, `visitantes.js`, `unidades.js`, `directorio-usuarios.js`, `vinculos.js` y `busqueda.js`. Se prueban a mano.
+- **JavaScript sin prueba automática:** el recortador de foto (`identidad.js`), el diálogo de «Eliminar usuario», el de «Eliminar conjunto» (`conjuntos.js`), `viviendas.js`, `visitantes.js`, `unidades.js`, `directorio-usuarios.js`, `vinculos.js` y `busqueda.js`. Se prueban a mano.
 - **El front real contra la API real.** Para hacerlo sin tocar `admind_db` sirvió un pytest desechable con `live_server` del backend (base de pruebas), que lanza el front con `ADMIND_API_URL` apuntando al servidor de prueba. No está en el repositorio.
 
 ## Correr todo en el PC

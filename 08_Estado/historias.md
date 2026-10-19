@@ -2,14 +2,14 @@
 resumen: "Las 40 historias de usuario: sprint previsto, story points, estado en el código, la nota de su módulo, su plan y lo que le falta a cada una."
 tipo: estado
 corte: 2026-10-13
-origen: "Notion (títulos, puntos y sprint) + código verificado el 2026-10-11"
+origen: "Notion (títulos, puntos y sprint) + código verificado el 2026-10-11 y puesto al día el 2026-10-13"
 actualizado: 2026-10-13
 revisado: 2026-10-13
 ---
 
 # Historias de usuario
 
-Títulos, story points y sprint previsto salen de Notion (`Gestión Scrum — AdMind` → `Historias de Usuario`). El estado es el del código, verificado el 2026-10-11 sobre Backend `d4e98e5` y Frontend `a946880`: todo lo que aparece aquí como construido **tiene commit, está subido y migrado**.
+Títulos, story points y sprint previsto salen de Notion (`Gestión Scrum — AdMind` → `Historias de Usuario`). El estado es el del código, verificado el 2026-10-11 sobre Backend `d4e98e5` y Frontend `a946880` y puesto al día el 2026-10-13 sobre Backend `7eb5b5a` y Frontend `8279616`: todo lo que aparece aquí como construido **tiene commit, está subido y migrado**.
 
 | Estado | Significa |
 |---|---|
@@ -90,10 +90,10 @@ A todas las construidas les falta la parte humana de la DoD; aquí va lo demás.
 |---|---|---|
 | HU-01 | 5 de 5 tareas y criterios. Recuperación de contraseña por enlace de un solo uso, con límite de 3 enlaces por hora y correo real por SMTP (05/10) | `send_mail` es síncrono y sin `try`: con SMTP real, un fallo da 500 solo si la cuenta existe. `/auth/login/` no limita los intentos |
 | HU-02 | 5 de 5. TOTP con QR, 10 códigos de respaldo y, desde el 05/10, enlace por correo para quitarlo si se pierde la aplicación | Recorrer el enlace a mano con la API encendida y un correo real |
-| HU-03 | Completa desde el 06/10: siete pasos (datos, viviendas, administración, áreas, reglas, reglamento y resumen) y seis requisitos. Un conjunto ya puede quedar operativo y lo activa el Superusuario o Administración. Desde el 11/10 Administración ve «Crear conjunto» en el selector | Sus criterios en Notion describen el asistente anterior. Dejar operativo un conjunto no queda en la auditoría, y reservar no exige que el conjunto esté operativo |
+| HU-03 | Completa desde el 06/10: siete pasos (datos, viviendas, administración, áreas, reglas, reglamento y resumen) y seis requisitos. Un conjunto ya puede quedar operativo y lo activa el Superusuario o Administración. Desde el 11/10 Administración ve «Crear conjunto» en el selector. Desde el 13/10 el Superusuario puede **dar de baja** el conjunto desde el resumen (Camilo; no es parte de los criterios de HU-03) | Sus criterios en Notion describen el asistente anterior. Dejar operativo un conjunto y darlo de baja no quedan en la auditoría, y reservar no exige que el conjunto esté operativo ([conjuntos](../05_Modulos/conjuntos.md)) |
 | HU-04 | 5 de 5 | — |
-| HU-05 | 5 de 5. Desde el 27/09 lo usan tablas reales | Cinco rutas sin registrar en la prueba del intruso ([estado_actual](estado_actual.md)) |
-| HU-26 | 5 de 5, conectada a la API | — |
+| HU-05 | 5 de 5. Desde el 27/09 lo usan tablas reales. Desde el 13/10 todas las rutas de la API están en la prueba del intruso | — |
+| HU-26 | 5 de 5, conectada a la API. Desde el 13/10 el Superusuario ve en el selector todos los conjuntos, también los dados de baja | El selector no distingue un conjunto dado de baja de uno activo ([pendientes](pendientes.md), sección 5) |
 
 ### Sprints 2 y 3
 
@@ -114,7 +114,7 @@ Construidos el 27/09 con el plan F0 a F10. Cada criterio de aceptación tiene un
 
 | HU | Qué hay | Qué le falta |
 |---|---|---|
-| HU-14 | Camilo, 05/10: solicitudes por área y bandeja del conjunto, aceptar o rechazar, auditoría y 409 si ya se decidió. Agente, 13/10: la bandeja trae primero la que más lleva esperando; rechazar exige categoría y, con «Otro motivo», el texto (lo exige también la base); la Secretaría ya no aprueba, solo descarta por causal formal; aprobar, rechazar y descartar avisan al residente por la aplicación y por correo; las rutas están en la prueba del intruso; y gestión entra por la pestaña Reservas del dashboard. La campana al liberarse la franja la subió Camilo el 12/10 | **Contra sus cinco criterios de Notion (13/10): se cumplen los cinco.** Fuera quedan el hilo de mensajes y las condiciones congeladas y versionadas (HU-15). Sin commit, y falta `migrate` de `reservas/0006`. En Notion sigue «En progreso» |
+| HU-14 | Camilo, 05/10: solicitudes por área y bandeja del conjunto, aceptar o rechazar, auditoría y 409 si ya se decidió. Agente, 13/10: la bandeja trae primero la que más lleva esperando; rechazar exige categoría y, con «Otro motivo», el texto (lo exige también la base); la Secretaría ya no aprueba, solo descarta por causal formal; aprobar, rechazar y descartar avisan al residente por la aplicación y por correo; las rutas están en la prueba del intruso; y gestión entra por la pestaña Reservas del dashboard. La campana al liberarse la franja la subió Camilo el 12/10 | **Contra sus cinco criterios de Notion (13/10): se cumplen los cinco.** Fuera quedan el hilo de mensajes y las condiciones congeladas y versionadas (HU-15). Con commit (`85f9f23` y `d0e4af7`) y `reservas/0006` aplicada. En Notion sigue «En progreso» |
 | HU-16 | Agente, 10/10. Es el pago del **alquiler de una reserva**, declarado por Administración (`reserva.declarar_pago`); el pago de administración es HU-35. Declarar guarda quién y cuándo, con auditoría. El comprobante es opcional (PDF, JPG o PNG de hasta 5 MB, validado por su firma, dentro de la base) y solo se sirve por una ruta validada. El residente puede subir el suyo sin declarar nada. Administración puede retirar una declaración con motivo | En Notion: «En revisión», 4 de 5 tareas. La de «almacenamiento fuera de la base» contradice lo construido. Sus tareas se compararon con el código; sus criterios, no |
 
 Del ciclo de la reserva falta la cancelación en firme (HU-17).
@@ -127,7 +127,7 @@ Del ciclo de la reserva falta la cancelación en firme (HU-17).
 | HU-25 | Construida el 22/09 con lo mínimo del canal de notificaciones (bandeja y correo). Desde el 05/10, hasta 4 fotos por anuncio | La prueba manual del plan de fotos. En Notion figura «Finalizado» sin la DoD |
 | HU-27 | Camilo, 01/10: registra el ingreso y lista los visitantes. Agente, 10/10: capa de servicio, auditoría y **salida**. Quien solo registra ve los de hoy y los que siguen adentro; con `visitante.ver_historico`, todo | Sin la Ley 1581 (finalidad, autorización y retención), sin el aviso al apartamento y sin bicicleta sin placa. **Contra sus cinco criterios de Notion (11/10):** tres se cumplen, uno es parcial (el vigilante del ingreso queda en la auditoría, no en el listado) y uno no (el tipo de vehículo no es obligatorio). En Notion: «En progreso» |
 | HU-28 | Agente, 10/10: catálogo de parqueaderos con código (`parqueadero.gestionar`), el vigilante elige uno de los libres al registrar una visita con vehículo, la salida lo libera, y diez registros simultáneos sobre un puesto dejan a una sola visita con él | En Notion: «En revisión», 5 de 5 tareas |
-| HU-29 | Camilo, 12/10: crear un caso con foto opcional, la lista, y que la Secretaría rechace o redirija. Agente, 13/10: el ciclo completo (Por revisar, En revisión, Redirigido, Resuelto, Rechazado; Citado existe y nada lo produce), prioridad con justificación obligatoria para Urgente, respuesta escrita obligatoria que también exige la base, aviso al residente en cada cambio, auditoría, el detalle con las acciones de cada rol y la pestaña Casos del dashboard. Administración atiende un caso sin que nadie se lo redirija | **Contra sus cinco criterios de Notion (13/10):** cuatro se cumplen; el de la infracción que nace de un caso depende de HU-30. El caso no guarda la vivienda: se deduce de dónde reside quien lo abrió. Sin commit, y falta `migrate` de `casos/0004`. En Notion: «En progreso», y la tarea «Tablero de tres columnas» ya no describe lo construido |
+| HU-29 | Camilo, 12/10: crear un caso con foto opcional, la lista, y que la Secretaría rechace o redirija. Agente, 13/10: el ciclo completo (Por revisar, En revisión, Redirigido, Resuelto, Rechazado; Citado existe y nada lo produce), prioridad con justificación obligatoria para Urgente, respuesta escrita obligatoria que también exige la base, aviso al residente en cada cambio, auditoría, el detalle con las acciones de cada rol y la pestaña Casos del dashboard. Administración atiende un caso sin que nadie se lo redirija | **Contra sus cinco criterios de Notion (13/10):** cuatro se cumplen; el de la infracción que nace de un caso depende de HU-30. El caso no guarda la vivienda: se deduce de dónde reside quien lo abrió. Con commit (`85f9f23` y `d0e4af7`) y `casos/0004` aplicada. En Notion: «En progreso», y la tarea «Tablero de tres columnas» ya no describe lo construido |
 
 ### Sprints 6 y 7
 

@@ -19,6 +19,8 @@ revisado: 2026-10-13
 > - **Dos permisos nuevos en el catálogo** (2026-10-08, Alejo; construidos con [Plan_Zonas_Con_Ingreso](../07_Planes/hechos/Plan_Zonas_Con_Ingreso.md), ya con commit): `ingreso.registrar` para Vigilancia e `ingreso.ver_historico` para Administración, sensible. El Superusuario los recibe porque su rol tiene todo el catálogo. Falta contárselo a Camilo.
 > - **`conjunto.crear` se evalúa por persona, no por conjunto activo** (2026-10-11, Alejo): quien es Administración en cualquiera de sus conjuntos activos puede crear otro apenas inicia sesión, sin entrar a ninguno. Lo calcula `puede_crear_conjuntos` en `apps/permisos/servicios.py` y la API lo manda como `puede_crear_conjunto`, aparte de `permisos`. Antes solo valía dentro de un conjunto activo. Falta contárselo a Camilo.
 >
+> - **El Superusuario ve todos los conjuntos y es quien da de baja uno** (2026-10-13, Camilo, `7eb5b5a`; Alejo no lo ha confirmado): `conjuntos_disponibles` ya no filtra por `activo` cuando la persona es Superusuario, así que también ve los dados de baja, y `DELETE /conjuntos/actual/` pregunta `es_superusuario` en la vista. **No hay un permiso `conjunto.eliminar`** en el catálogo. Ver [conjuntos](conjuntos.md).
+>
 > Detalle en [construccion](../06_Decisiones/construccion.md).
 
 ## Diseño (maestro §5.3)

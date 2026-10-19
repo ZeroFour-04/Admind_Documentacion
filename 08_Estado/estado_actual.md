@@ -2,7 +2,7 @@
 resumen: "Dónde está el proyecto hoy: commits, pruebas, migraciones, historias por grupo y lo que frena para cerrarlas."
 tipo: estado
 corte: 2026-10-13
-origen: "verificado en los tres repositorios y en admind_db el 2026-10-11"
+origen: "verificado en los tres repositorios y en admind_db el 2026-10-13"
 actualizado: 2026-10-13
 revisado: 2026-10-13
 ---
@@ -19,16 +19,16 @@ Esta nota dice **cómo está hoy**. Cómo se llegó aquí, día por día, está 
 
 | Qué | Cómo está |
 |---|---|
-| **Backend** (la API) | Rama `desarrollo` en **`87d67c5`** («limitar nombre de conjunto, nombres, apellidos y teléfono», 13/10), igual a `origin/desarrollo`. Sobre `0b627d1` de Camilo («sprint 4,5 y casos», 12/10) van el cambio de modo de uso de un área (`287621c`) y los límites de texto (`87d67c5`). 17 apps con código más `comun`; 4 solo con README (`citas`, `infracciones`, `triage`, `importacion_respaldo`). El conteo de rutas (71) es anterior a `casos` y a las campañas de reserva |
-| **Frontend** (las pantallas) | Rama `desarrollo` en **`0adf5eb`** («ocultar «Reglas» del menú de Vigilancia», 13/10), igual a `origin/desarrollo`. Sobre `7cd762c` de Camilo («Sprint 4,5 y casos», 12/10) van el cambio de modo de uso (`6c61ac4`), los límites de texto (`7121d94`) y el menú de Vigilancia (`0adf5eb`). 15 apps con pantallas, más `casos` |
-| **Sin commit** | Lo del dashboard de gestión del 13/10 (HU-14 y HU-29), en Backend y Frontend: 17 archivos y 2 migraciones en el back, 13 archivos y 7 nuevos en el front. Los commits los hace Alejo |
-| **Documentación** | Rama `main` en `2bc711a`, igual a `origin/main`, más las notas del 13/10 sobre el dashboard, sin commit |
-| **Base de datos** | **Dos migraciones sin aplicar en `admind_db`**, las dos del dashboard: `reservas/0006_categoria_de_rechazo` y `casos/0004_ciclo_del_caso`. Hasta correr `migrate`, las pantallas de solicitudes de reserva y de casos fallan contra esa base. Las de Camilo del 12/10 y las de los límites de texto ya están aplicadas |
-| **Pruebas del backend** | **706, todas pasan** (96 s). La prueba del intruso volvió a verde el 13/10: todas las rutas están registradas ([pruebas_y_ejecucion](../02_Arquitectura/pruebas_y_ejecucion.md)) |
-| **Pruebas del frontend** | **414, todas pasan** (14 s) |
+| **Backend** (la API) | Rama `desarrollo` en **`7eb5b5a`** («boton eliminar conjunto», 13/10, de Camilo), igual a `origin/desarrollo`. Sobre `0b627d1` de Camilo (12/10) van el modo de uso de un área (`287621c`), los límites de texto (`87d67c5`), el dashboard de gestión (`85f9f23`, «Dashboard beta») y la baja del conjunto con el teléfono a 15 (`7eb5b5a`). 17 apps con código más `comun`; 4 solo con README (`citas`, `infracciones`, `triage`, `importacion_respaldo`). **84 rutas de la API**, todas en la prueba del intruso |
+| **Frontend** (las pantallas) | Rama `desarrollo` en **`8279616`** («boton eliminar conjunto», 13/10, de Camilo), igual a `origin/desarrollo`. Sobre `7cd762c` de Camilo (12/10) van el modo de uso (`6c61ac4`), los límites de texto (`7121d94`), el menú de Vigilancia (`0adf5eb`), el dashboard (`d0e4af7`) y el botón «Eliminar conjunto» (`8279616`). 15 apps con pantallas, más `casos` |
+| **Sin commit** | Nada: los tres repositorios están limpios y alineados con GitHub |
+| **Documentación** | Rama `main` en `e08a958` («Dashboard beta», 13/10), igual a `origin/main`, más las notas de la revisión del 13/10 (la baja del conjunto, el teléfono y el cuadro de pantallas del front), sin commit |
+| **Base de datos** | **Ninguna migración sin aplicar en `admind_db`** (`showmigrations`, 13/10): `reservas/0006` y `casos/0004`, las del dashboard, ya están. **Pero** `makemigrations --check` ya no sale limpio: pide `personas/0003` porque Camilo editó la `personas/0002` después de aplicada y la restricción del teléfono del modelo no la acompañó. La base conserva `telefono` en `varchar(10)` y la restricción de 7 a 10 dígitos ([personas](../05_Modulos/personas.md)) |
+| **Pruebas del backend** | **708, todas pasan** (47 s). La prueba del intruso sigue en verde ([pruebas_y_ejecucion](../02_Arquitectura/pruebas_y_ejecucion.md)) |
+| **Pruebas del frontend** | **417, todas pasan** (9 s) |
 | **Historias con código** | **21 construidas (105 SP)**, 2 parciales (HU-27 y HU-33, 8 SP) y **15 sin empezar (75 SP)**, de 38 historias y 188 SP. Aparte: HU-39 (primera parte construida, sin puntos) y HU-40 (solo en Notion). Detalle en [historias](historias.md). Lo que Camilo subió el 12/10 de HU-15 y HU-18 no se ha comparado con sus criterios |
 | **Sin historia** | El ingreso a zonas con aforo ([ingresos](../05_Modulos/ingresos.md)) está construido y no tiene historia ni número |
-| **Planes** | Ninguno activo. Los once escritos están ejecutados ([planes](../07_Planes/planes.md)) |
+| **Planes** | Ninguno activo. Los once escritos están ejecutados, con commit y migraciones aplicadas ([planes](../07_Planes/planes.md)) |
 | **Plazo** | Entrega cerca del 2026-10-21: el profesor la amplió una semana (Alejo, 2026-10-13); antes era cerca del 14/10. Fecha exacta sin confirmar. No hay que entregar las 38 historias ([backlog_y_plazo](backlog_y_plazo.md)) |
 
 ## Historias por grupo
@@ -58,7 +58,8 @@ Lo que cambió respecto a lo que dice Notion o el Excel:
 
 La lista completa, ordenada por tipo, está en [pendientes](pendientes.md). Lo que más pesa:
 
-- [ ] **Dos migraciones sin aplicar y el dashboard sin commit.** `migrate` y los commits de HU-14 y HU-29 los hace Alejo ([pendientes](pendientes.md)).
+- [ ] **El teléfono quedó a medias** (Camilo, 13/10): el campo y la migración dicen 15, la restricción del modelo y el formulario del front siguen en 7 a 10, y `makemigrations --check` falla. Alejo había pedido 10 el mismo día ([pendientes](pendientes.md), secciones 3 y 8).
+- [ ] **La baja del conjunto** que subió Camilo el 13/10 no deja auditoría, no pide la doble confirmación escrita del diseño y el Superusuario sigue viendo y puede volver a entrar a un conjunto dado de baja ([pendientes](pendientes.md), sección 5).
 - [ ] **El backend no tiene rama `pruebas` en GitHub** (existe solo en local). Sin ella no se abre ningún PR `desarrollo → pruebas`.
 - [ ] **Ninguna prueba manual está hecha.** Cada plan trae su guion; le toca a quien no programó.
 - [ ] **Avisarle a Camilo** de los cambios del 06/10 al 11/10: migraciones, permisos nuevos, apps nuevas y su app `visitantes`, que cambió. En la bóveda no consta que se haya hecho.

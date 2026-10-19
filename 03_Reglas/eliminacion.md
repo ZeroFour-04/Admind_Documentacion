@@ -2,11 +2,14 @@
 resumen: "Invariantes de eliminación: sin borrado físico, baja lógica, auditoría de solo inserción y anulación."
 tipo: regla
 origen: "maestro v1.4 (2026-09-14) §5.11"
-actualizado: 2026-10-11
-revisado: 2026-10-11
+actualizado: 2026-10-13
+revisado: 2026-10-13
 ---
 
 # Invariantes de eliminación
+
+> [!WARNING] La baja del conjunto, tal como se construyó (2026-10-13, Camilo)
+> El código ya da de baja un conjunto: `DELETE /conjuntos/actual/` lo deja `activo = false` y `operativo = false`, y quita el conjunto activo de todas las sesiones ([conjuntos](../05_Modulos/conjuntos.md)). **No cumple dos filas de la tabla de abajo:** pide un «Sí / No» en el front y nada en la API, en vez de la **doble confirmación escrita**, y no hay cómo **revertirla**. Tampoco deja fila en la auditoría. El texto de diseño no se reescribe sin que el equipo lo pida: está en [pendientes](../08_Estado/pendientes.md), sección 5.
 
 El equipo también se equivoca. Ninguno de estos depende de que alguien recuerde validarlo.
 
@@ -29,3 +32,4 @@ El equipo también se equivoca. Ninguno de estos depende de que alguien recuerde
 - [backend](../02_Arquitectura/backend.md) — la auditoría de solo inserción
 - [cerradas](../06_Decisiones/cerradas.md) — decisiones 16 y 21
 - [historias](../08_Estado/historias.md) — HU-20, la anulación, sin empezar
+- [conjuntos](../05_Modulos/conjuntos.md) — la baja del conjunto, como quedó construida

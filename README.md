@@ -82,11 +82,11 @@ Cómo se relacionan las notas: toda nota termina en una sección *Ver también*,
 | [pagos](05_Modulos/pagos.md) | `pagos` | HU-35 | Construido; la mora, sin verificar lo legal | Pago de la administración por vivienda y mes, y la mora de paz y salvo |
 | [parqueaderos](05_Modulos/parqueaderos.md) | `parqueaderos`, `visitantes` | HU-27, HU-28, HU-34 | HU-28 construida, HU-27 parcial, HU-34 sin empezar | Catálogo de parqueaderos y el de visitantes atado a la visita |
 | [unidades](05_Modulos/unidades.md) | `unidades`, `notificaciones` | HU-08, HU-39 | Construido; HU-39, primera parte | Viviendas, agrupaciones, vínculos y a quién se notifica cada hecho |
-| [conjuntos](05_Modulos/conjuntos.md) | `conjuntos`, `documentos` | HU-03, HU-21, HU-33 | Construido; HU-33, solo el reglamento | Asistente de creación, requisitos para quedar operativo, color propio y foto 1:1 |
+| [conjuntos](05_Modulos/conjuntos.md) | `conjuntos`, `documentos` | HU-03, HU-21, HU-33 | Construido; HU-33, solo el reglamento | Asistente de creación, requisitos para quedar operativo, color propio y foto 1:1, y la baja del conjunto |
 | [cuentas](05_Modulos/cuentas.md) | `cuentas` | HU-01, HU-02, HU-26 | Construido | Sesión, token, conjunto activo, segundo factor y recuperación |
 | [permisos](05_Modulos/permisos.md) | `permisos` | HU-06 | Construido | Catálogo de roles y permisos, Superusuario, un rol por conjunto |
 | [personas](05_Modulos/personas.md) | `personas` | HU-04, HU-07 | Construido | Identidad global, UUID y documento normalizado |
-| [triage](05_Modulos/triage.md) | `anuncios`, `triage`, `casos` | HU-22 a HU-25, HU-29 | Solo los anuncios (HU-25) | Secretaría, prioridad, rechazo formal, bandeja y anuncios |
+| [triage](05_Modulos/triage.md) | `anuncios`, `triage`, `casos` | HU-22 a HU-25, HU-29 | Anuncios (HU-25) y casos (HU-29); de HU-22 a HU-24, una parte | Secretaría, prioridad, rechazo formal, el dashboard de gestión, los casos y los anuncios |
 | [infracciones](05_Modulos/infracciones.md) | `infracciones` | HU-30 | Sin construir | Registro y notificación; el sistema no sanciona |
 | [citas](05_Modulos/citas.md) | `citas` | HU-31, HU-32 | Sin construir | Citas y cambio de horario con alternativas |
 
@@ -106,7 +106,7 @@ El aislamiento entre conjuntos (HU-05) y la auditoría no tienen nota de módulo
 
 | Nota | Qué tiene |
 |---|---|
-| [planes](07_Planes/planes.md) | Los diez planes ejecutados, con su historia y la nota donde quedó lo vigente. No hay ninguno activo |
+| [planes](07_Planes/planes.md) | Los once planes ejecutados, con su historia y la nota donde quedó lo vigente. No hay ninguno activo |
 
 Los planes están en `07_Planes/hechos/` y son históricos: se abren para ver el guion de prueba manual o cómo se decidió algo, no para saber cómo es hoy.
 

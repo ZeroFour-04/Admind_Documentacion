@@ -5,7 +5,7 @@ modulo: ingresos
 hu: []
 origen: "definición con Alejo en chat (2026-10-06) + Plan_Zonas_Con_Ingreso (2026-10-08)"
 actualizado: 2026-10-13
-revisado: 2026-10-11
+revisado: 2026-10-13
 ---
 
 # Ingreso a zonas con aforo
@@ -57,7 +57,7 @@ Una app `ingresos` en cada repositorio. Una sola tabla nueva.
 - **La API** (`/ingresos/zonas/`, `/ingresos/residentes/buscar/`, `/ingresos/`, `/ingresos/<id>/salida/`): las vistas piden el permiso y nada más, sin revisar el rol por nombre. Los cupos son un conteo sin nombres. Quién está adentro lo ve solo quien registra; el historial, solo `ingreso.ver_historico`. Tabla completa en el `README.md` de la app.
 - **Las pantallas:** «Ingreso a zonas» para Vigilancia (cupos por zona, registrar en dos pasos, «Adentro ahora» y «Se les cumplió el tiempo hoy»); «Ingresos» para Administración, con el historial filtrable por zona y por día y sin formulario; y, en «Zonas comunes», la tabla de todas las zonas con sus cupos antes de reservar. Sin JavaScript: los cupos se refrescan al recargar. Detalle en [frontend](../02_Arquitectura/frontend.md).
 - **El área** gana `modo_uso` (`reserva` o `ingreso`) y `permanencia_maxima_minutos` (de 15 a 1 440). Un área con ingreso no se reserva: sin franjas y `409` al intentar tomar el bloqueo.
-- **El modo se puede cambiar al editar el área** (2026-10-13, sin commit; antes era fijo). Si un área con ingreso pasa a ser con reserva, quien está adentro sigue adentro: «Adentro ahora», la salida manual y la salida por tiempo no miran el modo del área, y el área deja de aparecer en los cupos y de admitir registros nuevos. El detalle está en [motor_reglas](motor_reglas.md).
+- **El modo se puede cambiar al editar el área** (2026-10-13, Backend `287621c` y Frontend `6c61ac4`; antes era fijo). Si un área con ingreso pasa a ser con reserva, quien está adentro sigue adentro: «Adentro ahora», la salida manual y la salida por tiempo no miran el modo del área, y el área deja de aparecer en los cupos y de admitir registros nuevos. El detalle está en [motor_reglas](motor_reglas.md).
 
 ## Salvaguardas legales (D3 a)
 

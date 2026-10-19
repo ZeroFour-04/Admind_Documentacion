@@ -2,7 +2,7 @@
 resumen: "Todo lo que falta, ordenado por tipo: lo que frena los story points, pruebas manuales, avisos a Camilo, lo legal, decisiones de equipo, Notion, textos desactualizados y deuda técnica."
 tipo: estado
 corte: 2026-10-13
-origen: "listas anteriores (2026-09-27 a 2026-10-11), reordenadas por tipo y contrastadas con el código el 2026-10-11"
+origen: "listas anteriores (2026-09-27 a 2026-10-11), reordenadas por tipo y contrastadas con el código el 2026-10-11; puesta al día el 2026-10-13"
 actualizado: 2026-10-13
 revisado: 2026-10-13
 ---
@@ -16,7 +16,6 @@ La fecha entre paréntesis es cuándo se anotó. *Verificado el 11/10* quiere de
 ## 1. Qué frena que se cuenten story points
 
 - [ ] **La rama `pruebas` del backend no existe en GitHub** (solo en local, y en un commit viejo). En el front existe, igual a `main`. Sin ella no hay PR `desarrollo → pruebas`. *(29/09, verificado el 11/10)*
-- [ ] **Migrar `admind_db` y hacer los commits del dashboard.** Faltan `reservas/0006_categoria_de_rechazo` y `casos/0004_ciclo_del_caso`; hasta correr `migrate`, las pantallas de solicitudes de reserva y de casos fallan contra esa base. Lo de HU-14 y HU-29 está sin commit en Backend y Frontend. *(13/10)*
 - [ ] **PR `desarrollo → pruebas` revisado** por quien no programó. Ninguna historia ha pasado por uno.
 - [ ] **Pruebas manuales** de quien no programó: sección 2.
 - [ ] **Decidir el alcance** que entra antes de la entrega: sección 5.
@@ -41,6 +40,7 @@ El agente no las hace: no tiene la contraseña ni el segundo factor de los usuar
 | Pago de administración (HU-35) | [Plan_Pago_De_Administracion](../07_Planes/hechos/Plan_Pago_De_Administracion.md) | — |
 | Cambiar el modo de uso de un área (13/10) | Sin guion: en «Editar área», pasar una con reservas apartadas y reglas propias a «Con ingreso» y volver | El agente lo recorrió con un guion contra la base de pruebas, no en el navegador ni con usuarios reales |
 | Usuarios, detalle de la vivienda y «Crear conjunto» (11/10) | Sin guion | Usuarios y el detalle de la vivienda se vieron en el navegador con datos inventados, no con usuarios reales |
+| «Eliminar conjunto» del resumen (13/10) | Sin guion | Lo subió Camilo; las pruebas lo cubren con la API simulada y `conjuntos.js`, que abre el diálogo, no tiene prueba automática. En la bóveda no consta que alguien lo haya recorrido |
 
 - [ ] **Dashboard de gestión (HU-14 y HU-29):** el guion de [Plan_Dashboard_De_Solicitudes](../07_Planes/hechos/Plan_Dashboard_De_Solicitudes.md), con Administración, Secretaría, dos residentes y Vigilancia. Lo recorrió el agente con el front real contra la API de pruebas (43 comprobaciones); falta la prueba de una persona en el navegador. *(13/10)*
 
@@ -54,8 +54,7 @@ En la bóveda no consta que se le haya avisado de nada de esto. Lo que tiene que
 - [ ] **Su app `visitantes` cambió** (HU-28): `servicios.py` nuevo y su vista quedó delgada; `POST /visitantes/` acepta `parqueadero`; `GET /visitantes/` trae `hora_salida` y `parqueadero`; ruta nueva `POST /visitantes/<id>/salida/`; el vigilante ve también las visitas de días anteriores sin salida. Cambiaron su `lista.html`, `forms.py`, `views.py` y `visitantes.js`, y su `tests/test_visitantes.py` ganó una fixture automática, sin tocar ninguna aserción.
 - [ ] **Sus pantallas de solicitudes cambiaron** (HU-16): `solicitudes_area.html` y `triage/bandeja.html` muestran el bloque «Pago», y las respuestas de solicitudes traen el campo `pago`.
 - [ ] **Contratos que cambiaron:** crear un área exige `aforo_maximo` y trae `modo_uso` y `permanencia_maxima_minutos` (la duración de la franja puede llegar vacía); `POST /reglas/` ya no exige `area` y responde 409 si la regla ya está definida; `GET /reglas/catalogo/` trae los tipos nuevos; `POST /reservas/solicitudes/` responde 409 sobre un área con ingreso; `GET /reservas/franjas/` puede responder `no_disponible` en franjas libres; `/anuncios/` trae `fotos`; `/unidades/` tiene tres rutas nuevas y más campos; `GET /auth/usuarios/` trae `unidades`.
-- [ ] **Límites de texto** (13/10): nombre del conjunto, nombres y apellidos hasta 30 caracteres y teléfono hasta 10; la restricción `persona_telefono_valido` que él escribió pasa de 7–15 a 7–10 dígitos y hay dos migraciones nuevas (`conjuntos/0005`, `personas/0002`). `componentes/campo.html` ahora emite `maxlength`, así que sus campos (cédula, nombre del visitante, placa) también cortan al límite que ya tenían.
-- [ ] **El modo de uso de un área ya se puede cambiar** (13/10): `PATCH /areas/<id>/` acepta `modo_uso` y su respuesta trae siempre `cambio_de_modo` (vacío si el modo no cambió); se revirtió la decisión del 08/10.
+- [ ] **Límites de texto** (13/10): nombre del conjunto, nombres y apellidos hasta 30 caracteres y teléfono hasta 10, a pedido de Alejo; la restricción `persona_telefono_valido` que él escribió pasó de 7–15 a 7–10 dígitos y hay dos migraciones nuevas (`conjuntos/0005`, `personas/0002`). `componentes/campo.html` ahora emite `maxlength`, así que sus campos (cédula, nombre del visitante, placa) también cortan al límite que ya tenía. **Ese mismo día subió el teléfono a 15** (`7eb5b5a`), en el campo y editando la `personas/0002` ya aplicada, sin tocar la restricción del modelo ni el formulario del front: confirmar con él cuál es el límite y cerrarlo con una migración nueva (sección 8).- [ ] **El modo de uso de un área ya se puede cambiar** (13/10): `PATCH /areas/<id>/` acepta `modo_uso` y su respuesta trae siempre `cambio_de_modo` (vacío si el modo no cambió); se revirtió la decisión del 08/10.
 - [ ] **Alfa y beta cambiaron de significado** (alfa = del conjunto, beta = del área) y *paz y salvo* **restringe de verdad** desde el 10/10.
 - [ ] **El asistente tiene siete pasos**, un conjunto ya puede quedar operativo y hay una historia nueva, HU-39.
 - [ ] **Vistas y no tocadas, suyas:** la prueba de `ingresos` que usa la hora real y `visitantes/0001` sin la FK compuesta de `unidad_id` (sección 8).
@@ -89,7 +88,8 @@ Un agente no las resuelve ([abiertas](../06_Decisiones/abiertas.md)).
 - [ ] **Tope de peso en el front para los archivos:** `cliente_api/reservas.py`, `documentos.py` y `pagos.py` leen el archivo entero con `archivo.read()` y lo reenvían; la API es la que rechaza por peso. *(10/10, verificado el 11/10)*
 - [ ] **Límite de búsquedas de personas:** cuenta por conjunto, así que un administrador de dos conjuntos puede hacer 20 en cada uno. ¿Debe ser global? *(27/09)*
 - [ ] **¿Los anuncios se pueden eliminar?** Hoy solo se editan (`PATCH`). Las reglas se quitan cerrando su vigencia desde el 06/10. *(27/09, verificado el 11/10)*
-- [ ] **¿Se ocultan del selector los conjuntos no operativos?** Hoy solo excluye los desactivados. *(27/09)*
+- [ ] **¿Se ocultan del selector los conjuntos no operativos?** A quien no es Superusuario, el selector le excluye los dados de baja y le deja los no operativos; el Superusuario ve todos. *(27/09, 13/10)*
+- [ ] **La baja del conjunto que subió Camilo el 13/10** (`servicios.eliminar`, `DELETE /conjuntos/actual/`), contra lo que ya estaba diseñado: **(a)** [eliminacion](../03_Reglas/eliminacion.md) pide doble confirmación escrita con el nombre exacto y el botón da un «Sí, eliminar / No»; la API no pide ninguna; **(b)** no deja fila en la auditoría; **(c)** el Superusuario sigue viendo el conjunto dado de baja en su selector, sin marca, y `puede_operar_en` lo deja volver a entrar; no hay cómo reactivarlo, y el diseño decía «reversible 30 días»; **(d)** se pregunta `es_superusuario` en la vista, no un permiso del catálogo (no existe `conjunto.eliminar`). Alejo decide si se deja así. *(13/10, verificado en el código)*
 - [ ] **`vigencia_hasta` es el primer día sin el rol:** con la fecha de hoy, el rol se pierde de inmediato. Confirmarlo. *(27/09)*
 - [ ] **Reparto de permisos por rol** en `catalogo.py`: interpretado del diseño, provisional hasta validarlo con un administrador real. *(27/09)*
 - [ ] **Quitar el segundo factor y restablecer la contraseña no dejan auditoría:** esas rutas no tienen conjunto activo. Registrarlo pide una tabla global (R12). *(05/10)*
@@ -144,6 +144,7 @@ El agente no toca Notion por su cuenta. Alejo decidió el 11/10 que refleje la r
 
 **Backend**
 
+- [ ] **`makemigrations --check` falla** desde `7eb5b5a`: pide `personas/0003` porque la restricción `persona_telefono_valido` del modelo sigue en `{7,10}` y la `personas/0002`, editada a mano después de aplicada, dice `{7,15}`. En `admind_db` quedó la versión vieja (`telefono` en `varchar(10)` y 7 a 10 dígitos): quien aplique `personas/0002` desde cero obtiene otra base. Se arregla con una migración nueva, no editando la aplicada. *(13/10, verificado en el código y en la base)*
 - [ ] `apps/ingresos/tests.py::test_un_registro_que_no_cumple_responde_400_con_todos_los_motivos_y_no_deja_fila` usa la hora real: falla entre las 22:00 y las 05:00 aunque nada esté mal. Es de Camilo.
 - [ ] `visitantes/0001` no trae la FK compuesta de `unidad_id` que pide [aislamiento](../03_Reglas/aislamiento.md). Es de Camilo. *(verificado el 11/10)*
 - [ ] `Asignacion` no tiene `registrado_por`. *(27/09, verificado el 11/10)*

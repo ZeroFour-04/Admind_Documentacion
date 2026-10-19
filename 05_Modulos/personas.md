@@ -26,7 +26,8 @@ Persona                       -- TABLA GLOBAL: sin conjunto_id (R12)
   numero_documento
   nombres                     (hasta 30 caracteres)
   apellidos                   (hasta 30 caracteres)
-  telefono                    (opcional; hasta 10 caracteres: vacío o de 7 a 10 dígitos, con `+` inicial opcional)
+  telefono                    (opcional; vacío o de 7 a 10 dígitos, con `+` inicial opcional. El campo del modelo
+                               admite 15 caracteres desde el 13/10: ver el aviso de abajo)
   activo : bool
   UNIQUE (tipo_documento, numero_documento)
 
@@ -37,6 +38,20 @@ Usuario                       -- TABLA GLOBAL: sin conjunto_id (R12)
   contraseña                  (solo el hash)
   activo : bool
 ```
+
+> [!WARNING] El límite del teléfono está a medias (2026-10-13)
+> Alejo pidió el 13/10 un teléfono de hasta 10 caracteres y se construyó así (`personas/0002`). Ese mismo día Camilo, en `7eb5b5a`, subió `Persona.telefono` a `max_length=15` y **editó la `personas/0002` ya aplicada** para que diga 15 y 7 a 15 dígitos, pero no tocó la restricción del modelo ni el formulario del front. Hoy conviven seis cosas:
+>
+> | Dónde | Dice |
+> |---|---|
+> | `models.py`: el campo | 15 caracteres |
+> | `models.py`: `persona_telefono_valido` | 7 a 10 dígitos |
+> | `personas/0002` (editada) | 15 caracteres y 7 a 15 dígitos |
+> | `admind_db` (aplicó la versión de antes) | `varchar(10)` y 7 a 10 dígitos |
+> | Serializer de crear usuario (`cuentas/serializers.py`) | 7 a 10 dígitos, `max_length=10` |
+> | Formulario del front (`UsuarioForm`) | 7 a 10 dígitos, `max_length=10` |
+>
+> `makemigrations --check` falla por eso. Qué límite es el bueno, y cerrarlo con una migración nueva, lo decide Alejo con Camilo ([pendientes](../08_Estado/pendientes.md), secciones 3 y 8). Hasta entonces, **para quien usa el sistema el teléfono vale de 7 a 10 dígitos**: el serializer y el formulario lo exigen.
 
 > [!NOTE] Datos personales revisados el 2026-09-14 (Alejo)
 > `nombre` se separa en **`nombres` y `apellidos`**, y `Persona` gana **`telefono`**, opcional. **El correo sale de `Persona` y vive solo en `Usuario`**: es credencial, porque con él se inicia sesión y a él llega la recuperación de contraseña. Si estuviera en las dos tablas, un día dirían cosas distintas. Una persona sin cuenta —un menor con TI registrado por sus padres— no necesita correo.
