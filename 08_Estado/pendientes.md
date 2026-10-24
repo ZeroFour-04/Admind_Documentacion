@@ -3,8 +3,8 @@ resumen: "Todo lo que falta, ordenado por tipo: lo que frena los story points, p
 tipo: estado
 corte: 2026-10-13
 origen: "listas anteriores (2026-09-27 a 2026-10-11), reordenadas por tipo y contrastadas con el código el 2026-10-11; puesta al día el 2026-10-13"
-actualizado: 2026-10-13
-revisado: 2026-10-13
+actualizado: 2026-10-24
+revisado: 2026-10-24
 ---
 
 # Pendientes
@@ -15,6 +15,7 @@ La fecha entre paréntesis es cuándo se anotó. *Verificado el 11/10* quiere de
 
 ## 1. Qué frena que se cuenten story points
 
+- [ ] **Mezclar a `desarrollo` la rama `ccr-4213a943-1fgq6z`** de Backend y Frontend (plan de triage, 24/10). Es lineal sobre `7eb5b5a` y `8279616`: entra como *fast-forward* si nadie subió nada antes. Hasta entonces, nada de HU-22 ni HU-24 del 24/10 está en `desarrollo`. *(24/10)*
 - [ ] **La rama `pruebas` del backend no existe en GitHub** (solo en local, y en un commit viejo). En el front existe, igual a `main`. Sin ella no hay PR `desarrollo → pruebas`. *(29/09, verificado el 11/10)*
 - [ ] **PR `desarrollo → pruebas` revisado** por quien no programó. Ninguna historia ha pasado por uno.
 - [ ] **Pruebas manuales** de quien no programó: sección 2.
@@ -42,6 +43,7 @@ El agente no las hace: no tiene la contraseña ni el segundo factor de los usuar
 | Usuarios, detalle de la vivienda y «Crear conjunto» (11/10) | Sin guion | Usuarios y el detalle de la vivienda se vieron en el navegador con datos inventados, no con usuarios reales |
 | «Eliminar conjunto» del resumen (13/10) | Sin guion | Lo subió Camilo; las pruebas lo cubren con la API simulada y `conjuntos.js`, que abre el diálogo, no tiene prueba automática. En la bóveda no consta que alguien lo haya recorrido |
 
+- [ ] **Filtros del dashboard y rechazo formal (HU-22 y HU-24):** el guion de [Plan_Triage_HU-22_HU-24](../07_Planes/hechos/Plan_Triage_HU-22_HU-24.md), después de mezclar la rama a `desarrollo`.
 - [ ] **Dashboard de gestión (HU-14 y HU-29):** el guion de [Plan_Dashboard_De_Solicitudes](../07_Planes/hechos/Plan_Dashboard_De_Solicitudes.md), con Administración, Secretaría, dos residentes y Vigilancia. Lo recorrió el agente con el front real contra la API de pruebas (43 comprobaciones); falta la prueba de una persona en el navegador. *(13/10)*
 
 ## 3. Avisarle a Camilo
@@ -99,6 +101,8 @@ Un agente no las resuelve ([abiertas](../06_Decisiones/abiertas.md)).
 ## 6. Notion
 
 El agente no toca Notion por su cuenta. Alejo decidió el 11/10 que refleje la realidad ([construccion](../06_Decisiones/construccion.md)).
+
+- [ ] **HU-22 y HU-24 (24/10):** HU-22 sigue «Sin empezar» y ya es parcial (solo faltan las citas); HU-24 está «En revisión» y cumple cuatro criterios y medio. Actualizar su tabla *Estado real*.
 
 - [ ] **HU-14 y HU-29:** pasarlas de estado en Notion. En HU-29, la tarea «Tablero de tres columnas con filtros e hilo» ya no describe lo construido (es una tabla con pestañas, sin hilo) y la de la FK desde la infracción figura «Finalizada» sin estar en el código. *(13/10)*
 - [ ] **HU-21 y HU-25** siguen «Finalizado» sin *PR revisado* ni *Probada por el otro*. Las corrige Alejo.

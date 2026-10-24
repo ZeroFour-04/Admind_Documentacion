@@ -12,11 +12,10 @@ Cómo se escribe y se cierra uno: [abrir_y_cerrar_un_plan](../09_Protocolos/abri
 
 ## Activos
 
-Cuatro, escritos el 2026-10-24 sobre Backend `7eb5b5a` y Frontend `8279616`. Ninguno ha empezado; cada uno tiene decisiones por llenar en su sección 3.
+Tres, escritos el 2026-10-24 sobre Backend `7eb5b5a` y Frontend `8279616`. Ninguno ha empezado; cada uno tiene decisiones por llenar en su sección 3.
 
 | Plan | Historia | Qué cubre |
 |---|---|---|
-| [Plan_Triage_HU-22_HU-24](activos/Plan_Triage_HU-22_HU-24.md) | HU-22, HU-24 | Una prueba por criterio del rechazo formal y filtros por pestaña en el dashboard, sin vista combinada ni citas |
 | [Plan_Infracciones](activos/Plan_Infracciones.md) | HU-30 | Registro que se comunica a propietario y arrendatario, cierre, anulación del Superusuario y botón desde el caso |
 | [Plan_Documentos](activos/Plan_Documentos.md) | HU-33 | Reglamento y manual con versiones, pantalla para el residente y descarga auditada; sin actas |
 | [Plan_Parqueaderos_De_Residentes](activos/Plan_Parqueaderos_De_Residentes.md) | HU-34 | Asignar y reasignar un parqueadero de residentes a una vivienda, con historial |
@@ -38,6 +37,7 @@ Un plan hecho es histórico y no se edita: menciona el rol Consejo, alfa y beta 
 | [Plan_Parqueadero_De_Visitantes](hechos/Plan_Parqueadero_De_Visitantes.md) | 2026-10-10 | HU-28 y parte de HU-27 | Catálogo de parqueaderos con código, ocupación atada a la visita y liberación al registrar la salida; incluye la salida del visitante y la capa de servicio de `visitantes`. F0 a F5, D1 a D8 | [parqueaderos](../05_Modulos/parqueaderos.md) |
 | [Plan_Pago_De_Administracion](hechos/Plan_Pago_De_Administracion.md) | 2026-10-10 | HU-35 | Tabla por vivienda y mes con buscador, check que pone Administración, comprobante que sube el residente y la mora que alimenta *paz y salvo* (F5, construida sin verificar lo legal). F0 a F5, D1 a D10 | [pagos](../05_Modulos/pagos.md) |
 | [Plan_Dashboard_De_Solicitudes](hechos/Plan_Dashboard_De_Solicitudes.md) | 2026-10-13 | HU-14 y HU-29 | El dashboard de gestión con pestañas (Reservas, Casos y Citas sin función): categoría de rechazo, descarte de Secretaría, aviso al residente y orden por antigüedad; el ciclo completo de los casos sobre lo que subió Camilo; y la Secretaría deja de aprobar. F0 a F5, D1 a D9. Lo construyó el agente | [reservas](../05_Modulos/reservas.md), [triage](../05_Modulos/triage.md), [permisos](../05_Modulos/permisos.md) |
+| [Plan_Triage_HU-22_HU-24](hechos/Plan_Triage_HU-22_HU-24.md) | 2026-10-24 | HU-22 y HU-24 | Una prueba por criterio del rechazo formal y filtros por pestaña en el dashboard (API y pantalla), sin vista combinada ni citas. F0 a F4, D1 a D5 en a. Lo construyó el agente, en la rama `ccr-4213a943-1fgq6z`, **sin mezclar a `desarrollo`** | [triage](../05_Modulos/triage.md) |
 
 Los seis planes del 06/10 y del 10/10 se escribieron como guiados y Alejo pidió en todos que **los construyera el agente**; el de zonas con ingreso (08/10) no era guiado.
 

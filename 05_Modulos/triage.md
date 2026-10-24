@@ -4,8 +4,8 @@ tipo: modulo
 modulo: triage
 hu: [HU-22, HU-23, HU-24, HU-25, HU-29]
 origen: "maestro v1.4 (2026-09-14) §5.7 + plan de anuncios con fotos (2026-10-05)"
-actualizado: 2026-10-13
-revisado: 2026-10-13
+actualizado: 2026-10-24
+revisado: 2026-10-24
 ---
 
 # Secretaría, triage y anuncios
@@ -13,7 +13,7 @@ revisado: 2026-10-13
 > [!NOTE] Qué hay construido (verificado el 2026-10-13)
 > - **Anuncios (HU-25):** construidos, con fotos. Sección *Cómo está construido*, abajo.
 > - **Casos (HU-29) y el dashboard de gestión:** construidos el 13/10 sobre lo que Camilo subió el 12/10. Sección *Cómo está construido: el dashboard y los casos*, abajo.
-> - **De la bandeja de triage (HU-22 a HU-24) hay una parte:** las pestañas por tipo, la prioridad sobre casos y el descarte por causal formal de reservas y casos. No hay vista combinada (decisión de Alejo del 13/10), ni nada sobre citas, que no existen. En el backend `apps/triage/` sigue con solo README: el dashboard es una pantalla del front que le pide las filas a cada módulo.
+> - **De la bandeja de triage (HU-22 a HU-24) hay una parte:** las pestañas por tipo, con filtros desde el 24/10; la prioridad sobre casos; y el descarte por causal formal de reservas y casos, con una prueba por criterio de HU-24. No hay vista combinada (decisión de Alejo del 13/10, confirmada el 24/10), ni nada sobre citas, que no existen. Lo del 24/10 está en la rama `ccr-4213a943-1fgq6z`, **sin mezclar a `desarrollo`**. En el backend `apps/triage/` sigue con solo README: el dashboard es una pantalla del front que le pide las filas a cada módulo.
 > - **La Secretaría ya no aprueba reservas** (Alejo, 13/10): el código volvió a coincidir con este diseño. Y una diferencia a propósito: el diseño dice que la bandeja no tiene respuesta de fondo; aquí el administrador responde desde el detalle del caso, al que se llega por la fila.
 
 ## Diseño (maestro §5.7)
@@ -80,6 +80,8 @@ Es **terminal**: no se reversa, no se edita, el solicitante vuelve a solicitar. 
 | Reservas | La que más lleva esperando primero. Sin prioridad | La tarjeta de la solicitud en la pantalla de su zona ([reservas](reservas.md)) |
 | Casos | Abiertos primero, por prioridad y luego antigüedad. «Por antigüedad» ignora la prioridad | El detalle del caso |
 | Citas | — | Un estado vacío: el módulo no existe |
+
+**Los filtros (HU-22, 24/10).** Cada pestaña tiene un formulario GET; los filtros viajan en la URL y los valida la API, que los aplica sin cambiar el orden. Reservas: estado, zona, vivienda, fechas de envío y solicitante, **sin prioridad**. Casos: estado, prioridad, fechas de creación y solicitante, **sin vivienda**, porque el caso no la guarda. Las cuentas de las pestañas salen de las listas sin filtrar, y la antigüedad se ve con cualquier filtro. El solicitante se busca palabra por palabra en nombres y apellidos, distinguiendo tildes (`personas.servicios.por_nombre`).
 
 **Quién hace qué sobre un caso.** La Secretaría clasifica y la Administración decide; Administración puede atender un caso sin que nadie se lo redirija, porque el sistema tiene que funcionar con cero secretarías.
 

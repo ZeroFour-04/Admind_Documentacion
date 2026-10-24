@@ -3,7 +3,9 @@ resumen: "Cierra HU-24 con una prueba por criterio y completa HU-22 sobre las pe
 titulo: "AdMind — Plan guiado de la bandeja de triage y el rechazo formal"
 tipo: plan
 modo: guiado
-estado: activo
+estado: hecho
+ejecutado: 2026-10-24
+ramas: "ccr-4213a943-1fgq6z en Backend y Frontend, sin mezclar a desarrollo"
 hu: [HU-22, HU-24]
 fecha: 2026-10-24
 para: "Alejo, con un agente que guía según 09_Protocolos/ejecutar_plan_guiado.md si Alejo lo aprueba; si no, el agente lo construye"
@@ -13,28 +15,37 @@ punto_de_partida: "Backend 7eb5b5a (708 pruebas según estado_actual), Frontend 
 
 # AdMind — Plan guiado de la bandeja de triage y el rechazo formal
 
-> [!IMPORTANT]
-> **Alejo:** las decisiones D1 a D3 ya tienen respuesta (chat del 2026-10-24); llena D4 y D5. Para empezar o retomar, en un chat nuevo: `Ejecuta el plan Documentacion/Admind_Documentacion/07_Planes/activos/Plan_Triage_HU-22_HU-24.md`. El agente te pregunta primero si lo quieres guiado o si lo construye él.
+> [!NOTE] Ejecutado el 2026-10-24, construido por el agente
+> Commits en la rama `ccr-4213a943-1fgq6z` de Backend (`db2a128`, `c1fcaab`, `bddc4d7`) y Frontend (`e1050c5`, `5d2cd69`), sobre `7eb5b5a` y `8279616`. **No están en `desarrollo`**: falta mezclarlos ([pendientes](../../08_Estado/pendientes.md)).
 
 ## 1. Seguimiento
 
-**Dónde voy:** sin empezar.
+**Dónde voy:** terminado.
 
 | Fase | Deja funcionando | Estado | Modo | Explicada de vuelta | Verificación | Commit | Fecha |
 |---|---|---|---|---|---|---|---|
-| F0 | Punto de partida confirmado | pendiente | — | — | | — | |
-| F1 | HU-24: una prueba con el nombre de cada criterio | pendiente | | | | | |
-| F2 | HU-22: filtros de casos y reservas en la API | pendiente | | | | | |
-| F3 | HU-22: filtros en las pestañas del dashboard | pendiente | | | | | |
-| F4 | HU-22: pruebas de sus cinco criterios | pendiente | | | | | |
+| F0 | Punto de partida confirmado | hecha | — | — | Backend 708, Frontend 417; solo falta `personas/0003` | — | 2026-10-24 |
+| F1 | HU-24: una prueba con el nombre de cada criterio | hecha | construida | — | Backend 712 | `db2a128` | 2026-10-24 |
+| F2 | HU-22: filtros de casos y reservas en la API | hecha | construida | — | Backend 716 | `c1fcaab` | 2026-10-24 |
+| F3 | HU-22: filtros en las pestañas del dashboard | hecha | construida | — | Frontend 423; vista en Chromium a 1280 y 390 px con la API simulada | `e1050c5` | 2026-10-24 |
+| F4 | HU-22: pruebas de sus cinco criterios | hecha | construida | — | Backend 718, Frontend 435 | `bddc4d7` y `5d2cd69` | 2026-10-24 |
 
 ### Desviaciones
 
-Ninguna.
+- 2026-10-24 · F0 · Las suites corrieron en el contenedor de la nube (Python 3.13 y PostgreSQL 16), no en la máquina de Alejo; él lo autorizó. Los commits quedaron en la rama de la sesión, no en `desarrollo`.
+- 2026-10-24 · B1.3 · La búsqueda de rutas de casos usa `get_resolver("apps.casos.urls")` en vez de recorrer todo el resolver.
+- 2026-10-24 · B2.1 · El filtro por solicitante es `por_nombre(texto, campo)` en `apps/personas/servicios.py`, compartido por casos y reservas: cada palabra tiene que estar en los nombres o los apellidos. Distingue tildes («Lucia» no encuentra a «Lucía»).
+- 2026-10-24 · B3.2 · Las zonas y viviendas del selector salen de las filas de la bandeja sin filtrar, no de `/areas/` ni `/unidades/`: no hace falta otro permiso ni otra petición. Con un estado elegido, «Pendientes / Todas» desaparece, porque se contradirían.
+- 2026-10-24 · B4.2 · El 2FA se probó con `/reservas/bandeja/` y `/casos/` sin verificar el segundo factor (403), en `apps/reservas/tests.py`.
 
 ### Conceptos por repasar
 
-Ninguno.
+Las cuatro fases las construyó el agente. Para la sustentación:
+
+- Probar una ausencia recorriendo las rutas (`test_hu24_rechazo_formal_no_se_aprueba_ni_se_reversa`).
+- Un serializer de consulta valida un `GET` igual que un `POST` (`ConsultarCasosSerializer`, `ConsultarBandejaSerializer`).
+- Por qué la API filtra y el front no; y por qué las cuentas de las pestañas salen de la lista sin filtrar.
+- Por qué las reservas no tienen filtro de prioridad, y por qué los casos no tienen filtro de vivienda.
 
 ## 2. Instrucciones para el agente
 
@@ -64,8 +75,8 @@ Ninguno.
 | D1 | La «sola bandeja» de HU-22 contra la decisión del 13/10 (pestañas separadas) | a) Se mantienen las pestañas, cada una con filtros; el criterio se lee «un solo dashboard, por pestañas» b) Pestaña «Todo» ordenada por antigüedad c) Posponer HU-22 | a | **a** (2026-10-24) |
 | D2 | El criterio de «no consume sus dos oportunidades» de HU-24 | a) Se prueba lo observable hoy: el descarte deja la solicitud en `RECHAZADA` (no `EXPIRADA`) y el residente puede volver a tomar la franja enseguida; queda parcial hasta HU-19 b) Construir el contador de oportunidades (es HU-19) | a | **a** (implícita en el pedido: «mínimo, pruebas») |
 | D3 | Citas en la bandeja | a) Fuera: depende de HU-31 b) Esperar a HU-31 para cerrar HU-22 | a | **a** |
-| D4 | Filtro por vivienda en la pestaña de casos. El caso no guarda la vivienda: se deduce de dónde reside su autor | a) Solo en reservas (la solicitud sí tiene `unidad`); en casos, filtro por solicitante b) En casos también, deduciendo por los vínculos vigentes del autor c) Agregar `Caso.unidad` (migración y cambio de modelo) | a | |
-| D5 | Dónde se filtra | a) En la API: parámetros validados por un serializer de consulta, el servicio arma el `filter` b) En el front, sobre las filas ya traídas | a | |
+| D4 | Filtro por vivienda en la pestaña de casos. El caso no guarda la vivienda: se deduce de dónde reside su autor | a) Solo en reservas (la solicitud sí tiene `unidad`); en casos, filtro por solicitante b) En casos también, deduciendo por los vínculos vigentes del autor c) Agregar `Caso.unidad` (migración y cambio de modelo) | a | **a** (2026-10-24) |
+| D5 | Dónde se filtra | a) En la API: parámetros validados por un serializer de consulta, el servicio arma el `filter` b) En el front, sobre las filas ya traídas | a | **a** (2026-10-24) |
 
 ## 4. Decisiones menores que el plan ya fija
 

@@ -3,7 +3,7 @@ resumen: "Las 40 historias de usuario: sprint previsto, story points, estado en 
 tipo: estado
 corte: 2026-10-13
 origen: "Notion (títulos, puntos y sprint) + código verificado el 2026-10-11 y puesto al día el 2026-10-13"
-actualizado: 2026-10-13
+actualizado: 2026-10-24
 revisado: 2026-10-13
 ---
 
@@ -63,9 +63,9 @@ El reparto por sprint está en [estado_actual](estado_actual.md).
 | HU-27 | Registro de visitantes y vehículos | 5 | 5 | Media | Parcial (Camilo) | [parqueaderos](../05_Modulos/parqueaderos.md) | [Parqueadero_De_Visitantes](../07_Planes/hechos/Plan_Parqueadero_De_Visitantes.md) |
 | HU-28 | Parqueadero de visitantes atado a la visita | 5 | 3 | Media | Construida | [parqueaderos](../05_Modulos/parqueaderos.md) | [Parqueadero_De_Visitantes](../07_Planes/hechos/Plan_Parqueadero_De_Visitantes.md) |
 | HU-29 | Tablero de casos con respuesta obligatoria | 5 | 5 | Media | Construida | [triage](../05_Modulos/triage.md) | [Plan_Dashboard_De_Solicitudes](../07_Planes/hechos/Plan_Dashboard_De_Solicitudes.md) |
-| HU-22 | Bandeja de triage de la Secretaría | 6 | 7 | Media | Parcial | [triage](../05_Modulos/triage.md) | [Triage_HU-22_HU-24](../07_Planes/activos/Plan_Triage_HU-22_HU-24.md) (activo) |
+| HU-22 | Bandeja de triage de la Secretaría | 6 | 7 | Media | Parcial | [triage](../05_Modulos/triage.md) | [Triage_HU-22_HU-24](../07_Planes/hechos/Plan_Triage_HU-22_HU-24.md) |
 | HU-23 | Prioridad sobre citas y casos | 6 | 5 | Media | Sin empezar | [triage](../05_Modulos/triage.md) | — |
-| HU-24 | Rechazo por causal formal de la Secretaría | 6 | 3 | Media | Parcial | [triage](../05_Modulos/triage.md) | [Triage_HU-22_HU-24](../07_Planes/activos/Plan_Triage_HU-22_HU-24.md) (activo) |
+| HU-24 | Rechazo por causal formal de la Secretaría | 6 | 3 | Media | Parcial | [triage](../05_Modulos/triage.md) | [Triage_HU-22_HU-24](../07_Planes/hechos/Plan_Triage_HU-22_HU-24.md) |
 | HU-30 | Registro y comunicación de infracciones | 6 | 4 | Media | Sin empezar | [infracciones](../05_Modulos/infracciones.md) | [Infracciones](../07_Planes/activos/Plan_Infracciones.md) (activo) |
 | HU-31 | Agendar cita dentro del horario de atención | 6 | 4 | Media | Sin empezar | [citas](../05_Modulos/citas.md) | — |
 | HU-32 | Cambio de horario con alternativas a los afectados | 6 | 8 | Media | Sin empezar | [citas](../05_Modulos/citas.md) | — |
@@ -133,6 +133,8 @@ Del ciclo de la reserva falta la cancelación en firme (HU-17).
 
 | HU | Qué hay | Qué le falta |
 |---|---|---|
+| HU-22 | Desde el 13/10 (Plan_Dashboard_De_Solicitudes): las pestañas Reservas, Casos y Citas, el 2FA (`solicitud.bandeja_ver` es sensible) y el aislamiento. Agente, 24/10: filtros por pestaña en la API y en la pantalla (Reservas: estado, zona, vivienda, fechas y solicitante; Casos: estado, prioridad, fechas y solicitante), la antigüedad visible con cualquier filtro y una prueba por criterio. En la rama `ccr-4213a943-1fgq6z`, sin mezclar a `desarrollo` | Las citas (HU-31). El criterio «una sola bandeja» se cumple por pestañas: Alejo mantuvo el 24/10 que no hay vista combinada. En Notion: «Sin empezar» |
+| HU-24 | Desde el 13/10: el descarte de la Secretaría en reservas y casos, con causal sin «otro» y comentario obligatorio. Agente, 24/10: una prueba con el nombre de cada criterio (`test_hu24_*`), incluido el aviso a la campana y que no se reversa. En la rama `ccr-4213a943-1fgq6z`, sin mezclar a `desarrollo` | El criterio de las dos oportunidades queda parcial hasta HU-19: hoy se prueba que el descarte deja `RECHAZADA` (no `EXPIRADA`) y que el residente vuelve a tomar la franja. En Notion: «En revisión» |
 | HU-33 | Solo el reglamento del conjunto en PDF (06/10), que es lo que exige HU-03 | Otros documentos, las actas y que el residente lo descargue. **Contra sus cinco criterios de Notion (11/10):** uno se cumple (rechaza por su firma un archivo que no es PDF), uno es parcial (subir otro no borra el anterior, pero no hay vista de versiones) y tres no (`documento.descargar` es de Administración, no hay actas ni manual, y la descarga no se audita). En Notion: «En progreso» |
 | HU-35 | Agente, 10/10: el residente sube el comprobante de un mes de su vivienda; Administración confirma con un check por vivienda y mes (Secretaría ve y busca); el buscador filtra en el servidor y ninguna fila trae la cédula; el pago confirmado alimenta la mora de *paz y salvo* con el *día límite de pago* | La mora se construyó **sin haber verificado lo legal** ([abiertas](../06_Decisiones/abiertas.md) 12.10 b). En Notion: «En revisión», 4 de 5 tareas; la de «almacenamiento fuera de la base» contradice lo construido |
 

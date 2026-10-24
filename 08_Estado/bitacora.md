@@ -2,7 +2,7 @@
 resumen: "Bitácora del proyecto: una fila por hecho, con fecha, hora, repositorio y commit. Lo más reciente abajo."
 tipo: estado
 origen: "avance §3"
-actualizado: 2026-10-13
+actualizado: 2026-10-24
 revisado: 2026-10-13
 ---
 
@@ -106,6 +106,8 @@ En las filas anteriores al 2026-09-30, *este archivo* es el antiguo `Admind_Avan
 | 2026-10-13 11:55 | Backend, Frontend y documentación | **Commit del dashboard de gestión (HU-14 y HU-29), de Alejo, «Dashboard beta».** Backend `85f9f23` (21 archivos, `reservas/0006` y `casos/0004`), Frontend `d0e4af7` (22 archivos) y documentación `e08a958`. Al revisar la base después, `showmigrations` no deja ninguna sin aplicar: las dos migraciones del dashboard ya estaban en `admind_db` |
 | 2026-10-13 12:25 | Backend y Frontend | **Camilo sube «boton eliminar conjunto»**, sin historia ni plan. **Backend `7eb5b5a`:** `DELETE /conjuntos/actual/` y `servicios.eliminar` (baja lógica: `activo` y `operativo` en falso, y el conjunto activo de todas las sesiones en `None`), solo el Superusuario; `conjuntos_disponibles` deja de filtrar por `activo` para el Superusuario; **`Persona.telefono` pasa a 15 caracteres y se edita la `personas/0002` ya aplicada**, sin tocar la restricción del modelo. **Frontend `8279616`:** botón «Eliminar conjunto» con diálogo en el resumen del asistente, `cliente_api.conjuntos.eliminar` y `static/js/conjuntos.js`. Pruebas: dos en el backend y tres en el front. No consta recorrido en el navegador |
 | 2026-10-13 | Los tres repositorios y `admind_db` | **Revisión de la bóveda contra el código, a pedido de Alejo.** Backend `7eb5b5a`, Frontend `8279616` y documentación `e08a958`, con árbol limpio e iguales a `origin`. Backend **708 pruebas, todas pasan** (47 s) y Frontend **417, todas pasan** (9 s). `showmigrations` sin pendientes; **`makemigrations --check` falla**: pide `personas/0003` por el teléfono (ver [personas](../05_Modulos/personas.md)). `admind_db` conserva `telefono` en `varchar(10)` y la restricción de 7 a 10. **84 rutas** de la API, todas en la prueba del intruso. Se pusieron al día las notas de estado, las de módulo afectadas y el cuadro de pantallas del front, que seguía con Solicitudes como maqueta y sin Casos, Ingresos, Parqueaderos ni Pagos |
+| 2026-10-24 | Documentación | **Cuatro planes para HU-22/HU-24, HU-30, HU-33 y HU-34**, con las decisiones de Alejo; HU-22 y HU-24 pasan a parciales en [historias](historias.md). Documentación `081d29b`, rama `ccr-4213a943-1fgq6z` |
+| 2026-10-24 | Backend y Frontend, rama `ccr-4213a943-1fgq6z` | **Plan de triage ejecutado por el agente.** Backend `db2a128` (pruebas de HU-24), `c1fcaab` (filtros de `/casos/` y `/reservas/bandeja/`) y `bddc4d7` (2FA y aislamiento con filtros); Frontend `e1050c5` (filtros en el dashboard) y `5d2cd69` (criterios de HU-22). Sobre `7eb5b5a` y `8279616`. Backend **718 pruebas**, Frontend **435**, todas pasan, corridas en el contenedor de la nube (Python 3.13, PostgreSQL 16). Sin migraciones nuevas; `personas/0003` sigue pendiente. **No está en `desarrollo`** |
 
 ## Ver también
 
