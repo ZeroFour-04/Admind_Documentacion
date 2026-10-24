@@ -2,7 +2,7 @@
 resumen: "Lista de planes de trabajo: cuáles están activos y cuáles ya se ejecutaron, con la historia que cubre cada uno y la nota donde quedó lo vigente."
 tipo: plan
 origen: "reorganización del 2026-09-30; revisada contra el código el 2026-10-11"
-actualizado: 2026-10-13
+actualizado: 2026-10-24
 revisado: 2026-10-13
 ---
 
@@ -12,11 +12,14 @@ Cómo se escribe y se cierra uno: [abrir_y_cerrar_un_plan](../09_Protocolos/abri
 
 ## Activos
 
-**Ninguno.** `activos/` está vacía: los once planes escritos están ejecutados.
+Cuatro, escritos el 2026-10-24 sobre Backend `7eb5b5a` y Frontend `8279616`. Ninguno ha empezado; cada uno tiene decisiones por llenar en su sección 3.
 
-Los once tienen commit y sus migraciones aplicadas en `admind_db`; el del dashboard (13/10) quedó en Backend `85f9f23` y Frontend `d0e4af7`.
-
-Lo que sigue sin plan está en [pendientes](../08_Estado/pendientes.md), sección 9. Qué entra antes de la entrega sigue sin decidir ([abiertas](../06_Decisiones/abiertas.md), 12.8).
+| Plan | Historia | Qué cubre |
+|---|---|---|
+| [Plan_Triage_HU-22_HU-24](activos/Plan_Triage_HU-22_HU-24.md) | HU-22, HU-24 | Una prueba por criterio del rechazo formal y filtros por pestaña en el dashboard, sin vista combinada ni citas |
+| [Plan_Infracciones](activos/Plan_Infracciones.md) | HU-30 | Registro que se comunica a propietario y arrendatario, cierre, anulación del Superusuario y botón desde el caso |
+| [Plan_Documentos](activos/Plan_Documentos.md) | HU-33 | Reglamento y manual con versiones, pantalla para el residente y descarga auditada; sin actas |
+| [Plan_Parqueaderos_De_Residentes](activos/Plan_Parqueaderos_De_Residentes.md) | HU-34 | Asignar y reasignar un parqueadero de residentes a una vivienda, con historial |
 
 ## Hechos
 

@@ -19,13 +19,13 @@ Títulos, story points y sprint previsto salen de Notion (`Gestión Scrum — Ad
 
 Con la DoD **ninguna está Terminada**. Cómo se reportan al docente: [estado_actual](estado_actual.md).
 
-## Totales (corte 2026-10-13)
+## Totales (corte 2026-10-13; HU-22 y HU-24 pasan a parciales el 2026-10-24)
 
 | | Historias | SP |
 |---|---|---|
 | Construidas | 21 | 105 |
-| Parciales (HU-27, HU-33) | 2 | 8 |
-| Sin empezar | 15 | 75 |
+| Parciales (HU-22, HU-24, HU-27, HU-33) | 4 | 18 |
+| Sin empezar | 13 | 65 |
 | **Las 38 del backlog** | **38** | **188** |
 | Nuevas, sin puntos (HU-39, HU-40) | 2 | — |
 
@@ -63,14 +63,14 @@ El reparto por sprint está en [estado_actual](estado_actual.md).
 | HU-27 | Registro de visitantes y vehículos | 5 | 5 | Media | Parcial (Camilo) | [parqueaderos](../05_Modulos/parqueaderos.md) | [Parqueadero_De_Visitantes](../07_Planes/hechos/Plan_Parqueadero_De_Visitantes.md) |
 | HU-28 | Parqueadero de visitantes atado a la visita | 5 | 3 | Media | Construida | [parqueaderos](../05_Modulos/parqueaderos.md) | [Parqueadero_De_Visitantes](../07_Planes/hechos/Plan_Parqueadero_De_Visitantes.md) |
 | HU-29 | Tablero de casos con respuesta obligatoria | 5 | 5 | Media | Construida | [triage](../05_Modulos/triage.md) | [Plan_Dashboard_De_Solicitudes](../07_Planes/hechos/Plan_Dashboard_De_Solicitudes.md) |
-| HU-22 | Bandeja de triage de la Secretaría | 6 | 7 | Media | Sin empezar | [triage](../05_Modulos/triage.md) | — |
+| HU-22 | Bandeja de triage de la Secretaría | 6 | 7 | Media | Parcial | [triage](../05_Modulos/triage.md) | [Triage_HU-22_HU-24](../07_Planes/activos/Plan_Triage_HU-22_HU-24.md) (activo) |
 | HU-23 | Prioridad sobre citas y casos | 6 | 5 | Media | Sin empezar | [triage](../05_Modulos/triage.md) | — |
-| HU-24 | Rechazo por causal formal de la Secretaría | 6 | 3 | Media | Sin empezar | [triage](../05_Modulos/triage.md) | — |
-| HU-30 | Registro y comunicación de infracciones | 6 | 4 | Media | Sin empezar | [infracciones](../05_Modulos/infracciones.md) | — |
+| HU-24 | Rechazo por causal formal de la Secretaría | 6 | 3 | Media | Parcial | [triage](../05_Modulos/triage.md) | [Triage_HU-22_HU-24](../07_Planes/activos/Plan_Triage_HU-22_HU-24.md) (activo) |
+| HU-30 | Registro y comunicación de infracciones | 6 | 4 | Media | Sin empezar | [infracciones](../05_Modulos/infracciones.md) | [Infracciones](../07_Planes/activos/Plan_Infracciones.md) (activo) |
 | HU-31 | Agendar cita dentro del horario de atención | 6 | 4 | Media | Sin empezar | [citas](../05_Modulos/citas.md) | — |
 | HU-32 | Cambio de horario con alternativas a los afectados | 6 | 8 | Media | Sin empezar | [citas](../05_Modulos/citas.md) | — |
-| HU-33 | Repositorio de documentos vigentes | 6 | 3 | Media | Parcial | [conjuntos](../05_Modulos/conjuntos.md) (el reglamento) | [Asistente_De_Creacion](../07_Planes/hechos/Plan_Asistente_De_Creacion.md) |
-| HU-34 | Asignación de parqueaderos de residentes | 6 | 4 | Media | Sin empezar | [parqueaderos](../05_Modulos/parqueaderos.md) | — |
+| HU-33 | Repositorio de documentos vigentes | 6 | 3 | Media | Parcial | [conjuntos](../05_Modulos/conjuntos.md) (el reglamento) | [Asistente_De_Creacion](../07_Planes/hechos/Plan_Asistente_De_Creacion.md), [Documentos](../07_Planes/activos/Plan_Documentos.md) (activo) |
+| HU-34 | Asignación de parqueaderos de residentes | 6 | 4 | Media | Sin empezar | [parqueaderos](../05_Modulos/parqueaderos.md) | [Parqueaderos_De_Residentes](../07_Planes/activos/Plan_Parqueaderos_De_Residentes.md) (activo) |
 | HU-35 | Reporte de pago de administración | 7 | 4 | Baja | Construida | [pagos](../05_Modulos/pagos.md) | [Pago_De_Administracion](../07_Planes/hechos/Plan_Pago_De_Administracion.md) |
 | HU-36 | Importación masiva con dry-run e idempotencia | 7 | 7 | Baja | Sin empezar | [alcance](../01_Contexto/alcance.md) 3.2 | — |
 | HU-37 | Respaldo de información por conjunto | 7 | 5 | Baja | Sin empezar | [alcance](../01_Contexto/alcance.md) 3.2 | — |
