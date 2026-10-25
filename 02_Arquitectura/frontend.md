@@ -2,8 +2,8 @@
 resumen: "El frontend por dentro: config sin base de datos, cliente_api, la sesión del front y el estado de cada pantalla."
 tipo: arquitectura
 origen: "guía de estructura §6 (2026-09-30)"
-actualizado: 2026-10-13
-revisado: 2026-10-13
+actualizado: 2026-10-25
+revisado: 2026-10-25
 ---
 
 # El frontend por dentro
@@ -49,7 +49,8 @@ Cada app del front tiene `views.py` (funciones), `urls.py`, a veces `forms.py` (
 | Solicitudes (el dashboard de gestión: pestañas Reservas, Casos y Citas, cada una una tabla; entra quien tiene `solicitud.bandeja_ver`) | `triage` | Real desde el 13/10. Citas es una pestaña sin función (HU-31). No hay vista combinada de los tres tipos (HU-22) |
 | Casos (el residente abre y consulta los suyos; gestión entra por la pestaña Casos del dashboard y en el detalle tiene las acciones de su permiso: tomar, prioridad, redirigir, descartar, responder y rechazar) | `casos` | Real (HU-29), 13/10 |
 | Ingreso a zonas (Vigilancia registra y da la salida; con `ingreso.ver_historico`, «Ingresos»: el historial) | `ingresos` | Real, sin historia. El aviso de finalidad es un marcador hasta la verificación legal |
-| Parqueaderos (la tabla; con `parqueadero.gestionar`, crear y retirar) | `parqueaderos` | Real (HU-28). Asignar a una vivienda es HU-34 y no está |
+| Infracciones (lista, formulario, detalle con cierre y, para el Superusuario, anulación) y el botón «Registrar infracción» en el detalle de un caso | `infracciones` | Real (HU-30) |
+| Parqueaderos (la tabla; crear y retirar con `parqueadero.gestionar`; asignar, reasignar, liberar e historial con `parqueadero.asignar`) y «Mi parqueadero» del residente | `parqueaderos` | Real (HU-28 y HU-34) |
 | Pagos (con `pago.ver`, la tabla del mes con buscador y el check; con `pago.reportar`, «Mis pagos») | `pagos` | Real (HU-35) |
 | Visitantes ("Visitante" para Vigilancia: formulario de ingreso con parqueadero y los de hoy, con «Registrar salida»; con `visitante.ver_historico`, el historial sin formulario) | `visitantes` | Real, parcial (HU-27); con ingreso y salida desde el 10/10 (HU-28). Sin el aviso al apartamento ni la Ley 1581 |
 | Conjunto | `conjuntos` | Real (resumen del asistente) |

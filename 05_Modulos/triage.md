@@ -4,8 +4,8 @@ tipo: modulo
 modulo: triage
 hu: [HU-22, HU-23, HU-24, HU-25, HU-29]
 origen: "maestro v1.4 (2026-09-14) §5.7 + plan de anuncios con fotos (2026-10-05)"
-actualizado: 2026-10-13
-revisado: 2026-10-13
+actualizado: 2026-10-24
+revisado: 2026-10-24
 ---
 
 # Secretaría, triage y anuncios
@@ -13,7 +13,7 @@ revisado: 2026-10-13
 > [!NOTE] Qué hay construido (verificado el 2026-10-13)
 > - **Anuncios (HU-25):** construidos, con fotos. Sección *Cómo está construido*, abajo.
 > - **Casos (HU-29) y el dashboard de gestión:** construidos el 13/10 sobre lo que Camilo subió el 12/10. Sección *Cómo está construido: el dashboard y los casos*, abajo.
-> - **De la bandeja de triage (HU-22 a HU-24) hay una parte:** las pestañas por tipo, la prioridad sobre casos y el descarte por causal formal de reservas y casos. No hay vista combinada (decisión de Alejo del 13/10), ni nada sobre citas, que no existen. En el backend `apps/triage/` sigue con solo README: el dashboard es una pantalla del front que le pide las filas a cada módulo.
+> - **De la bandeja de triage (HU-22 a HU-24) hay una parte:** las pestañas por tipo, la prioridad sobre casos, el descarte por causal formal de reservas y casos, y desde el 24/10 los filtros de cada pestaña y una prueba por criterio del rechazo formal (sin commit al corte). No hay vista combinada (decisión de Alejo del 13/10 y D1 a del [plan](../07_Planes/hechos/Plan_Triage_HU-22_HU-24.md): el criterio se lee «un solo dashboard, por pestañas»), ni nada sobre citas, que no existen. «No consume sus dos oportunidades» queda parcial hasta HU-19. En el backend `apps/triage/` sigue con solo README: el dashboard es una pantalla del front que le pide las filas a cada módulo.
 > - **La Secretaría ya no aprueba reservas** (Alejo, 13/10): el código volvió a coincidir con este diseño. Y una diferencia a propósito: el diseño dice que la bandeja no tiene respuesta de fondo; aquí el administrador responde desde el detalle del caso, al que se llega por la fila.
 
 ## Diseño (maestro §5.7)
@@ -105,6 +105,27 @@ Es **terminal**: no se reversa, no se edita, el solicitante vuelve a solicitar. 
 
 Las rutas están en `Backend/Admind_Backend/apps/casos/README.md`. El caso no guarda la vivienda: se deduce de dónde reside hoy quien lo abrió.
 
+## Cómo está construido: los filtros de las pestañas (2026-10-24)
+
+Cada pestaña tiene su formulario de filtros. Los filtros viajan en la URL (`?pestana=casos&prioridad=URGENTE`), se validan en la API y reducen las filas sin cambiar el orden; el front no filtra nada.
+
+| Pestaña | Filtros | Dónde se aplican |
+|---|---|---|
+| Reservas | `estado` (apartada, reservada o rechazada), `area`, `vivienda`, `solicitante`, `desde` y `hasta` (fecha de envío) | `ConsultarBandejaSerializer` → `reservas.servicios.solicitudes_para_bandeja` |
+| Casos | `estado`, `prioridad`, `solicitante`, `desde` y `hasta` (fecha de creación) | `ConsultarCasosSerializer` → `casos.servicios.casos_para_bandeja` |
+
+| Regla | Dónde se cumple |
+|---|---|
+| Un filtro que no sirve responde 400, no una tabla vacía | Los serializers de consulta (estado o prioridad que no existen, fecha mal escrita, `desde` posterior a `hasta`); el front muestra el error en el formulario |
+| Reservas no tiene filtro de prioridad y casos no tiene filtro de vivienda | Reservas no tiene prioridad (R9); el caso no guarda la vivienda. Un parámetro desconocido se ignora |
+| El solicitante se busca por palabras | `personas.servicios.por_nombre`: cada palabra tiene que estar en los nombres o los apellidos, y distingue tildes |
+| La antigüedad se ve con cualquier filtro | La columna no depende de ningún filtro; una prueba lo comprueba con cada uno |
+| Las cuentas de las pestañas no cambian al filtrar | Salen de la lista sin filtrar, que el dashboard pide siempre |
+| La bandeja no aprueba, no responde de fondo y no exporta | Una prueba del front lo comprueba sobre el HTML de las tres pestañas |
+| El 2FA se exige antes de mirar los filtros | `solicitud.bandeja_ver` es sensible: sin segundo factor, 403 |
+
+**El rechazo formal (HU-24)** tiene una prueba por criterio, con `test_hu24_` en el nombre (`apps/reservas/tests.py` y `apps/casos/tests.py`): sin categoría o sin explicación falla; libera la franja y avisa a la campana; el residente vuelve a tomar la franja; no se aprueba ni se reversa (409, y ninguna ruta se llama `reversar`, `reabrir` ni `deshacer`); en un caso, el motivo cuenta como la respuesta.
+
 ## Cómo está construido: fotos en los anuncios (2026-10-05)
 
 Un anuncio se publica solo con texto o con texto y **hasta 4 fotos** (PNG, JPG o WebP, de hasta 5 MB cada una). El detalle de la API está en `Backend/Admind_Backend/apps/anuncios/README.md`.
@@ -127,5 +148,6 @@ Las fotos van en una tabla aparte, con `BinaryField`, para que listar anuncios n
 - [reservas](reservas.md) — el Evento: la solicitud de reserva
 - [citas](citas.md) e [infracciones](infracciones.md) — los otros módulos que pasan por la Secretaría
 - [Plan_Anuncios_Con_Fotos](../07_Planes/hechos/Plan_Anuncios_Con_Fotos.md) — el plan de las fotos
+- [Plan_Triage_HU-22_HU-24](../07_Planes/hechos/Plan_Triage_HU-22_HU-24.md) — el plan de los filtros y el rechazo formal
 - [historias](../08_Estado/historias.md) — HU-22 a HU-25 y HU-29
 - `Backend/Admind_Backend/apps/anuncios/README.md`

@@ -40,7 +40,7 @@ Tres repositorios hermanos dentro de `A D M I N D/` (la carpeta tiene espacios: 
 - **Construye solo lo que te piden**, con el alcance exacto. Lo que falte fuera del pedido se avisa y no se hace: `03_Reglas/trabajo_con_ia.md`.
 - **No decides por el equipo.** Contradicciones abiertas, recorte de alcance, roles, permisos y tablas globales se preguntan: `06_Decisiones/abiertas.md`.
 - **La ley manda sobre todo lo demás**: `01_Contexto/legal.md`. Lo prohibido no se programa como permiso denegado; la operación no existe.
-- **Git:** ramas `main`, `desarrollo` y `pruebas`, sin ramas por historia. Sin `push` ni commits que no te pidan: `03_Reglas/git.md`.
+- **Git:** ramas `main`, `desarrollo` y `pruebas`, más una rama corta por cambio que se funde a `desarrollo` con PR (desde 2026-10-24). Sin `push` ni commits que no te pidan. **Los PR los hace Alejo, nunca tú**: solo lo guías: `03_Reglas/git.md`.
 - **Si una nota y el código no coinciden, manda el código.** Avisa y corrige la nota.
 - **Nada se instala ni se descarga** sin que Alejo lo confirme. `config/settings_pruebas.py` no se toca sin preguntarle.
 

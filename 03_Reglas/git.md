@@ -2,14 +2,25 @@
 resumen: "Ramas del curso (main, desarrollo, pruebas, sin ramas por historia), formato de commit y rutina diaria."
 tipo: regla
 origen: "maestro v1.4 (2026-09-14) §8.5 + guía de desarrollo §10 (2026-09-15)"
-actualizado: 2026-10-11
-revisado: 2026-10-11
+actualizado: 2026-10-24
+revisado: 2026-10-24
 ---
 
 # Git: ramas, commits y día a día
 
 > [!NOTE] Estado de las ramas al 2026-10-11
 > En GitHub el backend tiene `main` y `desarrollo`, y **no tiene rama `pruebas`** (existe solo en local, en un commit viejo). El front tiene las tres, con `pruebas` igual a `main`. `lab` existe solo en local, en los dos. Ninguna historia ha pasado por un PR `desarrollo → pruebas`.
+
+## Pull requests: los abre Alejo, nunca el agente
+
+**Regla de Alejo, 2026-10-24.** Cada cambio que llegue a un commit pasa por un pull request, y **el PR lo hace Alejo, él mismo**. El agente de IA no abre, edita, aprueba ni fusiona un PR por ninguna razón, ni aunque se lo parezca útil o el cambio sea mínimo. Tampoco usa `gh pr create`, `gh pr merge` ni las herramientas de PR de la app.
+
+Lo que sí puede hacer el agente: guiar a Alejo paso a paso (qué rama, qué base, qué título y descripción sugerir) y apoyarlo con el texto del PR cuando se lo pida, para que Alejo lo pegue y lo envíe.
+
+**Cómo se aplica (decidido por Alejo el 2026-10-24): ramas cortas.** Para cada commit se crea una rama corta desde `desarrollo` (por ejemplo `feat/areas-listar`), se sube, y Alejo abre el PR hacia `desarrollo`; al fusionarse, la rama se borra. Se mantiene el formato de commit con `[HU-XX]`. La promoción `desarrollo → pruebas` sigue siendo otro PR.
+
+> [!WARNING] Pendiente con el profesor
+> Esto choca con el modelo de abajo («sin ramas por historia», los dos trabajan directo en `desarrollo`, maestro §8.5). Las ramas cortas no son por historia sino por cambio, pero falta que el profesor confirme que lo acepta: [abiertas](../06_Decisiones/abiertas.md) 12.7 d. Mientras tanto, las secciones de abajo que dicen «directo en `desarrollo`» describen el requisito del curso, no la práctica de Alejo.
 
 ## Modelo de ramas — requisito del curso (maestro §8.5)
 

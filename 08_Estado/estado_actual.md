@@ -1,10 +1,10 @@
 ---
 resumen: "Dónde está el proyecto hoy: commits, pruebas, migraciones, historias por grupo y lo que frena para cerrarlas."
 tipo: estado
-corte: 2026-10-13
+corte: 2026-10-24
 origen: "verificado en los tres repositorios y en admind_db el 2026-10-13"
-actualizado: 2026-10-13
-revisado: 2026-10-13
+actualizado: 2026-10-25
+revisado: 2026-10-25
 ---
 
 # Estado actual
@@ -21,14 +21,14 @@ Esta nota dice **cómo está hoy**. Cómo se llegó aquí, día por día, está 
 |---|---|
 | **Backend** (la API) | Rama `desarrollo` en **`7eb5b5a`** («boton eliminar conjunto», 13/10, de Camilo), igual a `origin/desarrollo`. Sobre `0b627d1` de Camilo (12/10) van el modo de uso de un área (`287621c`), los límites de texto (`87d67c5`), el dashboard de gestión (`85f9f23`, «Dashboard beta») y la baja del conjunto con el teléfono a 15 (`7eb5b5a`). 17 apps con código más `comun`; 4 solo con README (`citas`, `infracciones`, `triage`, `importacion_respaldo`). **84 rutas de la API**, todas en la prueba del intruso |
 | **Frontend** (las pantallas) | Rama `desarrollo` en **`8279616`** («boton eliminar conjunto», 13/10, de Camilo), igual a `origin/desarrollo`. Sobre `7cd762c` de Camilo (12/10) van el modo de uso (`6c61ac4`), los límites de texto (`7121d94`), el menú de Vigilancia (`0adf5eb`), el dashboard (`d0e4af7`) y el botón «Eliminar conjunto» (`8279616`). 15 apps con pantallas, más `casos` |
-| **Sin commit** | Nada: los tres repositorios están limpios y alineados con GitHub |
+| **Sin commit** | **El plan de triage (24/10):** 10 archivos en el backend y 9 en el frontend (código, pruebas y READMEs), sin migraciones. La documentación, además de lo de la revisión del 13/10, tiene los cuatro planes nuevos y estas notas |
 | **Documentación** | Rama `main` en `e08a958` («Dashboard beta», 13/10), igual a `origin/main`, más las notas de la revisión del 13/10 (la baja del conjunto, el teléfono y el cuadro de pantallas del front), sin commit |
 | **Base de datos** | **Ninguna migración sin aplicar en `admind_db`** (`showmigrations`, 13/10): `reservas/0006` y `casos/0004`, las del dashboard, ya están. **Pero** `makemigrations --check` ya no sale limpio: pide `personas/0003` porque Camilo editó la `personas/0002` después de aplicada y la restricción del teléfono del modelo no la acompañó. La base conserva `telefono` en `varchar(10)` y la restricción de 7 a 10 dígitos ([personas](../05_Modulos/personas.md)) |
-| **Pruebas del backend** | **708, todas pasan** (47 s). La prueba del intruso sigue en verde ([pruebas_y_ejecucion](../02_Arquitectura/pruebas_y_ejecucion.md)) |
-| **Pruebas del frontend** | **417, todas pasan** (9 s) |
-| **Historias con código** | **21 construidas (105 SP)**, 2 parciales (HU-27 y HU-33, 8 SP) y **15 sin empezar (75 SP)**, de 38 historias y 188 SP. Aparte: HU-39 (primera parte construida, sin puntos) y HU-40 (solo en Notion). Detalle en [historias](historias.md). Lo que Camilo subió el 12/10 de HU-15 y HU-18 no se ha comparado con sus criterios |
+| **Pruebas del backend** | **723; 722 pasan y falla la nocturna conocida** (`apps/ingresos`, que usa la hora real y se corrió a las 22:44; 90 s). La prueba del intruso sigue en verde ([pruebas_y_ejecucion](../02_Arquitectura/pruebas_y_ejecucion.md)) |
+| **Pruebas del frontend** | **435, todas pasan** (16 s) |
+| **Historias con código** | **23 construidas (113 SP)**, 4 parciales (HU-22, HU-24, HU-27 y HU-33, 18 SP) y **11 sin empezar (57 SP)**, de 38 historias y 188 SP. Aparte: HU-39 (primera parte construida, sin puntos) y HU-40 (solo en Notion). Detalle en [historias](historias.md). Lo que Camilo subió el 12/10 de HU-15 y HU-18 no se ha comparado con sus criterios |
 | **Sin historia** | El ingreso a zonas con aforo ([ingresos](../05_Modulos/ingresos.md)) está construido y no tiene historia ni número |
-| **Planes** | Ninguno activo. Los once escritos están ejecutados, con commit y migraciones aplicadas ([planes](../07_Planes/planes.md)) |
+| **Planes** | Ninguno sin empezar. Se construyeron el 25/10, cada uno en su rama: parqueaderos de residentes (HU-34, `feat/parqueaderos-asignacion`), documentos (HU-33, `feat/documentos-por-tipo`) e infracciones (HU-30, `feat/infracciones-registro`, sin commit). El de triage (HU-22 y HU-24) se ejecutó el 24/10, sin commit. Los once anteriores están ejecutados, con commit y migraciones aplicadas ([planes](../07_Planes/planes.md)) |
 | **Plazo** | Entrega cerca del 2026-10-21: el profesor la amplió una semana (Alejo, 2026-10-13); antes era cerca del 14/10. Fecha exacta sin confirmar. No hay que entregar las 38 historias ([backlog_y_plazo](backlog_y_plazo.md)) |
 
 ## Historias por grupo
@@ -42,7 +42,7 @@ La columna *Sprint* es el reparto previsto en el Excel V11.1, que ya no se cumpl
 | **3** | HU-10 a HU-13 | 26 | 4 de 4 | — |
 | **4** | HU-14 a HU-19 | 28 | HU-14 y HU-16 (12 SP) | HU-15, HU-17, HU-18, HU-19 |
 | **5** | HU-20, 21, 25, 27, 28, 29 | 28 | HU-21, HU-25, HU-28 y HU-29 (18 SP); HU-27 parcial | HU-20 |
-| **6** | HU-22 a HU-24, HU-30 a HU-34 | 38 | HU-33 parcial | HU-22 a HU-24, HU-30 a HU-32, HU-34 |
+| **6** | HU-22 a HU-24, HU-30 a HU-34 | 38 | HU-30 y HU-34 (8 SP); HU-22, HU-24 y HU-33 parciales | HU-23, HU-31, HU-32 |
 | **7** | HU-35, 36, 37 | 16 | HU-35 (4 SP) | HU-36, HU-37 |
 | Condicional | HU-38 | 7 | — | HU-38 |
 

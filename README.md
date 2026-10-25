@@ -106,7 +106,7 @@ El aislamiento entre conjuntos (HU-05) y la auditoría no tienen nota de módulo
 
 | Nota | Qué tiene |
 |---|---|
-| [planes](07_Planes/planes.md) | Los once planes ejecutados, con su historia y la nota donde quedó lo vigente. No hay ninguno activo |
+| [planes](07_Planes/planes.md) | Los doce planes ejecutados, con su historia y la nota donde quedó lo vigente, y los tres activos (parqueaderos HU-34, infracciones HU-30 y documentos HU-33) |
 
 Los planes están en `07_Planes/hechos/` y son históricos: se abren para ver el guion de prueba manual o cómo se decidió algo, no para saber cómo es hoy.
 

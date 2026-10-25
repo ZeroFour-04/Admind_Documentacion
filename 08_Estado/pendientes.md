@@ -3,8 +3,8 @@ resumen: "Todo lo que falta, ordenado por tipo: lo que frena los story points, p
 tipo: estado
 corte: 2026-10-13
 origen: "listas anteriores (2026-09-27 a 2026-10-11), reordenadas por tipo y contrastadas con el código el 2026-10-11; puesta al día el 2026-10-13"
-actualizado: 2026-10-13
-revisado: 2026-10-13
+actualizado: 2026-10-25
+revisado: 2026-10-25
 ---
 
 # Pendientes
@@ -37,6 +37,7 @@ El agente no las hace: no tiene la contraseña ni el segundo factor de los usuar
 | Dos reglas de reserva del 10/10 | Sin guion | El agente no las recorrió en el navegador |
 | Pago de una reserva (HU-16) | [Plan_Pago_De_Reserva](../07_Planes/hechos/Plan_Pago_De_Reserva.md) | — |
 | Parqueadero de visitantes (HU-28) | [Plan_Parqueadero_De_Visitantes](../07_Planes/hechos/Plan_Parqueadero_De_Visitantes.md) | Dos navegadores con un solo puesto libre. `static/js/visitantes.js` no tiene prueba automática |
+| Triage: filtros y rechazo formal (HU-22 y HU-24) | [Plan_Triage_HU-22_HU-24](../07_Planes/hechos/Plan_Triage_HU-22_HU-24.md), guion de 5 pasos | Sin commit ni `migrate` (no hay migraciones). El agente no lo vio en el navegador: ni el formulario de filtros ni su diseño a 390 px |
 | Pago de administración (HU-35) | [Plan_Pago_De_Administracion](../07_Planes/hechos/Plan_Pago_De_Administracion.md) | — |
 | Cambiar el modo de uso de un área (13/10) | Sin guion: en «Editar área», pasar una con reservas apartadas y reglas propias a «Con ingreso» y volver | El agente lo recorrió con un guion contra la base de pruebas, no en el navegador ni con usuarios reales |
 | Usuarios, detalle de la vivienda y «Crear conjunto» (11/10) | Sin guion | Usuarios y el detalle de la vivienda se vieron en el navegador con datos inventados, no con usuarios reales |
@@ -160,11 +161,14 @@ El agente no toca Notion por su cuenta. Alejo decidió el 11/10 que refleje la r
 
 ## 9. Lo que sigue sin plan
 
+- **Parqueaderos de residentes (HU-34), construido el 25/10 en `feat/parqueaderos-asignacion` (back y front), sin commit:** falta que Alejo haga los commits y el PR hacia `desarrollo`, corra `migrate` (`parqueaderos/0002` y `reglas/0008`) y se recorra el [guion](../07_Planes/activos/Plan_Parqueaderos_De_Residentes.md) con otra persona.
+- **Documentos (HU-33), construido el 25/10 en `feat/documentos-por-tipo` (back y front), sin commit:** falta el commit, el PR hacia `desarrollo`, el **respaldo de `admind_db`** y `migrate` (`documentos/0002` renombra la tabla `documentos_reglamento` a `documentos_documento`) y el [guion](../07_Planes/activos/Plan_Documentos.md) con otra persona. Las actas de asamblea quedan fuera (D2 b).
+- **Infracciones (HU-30), construido el 25/10 en `feat/infracciones-registro` (back y front), sin commit:** falta el commit, el PR hacia `desarrollo`, `migrate` (`infracciones/0001`) y el [guion](../07_Planes/activos/Plan_Infracciones.md) con otra persona, que incluye entrar como propietario y arrendatario para ver el aviso.
 - **Segunda parte de HU-39:** las palabras del conjunto en las pantallas, registrar una vivienda a mano dentro de una agrupación, y retirar viviendas y agrupaciones con confirmación ([historias](historias.md)).
 - **El vínculo `habitante`** ([unidades](../05_Modulos/unidades.md)): decidido el 06/10, sin historia, sin plan y sin construir. Mientras no exista, la familia entra a una zona como acompañante de un titular.
 - **Después de las zonas con ingreso:** las reglas de piscina de la Ley 1209, depurar el historial al cumplirse la retención, que el vigilante confirme que quien venció de verdad salió, cupos que se actualicen solos, áreas típicas con ingreso en el asistente, el panel de Vigilancia como bento y enlazar los acompañantes con los visitantes de portería.
 - **De HU-27:** el aviso a quienes residen en el apartamento, la liberación manual de un parqueadero sin salida y el listado de ocupaciones de más de N horas.
-- **Preguntas sueltas de Alejo** (`Archivo/Notas/Nuevas reglas.md`, 06/10): cuántos parqueaderos tiene y puede tener cada vivienda (toca HU-34), y las correcciones del docente.
+- **Preguntas sueltas de Alejo** (`Archivo/Notas/Nuevas reglas.md`, 06/10): las correcciones del docente. Lo de cuántos parqueaderos puede tener cada vivienda se resolvió en HU-34 (D2: el tope lo fija cada conjunto con una regla).
 
 ## Cerrado al revisar esta lista (2026-10-11)
 

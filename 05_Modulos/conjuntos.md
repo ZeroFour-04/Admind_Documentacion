@@ -4,8 +4,8 @@ tipo: modulo
 modulo: conjuntos
 hu: [HU-03, HU-21, HU-33]
 origen: "guía de estructura §5.7 (2026-09-30); la baja, del código al 2026-10-13"
-actualizado: 2026-10-13
-revisado: 2026-10-13
+actualizado: 2026-10-25
+revisado: 2026-10-25
 ---
 
 # Conjuntos: asistente de creación e identidad
@@ -39,7 +39,7 @@ Cada paso se guarda apenas se completa: se puede salir y volver.
 
 **Quién lo deja operativo.** `POST /conjuntos/actual/activar/` exige `conjunto.activar`, que tienen el Superusuario y, desde el 2026-10-06, Administración. Si falta algo responde 400 con la lista de `faltantes`.
 
-**El reglamento** (lo mínimo de HU-33) vive en `apps/documentos`. `servicios.guardar()` revisa, en orden: que no esté vacío, que pese hasta 10 MB y que empiece por `%PDF-` (la firma, no el nombre). Se guarda en la base con `BinaryField`, con su huella SHA-256, quién lo subió y cuándo. **Subir otro no borra el anterior:** se agrega una fila y el vigente es el más reciente. Las consultas que no necesitan el archivo lo dejan fuera con `defer("contenido")`. En el front, el navegador nunca habla con la API: el servidor del front recibe el PDF y lo reenvía con el token de la sesión, y de vuelta lo entrega él mismo (`conjuntos:reglamento-archivo`).
+**Los documentos** (HU-33) viven en `apps/documentos`: `Documento` con `tipo` (`reglamento` o `manual`, desde el 25/10; antes `Reglamento`, renombrado por `documentos/0002` sin perder filas). **El reglamento es el único requisito para operar** (`Documento.objects.filter(tipo=REGLAMENTO)`); el manual de convivencia es opcional (D4 a). Detalle de rutas, versiones y permisos en [Plan_Documentos](../07_Planes/activos/Plan_Documentos.md). `servicios.guardar()` revisa, en orden: que no esté vacío, que pese hasta 10 MB y que empiece por `%PDF-` (la firma, no el nombre). Se guarda en la base con `BinaryField`, con su huella SHA-256, quién lo subió y cuándo. **Subir otro no borra el anterior:** se agrega una fila y el vigente de cada tipo es el más reciente; los demás son versiones archivadas, que solo ve `documento.descargar`. **Toda descarga queda en la auditoría** (`documento.descargar`, con el tipo y si es vigente o archivada); el residente descarga los vigentes con `documento.ver`, sin segundo factor. Las consultas que no necesitan el archivo lo dejan fuera con `defer("contenido")`. En el front, el navegador nunca habla con la API: el servidor del front recibe el PDF y lo reenvía con el token de la sesión, y de vuelta lo entrega él mismo (`conjuntos:reglamento-archivo`).
 
 > [!WARNING] Lo que no hace todavía
 > Dejar operativo un conjunto no queda en la auditoría. Un conjunto operativo no se vuelve a revisar si después deja de cumplir un requisito. Y reservar no exige que el conjunto esté operativo (plan D7 a del 27/09). Los tres están en [pendientes](../08_Estado/pendientes.md).

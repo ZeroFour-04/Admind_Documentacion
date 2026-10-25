@@ -4,8 +4,8 @@ tipo: modulo
 modulo: permisos
 hu: [HU-06]
 origen: "maestro v1.4 (2026-09-14) §5.3 + guía de estructura §5.4 (2026-09-30)"
-actualizado: 2026-10-13
-revisado: 2026-10-13
+actualizado: 2026-10-25
+revisado: 2026-10-25
 ---
 
 # Roles y permisos
@@ -61,7 +61,7 @@ Asignación  (persona_id, rol_codigo, conjunto_id)          -- conjunto_id nulo 
 |Ingresos a zonas|`ingreso.registrar` · `ingreso.ver_historico`|
 |Casos|`caso.crear` · `caso.ver_todos` · `caso.responder`|
 |Triage|`solicitud.bandeja_ver` · `solicitud.priorizar` · `solicitud.rechazar_formal`|
-|Infracciones|`infraccion.registrar` · `infraccion.ver` · `infraccion.cerrar`|
+|Infracciones|`infraccion.registrar` · `infraccion.ver` · `infraccion.cerrar` · `infraccion.anular` (solo el Superusuario, desde el 2026-10-25)|
 |Comunicación|`anuncio.publicar` · `anuncio.dirigir`|
 |Citas|`cita.agendar_propia` · `cita.gestionar_horario` · `cita.ver_todas`|
 |Documentos|`documento.subir` · `documento.ver` · `documento.descargar`|

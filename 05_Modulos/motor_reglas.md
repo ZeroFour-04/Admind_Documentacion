@@ -4,8 +4,8 @@ tipo: modulo
 modulo: reglas
 hu: [HU-09, HU-10, HU-13]
 origen: "definición con Alejo en chat (2026-10-06) + maestro v1.4 (2026-09-14) §5.10 + guía de estructura §5.6 (2026-09-30)"
-actualizado: 2026-10-13
-revisado: 2026-10-13
+actualizado: 2026-10-25
+revisado: 2026-10-25
 ---
 
 # Motor de reglas
@@ -122,6 +122,7 @@ Cuando un residente envía una solicitud, `reglas/evaluador.py` → `evaluar(sol
   | `DIAS_QUE_NO_ABRE` | beta | `renglones`: cada uno es `{dia_semana, motivo}` o `{desde, hasta, motivo}`. Hasta 60, motivo de hasta 120 caracteres, un día de la semana no se repite |
   | `CUPO_POR_UNIDAD` | beta | `reservas` y `dias`, desde 1 |
   | `ACOMPANANTES` | alfa | `maximo`, desde 0 (0 = no se permiten) |
+  | `PARQUEADEROS_POR_VIVIENDA` | alfa | `carro`, `moto` y `bicicleta`, desde 0 cada uno (0 = ninguno de ese vehículo). Sin modos: no la evalúa el motor, la lee la asignación de parqueaderos (HU-34, 2026-10-25) |
   | `UNA_RESERVA_POR_DIA` | beta | ninguno: definirla es activarla (2026-10-10) |
   | `SIN_FRANJAS_SEGUIDAS` | beta | ninguno: definirla es activarla (2026-10-10) |
   | `DIA_LIMITE_DE_PAGO` | alfa | `dia`, de 1 a 28. No la evalúa el motor: la lee `pagos` (2026-10-10) |

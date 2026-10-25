@@ -1,10 +1,10 @@
 ---
 resumen: "Las 40 historias de usuario: sprint previsto, story points, estado en el código, la nota de su módulo, su plan y lo que le falta a cada una."
 tipo: estado
-corte: 2026-10-13
+corte: 2026-10-24
 origen: "Notion (títulos, puntos y sprint) + código verificado el 2026-10-11 y puesto al día el 2026-10-13"
-actualizado: 2026-10-13
-revisado: 2026-10-13
+actualizado: 2026-10-25
+revisado: 2026-10-25
 ---
 
 # Historias de usuario
@@ -19,13 +19,13 @@ Títulos, story points y sprint previsto salen de Notion (`Gestión Scrum — Ad
 
 Con la DoD **ninguna está Terminada**. Cómo se reportan al docente: [estado_actual](estado_actual.md).
 
-## Totales (corte 2026-10-13)
+## Totales (corte 2026-10-24)
 
 | | Historias | SP |
 |---|---|---|
-| Construidas | 21 | 105 |
-| Parciales (HU-27, HU-33) | 2 | 8 |
-| Sin empezar | 15 | 75 |
+| Construidas | 23 | 113 |
+| Parciales (HU-22, HU-24, HU-27, HU-33) | 4 | 18 |
+| Sin empezar | 11 | 57 |
 | **Las 38 del backlog** | **38** | **188** |
 | Nuevas, sin puntos (HU-39, HU-40) | 2 | — |
 
@@ -63,14 +63,14 @@ El reparto por sprint está en [estado_actual](estado_actual.md).
 | HU-27 | Registro de visitantes y vehículos | 5 | 5 | Media | Parcial (Camilo) | [parqueaderos](../05_Modulos/parqueaderos.md) | [Parqueadero_De_Visitantes](../07_Planes/hechos/Plan_Parqueadero_De_Visitantes.md) |
 | HU-28 | Parqueadero de visitantes atado a la visita | 5 | 3 | Media | Construida | [parqueaderos](../05_Modulos/parqueaderos.md) | [Parqueadero_De_Visitantes](../07_Planes/hechos/Plan_Parqueadero_De_Visitantes.md) |
 | HU-29 | Tablero de casos con respuesta obligatoria | 5 | 5 | Media | Construida | [triage](../05_Modulos/triage.md) | [Plan_Dashboard_De_Solicitudes](../07_Planes/hechos/Plan_Dashboard_De_Solicitudes.md) |
-| HU-22 | Bandeja de triage de la Secretaría | 6 | 7 | Media | Sin empezar | [triage](../05_Modulos/triage.md) | — |
+| HU-22 | Bandeja de triage de la Secretaría | 6 | 7 | Media | Parcial | [triage](../05_Modulos/triage.md) | [Plan_Triage_HU-22_HU-24](../07_Planes/hechos/Plan_Triage_HU-22_HU-24.md) |
 | HU-23 | Prioridad sobre citas y casos | 6 | 5 | Media | Sin empezar | [triage](../05_Modulos/triage.md) | — |
-| HU-24 | Rechazo por causal formal de la Secretaría | 6 | 3 | Media | Sin empezar | [triage](../05_Modulos/triage.md) | — |
-| HU-30 | Registro y comunicación de infracciones | 6 | 4 | Media | Sin empezar | [infracciones](../05_Modulos/infracciones.md) | — |
+| HU-24 | Rechazo por causal formal de la Secretaría | 6 | 3 | Media | Parcial | [triage](../05_Modulos/triage.md) | [Plan_Triage_HU-22_HU-24](../07_Planes/hechos/Plan_Triage_HU-22_HU-24.md) |
+| HU-30 | Registro y comunicación de infracciones | 6 | 4 | Media | Construida | [infracciones](../05_Modulos/infracciones.md) | [Infracciones](../07_Planes/activos/Plan_Infracciones.md) |
 | HU-31 | Agendar cita dentro del horario de atención | 6 | 4 | Media | Sin empezar | [citas](../05_Modulos/citas.md) | — |
 | HU-32 | Cambio de horario con alternativas a los afectados | 6 | 8 | Media | Sin empezar | [citas](../05_Modulos/citas.md) | — |
-| HU-33 | Repositorio de documentos vigentes | 6 | 3 | Media | Parcial | [conjuntos](../05_Modulos/conjuntos.md) (el reglamento) | [Asistente_De_Creacion](../07_Planes/hechos/Plan_Asistente_De_Creacion.md) |
-| HU-34 | Asignación de parqueaderos de residentes | 6 | 4 | Media | Sin empezar | [parqueaderos](../05_Modulos/parqueaderos.md) | — |
+| HU-33 | Repositorio de documentos vigentes | 6 | 3 | Media | Parcial | [conjuntos](../05_Modulos/conjuntos.md) (los documentos) | [Asistente_De_Creacion](../07_Planes/hechos/Plan_Asistente_De_Creacion.md), [Documentos](../07_Planes/activos/Plan_Documentos.md) |
+| HU-34 | Asignación de parqueaderos de residentes | 6 | 4 | Media | Construida | [parqueaderos](../05_Modulos/parqueaderos.md) | [Parqueaderos_De_Residentes](../07_Planes/activos/Plan_Parqueaderos_De_Residentes.md) |
 | HU-35 | Reporte de pago de administración | 7 | 4 | Baja | Construida | [pagos](../05_Modulos/pagos.md) | [Pago_De_Administracion](../07_Planes/hechos/Plan_Pago_De_Administracion.md) |
 | HU-36 | Importación masiva con dry-run e idempotencia | 7 | 7 | Baja | Sin empezar | [alcance](../01_Contexto/alcance.md) 3.2 | — |
 | HU-37 | Respaldo de información por conjunto | 7 | 5 | Baja | Sin empezar | [alcance](../01_Contexto/alcance.md) 3.2 | — |
@@ -124,6 +124,8 @@ Del ciclo de la reserva falta la cancelación en firme (HU-17).
 | HU | Qué hay | Qué le falta |
 |---|---|---|
 | HU-21 | Construida el 22/09 con 8 acentos y logo; ampliada el 29/09 con color propio en hex y foto cuadrada 1:1. Revierte «solo 8 acentos, sin hex libre» | El texto de diseño (maestro §6.3) todavía no lo recoge. En Notion figura «Finalizado» sin la DoD |
+| HU-22 | 24/10: las pestañas de Reservas y Casos tienen filtros (Reservas: estado, zona, vivienda, residente y fechas de envío; Casos: estado, prioridad, residente y fechas de creación) que valida la API (400 si no sirven) y viajan en la URL; la antigüedad se ve con cualquier filtro; pruebas de que no hay aprobar, responder ni exportar y de que pide 2FA. Pestañas separadas por decisión de Alejo (13/10 y D1 a del plan) | La pestaña de citas (HU-31, de Camilo); la prueba manual |
+| HU-24 | 24/10: una prueba con el nombre de cada criterio (`test_hu24_*`): categoría y explicación obligatorias, la franja se libera y avisa a la campana, el residente la vuelve a tomar, no se aprueba ni se reversa, y en un caso el motivo cuenta como la respuesta | «No consume sus dos oportunidades» queda parcial hasta HU-19: no existe el contador; hoy se prueba que el descarte deja la solicitud en `RECHAZADA` y nunca en `EXPIRADA`. La prueba manual |
 | HU-25 | Construida el 22/09 con lo mínimo del canal de notificaciones (bandeja y correo). Desde el 05/10, hasta 4 fotos por anuncio | La prueba manual del plan de fotos. En Notion figura «Finalizado» sin la DoD |
 | HU-27 | Camilo, 01/10: registra el ingreso y lista los visitantes. Agente, 10/10: capa de servicio, auditoría y **salida**. Quien solo registra ve los de hoy y los que siguen adentro; con `visitante.ver_historico`, todo | Sin la Ley 1581 (finalidad, autorización y retención), sin el aviso al apartamento y sin bicicleta sin placa. **Contra sus cinco criterios de Notion (11/10):** tres se cumplen, uno es parcial (el vigilante del ingreso queda en la auditoría, no en el listado) y uno no (el tipo de vehículo no es obligatorio). En Notion: «En progreso» |
 | HU-28 | Agente, 10/10: catálogo de parqueaderos con código (`parqueadero.gestionar`), el vigilante elige uno de los libres al registrar una visita con vehículo, la salida lo libera, y diez registros simultáneos sobre un puesto dejan a una sola visita con él | En Notion: «En revisión», 5 de 5 tareas |
@@ -133,7 +135,9 @@ Del ciclo de la reserva falta la cancelación en firme (HU-17).
 
 | HU | Qué hay | Qué le falta |
 |---|---|---|
-| HU-33 | Solo el reglamento del conjunto en PDF (06/10), que es lo que exige HU-03 | Otros documentos, las actas y que el residente lo descargue. **Contra sus cinco criterios de Notion (11/10):** uno se cumple (rechaza por su firma un archivo que no es PDF), uno es parcial (subir otro no borra el anterior, pero no hay vista de versiones) y tres no (`documento.descargar` es de Administración, no hay actas ni manual, y la descarga no se audita). En Notion: «En progreso» |
+| HU-30 | Agente, 25/10, en la rama `feat/infracciones-registro` (sin commit ni `migrate`): registrar una infracción que se comunica en la misma transacción a propietario y arrendatario, cerrarla con comentario, anularla (solo el Superusuario, con `infraccion.anular`) y verla en una lista; puede nacer de un caso. Sin campo ni texto de sanción; el aviso de R11 va en las tres pantallas | `migrate` (`infracciones/0001`), el PR y la prueba manual de quien no la programó (guion en el plan). El residente solo ve el aviso, no una lista (D4 a); no hay anulación general de registros (HU-20) |
+| HU-33 | Reglamento (06/10) y, desde el 25/10 en la rama `feat/documentos-por-tipo` (sin commit ni `migrate`), el manual de convivencia: `Documento` con `tipo`, versiones que archivan la anterior, pantalla «Documentos» para todo rol con `documento.ver`, subida desde la misma pantalla, lista de versiones para `documento.descargar` y cada descarga auditada. El manual es opcional: no es requisito para operar (D4 a) | Las **actas de asamblea**, solo para propietarios (D2 b: no entran), así que un criterio de Notion queda sin cumplir. Falta `migrate` (con respaldo previo de `admind_db`), el PR y la prueba manual. En Notion: «En progreso» |
+| HU-34 | Agente, 25/10, en la rama `feat/parqueaderos-asignacion` (sin commit ni PR): `AsignacionParqueadero` con una sola vigente por puesto (índice único parcial), asignar, reasignar (cierra la anterior hoy), liberar, historial y «Mi parqueadero» del residente; tope por vivienda y vehículo con la regla `PARQUEADEROS_POR_VIVIENDA` (sin regla, sin tope); sin ninguna operación de restricción por mora | `migrate` (`parqueaderos/0002` y `reglas/0008`), el PR y la prueba manual de quien no la programó (guion en el plan). No hay aviso a la vivienda al asignar ni el residente ve el historial |
 | HU-35 | Agente, 10/10: el residente sube el comprobante de un mes de su vivienda; Administración confirma con un check por vivienda y mes (Secretaría ve y busca); el buscador filtra en el servidor y ninguna fila trae la cédula; el pago confirmado alimenta la mora de *paz y salvo* con el *día límite de pago* | La mora se construyó **sin haber verificado lo legal** ([abiertas](../06_Decisiones/abiertas.md) 12.10 b). En Notion: «En revisión», 4 de 5 tareas; la de «almacenamiento fuera de la base» contradice lo construido |
 
 ### HU-39, definida el 2026-10-06

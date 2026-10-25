@@ -2,8 +2,8 @@
 resumen: "Lista de planes de trabajo: cuáles están activos y cuáles ya se ejecutaron, con la historia que cubre cada uno y la nota donde quedó lo vigente."
 tipo: plan
 origen: "reorganización del 2026-09-30; revisada contra el código el 2026-10-11"
-actualizado: 2026-10-13
-revisado: 2026-10-13
+actualizado: 2026-10-25
+revisado: 2026-10-25
 ---
 
 # Planes
@@ -12,9 +12,13 @@ Cómo se escribe y se cierra uno: [abrir_y_cerrar_un_plan](../09_Protocolos/abri
 
 ## Activos
 
-**Ninguno.** `activos/` está vacía: los once planes escritos están ejecutados.
+| Plan | Historia | Qué cubre | Estado |
+|---|---|---|---|
+| [Plan_Parqueaderos_De_Residentes](activos/Plan_Parqueaderos_De_Residentes.md) | HU-34 | Asignar, reasignar y liberar parqueaderos de residentes con historial, tope por tipo de vehículo (regla del conjunto) y «Mi parqueadero». F0 a F3; D1 a D6 respondidas. Una ejecución en la nube se descartó el 24/10. Construido el 25/10 en `feat/parqueaderos-asignacion`, sin commit | Construido, falta PR y prueba manual |
+| [Plan_Infracciones](activos/Plan_Infracciones.md) | HU-30 | Registro de infracción que se comunica a propietario y arrendatario, se cierra con fecha y comentario y solo el Superusuario anula; sin campo de sanción. F0 a F4; D1 a D5 respondidas. Construido el 25/10 en `feat/infracciones-registro`, sin commit | Construido, falta `migrate`, PR y prueba manual |
+| [Plan_Documentos](activos/Plan_Documentos.md) | HU-33 | Reglamento y manual de convivencia con versiones, pantalla «Documentos» y auditoría de cada descarga; sin actas. F0 a F3; D1 a D4 respondidas. Construido el 25/10 en `feat/documentos-por-tipo`, sin commit | Construido, falta respaldo, `migrate`, PR y prueba manual |
 
-Los once tienen commit y sus migraciones aplicadas en `admind_db`; el del dashboard (13/10) quedó en Backend `85f9f23` y Frontend `d0e4af7`.
+Escritos el 2026-10-24 sobre Backend `7eb5b5a` y Frontend `8279616`. Los doce planes ejecutados están en *Hechos*, los once primeros con commit y sus migraciones aplicadas en `admind_db` (el del dashboard, 13/10, en Backend `85f9f23` y Frontend `d0e4af7`); el de triage (24/10) sigue sin commit.
 
 Lo que sigue sin plan está en [pendientes](../08_Estado/pendientes.md), sección 9. Qué entra antes de la entrega sigue sin decidir ([abiertas](../06_Decisiones/abiertas.md), 12.8).
 
@@ -35,6 +39,7 @@ Un plan hecho es histórico y no se edita: menciona el rol Consejo, alfa y beta 
 | [Plan_Parqueadero_De_Visitantes](hechos/Plan_Parqueadero_De_Visitantes.md) | 2026-10-10 | HU-28 y parte de HU-27 | Catálogo de parqueaderos con código, ocupación atada a la visita y liberación al registrar la salida; incluye la salida del visitante y la capa de servicio de `visitantes`. F0 a F5, D1 a D8 | [parqueaderos](../05_Modulos/parqueaderos.md) |
 | [Plan_Pago_De_Administracion](hechos/Plan_Pago_De_Administracion.md) | 2026-10-10 | HU-35 | Tabla por vivienda y mes con buscador, check que pone Administración, comprobante que sube el residente y la mora que alimenta *paz y salvo* (F5, construida sin verificar lo legal). F0 a F5, D1 a D10 | [pagos](../05_Modulos/pagos.md) |
 | [Plan_Dashboard_De_Solicitudes](hechos/Plan_Dashboard_De_Solicitudes.md) | 2026-10-13 | HU-14 y HU-29 | El dashboard de gestión con pestañas (Reservas, Casos y Citas sin función): categoría de rechazo, descarte de Secretaría, aviso al residente y orden por antigüedad; el ciclo completo de los casos sobre lo que subió Camilo; y la Secretaría deja de aprobar. F0 a F5, D1 a D9. Lo construyó el agente | [reservas](../05_Modulos/reservas.md), [triage](../05_Modulos/triage.md), [permisos](../05_Modulos/permisos.md) |
+| [Plan_Triage_HU-22_HU-24](hechos/Plan_Triage_HU-22_HU-24.md) | 2026-10-24 | HU-22 y HU-24 | Una prueba por criterio del rechazo formal y los filtros de las pestañas de Reservas y Casos del dashboard (API validada, URL, antigüedad siempre visible). F0 a F4, D1 a D5. Lo construyó el agente, sin commit. Una ejecución anterior en la nube se descartó | [triage](../05_Modulos/triage.md), [reservas](../05_Modulos/reservas.md) |
 
 Los seis planes del 06/10 y del 10/10 se escribieron como guiados y Alejo pidió en todos que **los construyera el agente**; el de zonas con ingreso (08/10) no era guiado.
 

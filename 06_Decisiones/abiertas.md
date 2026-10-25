@@ -80,6 +80,8 @@ _Sin confirmar por el equipo. Se listan para que no se pierdan, no como hechos._
 
 **c) "Un solo bloqueo activo en todo el sistema" contra "toda clave única incluye `conjunto_id`".** El §5.1 dice que un residente solo puede tener un bloqueo activo en todo el sistema; el §5.4 exige que toda clave única lleve `conjunto_id`. Una persona puede tener rol de Residente en dos conjuntos. Si la frase es literal, esa restricción cruza conjuntos y es una excepción al aislamiento que no está en la lista cerrada de tablas globales (R12); si no lo es, hay que corregir la redacción.
 
+**d) Un PR por commit contra "sin ramas por historia".** Desde el 2026-10-24 Alejo exige un PR por cada commit y lo abre él ([git](../03_Reglas/git.md)). Pero el modelo del curso (§8.5) hace que los dos trabajen directo en `desarrollo`, y un PR necesita una rama de origen distinta de la base. **Decidido el 2026-10-24 por Alejo:** ramas cortas que se funden a `desarrollo` con PR por commit ([construccion](construccion.md)). **Sigue abierto:** confirmar con el profesor que acepta ramas cortas, porque el maestro §8.5 dice «sin ramas por historia».
+
 ## 12.8 · Detectada el 2026-09-14: el plan del semestre contra el plazo de un mes
 
 _El plazo es un hecho. Lo abierto es qué hacer con él, y ningún agente recorta alcance por su cuenta._

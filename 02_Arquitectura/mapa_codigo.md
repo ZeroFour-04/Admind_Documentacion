@@ -2,8 +2,8 @@
 resumen: "Mapa del código: qué hay en cada carpeta de los tres repos, qué hace cada app del backend y qué nota la explica."
 tipo: arquitectura
 origen: "guía de estructura §2 y §5.5 (2026-09-30)"
-actualizado: 2026-10-13
-revisado: 2026-10-13
+actualizado: 2026-10-25
+revisado: 2026-10-25
 ---
 
 # Mapa del código
@@ -18,7 +18,7 @@ A D M I N D/
 │   │   ├── comun/                   ← piezas compartidas: aislamiento, modelo base, bloqueo, archivos (validación de comprobantes)
 │   │   ├── personas/ cuentas/ conjuntos/ permisos/ unidades/
 │   │   ├── areas/ reglas/ reservas/ casos/ ingresos/ anuncios/ notificaciones/ auditoria/ visitantes/ parqueaderos/ pagos/ documentos/
-│   │   └── citas/ infracciones/ …  ← solo README: módulos futuros, sin código
+│   │   └── citas/ …  ← solo README: módulos futuros, sin código
 │   ├── tests/                       ← pruebas transversales (aislamiento, concurrencia, esquema, archivos)
 │   ├── bd/                          ← notas sobre la base de datos
 │   ├── manage.py  requirements.txt  pytest.ini  .env
@@ -38,7 +38,7 @@ A D M I N D/
 └── .claude/launch.json              ← cómo arranca Claude los dos servidores
 ```
 
-Cada carpeta de `apps/` tiene un `README.md` que dice para qué existe. Las apps que **solo** tienen README (`citas`, `infracciones`, `triage` en el back, `importacion_respaldo`) son el lugar reservado para historias futuras.
+Cada carpeta de `apps/` tiene un `README.md` que dice para qué existe. Las apps que **solo** tienen README (`citas`, `triage` en el back, `importacion_respaldo`) son el lugar reservado para historias futuras.
 
 ## Apps del backend
 
@@ -49,7 +49,7 @@ Cada carpeta de `apps/` tiene un `README.md` que dice para qué existe. Las apps
 | `conjuntos` | `Conjunto` (acento y `color_personalizado`), `LogoDeConjunto` (la foto 1:1), asistente de creación con sus seis requisitos para quedar operativo | `POST /conjuntos/`, `/conjuntos/actual/…` (activar, identidad, logo; `DELETE` da de baja el conjunto activo, solo el Superusuario), `/conjuntos/logos/<huella>/` | HU-03, HU-21 |
 | `permisos` | Catálogo de 5 roles, `Asignacion` (un rol vigente por persona y conjunto), permisos efectivos | (se usan desde `cuentas`: `/auth/usuarios/<id>/roles/`) | HU-06 |
 | `unidades` | `Agrupacion` (torre, bloque, manzana), `Unidad` (apartamento o casa) y `VinculoUnidad` (propietario, reside…) con histórico; a quién avisar de qué; el generador de viviendas (`estructura.py`, funciones puras) | `/unidades/`, `/unidades/<id>/vinculos/…`, `/unidades/agrupaciones/`, `/unidades/estructura/` y `…/previsualizar/` | HU-08, HU-39 |
-| `documentos` | `Reglamento`: el PDF del reglamento del conjunto, guardado en la base; subir otro no borra el anterior | `GET` y `PUT /documentos/reglamento/`, `GET /documentos/reglamento/archivo/` | HU-33 (solo el reglamento), HU-03 |
+| `documentos` | `Documento` con `tipo` (reglamento o manual): el PDF guardado en la base; subir otro del mismo tipo archiva el anterior, no lo borra. Cada descarga se audita | `GET /documentos/`, `GET` y `PUT /documentos/<tipo>/`, `…/<tipo>/archivo/`, `…/<tipo>/versiones/` y `…/<tipo>/versiones/<id>/archivo/` | HU-33 (sin actas), HU-03 |
 | `areas` | `Area` común: nombre por conjunto, **modo de uso** (con reserva o con ingreso; se puede cambiar al editar), horario, aforo máximo obligatorio, mantenimiento; la duración de la franja (reserva) o la permanencia máxima (ingreso) | `/areas/`, `/areas/<id>/`, `/areas/<id>/desactivar/` | HU-09 |
 | `reglas` | Reglas por niveles, configurables y versionadas: **alfa** (del conjunto, sin área) y **beta** (de un área), una sola abierta por tipo; reglas **del sistema** fijas (`sistema.py`); el catálogo con las descripciones; el evaluador | `/reglas/`, `/reglas/catalogo/`, `/reglas/<id>/`, `/reglas/<id>/retirar/` | HU-10, HU-13 |
 | `reservas` | `Solicitud`: franjas, bloqueo de 3 min, envío y evaluación; el pago declarado (`pago.py`, `pago_declarado_por` y `pago_declarado_en`) y `ComprobanteDePago`, el archivo dentro de la base. La validación del archivo por su firma está en `apps/comun/archivos/comprobantes.py` | `/reservas/franjas/`, `/reservas/solicitudes/…`, `…/<id>/pago/`, `…/<id>/pago/retirar/`, `…/<id>/comprobantes/` y `GET /reservas/comprobantes/<id>/` | HU-11, HU-12, HU-13, HU-14, HU-16 |
@@ -59,7 +59,8 @@ Cada carpeta de `apps/` tiene un `README.md` que dice para qué existe. Las apps
 | `notificaciones` | Bandeja en la app + correo; `canal.notificar(aviso, personas)` | `GET /notificaciones/` | HU-25, HU-08 |
 | `visitantes` | `Visitante`: quién entró, a qué apartamento, con qué vehículo y a qué hora; desde el 10/10, su salida y el parqueadero de visitantes que ocupa (índice único parcial). Con `servicios.py`: «solo Vigilancia registra», la auditoría y la salida | `GET` y `POST /visitantes/`, `POST /visitantes/<id>/salida/` | HU-27 (parcial), HU-28 |
 | `pagos` | `PagoDeAdministracion` (una fila por vivienda y mes) y `Comprobante`, el archivo dentro de la base; `periodos.py` (meses, puro), `servicios.py` (tabla y buscador, check, reporte) y `mora.py` (la mora que lee `reglas`). Sin monto ni sanciones | `/pagos/administracion/`, `…/reportes/`, `…/mios/`, `…/comprobantes/<id>/` y `…/<unidad>/<AAAA-MM>/confirmacion/` | HU-35 |
-| `parqueaderos` | `Parqueadero`: puestos con código, de `residentes` o `visitantes`, con baja lógica. Su ocupación no es una tabla: la da la visita sin salida. No asigna ninguno a una unidad (HU-34) | `GET` y `POST /parqueaderos/`, `POST /parqueaderos/<id>/desactivar/` | HU-28 |
+| `parqueaderos` | `Parqueadero`: puestos con código, de `residentes` o `visitantes` y para un vehículo, con baja lógica. La ocupación de uno de visitantes no es una tabla: la da la visita sin salida. `AsignacionParqueadero`: el de residentes a una vivienda, con historial y una sola vigente | `GET` y `POST /parqueaderos/`, `…/mios/`, `…/<id>/desactivar/`, `…/asignacion/`, `…/liberacion/` y `…/asignaciones/` | HU-28, HU-34 |
+| `infracciones` | `RegistroDeInfraccion`: el hecho, su comunicación obligatoria a propietario y arrendatario, el cierre y la anulación. Sin sanción, multa ni restricción | `GET` y `POST /infracciones/`, `GET /infracciones/<id>/`, `POST …/cierre/` y `POST …/anulacion/` | HU-30 |
 | `auditoria` | Registro de solo inserción | (sin endpoints: lo usan los servicios) | transversal |
 | `comun` | Aislamiento, modelo base, bloqueo | — | HU-05, HU-11 |
 

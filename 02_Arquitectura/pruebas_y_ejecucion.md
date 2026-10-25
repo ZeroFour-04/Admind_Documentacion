@@ -2,8 +2,8 @@
 resumen: "Cómo correr los dos servidores y las pruebas, cuántas hay, qué cubre cada archivo de pruebas y cuál falla hoy."
 tipo: arquitectura
 origen: "guía de estructura §4.8, §8 y §9 (2026-09-30) + plan de los Sprints 2 y 3 §0.4; archivos verificados el 2026-10-11 y conteos el 2026-10-13"
-actualizado: 2026-10-13
-revisado: 2026-10-13
+actualizado: 2026-10-24
+revisado: 2026-10-24
 ---
 
 # Pruebas y ejecución
@@ -26,14 +26,14 @@ cd "/c/Users/Alejandro/Documents/A D M I N D/Frontend/Admind_Front-End"
 - **Aplicar en `admind_db`:** solo si el pedido o el plan lo autorizan ([convenciones](../03_Reglas/convenciones.md)). En los últimos planes las corrió Alejo.
 - **Migraciones pendientes:** `./.venv/Scripts/python.exe manage.py showmigrations` marca con `[ ]` las que faltan por aplicar.
 
-## Cómo están hoy (2026-10-13)
+## Cómo están hoy (2026-10-24)
 
-Sobre Backend `7eb5b5a` y Frontend `8279616`, con el árbol de trabajo limpio:
+Sobre Backend `7eb5b5a` y Frontend `8279616`, más el plan de triage sin commit:
 
 | Suite | Pruebas | Resultado | Tiempo |
 |---|---|---|---|
-| Backend | **708** | Todas pasan | 47 s |
-| Frontend | **417** | Todas pasan | 9 s |
+| Backend | **723** | 722 pasan; falla la nocturna (abajo) | 90 s |
+| Frontend | **435** | Todas pasan | 16 s |
 
 `showmigrations` no deja ninguna sin aplicar en `admind_db`. **`makemigrations --check` falla:** pide `personas/0003`, porque la restricción `persona_telefono_valido` del modelo (7 a 10 dígitos) ya no coincide con la `personas/0002`, que Camilo editó a mano el 13/10 después de aplicada (7 a 15) ([pendientes](../08_Estado/pendientes.md), sección 8). Las pruebas pasan porque su base se crea desde las migraciones, y la de `admind_db` quedó con la versión vieja.
 
@@ -41,7 +41,7 @@ Sobre Backend `7eb5b5a` y Frontend `8279616`, con el árbol de trabajo limpio:
 > Desde el 13/10 todas las rutas de la API están registradas en `tests/aislamiento/test_intruso.py`: las de HU-14, las de casos, `campanas`, `usuario-eliminar` y `usuario-perfil` (esta, como ruta sin conjunto). Una ruta nueva que no se registre vuelve a poner en rojo `test_toda_ruta_de_la_api_esta_cubierta`.
 
 > [!NOTE] La que falla de noche
-> `apps/ingresos/tests.py::test_un_registro_que_no_cumple_responde_400_con_todos_los_motivos_y_no_deja_fila` usa la hora real: la zona de prueba abre de 05:00 a 22:00 y entre las 22:00 y las 05:00 responde tres motivos en vez de dos. De día pasa.
+> `apps/ingresos/tests.py::test_un_registro_que_no_cumple_responde_400_con_todos_los_motivos_y_no_deja_fila` usa la hora real: la zona de prueba abre de 05:00 a 22:00 y entre las 22:00 y las 05:00 responde tres motivos en vez de dos. De día pasa; el 24/10 falló porque se corrió a las 22:44.
 
 Cómo fue creciendo el conteo, corte por corte, está en [bitacora](../08_Estado/bitacora.md).
 
@@ -69,7 +69,7 @@ Rutas relativas a `Backend/Admind_Backend/`.
 | `apps/documentos/tests.py` | Subir, ver y descargar el reglamento, los rechazos y quién puede |
 | `apps/areas/tests.py` | El catálogo de áreas, el aforo obligatorio, el modo de uso y su cambio (qué queda y qué reglas se retiran) |
 | `apps/reglas/tests.py` | Los niveles, la regla única por tipo, los tipos retirados, el catálogo, las restricciones de la base y el evaluador |
-| `apps/reservas/tests.py` | Franjas, bloqueo, envío, las reglas de reserva, la decisión, y declarar, retirar, subir y descargar el pago |
+| `apps/reservas/tests.py` | Franjas, bloqueo, envío, las reglas de reserva, la decisión, y declarar, retirar, subir y descargar el pago. Con `hu24` y `hu22` en el nombre: el rechazo formal criterio por criterio y los filtros de la bandeja |
 | `apps/ingresos/tests.py` | Aforo, acompañantes, horario, vencimiento con la hora simulada, búsqueda, restricciones de la base y la API por rol |
 | `apps/pagos/tests.py` | Los meses (funciones puras), la tabla, el buscador, el check idempotente, el reporte con validación por firma, «Mis pagos» y la mora con la hora simulada |
 | `apps/parqueaderos/tests.py` | El catálogo, y que ninguna ruta ni el modelo asignan un parqueadero a una unidad |

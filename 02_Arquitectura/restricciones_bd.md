@@ -2,8 +2,8 @@
 resumen: "Restricciones que hace cumplir PostgreSQL: las verificadas en la base y las que sostienen la concurrencia de reservas."
 tipo: arquitectura
 origen: "avance §2.3 (2026-09-15) + guía de estructura §4.4 (2026-09-30)"
-actualizado: 2026-10-11
-revisado: 2026-10-11
+actualizado: 2026-10-25
+revisado: 2026-10-25
 ---
 
 # Restricciones en PostgreSQL
@@ -18,9 +18,10 @@ AdMind no confía solo en Python para las reglas importantes: las repite como **
 | Índice único parcial `solicitud_un_bloqueo_por_persona` | ídem | Que una persona tenga dos bloqueos a la vez |
 | `UNIQUE` `pago_unico_por_vivienda_y_mes` | `pagos/models.py` (`pagos/0001`) | Dos filas de pago para la misma vivienda y el mismo mes (HU-35), aunque dos clics lleguen a la vez |
 | `CHECK` `pago_periodo_es_dia_uno`, `pago_confirmado_completo` y `pago_reportado_completo` | ídem | Un periodo que no sea el día 1, un check sin fecha o sin quién lo puso, un reporte sin persona o sin fecha |
-| `CHECK` `regla_tipo_valido` y `regla_nivel_coherente` | `reglas/models.py` (`reglas/0007`) | Se rehicieron para el tipo nuevo `DIA_LIMITE_DE_PAGO` (alfa): un tipo de regla nuevo pide migración |
+| `CHECK` `regla_tipo_valido` y `regla_nivel_coherente` | `reglas/models.py` (`reglas/0008`) | Se rehicieron para el tipo nuevo `PARQUEADEROS_POR_VIVIENDA` (alfa; antes, `DIA_LIMITE_DE_PAGO` en `reglas/0007`): un tipo de regla nuevo pide migración |
 | Índice único parcial `visitante_parqueadero_ocupado_unico` | `visitantes/models.py` (`visitantes/0003`) | Que dos visitas **sin salida** tengan el mismo parqueadero de visitantes. Al poner `hora_salida` la fila sale del índice y el puesto queda libre; las visitas sin parqueadero no cuentan (HU-28) |
 | `CHECK` `visitante_salida_despues_de_entrada` | `visitantes/models.py` (`visitantes/0002`) | Una salida anterior a la entrada |
+| Índice único parcial `asignacion_parqueadero_vigente_unica`, `CHECK` `asignacion_parqueadero_vigencia_coherente` y `CHECK` `parqueadero_vehiculo_valido` | `parqueaderos/models.py` (`parqueaderos/0002`) | Que un puesto tenga dos asignaciones **vigentes** (`vigencia_hasta` nula) a la vez: al cerrar una, la fila sale del índice; que una asignación termine antes de empezar; un vehículo que no sea carro, moto ni bicicleta. Las FK a puesto y a vivienda son compuestas con `conjunto_id`. Que el puesto sea de residentes no lo hace la base (un `CHECK` no mira otra tabla): lo hace `servicios.asignar` (HU-34) |
 | `UNIQUE` `parqueadero_codigo_unico` y `CHECK` `parqueadero_tipo_valido` | `parqueaderos/models.py` | Dos parqueaderos con el mismo código en un conjunto (se guarda en mayúsculas, así que «v-01» y «V-01» chocan) o un tipo que no sea `residentes` ni `visitantes` |
 | `CHECK` `solicitud_pago_declarado_completo` | ídem (`reservas/0003`) | Que un pago quede «declarado» sin fecha o con fecha y sin quién lo declaró: `pago_declarado_por` y `pago_declarado_en` van los dos o ninguno (HU-16). Se probó con un `UPDATE` directo, que se salta el código de Python |
 | FK compuesta `(x_id, conjunto_id)` | `apps/comun/aislamiento/migraciones.py` → `fk_compuesta()` | Que una fila apunte a algo de **otro conjunto** |
@@ -45,7 +46,7 @@ Una regla *abierta* es la que tiene `vigencia_hasta` vacía. La FK compuesta `(a
 
 ## Viviendas y documentos (2026-10-06)
 
-Las trae `unidades/0002_estructura`; el reglamento solo lleva las de toda tabla de conjunto. Aplicadas en `admind_db` (verificado el 2026-10-11).
+Las trae `unidades/0002_estructura`; el documento (antes reglamento) lleva las de toda tabla de conjunto y, desde `documentos/0002` (2026-10-25), el `CHECK` `documento_tipo_valido` (solo `reglamento` o `manual`) y el índice `(conjunto, tipo, subido_en)`. `documentos/0002` es un `RenameModel`: `ALTER TABLE documentos_reglamento RENAME TO documentos_documento`. Aplicadas en `admind_db` (verificado el 2026-10-11).
 
 | Restricción | Dónde | Qué impide |
 |---|---|---|
