@@ -3,8 +3,9 @@ resumen: "Todo lo que falta, ordenado por tipo: lo que frena los story points, p
 tipo: estado
 corte: 2026-10-13
 origen: "listas anteriores (2026-09-27 a 2026-10-11), reordenadas por tipo y contrastadas con el código el 2026-10-11; puesta al día el 2026-10-13"
-actualizado: 2026-10-25
-revisado: 2026-10-25
+actualizado: 2026-10-30
+revisado: 2026-10-30
+
 ---
 
 # Pendientes
@@ -42,6 +43,7 @@ El agente no las hace: no tiene la contraseña ni el segundo factor de los usuar
 | Cambiar el modo de uso de un área (13/10) | Sin guion: en «Editar área», pasar una con reservas apartadas y reglas propias a «Con ingreso» y volver | El agente lo recorrió con un guion contra la base de pruebas, no en el navegador ni con usuarios reales |
 | Usuarios, detalle de la vivienda y «Crear conjunto» (11/10) | Sin guion | Usuarios y el detalle de la vivienda se vieron en el navegador con datos inventados, no con usuarios reales |
 | «Eliminar conjunto» del resumen (13/10) | Sin guion | Lo subió Camilo; las pruebas lo cubren con la API simulada y `conjuntos.js`, que abre el diálogo, no tiene prueba automática. En la bóveda no consta que alguien lo haya recorrido |
+| Alta de Superusuarios (HU-06) | [Plan_Alta_De_Superusuarios](../07_Planes/hechos/Plan_Alta_De_Superusuarios.md), 6 pasos | Probar con Superusuario y con Administrador |
 
 - [ ] **Dashboard de gestión (HU-14 y HU-29):** el guion de [Plan_Dashboard_De_Solicitudes](../07_Planes/hechos/Plan_Dashboard_De_Solicitudes.md), con Administración, Secretaría, dos residentes y Vigilancia. Lo recorrió el agente con el front real contra la API de pruebas (43 comprobaciones); falta la prueba de una persona en el navegador. *(13/10)*
 
@@ -61,6 +63,7 @@ En la bóveda no consta que se le haya avisado de nada de esto. Lo que tiene que
 - [ ] **Vistas y no tocadas, suyas:** la prueba de `ingresos` que usa la hora real y `visitantes/0001` sin la FK compuesta de `unidad_id` (sección 8).
 
 - [ ] **Dashboard y casos (13/10):** la Secretaría ya no aprueba ni rechaza reservas (su rol pierde `reserva.aprobar` y `reserva.rechazar`; descarta con `solicitud.rechazar_formal`), y cambiaron las pruebas suyas que afirmaban lo contrario. `POST …/decision/` pide `categoria` al rechazar. `/reservas/bandeja/` exige `solicitud.bandeja_ver` y ordena por antigüedad. Su app `casos` se amplió sin tocar sus migraciones: estados nuevos, `APROBADO` ya no existe, la ruta de Secretaría es `/casos/<id>/descartar/` (con causal) y `/casos/<id>/rechazar/` pasó a ser de Administración; Administración ve todos los casos, no solo los redirigidos. En el front, `/solicitudes/` de gestión es el dashboard y `/casos/` de gestión redirige allá. Se corrigió su prueba `test_el_detalle_de_solicitud_incluye_condiciones_de_renta_de_su_area`, que guardaba sin conjunto activo.
+- [ ] **Alta de Superusuarios (30/10):** nuevo endpoint `POST /auth/superusuarios/` en `apps/cuentas` (exige `es_superusuario(persona)`, rol plataforma con `conjunto` nulo) y botón «Crear superusuario» en el selector del front hacia `/conjuntos/superusuarios/nuevo/`.
 
 ## 4. Lo legal sin verificar
 

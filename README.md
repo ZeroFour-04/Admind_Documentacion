@@ -106,7 +106,7 @@ El aislamiento entre conjuntos (HU-05) y la auditoría no tienen nota de módulo
 
 | Nota | Qué tiene |
 |---|---|
-| [planes](07_Planes/planes.md) | Los doce planes ejecutados, con su historia y la nota donde quedó lo vigente, y los tres activos (parqueaderos HU-34, infracciones HU-30 y documentos HU-33) |
+| [planes](07_Planes/planes.md) | Los doce planes ejecutados, con su historia y la nota donde quedó lo vigente, y los siete activos (parqueaderos HU-34, infracciones HU-30, documentos HU-33, quitar «Los escribo yo» y tres de estilo visual del front) |
 
 Los planes están en `07_Planes/hechos/` y son históricos: se abren para ver el guion de prueba manual o cómo se decidió algo, no para saber cómo es hoy.
 
@@ -138,7 +138,7 @@ Plantillas, en `09_Protocolos/Plantillas/`: [nota](09_Protocolos/Plantillas/nota
 
 | Carpeta | Qué hay |
 |---|---|
-| `Guias/` | Tutoriales para personas, con fecha de corte: [estructura actual](Guias/Admind_Guia_Estructura_Actual.md) (30/09), [guía de desarrollo](Guias/Admind_Guia_Desarrollo.md) (15/09), [instalación local](Guias/Admind_Backend_Instalacion_Local.md) e [inicialización del backend](Guias/Admind_Backend_Inicializacion.md) (14/09). No se actualizan: lo vigente está en las carpetas numeradas |
+| `Guias/` | Tutoriales para personas, con fecha de corte: [sustentación técnica](Guias/Admind_Guia_Sustentacion_Tecnica.md) (03/11), [estructura actual](Guias/Admind_Guia_Estructura_Actual.md) (30/09), [guía de desarrollo](Guias/Admind_Guia_Desarrollo.md) (15/09), [instalación local](Guias/Admind_Backend_Instalacion_Local.md) e [inicialización del backend](Guias/Admind_Backend_Inicializacion.md) (14/09). No se actualizan: lo vigente está en las carpetas numeradas |
 | `Archivo/` | Histórico, no se edita: `Avances/` (fotos fechadas y el [inventario del código al 27/09](Archivo/Avances/Inventario_codigo_2026-09-27.md)), `Informes/` (los cuatro informes al docente), `Lab/` y `Notas/` (apuntes de Alejo) |
 | `Credenciales/` | No la abre un agente |
 | [Admin_Master](Admin_Master.md) | Tabla de equivalencias: dónde quedó cada sección del maestro y qué es cada identificador |

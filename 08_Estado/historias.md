@@ -43,7 +43,7 @@ El reparto por sprint está en [estado_actual](estado_actual.md).
 | HU-04 | Persona global única por documento | 1 | 3 | Alta | Construida | [personas](../05_Modulos/personas.md) | — |
 | HU-05 | Aislamiento de datos entre conjuntos | 1 | 2 | Alta | Construida | [aislamiento](../03_Reglas/aislamiento.md) | — |
 | HU-26 | Selector de conjunto activo | 1 | 6 | Alta | Construida | [cuentas](../05_Modulos/cuentas.md) | — |
-| HU-06 | Asignación de roles del catálogo fijo | 2 | 6 | Alta | Construida | [permisos](../05_Modulos/permisos.md) | [Sprints_2_3](../07_Planes/hechos/Admind_Plan_Sprints_2_3.md) |
+| HU-06 | Asignación de roles del catálogo fijo | 2 | 6 | Alta | Construida | [permisos](../05_Modulos/permisos.md) | [Sprints_2_3](../07_Planes/hechos/Admind_Plan_Sprints_2_3.md), [Alta_De_Superusuarios](../07_Planes/hechos/Plan_Alta_De_Superusuarios.md) |
 | HU-07 | Vincular persona existente por búsqueda de documento | 2 | 3 | Alta | Construida | [personas](../05_Modulos/personas.md) | [Sprints_2_3](../07_Planes/hechos/Admind_Plan_Sprints_2_3.md) |
 | HU-08 | Vínculos de unidad y enrutamiento de notificaciones | 2 | 7 | Alta | Construida | [unidades](../05_Modulos/unidades.md) | [Sprints_2_3](../07_Planes/hechos/Admind_Plan_Sprints_2_3.md) |
 | HU-09 | Catálogo de áreas comunes del conjunto | 2 | 4 | Alta | Construida | [motor_reglas](../05_Modulos/motor_reglas.md) (modo de uso y aforo) | [Sprints_2_3](../07_Planes/hechos/Admind_Plan_Sprints_2_3.md), [Motor_De_Reglas](../07_Planes/hechos/Plan_Motor_De_Reglas.md) |

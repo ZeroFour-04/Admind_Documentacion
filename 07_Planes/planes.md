@@ -2,8 +2,8 @@
 resumen: "Lista de planes de trabajo: cuáles están activos y cuáles ya se ejecutaron, con la historia que cubre cada uno y la nota donde quedó lo vigente."
 tipo: plan
 origen: "reorganización del 2026-09-30; revisada contra el código el 2026-10-11"
-actualizado: 2026-10-25
-revisado: 2026-10-25
+actualizado: 2026-10-30
+revisado: 2026-10-30
 ---
 
 # Planes
@@ -17,6 +17,13 @@ Cómo se escribe y se cierra uno: [abrir_y_cerrar_un_plan](../09_Protocolos/abri
 | [Plan_Parqueaderos_De_Residentes](activos/Plan_Parqueaderos_De_Residentes.md) | HU-34 | Asignar, reasignar y liberar parqueaderos de residentes con historial, tope por tipo de vehículo (regla del conjunto) y «Mi parqueadero». F0 a F3; D1 a D6 respondidas. Una ejecución en la nube se descartó el 24/10. Construido el 25/10 en `feat/parqueaderos-asignacion`, sin commit | Construido, falta PR y prueba manual |
 | [Plan_Infracciones](activos/Plan_Infracciones.md) | HU-30 | Registro de infracción que se comunica a propietario y arrendatario, se cierra con fecha y comentario y solo el Superusuario anula; sin campo de sanción. F0 a F4; D1 a D5 respondidas. Construido el 25/10 en `feat/infracciones-registro`, sin commit | Construido, falta `migrate`, PR y prueba manual |
 | [Plan_Documentos](activos/Plan_Documentos.md) | HU-33 | Reglamento y manual de convivencia con versiones, pantalla «Documentos» y auditoría de cada descarga; sin actas. F0 a F3; D1 a D4 respondidas. Construido el 25/10 en `feat/documentos-por-tipo`, sin commit | Construido, falta respaldo, `migrate`, PR y prueba manual |
+
+| [Plan_Quitar_Lista_Propia](activos/Plan_Quitar_Lista_Propia.md) | HU-39 | Quita del asistente de creación la opción «Los escribo yo» (patrón `lista`), solo en el front; la API la sigue aceptando. F0 a F5, sin decisiones. Para Gemini Flash. Validado el 30/10 en una copia: 496 pruebas | Escrito, sin ejecutar |
+| [Plan_Estilo_Visual_Base](activos/Plan_Estilo_Visual_Base.md) | Sin historia | La capa visual «con vida», solo en el front: degradados y sombras teñidos con el acento de cada conjunto, íconos en el lateral, animación de entrada y fondo elegible (liso, color o cristal). **Relaja** sistema_visual 6.1 y 6.2. F0 a F6, D1 y D2 con respuesta recomendada. Para Gemini Flash; **va primero** | Escrito, sin ejecutar |
+| [Plan_Estilo_Visual_Conjuntos](activos/Plan_Estilo_Visual_Conjuntos.md) | HU-26, HU-03 | Selector de conjuntos con portada del color de cada uno y asistente con píldoras, solo con CSS. F0 a F4. Necesita el plan base | Escrito, sin ejecutar |
+| [Plan_Estilo_Visual_Zonas_Comunes](activos/Plan_Estilo_Visual_Zonas_Comunes.md) | HU-11 | «Zonas comunes» pasa de tabla a tarjetas por zona, con medidor de cupos y calendario y franjas lado a lado. Cambia 5 aserciones de `test_reservas.py`. F0 a F4. Necesita el plan base | Escrito, sin ejecutar |
+
+Los tres planes de estilo comparten la carpeta [Plan_Estilo_Visual_Recursos](activos/Plan_Estilo_Visual_Recursos/): CSS, JS y plantillas ya probados que el agente copia con `cp` (escritos y validados el 2026-10-30 en una copia del front: Frontend `734a8f7`, 495 pruebas antes y 504 con los cuatro planes). Se mueven a *Hechos* juntos, cuando los tres estén cerrados.
 
 Escritos el 2026-10-24 sobre Backend `7eb5b5a` y Frontend `8279616`. Los doce planes ejecutados están en *Hechos*, los once primeros con commit y sus migraciones aplicadas en `admind_db` (el del dashboard, 13/10, en Backend `85f9f23` y Frontend `d0e4af7`); el de triage (24/10) sigue sin commit.
 
@@ -40,6 +47,7 @@ Un plan hecho es histórico y no se edita: menciona el rol Consejo, alfa y beta 
 | [Plan_Pago_De_Administracion](hechos/Plan_Pago_De_Administracion.md) | 2026-10-10 | HU-35 | Tabla por vivienda y mes con buscador, check que pone Administración, comprobante que sube el residente y la mora que alimenta *paz y salvo* (F5, construida sin verificar lo legal). F0 a F5, D1 a D10 | [pagos](../05_Modulos/pagos.md) |
 | [Plan_Dashboard_De_Solicitudes](hechos/Plan_Dashboard_De_Solicitudes.md) | 2026-10-13 | HU-14 y HU-29 | El dashboard de gestión con pestañas (Reservas, Casos y Citas sin función): categoría de rechazo, descarte de Secretaría, aviso al residente y orden por antigüedad; el ciclo completo de los casos sobre lo que subió Camilo; y la Secretaría deja de aprobar. F0 a F5, D1 a D9. Lo construyó el agente | [reservas](../05_Modulos/reservas.md), [triage](../05_Modulos/triage.md), [permisos](../05_Modulos/permisos.md) |
 | [Plan_Triage_HU-22_HU-24](hechos/Plan_Triage_HU-22_HU-24.md) | 2026-10-24 | HU-22 y HU-24 | Una prueba por criterio del rechazo formal y los filtros de las pestañas de Reservas y Casos del dashboard (API validada, URL, antigüedad siempre visible). F0 a F4, D1 a D5. Lo construyó el agente, sin commit. Una ejecución anterior en la nube se descartó | [triage](../05_Modulos/triage.md), [reservas](../05_Modulos/reservas.md) |
+| [Plan_Alta_De_Superusuarios](hechos/Plan_Alta_De_Superusuarios.md) | 2026-10-30 | HU-06 | Alta de Superusuarios desde el selector sin conjunto activo: POST /auth/superusuarios/ en la API y botón con formulario en el front. F0 a F2; D1 a D3 en a. Lo construyó el agente en `feat/superusuarios-desde-selector` | [cuentas](../05_Modulos/cuentas.md), [permisos](../05_Modulos/permisos.md) |
 
 Los seis planes del 06/10 y del 10/10 se escribieron como guiados y Alejo pidió en todos que **los construyera el agente**; el de zonas con ingreso (08/10) no era guiado.
 

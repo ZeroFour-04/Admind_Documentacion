@@ -4,8 +4,9 @@ tipo: modulo
 modulo: permisos
 hu: [HU-06]
 origen: "maestro v1.4 (2026-09-14) §5.3 + guía de estructura §5.4 (2026-09-30)"
-actualizado: 2026-10-25
-revisado: 2026-10-25
+actualizado: 2026-10-30
+revisado: 2026-10-30
+
 ---
 
 # Roles y permisos
@@ -20,6 +21,8 @@ revisado: 2026-10-25
 > - **`conjunto.crear` se evalúa por persona, no por conjunto activo** (2026-10-11, Alejo): quien es Administración en cualquiera de sus conjuntos activos puede crear otro apenas inicia sesión, sin entrar a ninguno. Lo calcula `puede_crear_conjuntos` en `apps/permisos/servicios.py` y la API lo manda como `puede_crear_conjunto`, aparte de `permisos`. Antes solo valía dentro de un conjunto activo. Falta contárselo a Camilo.
 >
 > - **El Superusuario ve todos los conjuntos y es quien da de baja uno** (2026-10-13, Camilo, `7eb5b5a`; Alejo no lo ha confirmado): `conjuntos_disponibles` ya no filtra por `activo` cuando la persona es Superusuario, así que también ve los dados de baja, y `DELETE /conjuntos/actual/` pregunta `es_superusuario` en la vista. **No hay un permiso `conjunto.eliminar`** en el catálogo. Ver [conjuntos](conjuntos.md).
+>
+> - **Alta de Superusuarios desde el selector** (2026-10-30, Alejo; [Plan_Alta_De_Superusuarios](../07_Planes/hechos/Plan_Alta_De_Superusuarios.md)): un Superusuario crea a otro con `POST /auth/superusuarios/` en `apps/cuentas`, sin conjunto (`conjunto_id` nulo). La vista comprueba `es_superusuario(persona)`. En el front se accede desde el botón «Crear superusuario» en `/conjuntos/` (solo visible si tiene rol Superusuario) que lleva a `/conjuntos/superusuarios/nuevo/`. Falta contárselo a Camilo.
 >
 > Detalle en [construccion](../06_Decisiones/construccion.md).
 

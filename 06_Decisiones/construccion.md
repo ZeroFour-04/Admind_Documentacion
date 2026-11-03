@@ -2,8 +2,8 @@
 resumen: "Decisiones tomadas al construir, por fecha: qué se decidió, quién y dónde quedó. Incluye D1 a D12 del plan de los Sprints 2 y 3."
 tipo: decision
 origen: "avance §4 (2026-09-27) + decisiones del 2026-09-13 al 2026-09-30"
-actualizado: 2026-10-25
-revisado: 2026-10-25
+actualizado: 2026-10-30
+revisado: 2026-10-30
 ---
 
 # Decisiones tomadas al construir
@@ -134,6 +134,8 @@ Referencias dentro de la tabla: *maestro §N* se resuelve en `Admin_Master.md`; 
 | 2026-10-25 | **Infracciones (HU-30) D2 a, D3 a y D5 a, y se construye.** El sistema comunica y sella `fecha_notificacion` al guardar (no hay comunicación física declarada); la anulación pide un permiso nuevo `infraccion.anular`, solo en `PERMISOS` (lo tiene el Superusuario) y sensible; al cerrar se avisa otra vez a la vivienda y al anular no. Alejo pidió que lo construya el agente, en `feat/infracciones-registro` desde `origin/desarrollo` | Alejo, en chat | [Plan_Infracciones](../07_Planes/activos/Plan_Infracciones.md) |
 | 2026-10-25 | **Documentos (HU-33) D3 a y D4 a, y se construye.** `Reglamento` se renombra a `Documento` con `tipo` (reglamento o manual; las filas existentes quedan como reglamento). El manual de convivencia es opcional: solo el reglamento cuenta para quedar operativo, y la administración decide si sube el manual. Alejo pidió que lo construya el agente. La rama `feat/documentos-por-tipo` sale de `origin/desarrollo` (no de `HU-22-Triage` ni de `feat/parqueaderos-asignacion`: no comparten archivos salvo `test_intruso.py` y el menú lateral, con cambios en líneas distintas) | Alejo, en chat | [Plan_Documentos](../07_Planes/activos/Plan_Documentos.md) |
 | 2026-10-24 | **Infracciones (HU-30) D1 a y D4 a; documentos (HU-33) D1 a y D2 b.** La infracción puede nacer de un caso; el residente solo ve el aviso, sin lista. Reglamento y manual de convivencia, sin actas; `documento.ver` alcanza para descargar los vigentes y toda descarga se audita. Aún sin construir | Alejo, en chat | [Plan_Infracciones](../07_Planes/activos/Plan_Infracciones.md), [Plan_Documentos](../07_Planes/activos/Plan_Documentos.md) |
+| 2026-10-30 | **Alta de cuentas desde el selector: solo Superusuarios.** El Superusuario crea otros Superusuarios desde `/conjuntos/`, sin conjunto (plan escrito, sin construir). Crear administradores y los demás roles **ya existe** y sigue igual: el paso 3 del asistente y la pantalla Usuarios dentro del conjunto; **todo rol de conjunto se crea asignado a un conjunto**. Se descartó un formulario en el selector que escoja el conjunto, porque el conjunto no viaja en la petición ([aislamiento](../03_Reglas/aislamiento.md)). Se descartó el **administrador sin conjunto** que arranca vacío y crea los suyos: pedía un rol nuevo o romper `asignacion_conjunto_segun_alcance`, y cambiar el diagrama de clases. Se descartó **quitar o eximir el 2FA** a ciertas cuentas: para la sustentación, los jurados entran como Residente o Vigilancia, que no lo exigen | Alejo, en chat | [Plan_Alta_De_Superusuarios](../07_Planes/hechos/Plan_Alta_De_Superusuarios.md) |
+| 2026-10-30 | **Alta de Superusuarios (HU-06) construida por el agente (respuestas D1 a, D2 a, D3 a).** D1 a: `es_superusuario(persona)` comprueba en la vista `POST /auth/superusuarios/` que quien crea sea Superusuario, sin cambiar el catálogo de permisos. D2 a: sin auditoría formal en `Registro` (es modelo de conjunto y el Superusuario no tiene conjunto); queda la fila en `Asignacion` con `vigencia_desde`. D3 a: solo persona nueva con documento y correo que no existan. Construido por el agente a pedido de Alejo en `feat/superusuarios-desde-selector`. Botón en el selector y pantalla `/conjuntos/superusuarios/nuevo/`. Falta contárselo a Camilo | Alejo y el agente, en chat | [Plan_Alta_De_Superusuarios](../07_Planes/hechos/Plan_Alta_De_Superusuarios.md), [cuentas](../05_Modulos/cuentas.md), [permisos](../05_Modulos/permisos.md) |
 
 ## Ver también
 

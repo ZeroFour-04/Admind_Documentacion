@@ -4,8 +4,9 @@ tipo: modulo
 modulo: cuentas
 hu: [HU-01, HU-02, HU-26]
 origen: "guía de estructura §5.3 (2026-09-30)"
-actualizado: 2026-10-13
-revisado: 2026-10-13
+actualizado: 2026-10-30
+revisado: 2026-10-30
+
 ---
 
 # Cuentas: sesión, token y segundo factor
@@ -19,6 +20,8 @@ revisado: 2026-10-13
 
 7. `GET /auth/usuarios/` (y el detalle, y la respuesta de cambiar o retirar un rol) trae por cada cuenta, además de sus `asignaciones`, sus **`unidades`**: las viviendas con vínculo vigente en el conjunto activo, `[{nombre, agrupacion, orden}]`, sin repetir aunque tenga dos vínculos sobre la misma (`unidades.servicios.viviendas_de_las_personas`, una sola consulta; `orden` es el de la agrupación, y `null` si la vivienda no tiene). Es lo que permite al front ordenar la lista por agrupación (2026-10-11). Con `usuario.gestionar` ya se ven los datos de la persona; el perfil propio (`/auth/usuarios/perfil/`) devuelve la lista vacía.
 
+8. `POST /auth/superusuarios/` (HU-06): un Superusuario crea la cuenta y asignación de otro Superusuario desde el selector, sin conjunto activo (asignación con `conjunto` nulo). La vista verifica `es_superusuario(persona)`. El nuevo usuario debe configurar su segundo factor en su primer ingreso, ya que el rol Superusuario tiene permisos sensibles (2026-10-30, [Plan_Alta_De_Superusuarios](../07_Planes/hechos/Plan_Alta_De_Superusuarios.md)). Falta contárselo a Camilo.
+
 **Cómo se firma ese enlace.** `EnlaceParaQuitarlo` (`dos_factores.py`) hereda el generador de Django que ya usa la recuperación de contraseña y le suma a lo firmado el id del dispositivo TOTP: al borrar el dispositivo, el enlace deja de valer, sin tabla nueva. Tiene sal propia, así que un enlace de contraseña no quita el 2FA ni al revés. Abrir el enlace no cambia nada: se confirma con un botón (`POST`). **Costo aceptado** (Alejo, 2026-10-05): el segundo factor protege tanto como el buzón, porque con el correo también se cambia la contraseña.
 
 Se eligió **token opaco guardado en la base** y no JWT: se puede revocar al instante (logout) y guarda estado (conjunto activo, 2FA).
@@ -31,5 +34,6 @@ Se eligió **token opaco guardado en la base** y no JWT: se puede revocar al ins
 - [personas](personas.md) — la persona dueña de la cuenta
 - [conjuntos](conjuntos.md) — «Crear conjunto» en el selector
 - [Plan_Recuperacion_Contrasena](../07_Planes/hechos/Plan_Recuperacion_Contrasena.md) — el plan del límite de enlaces y el SMTP
+- [Plan_Alta_De_Superusuarios](../07_Planes/hechos/Plan_Alta_De_Superusuarios.md) — alta de Superusuarios desde el selector
 - [historias](../08_Estado/historias.md) — HU-01, HU-02 y HU-26
 - `Backend/Admind_Backend/apps/cuentas/README.md`
