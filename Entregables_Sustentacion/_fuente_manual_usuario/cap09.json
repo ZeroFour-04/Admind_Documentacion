@@ -1,0 +1,26 @@
+[
+  {"t":"h1","texto":"9. Glosario"},
+  {"t":"p","texto":"Las palabras que se repiten en AdMind, en el orden en que probablemente las encuentre."},
+  {"t":"tabla","cols":["Palabra","Qué significa en AdMind"],"pesos":[1.6,5.2],"primeraNegrita":true,"filas":[
+    ["Conjunto","El conjunto residencial. Todo lo que se ve y se registra en AdMind pertenece al conjunto elegido."],
+    ["Rol","La función de una persona en el conjunto: Residente, Vigilancia, Secretaría, Administración o Superusuario. Define qué secciones ve y qué puede hacer. Una persona tiene un solo rol por conjunto."],
+    ["Superusuario","La persona que opera la plataforma: crea los conjuntos y puede entrar a cualquiera."],
+    ["Vivienda (unidad)","Cada apartamento o casa del conjunto. Las viviendas se agrupan en torres, bloques, etapas u otra palabra que use el conjunto."],
+    ["Vínculo","La relación de una persona con una vivienda: propietaria, arrendataria, y si vive o no en ella. Solo quien vive en la unidad puede reservar a su nombre."],
+    ["Zona común (área común)","Un espacio compartido del conjunto, como el salón social o el gimnasio. Se usa **con reserva** o **con ingreso**."],
+    ["Con reserva","Zona que se aparta con anticipación, por franjas de horario."],
+    ["Con ingreso","Zona que no se aparta: portería registra a quien entra y no se pasa del aforo."],
+    ["Franja","Un bloque de horario de una zona con reserva, por ejemplo de 8:00 a 12:00. Puede estar libre, en trámite, apartada o reservada."],
+    ["Aforo","Cuántas personas caben en una zona. En una reserva es el máximo de asistentes; en una zona con ingreso es el máximo de personas adentro al mismo tiempo."],
+    ["Solicitud","El pedido de reserva que envía un residente para una franja. Pasa por En trámite, Apartada y Reservada (o es rechazada o liberada)."],
+    ["En trámite","El estado de una solicitud durante los 3 minutos en que la franja es solo de quien la tomó."],
+    ["Caso","Un aviso o reclamo que abre un residente. Lo revisa Secretaría y lo resuelve Administración."],
+    ["Comprobante","El archivo (PDF, JPG o PNG) con que se respalda un pago. Subirlo no confirma el pago: lo hace la administración."],
+    ["Paz y salvo","Regla opcional: una vivienda en mora no reserva ni ingresa a las zonas comunes hasta ponerse al día."],
+    ["Infracción","El registro de que se comunicó a una vivienda un hecho que contraría el reglamento. No es una sanción."],
+    ["Verificación en dos pasos","Un segundo código, que cambia cada 30 segundos y muestra una aplicación del celular, que se pide además de la contraseña a Administración, Secretaría y Superusuario."],
+    ["Códigos de respaldo","Diez códigos de un solo uso que sirven si se pierde el celular."],
+    ["Acento","El color que identifica a un conjunto en AdMind: pinta la barra y los botones mientras se trabaja en él."]
+  ]},
+  {"t":"nota","titulo":"Para recordar","texto":"Si una palabra de este manual no está aquí o una pantalla le genera dudas, pregunte a la administración de su conjunto: ella es quien configura AdMind para su comunidad."}
+]

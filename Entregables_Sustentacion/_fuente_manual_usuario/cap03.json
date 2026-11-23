@@ -1,0 +1,117 @@
+[
+  {"t":"h1","texto":"3. Residente"},
+  {"t":"p","texto":"Este capítulo es para las personas que viven en el conjunto. Para reservar una zona, usted debe estar vinculado a una vivienda como quien vive en ella; si no puede reservar, hable con la administración."},
+
+  {"t":"h2","texto":"3.1 Reservar una zona común"},
+  {"t":"p","texto":"**Para qué sirve:** apartar una franja de horario de una zona común, como el salón social, para una fecha determinada. **Quién puede hacerlo:** el Residente que vive en la vivienda."},
+  {"t":"h3","texto":"Las zonas comunes y sus dos formas de uso"},
+  {"t":"p","texto":"En **Zonas comunes** ({U08}) hay una tarjeta por zona, y cada una dice **cómo se usa**:"},
+  {"t":"ul","items":[
+    "**Con reserva:** se aparta una franja con anticipación. Es el caso del salón social. La tarjeta muestra el horario, cuánto dura cada franja y el botón **Reservar**.",
+    "**Con ingreso:** no se aparta. La persona se presenta en portería y Vigilancia registra su entrada, siempre que no se pase del aforo. Es el caso del gimnasio. La tarjeta muestra el horario, cuánto puede quedarse cada persona y cuántos cupos hay libres, por ejemplo «13 de 15 libres»."
+  ]},
+  {"t":"fig","id":"U08","file":"U08_zonas.png","pie":"Zonas comunes: tarjetas de las zonas, calendario y franjas del día"},
+  {"t":"h3","texto":"Elegir la franja"},
+  {"t":"ol","items":[
+    "Pulse **Zonas comunes** en el menú lateral.",
+    "En **Reserva tu espacio**, elija la zona en **Área para reservar** (por ejemplo, «Salón social»), o pulse **Reservar** en su tarjeta.",
+    "En el calendario, pulse el día que quiere. Con **Mes anterior** y **Mes siguiente** cambia de mes.",
+    "A la derecha aparecen las franjas de ese día, con su estado. Pulse **Reservar** en la franja que esté **Libre**."
+  ]},
+  {"t":"p","texto":"Cada franja muestra su estado con una palabra, no solo con color:"},
+  {"t":"tabla","cols":["Estado de la franja","Qué significa"],"pesos":[1.6,5],"primeraNegrita":true,"filas":[
+    ["Libre","Nadie la tiene. Puede reservarla."],
+    ["En trámite","Otra persona la tomó y está llenando su solicitud (tiene 3 minutos)."],
+    ["Apartada","Ya hay una solicitud enviada que espera la decisión de la administración."],
+    ["Reservada","La administración aceptó la solicitud."],
+    ["Tuya","Es una reserva suya."],
+    ["Ya pasó","La franja ya empezó o terminó."],
+    ["No disponible","La zona no abre ese día."]
+  ]},
+  {"t":"h3","texto":"Completar la solicitud en 3 minutos"},
+  {"t":"p","texto":"Al pulsar **Reservar** se abre la **Solicitud de reserva** en estado **En trámite** ({U09}). La pantalla muestra la zona, la fecha y el horario, y un reloj: «Tienes 2:59 para enviar la solicitud. Mientras tanto, la franja es solo tuya.» También dice a nombre de qué vivienda queda la reserva."},
+  {"t":"ol","items":[
+    "Escriba el **Motivo** (por ejemplo, «Cumpleaños de mi hija»).",
+    "Escriba cuántos **Asistentes** habrá. No puede pasar del aforo de la zona.",
+    "Si quiere, agregue **Observaciones** (es opcional).",
+    "Pulse **Revisar solicitud**."
+  ]},
+  {"t":"fig","id":"U09","file":"U09_solicitud_tramite.png","pie":"Solicitud en trámite, con la cuenta regresiva de 3 minutos"},
+  {"t":"p","texto":"Antes de enviarla, AdMind le muestra un resumen en **Revisa antes de enviar** ({U10}): la zona, la fecha en letras, el horario y el número de asistentes. Si algo está mal, pulse **Corregir**. Si todo está bien, pulse **Enviar solicitud**."},
+  {"t":"fig","id":"U10","file":"U10_confirmacion.png","pie":"Panel de confirmación antes de enviar","ancho":14},
+  {"t":"p","texto":"En el resumen pueden aparecer avisos que no impiden el envío, pero conviene leer: «Empieza en menos de 24 horas.», «Es el último día que se puede reservar con la anticipación permitida.» o «Ya tienes otra solicitud apartada o reservada.»"},
+  {"t":"p","texto":"Si no quiere reservar, pulse **Cancelar**: la franja queda libre de inmediato."},
+  {"t":"h3","texto":"Después de enviar"},
+  {"t":"p","texto":"La solicitud pasa a **Apartada** ({U11}). AdMind dice: «Tu solicitud quedó apartada. La administración la revisará y te avisará.» Cuando la administración decida, la solicitud pasa a **Reservada** (si la acepta) o recibe un motivo (si la rechaza), y usted lo ve aquí y en **Notificaciones**."},
+  {"t":"fig","id":"U11","file":"U11_solicitud_enviada.png","pie":"Solicitud enviada, con el bloque de pago y el comprobante"},
+  {"t":"h3","texto":"Subir el comprobante de pago de la reserva"},
+  {"t":"p","texto":"Si la zona tiene un costo, en el bloque **Pago** usted puede adjuntar el comprobante:"},
+  {"t":"ol","items":[
+    "En **Comprobante de pago**, elija el archivo (PDF, JPG o PNG de hasta 5 MB).",
+    "Pulse **Subir comprobante**. El archivo queda en la lista de **Comprobantes**. Puede subir hasta 3."
+  ]},
+  {"t":"nota","titulo":"Tenga en cuenta","items":[
+    "AdMind **no verifica el dinero**. Subir el comprobante no confirma el pago: lo declara una persona de la administración cuando lo verifique. Mientras tanto verá «Sin pago declarado».",
+    "Si no envía la solicitud dentro de los 3 minutos, el tiempo se vence y la franja queda libre otra vez. Puede volver a tomarla si nadie más lo hizo.",
+    "Las reglas del conjunto, como la anticipación mínima y máxima o el límite de reservas, las define la administración. Si su solicitud no las cumple, AdMind se lo explica y libera la franja (ver capítulo 8)."
+  ]},
+  {"t":"h3","texto":"Ver sus solicitudes"},
+  {"t":"p","texto":"En **Solicitudes** (o en **Casos**, pestaña **Reservas**) aparece la lista de sus reservas con la zona, el estado, la fecha y el horario, la vivienda, el motivo y el número de asistentes. Pulse **Ver solicitud** para abrir una."},
+
+  {"t":"h2","texto":"3.2 Abrir un caso y seguirlo"},
+  {"t":"p","texto":"**Para qué sirve:** avisar a la administración un daño, un reclamo o cualquier situación del conjunto, y saber cómo avanza. **Quién puede hacerlo:** el Residente."},
+  {"t":"ol","items":[
+    "Pulse **Casos** en el menú lateral y luego **Crear caso**. Se abre el formulario ({U12}).",
+    "Escriba el **Título o motivo** (resumido) y, en **Caso**, la descripción completa.",
+    "Si quiere, adjunte una imagen en **Subir una foto o imagen** (es opcional: PNG, JPG o WebP de hasta 5 MB).",
+    "Pulse **Crear caso**. Para salir sin guardar, pulse **Cancelar**."
+  ]},
+  {"t":"fig","id":"U12","file":"U12_caso_nuevo.png","pie":"Abrir un caso, con foto opcional"},
+  {"t":"p","texto":"AdMind confirma con «Tu caso quedó creado y enviado a la administración.» y lo agrega a la lista **Casos** ({U13}), donde puede seguir su estado."},
+  {"t":"fig","id":"U13","file":"U13_mis_casos.png","pie":"Mis casos, con su estado"},
+  {"t":"tabla","cols":["Estado del caso","Qué significa"],"pesos":[1.6,5],"primeraNegrita":true,"filas":[
+    ["Por revisar","Su caso llegó y todavía nadie lo ha tomado."],
+    ["En revisión","La administración ya lo está revisando."],
+    ["Redirigido","Secretaría lo pasó a quien debe resolverlo."],
+    ["Resuelto","El caso se cerró con una respuesta."],
+    ["Rechazado","El caso se cerró y la administración le explicó la razón."]
+  ]},
+
+  {"t":"h2","texto":"3.3 Anuncios"},
+  {"t":"p","texto":"**Para qué sirve:** leer los avisos que publica la administración. **Quién puede hacerlo:** todas las personas del conjunto."},
+  {"t":"p","texto":"Pulse **Anuncios** ({U14}). Cada anuncio muestra su título, a quién va dirigido («Para todo el conjunto» o para una vivienda), quién y cuándo lo publicó, el texto y las fotos. Cuando se publica un anuncio, AdMind avisa una sola vez en **Notificaciones** y por correo."},
+  {"t":"fig","id":"U14","file":"U14_anuncios.png","pie":"Anuncios, con un anuncio con foto"},
+
+  {"t":"h2","texto":"3.4 Documentos del conjunto"},
+  {"t":"p","texto":"**Para qué sirve:** consultar y descargar el reglamento y el manual de convivencia. **Quién puede hacerlo:** el Residente."},
+  {"t":"ol","items":[
+    "Pulse **Documentos** en el menú lateral ({U15}).",
+    "Busque el documento. Verá su nombre de archivo, su tamaño y quién lo subió.",
+    "Pulse **Descargar reglamento de propiedad horizontal** para guardarlo en su equipo."
+  ]},
+  {"t":"fig","id":"U15","file":"U15_documentos.png","pie":"Documentos del conjunto"},
+  {"t":"p","texto":"Si un documento aparece como «Sin cargar», la administración todavía no lo ha subido."},
+
+  {"t":"h2","texto":"3.5 Reportar el pago de la administración"},
+  {"t":"p","texto":"**Para qué sirve:** avisar que usted pagó la cuota de administración de un mes y adjuntar el comprobante. **Quién puede hacerlo:** el Residente."},
+  {"t":"ol","items":[
+    "Pulse **Pagos** en el menú lateral. Aparece **Mis pagos de administración** ({U16}), con una fila por mes y su estado: **Sin reporte**, **Reportado** o **Confirmado**.",
+    "En **Reportar un pago**, elija el **Mes**.",
+    "En **Comprobante de pago**, elija el archivo (PDF, JPG o PNG de hasta 5 MB).",
+    "Pulse **Subir comprobante**."
+  ]},
+  {"t":"fig","id":"U16","file":"U16_mis_pagos.png","pie":"Mis pagos de administración"},
+  {"t":"p","texto":"AdMind confirma con «Tu comprobante quedó reportado. La administración lo revisará y lo confirmará.» y el mes pasa a **Reportado**. Cuando la administración verifique el pago, el mes pasa a **Confirmado** y verá quién lo confirmó."},
+  {"t":"nota","titulo":"Tenga en cuenta","texto":"AdMind no verifica el dinero: el pago lo confirma una persona de la administración. El conjunto puede definir un día límite de pago; quien no tenga el pago confirmado después de ese día queda en mora y, si el conjunto aplica la regla de paz y salvo, no podrá reservar ni ingresar a las zonas comunes hasta ponerse al día."},
+
+  {"t":"h2","texto":"3.6 Mi parqueadero"},
+  {"t":"p","texto":"**Para qué sirve:** ver el puesto de parqueadero que la administración le asignó. **Quién puede hacerlo:** el Residente."},
+  {"t":"p","texto":"Pulse **Mi parqueadero** ({U17}). La tabla muestra el **Código** del puesto, el **Vehículo**, la **Vivienda**, si es **Accesible**, las **Notas** y la fecha **Desde** la que está asignado. Si no tiene puesto, la tabla aparece vacía."},
+  {"t":"fig","id":"U17","file":"U17_mi_parqueadero.png","pie":"Mi parqueadero","ancho":14},
+  {"t":"nota","titulo":"Tenga en cuenta","texto":"La asignación es un registro administrativo del conjunto. Para cambiarla, hable con la administración."},
+
+  {"t":"h2","texto":"3.7 Notificaciones"},
+  {"t":"p","texto":"**Para qué sirve:** tener en un solo lugar los avisos que AdMind le envía, como los anuncios nuevos. **Quién puede hacerlo:** el Residente."},
+  {"t":"p","texto":"Pulse **Notificaciones** ({U18}). Cada aviso muestra su título, la fecha y la hora, el texto y, cuando corresponde, el enlace **Ver en anuncios**. Si el anuncio trae fotos, el aviso lo dice y usted las ve dentro de AdMind."},
+  {"t":"fig","id":"U18","file":"U18_notificaciones.png","pie":"Bandeja de notificaciones"}
+]

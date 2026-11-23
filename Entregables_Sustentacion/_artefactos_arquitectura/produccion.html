@@ -1,0 +1,592 @@
+<title>AdMind en producción</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Plano técnico: índice fijo a la izquierda y una columna de lectura; los diagramas ocupan el ancho de la columna y se desplazan solos si no caben. */
+:root{
+  --fondo:#F6F8F7; --hoja:#FFFFFF; --tinta:#14201D; --tenue:#56625E; --linea:#D6DCDA; --linea-suave:#EDF1EF;
+  --verde:#0E6B5A; --verde-tinta:#0B5546; --verde-suave:#EEF5F2; --sobre-verde:#FFFFFF;
+  --ambar-f:#FBF0DC; --ambar-t:#6B4A05; --hoja-f:#E2F0E4; --hoja-t:#1F5A2C;
+  --rojo-f:#FBE7E5; --rojo-t:#8A1E15; --azul-f:#E4EDF8; --azul-t:#1B4470; --codigo-f:#EDF1EF;
+  --f-titulo:"Archivo", "Arial Narrow", system-ui, sans-serif;
+  --f-texto:"Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono:"JetBrains Mono", ui-monospace, "Cascadia Code", Consolas, monospace;
+  --radio:10px;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --fondo:#0B1412; --hoja:#121D1A; --tinta:#E4ECE9; --tenue:#9AA9A4; --linea:#2C3B36; --linea-suave:#1A2622;
+  --verde:#5CC3A9; --verde-tinta:#8FD8C4; --verde-suave:#10302A; --sobre-verde:#06201A;
+  --ambar-f:#3A2C0C; --ambar-t:#F2CF86; --hoja-f:#16301C; --hoja-t:#A6DCB0;
+  --rojo-f:#3A1714; --rojo-t:#F4ABA3; --azul-f:#132739; --azul-t:#A9C8EC; --codigo-f:#1A2622;
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --fondo:#0B1412; --hoja:#121D1A; --tinta:#E4ECE9; --tenue:#9AA9A4; --linea:#2C3B36; --linea-suave:#1A2622;
+  --verde:#5CC3A9; --verde-tinta:#8FD8C4; --verde-suave:#10302A; --sobre-verde:#06201A;
+  --ambar-f:#3A2C0C; --ambar-t:#F2CF86; --hoja-f:#16301C; --hoja-t:#A6DCB0;
+  --rojo-f:#3A1714; --rojo-t:#F4ABA3; --azul-f:#132739; --azul-t:#A9C8EC; --codigo-f:#1A2622;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} }
+body{background:var(--fondo);color:var(--tinta);font-family:var(--f-texto);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:var(--verde-tinta);text-underline-offset:3px}
+:focus-visible{outline:2px solid var(--verde);outline-offset:2px;border-radius:4px}
+code{font-family:var(--f-mono);font-size:.86em;background:var(--codigo-f);padding:.1em .38em;border-radius:5px;overflow-wrap:anywhere}
+h1,h2,h3{font-family:var(--f-titulo);line-height:1.15;text-wrap:balance;margin:0}
+p{margin:0}
+
+.marco{display:grid;grid-template-columns:200px minmax(0,1fr);gap:56px;max-width:1160px;margin:0 auto;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-block:40px 80px}
+.indice{position:sticky;top:calc(env(safe-area-inset-top, 0px) + 28px);align-self:start;display:flex;flex-direction:column;gap:18px}
+.indice .marca{font-family:var(--f-titulo);font-weight:800;font-size:1.05rem;letter-spacing:-.01em;color:var(--verde-tinta);text-decoration:none}
+.indice ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
+.indice a.ir{display:block;padding:5px 10px;border-radius:7px;color:var(--tenue);text-decoration:none;font-size:.9rem;border-left:2px solid transparent}
+.indice a.ir:hover{color:var(--tinta);background:var(--linea-suave)}
+.indice a.ir.activo{color:var(--verde-tinta);border-left-color:var(--verde);background:var(--verde-suave);font-weight:600}
+.indice .otra{font-size:.85rem;color:var(--tenue);border-top:1px solid var(--linea);padding-top:14px}
+.boton-repaso{font:inherit;font-size:.88rem;font-weight:600;border:1px solid var(--verde);background:transparent;color:var(--verde-tinta);
+  border-radius:999px;padding:7px 14px;cursor:pointer;text-align:left}
+.boton-repaso[aria-pressed="true"]{background:var(--verde);color:var(--sobre-verde)}
+
+.contenido{min-width:0;max-width:820px;display:flex;flex-direction:column;gap:72px}
+.portada{display:flex;flex-direction:column;gap:18px}
+.antetitulo{font-family:var(--f-mono);font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--verde-tinta)}
+.portada h1{font-size:clamp(2.3rem,5.2vw,3.6rem);font-weight:800;letter-spacing:-.025em}
+.entrada{font-size:1.15rem;color:var(--tenue);max-width:62ch}
+.ficha{display:flex;flex-wrap:wrap;border:1px solid var(--linea);border-radius:var(--radio);background:var(--hoja);overflow:hidden}
+.ficha div{flex:1 1 130px;padding:12px 16px;border-right:1px solid var(--linea-suave);display:flex;flex-direction:column;gap:2px}
+.ficha dt{font-size:.74rem;text-transform:uppercase;letter-spacing:.06em;color:var(--tenue)}
+.ficha dd{margin:0;font-family:var(--f-titulo);font-weight:700;font-size:1.25rem;font-variant-numeric:tabular-nums}
+
+.tema{display:flex;flex-direction:column;gap:20px;scroll-margin-top:24px}
+.tema > header{display:flex;flex-direction:column;gap:8px}
+.ruta{font-family:var(--f-mono);font-size:.78rem;color:var(--tenue)}
+.tema h2{font-size:clamp(1.6rem,3.2vw,2.1rem);font-weight:800;letter-spacing:-.015em}
+.tema h3{font-size:1.15rem;font-weight:700;margin-top:6px}
+.tema p, .tema li{max-width:68ch}
+.tema ul, .tema ol{margin:0;padding-left:1.25em;display:flex;flex-direction:column;gap:6px}
+
+.diagrama{background:var(--hoja);border:1px solid var(--linea);border-radius:var(--radio);padding:16px;overflow-x:auto}
+.diagrama svg{display:block;width:100%;min-width:640px;height:auto}
+.diagrama figcaption{font-size:.85rem;color:var(--tenue);margin-top:10px}
+.d-marco{fill:none;stroke:var(--linea);stroke-width:1.5;stroke-dasharray:6 5}
+.d-caja{fill:var(--hoja);stroke:var(--linea);stroke-width:1.5}
+.d-clave{fill:var(--verde-suave);stroke:var(--verde);stroke-width:1.5}
+.d-bd{fill:var(--ambar-f);stroke:var(--ambar-t);stroke-width:1.3}
+.d-t{fill:var(--tinta);font-family:var(--f-titulo);font-weight:700;font-size:15px}
+.d-s{fill:var(--tenue);font-family:var(--f-mono);font-size:11px}
+.d-e{fill:var(--verde-tinta);font-family:var(--f-texto);font-weight:600;font-size:11.5px}
+.d-m{fill:var(--tenue);font-family:var(--f-mono);font-size:11px;letter-spacing:.04em}
+.d-flecha{stroke:var(--verde);stroke-width:1.8;fill:none}
+.d-punteada{stroke:var(--tenue);stroke-width:1.5;fill:none;stroke-dasharray:5 4}
+.d-punta{fill:var(--verde)}
+.d-punta-tenue{fill:var(--tenue)}
+
+.tabla-envoltura{overflow-x:auto;border:1px solid var(--linea);border-radius:var(--radio);background:var(--hoja)}
+table{border-collapse:collapse;width:100%;font-size:.92rem}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--linea-suave);vertical-align:top}
+th{font-size:.76rem;text-transform:uppercase;letter-spacing:.05em;color:var(--tenue);font-weight:600;background:var(--linea-suave)}
+tr:last-child td{border-bottom:0}
+td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+
+.pasos{list-style:none;padding:0 !important;counter-reset:paso;gap:0 !important;border-left:2px solid var(--linea);margin-left:14px !important}
+.pasos > li{counter-increment:paso;position:relative;padding:4px 0 18px 30px;max-width:none !important}
+.pasos > li::before{content:counter(paso);position:absolute;left:-15px;top:2px;width:28px;height:28px;border-radius:50%;
+  background:var(--hoja);border:2px solid var(--verde);color:var(--verde-tinta);font:700 .8rem/24px var(--f-titulo);text-align:center}
+.pasos .cabeza{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-weight:600}
+.pasos .explica{color:var(--tenue);margin-top:4px;font-size:.95rem}
+
+.chip{display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:2px 8px;border-radius:999px;white-space:nowrap}
+.chip.front{background:var(--azul-f);color:var(--azul-t)}
+.chip.api{background:var(--verde-suave);color:var(--verde-tinta)}
+.chip.bd{background:var(--ambar-f);color:var(--ambar-t)}
+.chip.nube{background:var(--linea-suave);color:var(--tenue)}
+.chip.ok{background:var(--hoja-f);color:var(--hoja-t)}
+.chip.no{background:var(--rojo-f);color:var(--rojo-t)}
+
+.flujo{display:flex;flex-wrap:wrap;align-items:stretch;gap:10px}
+.flujo .bloque{flex:1 1 140px;min-width:0;background:var(--hoja);border:1px solid var(--linea);border-radius:var(--radio);padding:12px 14px;display:flex;flex-direction:column;gap:4px;position:relative}
+.flujo .bloque.clave{border-color:var(--verde);background:var(--verde-suave)}
+.flujo .bloque b{font-family:var(--f-titulo);font-size:1rem}
+.flujo .bloque span{font-size:.85rem;color:var(--tenue)}
+.flujo .bloque code{align-self:flex-start}
+.flujo .sig{align-self:center;color:var(--verde);font-weight:700}
+@media (max-width:640px){ .flujo{flex-direction:column} .flujo .sig{transform:rotate(90deg)} }
+
+.nota{border-radius:var(--radio);padding:14px 18px;display:flex;flex-direction:column;gap:6px;font-size:.95rem}
+.nota strong.titulo{font-family:var(--f-titulo);font-size:.82rem;text-transform:uppercase;letter-spacing:.06em}
+.nota.jurado{background:var(--verde-suave);color:var(--tinta)}
+.nota.jurado strong.titulo{color:var(--verde-tinta)}
+.nota.debil{background:var(--ambar-f);color:var(--ambar-t)}
+
+pre.codigo{margin:0;background:var(--codigo-f);border:1px solid var(--linea);border-radius:var(--radio);padding:14px 16px;overflow-x:auto;
+  font-family:var(--f-mono);font-size:.82rem;line-height:1.55;color:var(--tinta)}
+pre.codigo .com{color:var(--tenue)}
+
+.dos{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.panel{background:var(--hoja);border:1px solid var(--linea);border-radius:var(--radio);padding:16px 18px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.panel h3{margin:0}
+.panel p, .panel li{font-size:.93rem}
+
+.buscador{display:flex;flex-direction:column;gap:6px}
+.buscador label{font-size:.85rem;font-weight:600}
+.buscador input{font:inherit;padding:10px 14px;border:1px solid var(--linea);border-radius:8px;background:var(--hoja);color:var(--tinta);max-width:360px;width:100%}
+.rejilla-apps{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+.app{background:var(--hoja);border:1px solid var(--linea);border-radius:var(--radio);padding:14px 16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.app header{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.app code{background:none;padding:0;font-weight:700;font-size:.92rem;color:var(--verde-tinta)}
+.app .hu{font-size:.72rem;color:var(--tenue);font-family:var(--f-mono);white-space:nowrap}
+.app p{font-size:.88rem;color:var(--tenue)}
+.sin-resultados{color:var(--tenue);font-size:.92rem}
+
+.repaso{display:flex;flex-direction:column;gap:10px}
+.repaso details{background:var(--hoja);border:1px solid var(--linea);border-radius:var(--radio);padding:0}
+.repaso summary{cursor:pointer;padding:14px 18px;font-weight:600;list-style:none;display:flex;gap:10px;align-items:flex-start}
+.repaso summary::-webkit-details-marker{display:none}
+.repaso summary::before{content:"+";font-family:var(--f-mono);color:var(--verde);font-weight:700}
+.repaso details[open] summary::before{content:"−"}
+.repaso details > div{padding:0 18px 16px 40px;color:var(--tenue);font-size:.95rem}
+
+body.modo-repaso .oculta:not(.visto){filter:blur(6px);cursor:pointer;user-select:none}
+@media (prefers-reduced-motion: no-preference){ .oculta{transition:filter .2s ease} }
+
+.pie{border-top:1px solid var(--linea);padding-top:20px;font-size:.85rem;color:var(--tenue);display:flex;flex-direction:column;gap:6px}
+
+@media (max-width:900px){
+  .marco{grid-template-columns:minmax(0,1fr);gap:28px;padding-block:24px 64px}
+  .indice{position:static;gap:12px}
+  .indice ol{flex-direction:row;overflow-x:auto;gap:6px;padding-bottom:6px}
+  .indice a.ir{white-space:nowrap;border:1px solid var(--linea);border-radius:999px;padding:5px 12px}
+  .indice a.ir.activo{border-color:var(--verde)}
+  .indice .otra{border-top:0;padding-top:0}
+  .contenido{gap:56px}
+}
+</style>
+<div class="marco">
+  <nav class="indice" aria-label="Secciones">
+    <a class="marca" href="#inicio">AdMind · producción</a>
+    <ol>
+      <li><a class="ir" href="#camino">El camino</a></li>
+      <li><a class="ir" href="#pruebas">Pruebas</a></li>
+      <li><a class="ir" href="#ci">Integración continua</a></li>
+      <li><a class="ir" href="#sonar">SonarCloud</a></li>
+      <li><a class="ir" href="#servidor">El servidor</a></li>
+      <li><a class="ir" href="#despliegue">Despliegue continuo</a></li>
+      <li><a class="ir" href="#limites">Límites</a></li>
+      <li><a class="ir" href="#repaso">Repaso</a></li>
+    </ol>
+    <button type="button" class="boton-repaso" id="boton-repaso" aria-pressed="false">Modo repaso</button>
+    <p class="otra">La otra página: <a href="https://claude.ai/artifact/AtvFRZoD7oBgqei1JWTgip">Arquitectura de AdMind</a>, con el sistema, las capas, el aislamiento y la base.</p>
+  </nav>
+
+  <main class="contenido">
+    <section class="portada" id="inicio">
+      <p class="antetitulo">Sustentación técnica · 23 de noviembre de 2026</p>
+      <h1>AdMind en producción</h1>
+      <p class="entrada">De un cambio en una rama a <code>https://admind.detkor.com</code>: las pruebas, el CI, SonarCloud, el servidor y el despliegue que corre solo. Activa el <strong>modo repaso</strong> en el índice para ocultar las explicaciones y ponerte a prueba.</p>
+      <dl class="ficha">
+        <div><dt>Pruebas del back</dt><dd>854</dd></div>
+        <div><dt>Cobertura</dt><dd>94,2 %</dd></div>
+        <div><dt>Pruebas del front</dt><dd>541</dd></div>
+        <div><dt>Vulnerabilidades</dt><dd>20 → 16</dd></div>
+        <div><dt>Despliegue</dt><dd>Automático</dd></div>
+      </dl>
+    </section>
+
+    <section class="tema" id="camino">
+      <header>
+        <p class="ruta">GitHub · ZeroFour-04/Admind_Backend · ZeroFour-04/Admind_Front-End</p>
+        <h2>El camino de un cambio</h2>
+      </header>
+      <p>Todo cambio entra por una rama corta y un PR. El CI y SonarCloud lo revisan antes de fundir; al llegar a <code>main</code>, el servidor se actualiza solo.</p>
+      <div class="flujo" role="list">
+        <div class="bloque" role="listitem"><b>Rama corta</b><span>Un cambio, una rama</span></div>
+        <span class="sig" aria-hidden="true">→</span>
+        <div class="bloque" role="listitem"><b>Pull request</b><span>Se revisa antes de fundir</span></div>
+        <span class="sig" aria-hidden="true">→</span>
+        <div class="bloque clave" role="listitem"><b>CI + SonarCloud</b><span>Pruebas, migraciones y análisis</span></div>
+        <span class="sig" aria-hidden="true">→</span>
+        <div class="bloque" role="listitem"><b>Merge a main</b><span>GitHub manda el webhook</span></div>
+        <span class="sig" aria-hidden="true">→</span>
+        <div class="bloque clave" role="listitem"><b>Despliegue</b><span>Pull, dependencias, migraciones, reinicio</span></div>
+      </div>
+      <div class="tabla-envoltura">
+        <table>
+          <thead><tr><th>Fecha</th><th>Desde cuándo</th></tr></thead>
+          <tbody>
+            <tr><td class="num">24-oct</td><td>Todo cambio entra por PR</td></tr>
+            <tr><td class="num">16-nov</td><td>GitHub Actions corre en los dos repos</td></tr>
+            <tr><td class="num">17-nov</td><td>Primer escaneo de SonarCloud</td></tr>
+            <tr><td class="num">22-nov</td><td>CI endurecido (dependencias con hash) y segundo escaneo</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="tema" id="pruebas">
+      <header>
+        <p class="ruta">Backend/Admind_Backend/tests/ · apps/&lt;app&gt;/tests.py · pytest.ini</p>
+        <h2>Pruebas y cobertura</h2>
+      </header>
+      <p>Una prueba ejecuta un pedazo del código y comprueba el resultado. La cobertura mide qué líneas y qué ramas (cada lado de un <code>if</code>) ejecutaron las pruebas. Un 94,2 % no quiere decir «sin errores»: quiere decir que el 94,2 % del código corrió al menos una vez en una prueba.</p>
+      <div class="dos">
+        <div class="panel">
+          <h3>Cómo corren</h3>
+          <ul>
+            <li>pytest, pytest-django y pytest-cov (coverage.py).</li>
+            <li>El back crea una base PostgreSQL de prueba en cada corrida y la borra al final. Así también se prueban las funciones, el procedimiento y los triggers.</li>
+            <li>El front se prueba sin API: <code>mock.patch</code> sobre las funciones de <code>cliente_api</code> y se revisa el HTML.</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <h3>El reporte</h3>
+          <p>El CI corre <code>pytest --cov --cov-fail-under=70</code>: si la cobertura baja del 70 %, se pone rojo. Cada ejecución sube <code>htmlcov/</code> como artefacto <code>cobertura-backend</code>.</p>
+          <pre class="codigo">./.venv/Scripts/python.exe -m pytest -q \
+  --cov --cov-report=term --cov-report=html</pre>
+        </div>
+      </div>
+      <div class="tabla-envoltura">
+        <table>
+          <thead><tr><th>Prueba</th><th>Qué vigila</th></tr></thead>
+          <tbody>
+            <tr><td><code>tests/aislamiento/test_intruso.py</code></td><td>Todas las rutas, desde otro conjunto y sin permiso. Falla si aparece una ruta nueva sin registrar</td></tr>
+            <tr><td>Tablas globales</td><td>Falla si aparece una tabla sin <code>conjunto_id</code> fuera de la lista cerrada</td></tr>
+            <tr><td><code>tests/concurrencia/test_bloqueo_de_franjas.py</code></td><td>Varios hilos piden la misma franja contra PostgreSQL real: solo uno la obtiene</td></tr>
+            <tr><td><code>tests/esquema/test_procedimientos.py</code> y <code>test_triggers.py</code></td><td>Las 5 rutinas y los triggers, con su camino feliz y su error</td></tr>
+            <tr><td><code>tests/test_cors.py</code></td><td>El origen permitido recibe la cabecera; otro origen no</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="nota debil">
+        <strong class="titulo">Lo que no está probado</strong>
+        <p>El JavaScript propio (Alpine.js) y la prueba manual con usuarios reales. El hasher MD5 de <code>config/settings_pruebas.py</code> es solo para que las pruebas corran rápido; producción usa PBKDF2-SHA256.</p>
+      </div>
+    </section>
+
+    <section class="tema" id="ci">
+      <header>
+        <p class="ruta">.github/workflows/ci.yml · scripts/bloquear_dependencias.py · requirements.lock</p>
+        <h2>Integración continua</h2>
+      </header>
+      <p>Con cada push y cada PR a <code>main</code>, <code>desarrollo</code> y <code>pruebas</code>, GitHub Actions instala el proyecto en un Ubuntu limpio y corre las pruebas. Estos son los pasos del back, en orden.</p>
+      <ol class="pasos">
+        <li><div class="cabeza"><code>permissions: contents: read</code></div>
+          <p class="explica oculta">El token del flujo solo puede leer el repositorio: no escribe, no comenta, no publica.</p></li>
+        <li><div class="cabeza">Servicio <code>postgres:18</code></div>
+          <p class="explica oculta">Levanta un PostgreSQL de verdad, con un chequeo de salud (<code>pg_isready</code>) antes de seguir.</p></li>
+        <li><div class="cabeza"><code>actions/checkout@v6</code> y <code>setup-python@v6</code></div>
+          <p class="explica oculta">Trae el código y pone Python 3.14. Las versiones v6 corren en Node 24.</p></li>
+        <li><div class="cabeza">Check dependency lock</div>
+          <p class="explica oculta"><code>bloquear_dependencias.py --check</code> falla si <code>requirements.lock</code> no corresponde a <code>requirements.txt</code>.</p></li>
+        <li><div class="cabeza">Install dependencies</div>
+          <p class="explica oculta"><code>pip install --require-hashes --only-binary :all: -r requirements.lock</code>: solo wheels cuyo SHA-256 está en el lock.</p></li>
+        <li><div class="cabeza">Check migrations</div>
+          <p class="explica oculta"><code>makemigrations --check --dry-run</code> falla si alguien cambió un modelo y olvidó la migración.</p></li>
+        <li><div class="cabeza">Run tests with coverage</div>
+          <p class="explica oculta"><code>pytest -q --cov … --cov-fail-under=70</code>: las 854 pruebas, con el mínimo de 70 %.</p></li>
+        <li><div class="cabeza">Upload coverage report</div>
+          <p class="explica oculta">Con <code>if: always()</code>, sube <code>htmlcov/</code> aunque fallen las pruebas.</p></li>
+      </ol>
+      <p>El del front tiene el lock, la instalación y <code>pytest -q</code>, sin PostgreSQL ni migraciones.</p>
+      <div class="dos">
+        <div class="panel">
+          <h3><code>--require-hashes</code></h3>
+          <p>pip compara el SHA-256 de cada archivo con el del lock. Si alguien cambia un paquete en PyPI, el hash no coincide y no se instala. El <code>==</code> de <code>requirements.txt</code> fija la versión, pero no garantiza que el archivo sea el mismo.</p>
+        </div>
+        <div class="panel">
+          <h3><code>--only-binary :all:</code></h3>
+          <p>Solo instala wheels, paquetes ya construidos. Así nunca ejecuta el <code>setup.py</code> de un paquete, que es un programa y puede correr cualquier código al instalarse.</p>
+        </div>
+      </div>
+      <dl class="ficha">
+        <div><dt>Ejecuciones back</dt><dd>30</dd></div>
+        <div><dt>Ejecuciones front</dt><dd>15</dd></div>
+        <div><dt>PR back</dt><dd>21</dd></div>
+        <div><dt>PR front</dt><dd>12</dd></div>
+      </dl>
+      <div class="nota jurado">
+        <strong class="titulo">Las dos ejecuciones en rojo del 22-nov</strong>
+        <p>El <code>ci.yml</code> nuevo tenía un error de sintaxis YAML: en <code>:all: </code>, los dos puntos seguidos de espacio hacían que YAML leyera una clave. Se puso la línea entre comillas (<code>b4d5c7c</code> y <code>a0feaf4</code>) y la siguiente quedó en verde. Para eso está el CI.</p>
+      </div>
+    </section>
+
+    <section class="tema" id="sonar">
+      <header>
+        <p class="ruta">sonarcloud.io · ZeroFour-04_Admind_Backend · ZeroFour-04_Admind_Front-End</p>
+        <h2>SonarCloud</h2>
+      </header>
+      <p>Análisis estático: SonarCloud lee el código sin ejecutarlo y busca bugs, vulnerabilidades, <em>code smells</em> y duplicación. Con <em>Automatic Analysis</em> revisa <code>main</code> y cada PR sin pasar por el CI.</p>
+      <div class="flujo" role="list">
+        <div class="bloque" role="listitem"><b>Primer escaneo</b><span>17-nov: 3 en el back y 17 en el front</span></div>
+        <span class="sig" aria-hidden="true">→</span>
+        <div class="bloque clave" role="listitem"><b>Una corrección por integrante</b><span>Alejo: las dos de <code>ci.yml</code>. Camilo: la suya</span></div>
+        <span class="sig" aria-hidden="true">→</span>
+        <div class="bloque" role="listitem"><b>Segundo escaneo</b><span>22-nov: 1 en el back y 15 en el front</span></div>
+      </div>
+      <div class="tabla-envoltura">
+        <table>
+          <thead><tr><th></th><th>Back 17-nov</th><th>Back 22-nov</th><th>Front 17-nov</th><th>Front 22-nov</th></tr></thead>
+          <tbody>
+            <tr><td>Vulnerabilidades</td><td class="num">3</td><td class="num">1</td><td class="num">17</td><td class="num">15</td></tr>
+            <tr><td>Calificación de seguridad</td><td class="num">C</td><td class="num">C</td><td class="num">C</td><td class="num">C</td></tr>
+            <tr><td>Bugs</td><td class="num">0</td><td class="num">0</td><td class="num">3</td><td class="num">3</td></tr>
+            <tr><td>Duplicación</td><td class="num">0,9 %</td><td class="num">0,9 %</td><td class="num">0,2 %</td><td class="num">0,2 %</td></tr>
+            <tr><td>Líneas de código</td><td class="num">19.815</td><td class="num">20.201</td><td class="num">16.464</td><td class="num">16.525</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="dos">
+        <div class="panel">
+          <h3>Corregidas <span class="chip ok">PR #21 y #12</span></h3>
+          <ul>
+            <li><strong>S8541</strong>: los scripts del gestor de paquetes no deberían ejecutarse al instalar. Se corrigió con <code>--only-binary :all:</code>.</li>
+            <li><strong>S8544</strong>: las dependencias deberían fijarse a versiones verificadas. Se corrigió con el lock con hashes y <code>--require-hashes</code>.</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <h3>Abiertas el 22-nov</h3>
+          <ul>
+            <li>Back, <strong>S2068</strong> (MAJOR): la contraseña de ejemplo de <code>.env _ejemplo</code>.</li>
+            <li>Front, <strong>S7044</strong> (MAJOR): la ruta de la API se arma con datos del usuario en <code>cliente_api/http.py</code>.</li>
+            <li>Front, <strong>S3752</strong> ×14 (MINOR): vistas que no declaran sus métodos HTTP.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tabla-envoltura">
+        <table>
+          <thead><tr><th>Término</th><th>Qué es</th></tr></thead>
+          <tbody>
+            <tr><td>Vulnerabilidad</td><td>Un problema de seguridad confirmado que hay que corregir</td></tr>
+            <tr><td>Security hotspot</td><td>Código sensible que una persona revisa y decide si es seguro. AdMind tiene 0 abiertos</td></tr>
+            <tr><td>Calificación de seguridad</td><td>De A a E, la fija la peor vulnerabilidad abierta. Con una MAJOR abierta queda en C</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="tema" id="servidor">
+      <header>
+        <p class="ruta">Oracle Cloud · systemd · /etc/admind/py/</p>
+        <h2>El servidor</h2>
+      </header>
+      <p>Una máquina virtual de Oracle Cloud con Ubuntu 24.04, 2 vCPU y ~1 GB de RAM. Front, API y base viven en ella. En el servidor corren PostgreSQL 16 y Python 3.12; en local y en el CI, 18 y 3.14.</p>
+      <figure class="diagrama" style="margin:0">
+        <svg viewBox="0 0 820 330" role="img" aria-labelledby="vps-t vps-d">
+          <title id="vps-t">Los servicios dentro del VPS</title>
+          <desc id="vps-d">cloudflared recibe el tráfico del túnel y lo pasa al front en el puerto 8001 y al receptor de webhooks en el 8010. El front llama a la API en el 8000 y la API a PostgreSQL. El receptor deja trabajos en la cola de despliegue.</desc>
+          <defs>
+            <marker id="q1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="d-punta"/></marker>
+            <marker id="q2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="d-punta-tenue"/></marker>
+          </defs>
+          <rect x="10" y="10" width="800" height="310" rx="14" class="d-marco"/>
+          <text x="28" y="34" class="d-m">VPS · SERVICIOS DE SYSTEMD</text>
+
+          <rect x="30" y="130" width="150" height="74" rx="10" class="d-caja"/>
+          <text x="105" y="160" text-anchor="middle" class="d-t">cloudflared</text>
+          <text x="105" y="178" text-anchor="middle" class="d-s">conexión saliente</text>
+          <text x="105" y="193" text-anchor="middle" class="d-s">a Cloudflare</text>
+
+          <rect x="250" y="44" width="180" height="78" rx="10" class="d-caja"/>
+          <text x="340" y="74" text-anchor="middle" class="d-t">admind-front</text>
+          <text x="340" y="93" text-anchor="middle" class="d-s">gunicorn · 2 workers</text>
+          <text x="340" y="109" text-anchor="middle" class="d-s">127.0.0.1:8001</text>
+
+          <rect x="250" y="156" width="180" height="78" rx="10" class="d-clave"/>
+          <text x="340" y="186" text-anchor="middle" class="d-t">admind-backend</text>
+          <text x="340" y="205" text-anchor="middle" class="d-s">gunicorn · 2 workers</text>
+          <text x="340" y="221" text-anchor="middle" class="d-s">127.0.0.1:8000</text>
+
+          <path d="M500,172 v52 a55,10 0 0 0 110,0 v-52" class="d-bd"/>
+          <ellipse cx="555" cy="172" rx="55" ry="10" class="d-bd"/>
+          <text x="555" y="206" text-anchor="middle" class="d-t">PostgreSQL 16</text>
+          <text x="555" y="224" text-anchor="middle" class="d-s">admind_db</text>
+
+          <rect x="250" y="252" width="180" height="56" rx="10" class="d-caja"/>
+          <text x="340" y="276" text-anchor="middle" class="d-t">admind-webhook</text>
+          <text x="340" y="294" text-anchor="middle" class="d-s">127.0.0.1:8010</text>
+
+          <rect x="500" y="252" width="190" height="56" rx="10" class="d-caja"/>
+          <text x="595" y="276" text-anchor="middle" class="d-t">admind-deploy-queue</text>
+          <text x="595" y="294" text-anchor="middle" class="d-s">cola → script → reinicio</text>
+
+          <text x="650" y="62" class="d-m">SYSTEMD</text>
+          <text x="650" y="82" class="d-s">usuario sin privilegios</text>
+          <text x="650" y="98" class="d-s">UMask=0077</text>
+          <text x="650" y="114" class="d-s">reinicio si cae</text>
+
+          <path d="M180,152 C214,136 214,86 246,83" class="d-flecha" marker-end="url(#q1)"/>
+          <path d="M340,122 V152" class="d-flecha" marker-end="url(#q1)"/>
+          <text x="350" y="142" class="d-e">JSON + Token</text>
+          <path d="M430,196 H496" class="d-flecha" marker-end="url(#q1)"/>
+          <text x="463" y="187" text-anchor="middle" class="d-e">SQL</text>
+          <path d="M180,184 C214,204 214,280 246,280" class="d-punteada" marker-end="url(#q2)"/>
+          <path d="M430,280 H496" class="d-punteada" marker-end="url(#q2)"/>
+          <text x="463" y="271" text-anchor="middle" class="d-s">trabajo</text>
+        </svg>
+        <figcaption>Nada de esto escucha hacia afuera: todo está en <code>127.0.0.1</code> y entra por el túnel. El firewall de Oracle y las interfaces de PostgreSQL no se verificaron (hace falta <code>sudo</code>).</figcaption>
+      </figure>
+      <div class="dos">
+        <div class="panel">
+          <h3>gunicorn y systemd</h3>
+          <p>gunicorn es el servidor de aplicaciones de producción para Django; <code>runserver</code> es solo para desarrollar. systemd es el gestor de servicios de Linux: arranca cada servicio con la máquina y lo reinicia si falla.</p>
+        </div>
+        <div class="panel">
+          <h3>Cloudflare Tunnel</h3>
+          <p><code>cloudflared</code> abre desde el VPS una conexión saliente y cifrada hasta Cloudflare, y las peticiones a <code>admind.detkor.com</code> entran por ahí. No hace falta abrir el 80 ni el 443, y el certificado HTTPS lo pone Cloudflare en el borde.</p>
+        </div>
+      </div>
+      <h3>Configuración de producción</h3>
+      <p>Cada servicio usa un módulo de settings en <code>/etc/admind/py/</code> que importa el del repositorio y lo sobrescribe. Las claves (base, correo, <code>SECRET_KEY</code>, <code>CORS_ALLOWED_ORIGINS</code>) están en el <code>.env</code> del servidor; los repos solo traen <code>.env _ejemplo</code>.</p>
+      <div class="tabla-envoltura">
+        <table>
+          <thead><tr><th>Ajuste</th><th>Front</th><th>API</th></tr></thead>
+          <tbody>
+            <tr><td><code>DEBUG</code></td><td><code>False</code></td><td><code>False</code></td></tr>
+            <tr><td><code>ALLOWED_HOSTS</code></td><td><code>admind.detkor.com</code></td><td><code>127.0.0.1</code> y <code>localhost</code></td></tr>
+            <tr><td>HTTPS</td><td><code>SECURE_SSL_REDIRECT</code> y <code>X-Forwarded-Proto</code></td><td>No aplica: no sale del servidor</td></tr>
+            <tr><td>Cookies</td><td>Sesión y CSRF seguras; <code>CSRF_TRUSTED_ORIGINS</code></td><td>—</td></tr>
+            <tr><td>Estáticos</td><td>whitenoise, comprimidos</td><td><code>STATIC_ROOT</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="tema" id="despliegue">
+      <header>
+        <p class="ruta">/opt/admind-webhook/server.py · deploy_queue.py · /usr/local/sbin/</p>
+        <h2>Despliegue continuo</h2>
+      </header>
+      <ol class="pasos">
+        <li><div class="cabeza">Merge a <code>main</code></div>
+          <p class="explica oculta">GitHub manda un webhook a <code>deploy-admind.detkor.com</code>, que entra por el mismo túnel.</p></li>
+        <li><div class="cabeza"><code>server.py</code> valida la firma HMAC SHA-256</div>
+          <p class="explica oculta">GitHub firma el cuerpo con un secreto que solo conocen GitHub y el servidor. El servidor recalcula la firma; si no coincide, descarta la petición. Sin eso, cualquiera que conociera la URL podría disparar despliegues.</p></li>
+        <li><div class="cabeza">Filtra y encola</div>
+          <p class="explica oculta">Solo acepta <code>push</code> a <code>refs/heads/main</code> de los dos repos, descarta entregas repetidas, valida el commit y deja un trabajo en la cola (64 como máximo). Corre con un usuario dedicado y el aislamiento de systemd.</p></li>
+        <li><div class="cabeza">Una unidad <code>.path</code> ve el trabajo</div>
+          <p class="explica oculta">systemd vigila la carpeta de la cola y lanza <code>deploy_queue.py</code>, que corre el script del proyecto.</p></li>
+        <li><div class="cabeza">El script despliega y reinicia</div>
+          <p class="explica oculta">Back y front hacen pull, instalan y reinician su servicio; el back además migra la base y el front recoge los estáticos.</p></li>
+      </ol>
+      <div class="dos">
+        <div class="panel">
+          <h3>Script del back</h3>
+          <pre class="codigo"><span class="com"># en esencia</span>
+git pull --ff-only origin main
+pip install -r requirements.txt
+python manage.py migrate
+systemctl restart admind-backend</pre>
+        </div>
+        <div class="panel">
+          <h3>Script del front</h3>
+          <pre class="codigo"><span class="com"># en esencia</span>
+git pull --ff-only origin main
+pip install -r requirements.txt
+python manage.py collectstatic
+systemctl restart admind-front</pre>
+        </div>
+      </div>
+      <dl class="ficha">
+        <div><dt>Desplegado back</dt><dd>b4d5c7c</dd></div>
+        <div><dt>Desplegado front</dt><dd>a0feaf4</dd></div>
+        <div><dt>Igual a main</dt><dd>Sí, 22-nov</dd></div>
+      </dl>
+    </section>
+
+    <section class="tema" id="limites">
+      <header>
+        <p class="ruta">Lo que se dice de frente</p>
+        <h2>Límites</h2>
+      </header>
+      <div class="tabla-envoltura">
+        <table>
+          <thead><tr><th>Límite</th><th>Cómo decirlo</th></tr></thead>
+          <tbody>
+            <tr><td><code>main</code> no está protegida en ninguno de los dos repos</td><td>El CI marca el PR en rojo, pero GitHub todavía deja fundir. Protegerla exigiendo el check es un ajuste de <em>Settings → Branches</em>. Verificado el 22-nov</td></tr>
+            <tr><td>No hay vuelta atrás automática</td><td>Si un despliegue sale mal, se vuelve al commit anterior a mano y se reinicia. Por eso el CI va antes de fundir</td></tr>
+            <tr><td>El servidor instala con <code>requirements.txt</code></td><td>El CI verifica los hashes del lock; el script de despliegue instala las mismas versiones fijadas, sin verificar el hash</td></tr>
+            <tr><td>Versiones distintas</td><td>El servidor usa PostgreSQL 16 y Python 3.12; el CI, 18 y 3.14</td></tr>
+            <tr><td>Firewall y PostgreSQL</td><td>No se verificaron las reglas del firewall de Oracle ni a qué interfaces escucha PostgreSQL. No afirmar nada de eso</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="tema" id="repaso">
+      <header>
+        <p class="ruta">Para estudiar</p>
+        <h2>Repaso</h2>
+      </header>
+      <p>Responde en voz alta antes de abrir cada una.</p>
+      <div class="repaso">
+        <details><summary>¿Qué mide la cobertura y qué no?</summary><div>Qué líneas y ramas se ejecutaron en las pruebas. No garantiza que el resultado sea correcto en todos los casos.</div></details>
+        <details><summary>¿Por qué las pruebas corren contra PostgreSQL y no SQLite?</summary><div>Porque las reglas clave las impone PostgreSQL: FK compuestas, índices únicos parciales y triggers. En SQLite no existirían.</div></details>
+        <details><summary>¿Qué pasa si alguien cambia un modelo y olvida la migración?</summary><div>El paso <em>Check migrations</em> falla y el CI se pone rojo.</div></details>
+        <details><summary>¿Qué hacen <code>--require-hashes</code> y <code>--only-binary :all:</code>?</summary><div>El primero rechaza cualquier paquete cuyo SHA-256 no esté en el lock. El segundo instala solo wheels, así que nunca ejecuta un <code>setup.py</code>.</div></details>
+        <details><summary>¿Por qué la calificación de seguridad sigue en C?</summary><div>La fija la peor vulnerabilidad abierta y queda una MAJOR en cada repo. Las incidencias bajaron de 20 a 16.</div></details>
+        <details><summary>¿Por qué no se ve el puerto 8000 desde internet?</summary><div>La API escucha solo en <code>127.0.0.1</code> y no hay puertos de entrada para la web: todo entra por el túnel hasta el front.</div></details>
+        <details><summary>¿Qué valida el webhook antes de desplegar?</summary><div>La firma HMAC SHA-256, que sea un <code>push</code> a <code>main</code> de uno de los dos repos y que la entrega no esté repetida.</div></details>
+        <details><summary>¿Dónde viven los secretos de producción?</summary><div>En el servidor: el <code>.env</code> y los settings de <code>/etc/admind/py/</code>. Los repos solo traen <code>.env _ejemplo</code>.</div></details>
+        <details><summary>¿Qué pasa si se cae un servicio?</summary><div>systemd lo reinicia. Si se cae todo el servidor, el plan B son las capturas de la presentación y del Manual de Usuario.</div></details>
+      </div>
+    </section>
+
+    <footer class="pie">
+      <p>Datos del 22 de noviembre de 2026: CI de <code>main</code>, SonarCloud, los dos <code>ci.yml</code>, la protección de ramas en GitHub y el VPS leído por SSH.</p>
+      <p>Fuentes: la guía de la sustentación final, el plan de la entrega final y el reparto de la sustentación, en la bóveda.</p>
+    </footer>
+  </main>
+</div>
+<script>
+(function(){
+  // Modo repaso: difumina las explicaciones y respuestas marcadas con .oculta; un clic revela cada una.
+  var boton = document.getElementById('boton-repaso');
+  function aplicar(activo){
+    document.body.classList.toggle('modo-repaso', activo);
+    boton.setAttribute('aria-pressed', activo ? 'true' : 'false');
+    boton.textContent = activo ? 'Modo repaso: activo' : 'Modo repaso';
+    if (!activo) document.querySelectorAll('.oculta.visto').forEach(function(el){ el.classList.remove('visto'); });
+  }
+  if (boton){
+    boton.addEventListener('click', function(){ aplicar(!document.body.classList.contains('modo-repaso')); });
+    document.addEventListener('click', function(e){
+      var el = e.target.closest('.oculta');
+      if (el && document.body.classList.contains('modo-repaso')) el.classList.add('visto');
+    });
+  }
+
+  // Índice: marca la sección visible.
+  var enlaces = Array.prototype.slice.call(document.querySelectorAll('.indice a.ir'));
+  var secciones = enlaces.map(function(a){ return document.querySelector(a.getAttribute('href')); }).filter(Boolean);
+  if ('IntersectionObserver' in window && secciones.length){
+    var obs = new IntersectionObserver(function(entradas){
+      entradas.forEach(function(en){
+        if (en.isIntersecting){
+          enlaces.forEach(function(a){ a.classList.toggle('activo', a.getAttribute('href') === '#' + en.target.id); });
+        }
+      });
+    }, {rootMargin:'-20% 0px -70% 0px'});
+    secciones.forEach(function(s){ obs.observe(s); });
+  }
+
+  // Buscador de apps.
+  var filtro = document.getElementById('filtro-apps');
+  if (filtro){
+    var tarjetas = Array.prototype.slice.call(document.querySelectorAll('.rejilla-apps .app'));
+    var vacio = document.getElementById('apps-vacio');
+    var normal = function(t){ return t.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, ''); };
+    filtro.addEventListener('input', function(){
+      var q = normal(filtro.value.trim()), visibles = 0;
+      tarjetas.forEach(function(t){
+        var ok = !q || normal(t.textContent).indexOf(q) !== -1;
+        t.hidden = !ok; if (ok) visibles++;
+      });
+      if (vacio) vacio.hidden = visibles !== 0;
+    });
+  }
+})();
+</script>

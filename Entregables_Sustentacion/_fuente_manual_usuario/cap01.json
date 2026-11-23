@@ -1,0 +1,39 @@
+[
+  {"t":"h1","texto":"1. Bienvenida"},
+  {"t":"h2","texto":"1.1 Qué es AdMind"},
+  {"t":"p","texto":"AdMind es una aplicación web para administrar conjuntos residenciales en Colombia, de acuerdo con la Ley 675 de 2001 (propiedad horizontal). Reúne en un solo lugar lo que casi siempre se hace en papel, en cuadernos o por mensajes: reservar las zonas comunes, abrir y seguir solicitudes, publicar anuncios, registrar visitantes y consultar los documentos del conjunto."},
+  {"t":"p","texto":"**Si usted es residente,** AdMind le permite reservar el salón social desde el celular, avisar un daño en una zona común, ver los anuncios de la administración, descargar el reglamento y reportar el pago de la administración, sin tener que ir a la oficina."},
+  {"t":"p","texto":"**Si usted trabaja en la administración,** AdMind le permite decidir las reservas, atender los casos que abren los residentes, mantener al día las viviendas y sus propietarios, controlar los parqueaderos y los pagos, y dejar constancia de lo que se comunica a cada vivienda."},
+  {"t":"h2","texto":"1.2 Qué necesita para usarlo"},
+  {"t":"ul","items":[
+    "Un navegador actual: Chrome, Edge, Firefox o Safari.",
+    "Conexión a internet.",
+    "Un correo electrónico y una contraseña que le entrega la administración del conjunto.",
+    "Solo si trabaja en Administración, Secretaría o como Superusuario: un celular con una aplicación de autenticación, como Google Authenticator o Microsoft Authenticator. Se explica en el capítulo 2."
+  ]},
+  {"t":"p","texto":"AdMind también funciona en el celular: el menú se recoge en un botón y las pantallas se acomodan al ancho (ver {U37})."},
+  {"t":"h2","texto":"1.3 Cómo está organizado este manual"},
+  {"t":"p","texto":"El capítulo 2 sirve para todas las personas. Después hay un capítulo por rol: lea solo el suyo. El capítulo 8 reúne los mensajes que puede ver y qué hacer en cada caso, y el capítulo 9 explica las palabras que se repiten."},
+  {"t":"tabla","cols":["Capítulo","Para quién","De qué trata"],"pesos":[1.3,1.4,4],"primeraNegrita":true,"filas":[
+    ["2. Primeros pasos","Todos","Ingresar, verificación en dos pasos, recuperar la contraseña, elegir conjunto y conocer la pantalla."],
+    ["3. Residente","Residente","Reservar zonas comunes, abrir casos, anuncios, documentos, pagos, parqueadero y notificaciones."],
+    ["4. Vigilancia","Vigilancia","Registrar visitantes y el ingreso a las zonas con aforo."],
+    ["5. Secretaría","Secretaría","Tablero de solicitudes, gestión de casos y anuncios."],
+    ["6. Administración","Administración","Reservas, zonas, reglas, usuarios, viviendas, parqueaderos, pagos, documentos, identidad del conjunto e infracciones."],
+    ["7. Superusuario","Superusuario","Crear y activar conjuntos, crear superusuarios y anular registros equivocados."],
+    ["8. Mensajes y solución de problemas","Todos","Qué significa cada mensaje y qué hacer."],
+    ["9. Glosario","Todos","Las palabras que usa AdMind."]
+  ]},
+  {"t":"h2","texto":"1.4 Los cinco roles"},
+  {"t":"p","texto":"Lo que usted ve y puede hacer en AdMind depende de su **rol** en el conjunto. Cada persona tiene un solo rol por conjunto: si cambia de función, la administración le cambia el rol, no se le suma otro."},
+  {"t":"tabla","cols":["Rol","Qué puede hacer en AdMind"],"pesos":[1.3,5],"primeraNegrita":true,"filas":[
+    ["Residente","Ver las zonas comunes y reservarlas, abrir casos, ver los documentos del conjunto, reportar su pago de administración, ver los anuncios, su parqueadero y sus notificaciones."],
+    ["Vigilancia","Registrar visitantes e ingresos a zonas con aforo, y consultar las reservas del día."],
+    ["Secretaría","Gestionar el tablero de solicitudes: cambiar la prioridad, redirigir y descartar casos con una causal. Publicar anuncios y consultar pagos y reservas. No aprueba reservas."],
+    ["Administración","Todo lo del conjunto: aprobar o rechazar reservas, zonas, reglas, usuarios y roles, viviendas, parqueaderos, pagos, documentos, identidad visual, infracciones y respuesta a casos. En la barra superior de la pantalla este rol aparece como «Administrador»."],
+    ["Superusuario","Opera la plataforma: crea y activa conjuntos, crea otros superusuarios, anula registros equivocados y puede entrar a cualquier conjunto."]
+  ]},
+  {"t":"h2","texto":"1.5 Sobre las imágenes de este manual"},
+  {"t":"p","texto":"Todas las pantallas que verá en este manual se tomaron en un conjunto de prueba, con datos inventados: personas como «Prueba Residente» y correos terminados en @example.com. Los nombres de los botones, campos y mensajes están escritos tal como aparecen en la pantalla. Cada figura lleva un número y se menciona en el texto."},
+  {"t":"aviso","titulo":"En implementación","texto":"Algunas funciones todavía no están disponibles y por eso este manual no las explica: las citas (la pestaña Citas existe, pero aún no funciona), la importación masiva de personas y viviendas, el respaldo de la información, los reportes y la anulación general de registros. Cuando estén listas se agregarán aquí."}
+]

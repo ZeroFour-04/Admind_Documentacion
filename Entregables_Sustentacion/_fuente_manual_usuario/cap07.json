@@ -1,0 +1,86 @@
+[
+  {"t":"h1","texto":"7. Superusuario"},
+  {"t":"p","texto":"Este capítulo es para quien opera la plataforma. El Superusuario puede entrar a cualquier conjunto y ver todo lo que ve Administración, y además tiene tareas propias: crear y activar conjuntos, crear otros superusuarios, anular registros equivocados y eliminar un conjunto. Ingresa con verificación en dos pasos (sección 2.2)."},
+  {"t":"p","texto":"Al ingresar, el Superusuario ve la pantalla **Elige un conjunto** ({U05}), con todos los conjuntos de la plataforma y dos botones propios: **Crear conjunto** y **Crear superusuario**."},
+
+  {"t":"h2","texto":"7.1 Crear un conjunto con el asistente de siete pasos"},
+  {"t":"p","texto":"**Para qué sirve:** dejar listo un conjunto nuevo: sus datos, sus viviendas, quién lo administra, sus zonas comunes, sus reglas y su reglamento. **Quién puede hacerlo:** Superusuario."},
+  {"t":"p","texto":"Pulse **Crear conjunto**. Se abre el asistente ({U35}), con siete pasos que se ven arriba como botones: **1. Datos básicos**, **2. Viviendas**, **3. Administración**, **4. Áreas**, **5. Reglas**, **6. Reglamento** y **7. Resumen**. Cada paso se guarda al continuar, y puede volver a un paso anterior pulsando su nombre."},
+  {"t":"fig","id":"U35","file":"U35_asistente.png","pie":"Asistente de creación de un conjunto: paso 1, Datos básicos"},
+  {"t":"h3","texto":"Paso 1. Datos básicos"},
+  {"t":"ol","items":[
+    "Escriba el **Nombre del conjunto**.",
+    "Escriba la **Dirección**. Es obligatoria para dejar el conjunto operativo.",
+    "Elija el **Color del conjunto**: ocho colores (Verde, Azul, Índigo, Púrpura, Vino, Terracota, Ocre y Pizarra) o **Personalizado**. El color pinta la barra y los botones mientras se trabaja en ese conjunto.",
+    "Pulse **Crear y continuar**."
+  ]},
+  {"t":"h3","texto":"Paso 2. Viviendas"},
+  {"t":"p","texto":"Aquí se describe cómo es el conjunto y AdMind crea todas sus viviendas de una vez. Se necesita al menos una para que el conjunto quede operativo."},
+  {"t":"ol","items":[
+    "En **¿Qué viviendas tiene el conjunto?** elija **Apartamentos**, **Casas** o **Apartamentos y casas**.",
+    "En **¿Cómo se agrupan?** elija la palabra que usa el conjunto: **Torres**, **Bloques**, **Edificios**, **Interiores**, **Etapas**, **Otra palabra** o **No se agrupan**.",
+    "En **¿Cómo se identifican?** elija **Con números: 1, 2, 3**, **Con letras: A, B, C** o **Con nombre propio**, y escriba cuántas agrupaciones son en **¿Cuántas torres son?** (o la palabra que haya elegido).",
+    "En **¿Cómo se numeran?** elija **Piso y consecutivo** (101, 102… 201, 202), **Consecutivo** (1, 2, 3… y vuelve a empezar en cada agrupación) o **Consecutivo corrido** (la numeración sigue de una agrupación a la siguiente).",
+    "En **¿Cuántas son?** escriba los **Pisos**, los **Apartamentos por piso** y **¿Desde qué piso hay apartamentos?** (por ejemplo, 2 si el primer piso es recepción, locales o parqueadero). Si no todas las agrupaciones son iguales, marque **No todas son iguales**.",
+    "Pulse **Ver cómo queda**. AdMind muestra **Así va a quedar**: por agrupación, la primera y la última vivienda y cuántas se crean.",
+    "Si está bien, pulse el botón con el total, por ejemplo **Crear 24 viviendas**. AdMind confirma «Se crearon 24 viviendas.» Después pulse **Continuar**."
+  ]},
+  {"t":"h3","texto":"Paso 3. Administración"},
+  {"t":"p","texto":"El conjunto necesita al menos una persona con rol Administración. La pantalla muestra «Quién administra» el conjunto. Si todavía no hay nadie, abra **Agregar a alguien con rol Administración**, complete el formulario y pulse **Agregar**. Después pulse **Continuar**."},
+  {"t":"h3","texto":"Paso 4. Áreas"},
+  {"t":"p","texto":"Aquí se crean las zonas comunes ({U35b}). Puede empezar por una plantilla (**Salón comunal**, **BBQ** o **Cancha**), que llena el formulario con valores de partida para que los revise, o abrir **Agregar un área** y escribir todo. Los campos son los de la sección 6.2. Pulse **Agregar** para guardar cada zona. El conjunto necesita al menos una zona activa. Cuando termine, pulse **Continuar**."},
+  {"t":"fig","id":"U35b","file":"U35b_asistente_areas.png","pie":"Asistente de creación: paso 4, Áreas comunes"},
+  {"t":"h3","texto":"Paso 5. Reglas"},
+  {"t":"p","texto":"Aquí se define el tablero de reglas (sección 6.3). Para que el conjunto quede operativo basta con definir la **Anticipación máxima**; las demás reglas se pueden definir después. Pulse **Definir** en la regla, escriba el valor y pulse **Guardar regla**."},
+  {"t":"h3","texto":"Paso 6. Reglamento"},
+  {"t":"p","texto":"Suba el reglamento del conjunto en PDF (hasta 10 MB): elija el archivo en **Reglamento, en PDF** y pulse **Subir**. AdMind responde «El reglamento quedó cargado.» Si sube otro después, el anterior se conserva y el vigente pasa a ser el más reciente."},
+  {"t":"h3","texto":"Paso 7. Resumen"},
+  {"t":"p","texto":"El último paso revisa que todo esté completo y deja el conjunto operativo (sección 7.2)."},
+
+  {"t":"h2","texto":"7.2 Dejar operativo un conjunto"},
+  {"t":"p","texto":"**Para qué sirve:** activar el conjunto para que las personas puedan usarlo. **Quién puede hacerlo:** Superusuario."},
+  {"t":"p","texto":"Abra el paso **7. Resumen**, o pulse **Conjunto** en el menú lateral ({U36}). Mientras no esté activo, el título dice **Sin activar**. La pantalla muestra los **Datos básicos** del conjunto y la lista **Requisitos para dejarlo operativo**, cada uno marcado como «Pendiente» o «Cumplido»:"},
+  {"t":"ul","items":[
+    "Datos básicos: nombre y dirección.",
+    "Al menos una persona con rol Administración.",
+    "Al menos una vivienda registrada.",
+    "Catálogo de áreas comunes.",
+    "Reglas del conjunto definidas.",
+    "Reglamento cargado."
+  ]},
+  {"t":"fig","id":"U36","file":"U36_resumen.png","pie":"Resumen del conjunto, con los requisitos cumplidos"},
+  {"t":"p","texto":"Cuando los seis requisitos estén en «Cumplido», pulse **Dejar operativo**. AdMind responde «El conjunto quedó operativo.» y el título pasa a **Operativo**. Para volver al paso anterior pulse **Volver**."},
+  {"t":"nota","titulo":"Tenga en cuenta","texto":"Mientras falte algún requisito, el conjunto no queda operativo. La pantalla le dice exactamente cuál falta."},
+
+  {"t":"h2","texto":"7.3 Crear otro superusuario"},
+  {"t":"p","texto":"**Para qué sirve:** darle a otra persona acceso a todos los conjuntos de la plataforma. **Quién puede hacerlo:** Superusuario."},
+  {"t":"ol","items":[
+    "En **Elige un conjunto**, pulse **Crear superusuario**.",
+    "Complete el formulario: **Tipo de documento**, **Número de documento**, **Nombres**, **Apellidos**, **Teléfono**, **Correo electrónico**, **Contraseña** y **Confirmar contraseña**.",
+    "Pulse **Crear superusuario**. Para salir sin crearlo, pulse **Volver**."
+  ]},
+  {"t":"nota","titulo":"Tenga en cuenta","texto":"La cuenta tendrá acceso a todos los conjuntos y deberá configurar la verificación en dos pasos al entrar."},
+
+  {"t":"h2","texto":"7.4 Cambiar la identidad de un conjunto"},
+  {"t":"p","texto":"En el Resumen del conjunto, **Cambiar color y foto** abre la pantalla de color y foto, que se explica en la sección 6.9."},
+
+  {"t":"h2","texto":"7.5 Anular una infracción registrada por error"},
+  {"t":"p","texto":"**Para qué sirve:** corregir un registro de infracción que se hizo por equivocación, sin borrarlo. **Quién puede hacerlo:** solo el Superusuario."},
+  {"t":"ol","items":[
+    "Pulse **Infracciones** y abra el registro con **Ver registro**.",
+    "En el detalle, abra **Anular este registro**.",
+    "Escriba el **Motivo de la anulación**.",
+    "Pulse **Anular registro**."
+  ]},
+  {"t":"nota","titulo":"Tenga en cuenta","texto":"Anular es para un registro equivocado. El registro sigue en la lista, tachado y con su motivo; no se borra."},
+
+  {"t":"h2","texto":"7.6 Eliminar un conjunto"},
+  {"t":"p","texto":"**Para qué sirve:** quitar un conjunto que ya no se va a usar. **Quién puede hacerlo:** solo el Superusuario."},
+  {"t":"ol","items":[
+    "Entre al conjunto y abra el **Resumen** (sección 7.2).",
+    "Pulse **Eliminar conjunto**, el botón rojo del bloque **Datos básicos**.",
+    "En la ventana de confirmación, lea el nombre del conjunto y pulse **Sí, eliminar**. Para arrepentirse, pulse **No**.",
+    "AdMind lo elimina y vuelve a **Elige un conjunto**."
+  ]},
+  {"t":"aviso","titulo":"Importante","texto":"Eliminar un conjunto es una acción seria: confirme siempre que el nombre sea el del conjunto correcto antes de pulsar **Sí, eliminar**."}
+]

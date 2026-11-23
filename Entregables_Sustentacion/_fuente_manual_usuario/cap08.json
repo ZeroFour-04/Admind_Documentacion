@@ -1,0 +1,46 @@
+[
+  {"t":"h1","texto":"8. Mensajes y solución de problemas"},
+  {"t":"p","texto":"AdMind escribe sus mensajes en español y dice qué pasó. Este capítulo reúne los que más se ven, tal como aparecen en la pantalla, qué significan y qué hacer. Si el problema continúa, hable con la administración de su conjunto."},
+  {"t":"h2","texto":"8.1 Al ingresar"},
+  {"t":"p","texto":"Los errores aparecen en rojo, dentro de la misma pantalla, cerca del campo que falló. La {U04b} muestra, como ejemplo, el mensaje de un código de verificación que no coincide."},
+  {"t":"tabla","cols":["Mensaje o situación","Qué significa","Qué hacer"],"pesos":[2.4,2.6,3.2],"primeraNegrita":true,"filas":[
+    ["«Correo o contraseña incorrectos.»","El correo o la contraseña no coinciden con una cuenta con acceso. Por seguridad, AdMind no dice cuál de los dos falló.","Revise el correo y la contraseña, y que no tenga activadas las mayúsculas. Si no recuerda la contraseña, use «¿Olvidaste tu contraseña?» (sección 2.3)."],
+    ["«Código incorrecto o vencido.»","El código de 6 números no coincide: ya cambió (dura 30 segundos) o es de otra cuenta.","Espere al código siguiente y escríbalo de nuevo. Revise que la hora del celular esté en automático. Si perdió el celular, use un código de respaldo (sección 2.2)."],
+    ["«No puedo escanear el código» en la pantalla del QR","La cámara no lee el código QR.","Abra «No puedo escanear el código» y escriba en la aplicación la clave que se muestra."],
+    ["Perdí el celular o borré la aplicación de autenticación","No puede generar el código de 6 números.","Pruebe con un código de respaldo. Si no los tiene, pulse «¿Problemas con la verificación en dos pasos?» y luego «Enviar enlace a mi correo» (sección 2.2)."],
+    ["«El enlace no es válido o ya venció. Pide uno nuevo.»","El enlace del correo ya se usó o pasó más de una hora desde que lo pidió.","Pida otro enlace desde «Recuperar contraseña» (el enlace sirve una sola vez)."],
+    ["«Se pidieron demasiados enlaces para este correo. Espera una hora e intenta de nuevo.»","Se pidió muchas veces el enlace en poco tiempo.","Espere una hora y vuelva a intentar. Revise mientras tanto la carpeta de correo no deseado."],
+    ["No llega el correo con el enlace","El correo tardó, está en la carpeta de correo no deseado (spam) o la dirección no es la de la cuenta.","Revise «Correo no deseado» o «Spam», espere unos minutos y verifique que escribió el mismo correo con el que ingresa. Si no llega, pida otro enlace."],
+    ["Volvió a la pantalla de ingreso sin que usted lo pidiera","La sesión venció. Dura una hora.","Vuelva a escribir su correo y su contraseña. Lo que no alcanzó a guardar hay que repetirlo."]
+  ]},
+  {"t":"fig","id":"U04b","file":"U04b_2fa_codigo_incorrecto.png","pie":"El mensaje «Código incorrecto o vencido.» en la verificación en dos pasos"},
+
+  {"t":"h2","texto":"8.2 Al reservar una zona común"},
+  {"t":"p","texto":"La {U38} muestra lo que ve el residente cuando una solicitud no cumple las reglas del conjunto: el mensaje dice qué falló y la franja queda libre."},
+  {"t":"tabla","cols":["Mensaje o situación","Qué significa","Qué hacer"],"pesos":[2.4,2.6,3.2],"primeraNegrita":true,"filas":[
+    ["«Otra persona está tramitando esta franja en este momento.»","Alguien tomó la franja antes que usted y tiene 3 minutos para enviar su solicitud.","Elija otra franja o espere unos minutos y recargue el calendario: si la otra persona no la envía, la franja vuelve a quedar libre."],
+    ["«Se venció el tiempo. La franja quedó libre.»","Pasaron los 3 minutos sin que enviara la solicitud.","Vuelva al calendario y tome la franja de nuevo, si todavía está libre. Tenga lista la información antes de pulsar «Reservar»."],
+    ["«Esta solicitud ya no está en trámite.»","La solicitud ya se envió, se canceló o se venció, y no admite más cambios.","Revise su estado en «Solicitudes». Si necesita otra reserva, tome una franja nueva."],
+    ["«La solicitud no cumple las reglas del conjunto: Esta área admite máximo 50 asistentes y la solicitud dice 99. La franja quedó libre.»","El conjunto tiene reglas (aforo, anticipación, límite de reservas) y la solicitud no las cumple. El mensaje dice cuál.","Lea qué regla falló, corrija el dato y tome la franja otra vez. Puede consultar las reglas con la administración."],
+    ["No puedo reservar a nombre de mi vivienda","Solo quien vive en la unidad puede reservar a su nombre.","Pida a la administración que revise que su vínculo con la vivienda marque «Vive en la unidad»."]
+  ]},
+  {"t":"fig","id":"U38","file":"U38_error.png","pie":"Una solicitud que no cumple las reglas: el mensaje dice qué falló y la franja queda libre"},
+
+  {"t":"h2","texto":"8.3 En general"},
+  {"t":"tabla","cols":["Mensaje o situación","Qué significa","Qué hacer"],"pesos":[2.4,2.6,3.2],"primeraNegrita":true,"filas":[
+    ["No veo una sección en el menú","El menú muestra solo lo que su rol usa (ver la tabla de la sección 2.5).","No es un error. Si necesita esa función, pida a la administración que revise su rol."],
+    ["«No tienes permiso para hacer esto en el conjunto activo.»","Su rol no permite esa acción, o la pantalla es de otro rol.","Vuelva al menú y use una sección propia de su rol. Si cree que debería tener acceso, hable con la administración."],
+    ["«No hay conexión con el servidor de AdMind. Revisa que esté encendido e intenta de nuevo.»","AdMind no recibió respuesta a tiempo: puede ser la conexión a internet o que la acción tarde más de lo normal.","Espere unos segundos y recargue la página. Antes de repetir una acción que crea algo (por ejemplo, publicar un anuncio), revise la lista: es posible que ya se haya hecho."],
+    ["«Para aceptar, escribe el motivo o las condiciones.»","Al decidir una reserva, Administración debe escribir el motivo o las condiciones del alquiler.","Escriba el texto en «Motivo de la decisión o condiciones del alquiler» y pulse «Aceptar» otra vez."],
+    ["«Para rechazar, elige el motivo del rechazo.» o «Con «Otro motivo», escribe cuál es.»","Falta el motivo al rechazar una reserva.","Elija un «Motivo del rechazo» y, si es «Otro motivo», escríbalo."],
+    ["La página muestra «Page not found»","La dirección no existe o su rol no puede abrirla.","Pulse el botón «atrás» del navegador o vuelva a «Inicio» desde el menú lateral."]
+  ]},
+
+  {"t":"h2","texto":"8.4 Si algo no se ve bien"},
+  {"t":"ul","items":[
+    "Recargue la página con la tecla F5.",
+    "Revise que su navegador esté actualizado.",
+    "Pruebe en otro navegador, o desde el celular.",
+    "Si la pantalla sigue rota, vacía o muestra un mensaje que no está en este capítulo, tome una captura y envíela a la administración, indicando qué estaba haciendo."
+  ]}
+]

@@ -1,0 +1,54 @@
+[
+  {"t":"h1","texto":"4. Vigilancia"},
+  {"t":"p","texto":"Este capítulo es para el personal de portería. En el menú lateral usted ve **Inicio**, **Zonas comunes**, **Anuncios**, **Ingreso a zonas** y **Visitante**. Las secciones de gestión no aparecen en su menú."},
+
+  {"t":"h2","texto":"4.1 Registrar un visitante y su salida"},
+  {"t":"p","texto":"**Para qué sirve:** dejar constancia de quién entra de visita al conjunto, a qué apartamento va y, si llega en vehículo, qué parqueadero ocupa. **Quién puede hacerlo:** Vigilancia."},
+  {"t":"h3","texto":"Registrar el ingreso"},
+  {"t":"ol","items":[
+    "Pulse **Visitante** en el menú lateral. Aparece el formulario de ingreso ({U19a}).",
+    "Escriba el documento del visitante en **CC** y su nombre en **Nombre**.",
+    "En **¿El visitante ingresa con vehículo?** marque **No** o **Sí**.",
+    "Si marcó **Sí**, escriba la **Placa vehículo**, elija el **Tipo vehículo** (Auto o Moto) y, en **Parqueadero**, elija un puesto libre de visitantes (por ejemplo, «V-01») o deje «Sin parqueadero».",
+    "En **Apartamento a visitar**, elija la vivienda.",
+    "Pulse **Registrar ingreso**."
+  ]},
+  {"t":"fig","id":"U19a","file":"U19a_visitante_formulario.png","pie":"Formulario de ingreso de un visitante con vehículo"},
+  {"t":"p","texto":"AdMind confirma con «Ingreso de visitante registrado.» y agrega al visitante a la tabla de los visitantes de hoy ({U19}), con su documento, nombre, placa, tipo de vehículo, hora de ingreso, apartamento y parqueadero."},
+  {"t":"fig","id":"U19","file":"U19_visitantes.png","pie":"Visitantes: el formulario y la lista de los de hoy, con Registrar salida"},
+  {"t":"h3","texto":"Registrar la salida"},
+  {"t":"p","texto":"Cuando el visitante se va, busque su fila en la tabla de hoy y pulse **Registrar salida**. Si ocupaba un parqueadero, el puesto queda libre para la siguiente visita."},
+  {"t":"nota","titulo":"Tenga en cuenta","items":[
+    "La hora de ingreso la asigna AdMind automáticamente con la hora de Colombia: usted no la escribe.",
+    "Un parqueadero de visitantes lo ocupa la visita mientras no se registre su salida. Por eso conviene registrar siempre la salida."
+  ]},
+  {"t":"aviso","titulo":"En implementación","texto":"Todavía no se avisa al apartamento visitado cuando llega una visita, ni se muestra el aviso sobre el tratamiento de datos personales (Ley 1581 de 2012)."},
+
+  {"t":"h2","texto":"4.2 Registrar el ingreso a una zona con aforo"},
+  {"t":"p","texto":"**Para qué sirve:** controlar cuántas personas hay dentro de una zona de «ingreso», como el gimnasio, para que no se pase del aforo. **Quién puede hacerlo:** Vigilancia."},
+  {"t":"p","texto":"La pantalla **Ingreso a zonas** ({U20}) tiene tres partes:"},
+  {"t":"ul","items":[
+    "**Cupos por zona:** una tabla con la **Zona**, los **Cupos ahora** (por ejemplo, «13 de 15 libres») y el **Estado** (por ejemplo, «Abierta»). Los cupos se actualizan al recargar la página: pulse **Actualizar**.",
+    "**Registrar una entrada:** el formulario para dejar entrar a una persona.",
+    "**Adentro ahora:** quién está dentro en este momento."
+  ]},
+  {"t":"fig","id":"U20","file":"U20_ingresos.png","pie":"Ingreso a zonas: cupos, formulario y personas adentro"},
+  {"t":"h3","texto":"Registrar la entrada"},
+  {"t":"ol","items":[
+    "En **Zona**, elija la zona a la que va a entrar la persona ({U21}).",
+    "En **Número de documento del residente**, escriba el documento sin puntos ni espacios. AdMind solo busca entre quienes viven en el conjunto.",
+    "En **Acompañantes que entran con la persona**, escriba cuántas personas la acompañan (0 si va sola).",
+    "Pulse **Buscar residente**."
+  ]},
+  {"t":"fig","id":"U21","file":"U21_ingreso_registrar.png","pie":"Registrar una entrada a la zona"},
+  {"t":"p","texto":"AdMind le pide confirmar: «Confirma quién entra y a nombre de qué vivienda», con el nombre y la vivienda de la persona ({U21b}). Si son correctos, pulse **Registrar entrada**; si no, pulse **Cancelar**."},
+  {"t":"fig","id":"U21b","file":"U21b_ingreso_confirmar.png","pie":"Confirmación de quién entra y a nombre de qué vivienda"},
+  {"t":"p","texto":"AdMind responde «Ingreso registrado.» y la persona aparece en **Adentro ahora**, con su vivienda, la zona, los acompañantes, la hora a la que **Entró** y la hora a la que **Debe salir**."},
+  {"t":"h3","texto":"Registrar la salida"},
+  {"t":"p","texto":"Cuando la persona se retira, busque su fila en **Adentro ahora** y pulse **Registrar salida**. El puesto, y el de sus acompañantes, queda libre."},
+  {"t":"nota","titulo":"Tenga en cuenta","items":[
+    "Cada acompañante ocupa un puesto del aforo. La administración puede limitar cuántos acompañantes puede tener una vivienda a la vez.",
+    "Cada persona puede quedarse un tiempo máximo en la zona. Cuando se cumple, el sistema libera su puesto y la lista **Se les cumplió el tiempo hoy** le avisa: «El sistema liberó su puesto. Si siguen adentro, pídeles que salgan.»"
+  ]},
+  {"t":"aviso","titulo":"En implementación","texto":"El aviso sobre para qué se usan estos datos («Aviso de finalidad») aparece como pendiente de la verificación legal."}
+]

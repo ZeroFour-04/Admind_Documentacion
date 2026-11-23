@@ -1,0 +1,16 @@
+{
+  "encabezado": "AdMind — Manual de Usuario",
+  "pie": "AdMind · Ingeniería de Software II · 2026",
+  "portada": {
+    "titulo": "Manual de Usuario",
+    "bajada": "Guía de uso por rol",
+    "subtitulo": "AdMind — Plataforma de administración de conjuntos residenciales",
+    "lineas": [
+      { "etiqueta": "Integrantes", "valores": ["MANUEL ALEJANDRO ALDANA RINCON", "ANDERSON CAMILO REMISO NIÑO"] },
+      { "etiqueta": "Asignatura", "valores": ["Ingeniería de Software II"] },
+      { "etiqueta": "Docente", "valores": ["Oscar Gómez"] },
+      { "etiqueta": "Universidad", "valores": ["Universidad de Cundinamarca"] },
+      { "etiqueta": "Fecha", "valores": ["14 de noviembre de 2026"] }
+    ]
+  }
+}

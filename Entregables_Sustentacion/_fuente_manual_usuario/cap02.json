@@ -1,0 +1,119 @@
+[
+  {"t":"h1","texto":"2. Primeros pasos"},
+  {"t":"p","texto":"Este capítulo es para todas las personas, sin importar su rol. Explica cómo ingresar, cómo activar la verificación en dos pasos (solo para algunos roles), cómo recuperar la contraseña, cómo elegir el conjunto y cómo moverse por la pantalla."},
+
+  {"t":"h2","texto":"2.1 Ingresar a AdMind"},
+  {"t":"p","texto":"**Para qué sirve:** identificarse para ver lo que le corresponde. **Quién puede hacerlo:** cualquier persona que tenga una cuenta."},
+  {"t":"ol","items":[
+    "Abra AdMind en su navegador, con la dirección que le dio la administración. Aparece la pantalla de ingreso ({U01}).",
+    "Escriba su dirección en **Correo**.",
+    "Escriba su clave en **Contraseña**.",
+    "Pulse **Iniciar sesión**."
+  ]},
+  {"t":"fig","id":"U01","file":"U01_ingreso.png","pie":"Pantalla de ingreso"},
+  {"t":"p","texto":"Qué pasa después: si su rol es Administración, Secretaría o Superusuario, AdMind le pide un código de verificación (sección 2.2). Si usted pertenece a varios conjuntos, aparece la pantalla **Elige un conjunto** (sección 2.4); si pertenece a uno solo, entra directamente a él."},
+  {"t":"nota","titulo":"Tenga en cuenta","items":[
+    "La sesión dura una hora. Pasado ese tiempo, AdMind vuelve a la pantalla de ingreso y usted debe escribir sus datos otra vez.",
+    "Para salir en cualquier momento pulse **Salir**, arriba a la derecha. Hágalo siempre que use un computador que no es suyo."
+  ]},
+
+  {"t":"h2","texto":"2.2 Verificación en dos pasos"},
+  {"t":"p","texto":"**Para qué sirve:** proteger las cuentas que manejan información sensible de los residentes. Además de la contraseña, la persona escribe un código de 6 números que cambia cada 30 segundos y que solo muestra su celular. **Quién la usa:** Administración, Secretaría y Superusuario."},
+  {"t":"h3","texto":"Activarla la primera vez"},
+  {"t":"p","texto":"La primera vez que ingrese, AdMind le muestra la pantalla **Activa la verificación en dos pasos** ({U03})."},
+  {"t":"ol","items":[
+    "Instale en su celular una aplicación de autenticación, como Google Authenticator o Microsoft Authenticator.",
+    "Abra la aplicación y escanee el código QR que aparece en la pantalla. Si no puede escanearlo, abra **No puedo escanear el código** y escriba en la aplicación la clave que se muestra.",
+    "Escriba en **Código** los 6 números que muestra la aplicación.",
+    "Pulse **Activar**."
+  ]},
+  {"t":"fig","id":"U03","file":"U03_2fa_configurar.png","pie":"Activar la verificación en dos pasos (el código QR está oculto en la imagen porque es secreto)"},
+  {"t":"p","texto":"Enseguida aparece **Guarda tus códigos de respaldo** ({U03b}): son 10 códigos de 8 letras y números que sirven por si pierde el celular. **Cada uno sirve una sola vez y esta es la única vez que los verá.** Cópielos o imprímalos y guárdelos en un lugar seguro. Después pulse **Ya los guardé, continuar**."},
+  {"t":"fig","id":"U03b","file":"U03b_codigos_respaldo.png","pie":"Códigos de respaldo (ocultos en la imagen)"},
+  {"t":"h3","texto":"Verificarla en cada ingreso"},
+  {"t":"p","texto":"Desde la segunda vez, después de escribir el correo y la contraseña aparece **Verificación en dos pasos** ({U04})."},
+  {"t":"ol","items":[
+    "Abra la aplicación de autenticación en su celular.",
+    "Escriba en **Código** los 6 números que muestra, o uno de sus códigos de respaldo (8 letras y números).",
+    "Pulse **Verificar**."
+  ]},
+  {"t":"fig","id":"U04","file":"U04_2fa_verificar.png","pie":"Verificación en dos pasos"},
+  {"t":"nota","titulo":"Tenga en cuenta","items":[
+    "El código cambia cada 30 segundos. Si AdMind responde «Código incorrecto o vencido.», espere a que aparezca el código siguiente y escríbalo de nuevo.",
+    "Si el código nunca coincide, revise que la hora de su celular esté en automático: un reloj adelantado o atrasado hace fallar el código."
+  ]},
+  {"t":"h3","texto":"Si perdió el celular o borró la aplicación"},
+  {"t":"p","texto":"En la pantalla de verificación pulse **¿Problemas con la verificación en dos pasos?** ({U04c})."},
+  {"t":"ol","items":[
+    "Pruebe primero con uno de sus códigos de respaldo: vuelva a la pantalla con **Volver a escribir el código** y escríbalo en **Código**.",
+    "Si tampoco los tiene, pulse **Enviar enlace a mi correo**. AdMind envía a su correo un enlace para quitar la verificación en dos pasos.",
+    "Abra el enlace desde su correo. Cuando vuelva a ingresar, AdMind le pedirá configurarla de nuevo, como la primera vez."
+  ]},
+  {"t":"fig","id":"U04c","file":"U04c_2fa_problemas.png","pie":"Problemas con la verificación en dos pasos"},
+
+  {"t":"h2","texto":"2.3 Recuperar la contraseña"},
+  {"t":"p","texto":"**Para qué sirve:** crear una contraseña nueva si olvidó la suya. **Quién puede hacerlo:** cualquier persona con cuenta."},
+  {"t":"ol","items":[
+    "En la pantalla de ingreso pulse **¿Olvidaste tu contraseña?** Aparece **Recuperar contraseña** ({U02}).",
+    "Escriba en **Correo** el correo con el que ingresa.",
+    "Pulse **Enviar enlace**. AdMind responde con el mensaje de la {U02b}: «Si el correo está registrado, te enviamos un enlace para restablecer la contraseña».",
+    "Abra el correo, incluida la carpeta de correo no deseado, y pulse el enlace.",
+    "En **Crear contraseña nueva** escriba la contraseña dos veces y pulse **Guardar contraseña**."
+  ]},
+  {"t":"fig","id":"U02","file":"U02_recuperar.png","pie":"Recuperar contraseña"},
+  {"t":"fig","id":"U02b","file":"U02b_recuperar_enviado.png","pie":"Mensaje después de pedir el enlace"},
+  {"t":"nota","titulo":"Tenga en cuenta","items":[
+    "El enlace sirve **una sola vez** y vence en **una hora**. Si venció, pulse **Pedir otro enlace**.",
+    "La contraseña nueva debe tener mínimo 8 caracteres, no ser solo números y no parecerse a su correo.",
+    "Al guardar la contraseña nueva se cierran todas sus sesiones abiertas, en cualquier equipo."
+  ]},
+
+  {"t":"h2","texto":"2.4 Elegir el conjunto"},
+  {"t":"p","texto":"Si usted tiene acceso a más de un conjunto, después de ingresar aparece **Elige un conjunto** ({U05}). Cada tarjeta muestra el color del conjunto, su foto o sus iniciales, su nombre y su dirección."},
+  {"t":"ol","items":[
+    "Busque la tarjeta del conjunto con el que va a trabajar.",
+    "Pulse **Entrar al conjunto**."
+  ]},
+  {"t":"fig","id":"U05","file":"U05_selector.png","pie":"Elige un conjunto (el Superusuario ve también los botones Crear conjunto y Crear superusuario)"},
+  {"t":"nota","titulo":"Tenga en cuenta","texto":"Todo lo que vea y registre después pertenece al conjunto que eligió. Para cambiar de conjunto sin cerrar la sesión, pulse **Cambiar de conjunto** en la barra superior."},
+
+  {"t":"h2","texto":"2.5 Conocer la pantalla"},
+  {"t":"p","texto":"Una vez dentro de un conjunto, todas las pantallas comparten la misma estructura ({U06})."},
+  {"t":"ul","items":[
+    "**Barra superior:** el logo de AdMind, la foto o las iniciales del conjunto con su nombre, el botón de apariencia (el fondo de la página puede ser liso, de color o de cristal), el enlace **Cambiar de conjunto**, su tipo de usuario (por ejemplo, Residente), el ícono de su perfil y el botón **Salir**.",
+    "**Menú lateral:** las secciones a las que su rol da acceso. La sección donde está aparece resaltada.",
+    "**Zona de trabajo:** el contenido de la sección, con su título arriba."
+  ]},
+  {"t":"fig","id":"U06","file":"U06_pantalla_general.png","pie":"Pantalla general, vista por un Residente"},
+  {"t":"aviso","titulo":"En implementación","texto":"La pantalla **Inicio** es una maqueta: lleva la etiqueta «Maqueta con datos de ejemplo» y todavía no resume sus pendientes. Elija una sección en el menú lateral."},
+  {"t":"p","texto":"No todas las personas ven las mismas secciones. La tabla siguiente muestra qué secciones aparecen en el menú de cada rol."},
+  {"t":"tabla","cols":["Sección del menú","Residente","Vigilancia","Secretaría","Administración","Superusuario"],"pesos":[2.2,1.1,1.1,1.1,1.4,1.4],"primeraNegrita":true,"filas":[
+    ["Inicio","Sí","Sí","Sí","Sí","Sí"],
+    ["Zonas comunes","Sí","Sí","Sí","Sí","Sí"],
+    ["Áreas comunes","—","—","Sí","Sí","Sí"],
+    ["Reglas","Sí","—","Sí","Sí","Sí"],
+    ["Anuncios","Sí","Sí","Sí","Sí","Sí"],
+    ["Documentos","Sí","—","—","Sí","Sí"],
+    ["Notificaciones","Sí","—","Sí","Sí","Sí"],
+    ["Solicitudes","Sí","—","Sí","Sí","Sí"],
+    ["Casos","Sí","—","Sí","Sí","Sí"],
+    ["Infracciones","—","—","—","Sí","Sí"],
+    ["Ingreso a zonas (Ingresos)","—","Sí","—","Sí","Sí"],
+    ["Pagos","Sí","—","Sí","Sí","Sí"],
+    ["Visitante (Visitantes)","—","Sí","—","Sí","Sí"],
+    ["Conjunto","—","—","—","Sí","Sí"],
+    ["Usuarios","—","—","Sí","Sí","Sí"],
+    ["Unidades","—","—","Sí","Sí","Sí"],
+    ["Parqueaderos","—","—","—","Sí","Sí"],
+    ["Mi parqueadero","Sí","—","—","—","—"]
+  ]},
+  {"t":"nota","titulo":"Tenga en cuenta","texto":"Si usted no ve una sección en el menú, es porque su rol no la usa: no es un error. Aunque la sección Reglas aparece en el menú del Residente, hoy al abrirla AdMind responde «No tienes permiso para hacer esto en el conjunto activo.»"},
+  {"t":"h3","texto":"Su perfil"},
+  {"t":"p","texto":"Pulse el ícono de la persona en la barra superior para abrir **Mi perfil** ({U07}). Allí aparecen sus datos personales: nombre completo, correo electrónico, tipo y número de documento, teléfono, estado y tipo de usuario. Para volver, pulse **Volver al inicio**."},
+  {"t":"fig","id":"U07","file":"U07_perfil.png","pie":"Mi perfil"},
+  {"t":"h3","texto":"En el celular"},
+  {"t":"p","texto":"En una pantalla angosta, el menú lateral se recoge. Pulse el botón de menú de la barra superior (**Abrir el menú de secciones**) para desplegarlo ({U37}) y **Cerrar el menú de secciones** para recogerlo. En la parte de abajo del menú aparecen su tipo de usuario y **Cambiar de conjunto**."},
+  {"t":"fig","id":"U37","file":"U37_movil.png","pie":"El menú lateral desplegado en el celular","ancho":8},
+  {"t":"h3","texto":"Cerrar la sesión"},
+  {"t":"p","texto":"Pulse **Salir**, arriba a la derecha. AdMind vuelve a la pantalla de ingreso."}
+]

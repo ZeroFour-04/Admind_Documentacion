@@ -48,6 +48,7 @@ Tres repositorios hermanos dentro de `A D M I N D/` (la carpeta tiene espacios: 
 ## Lo que no se lee salvo que te lo pidan
 
 - `Archivo/`: fotos fechadas, informes al docente, lab y notas sueltas. Es histórico y puede contradecir lo vigente.
+- `Entregables_Sustentacion/`: copia de los Word, PDF, la presentación y las capturas de la sustentación (47 MB, casi todo binario). La fuente viva está en la raíz del espacio de trabajo.
 - `Guias/`: tutoriales largos escritos para personas, con fecha de corte.
 - `Credenciales/`: no se abre ni se copia su contenido a ningún lado.
 - `Backend.zip`, en la raíz del espacio de trabajo: es una demo descartada.

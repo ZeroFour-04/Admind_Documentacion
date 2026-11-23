@@ -1,0 +1,186 @@
+[
+  {"t":"h1","texto":"6. Administración"},
+  {"t":"p","texto":"Este capítulo es para quien administra el conjunto. En la barra superior de la pantalla su rol aparece como «Administrador». Su menú lateral tiene todas las secciones del conjunto: **Inicio**, **Zonas comunes**, **Áreas comunes**, **Reglas**, **Anuncios**, **Documentos**, **Notificaciones**, **Solicitudes**, **Casos**, **Infracciones**, **Ingresos**, **Pagos**, **Visitantes**, **Conjunto**, **Usuarios**, **Unidades** y **Parqueaderos**."},
+
+  {"t":"h2","texto":"6.1 Decidir una reserva y declarar su pago"},
+  {"t":"p","texto":"**Para qué sirve:** aceptar o rechazar las solicitudes de reserva que envían los residentes y dejar constancia del pago. **Quién puede hacerlo:** Administración. Secretaría solo puede ver estas solicitudes."},
+  {"t":"ol","items":[
+    "Pulse **Áreas comunes**. En la fila de la zona, pulse **Solicitudes**.",
+    "Se abre **Solicitudes de zona común** ({U25}). Cada solicitud muestra quién la envió, su estado, la fecha y el horario, la vivienda, el motivo, los asistentes y las observaciones.",
+    "Revise el bloque **Pago** ({U25b}). Si el residente subió un comprobante, aparece en la lista de **Comprobantes**.",
+    "Cuando haya verificado el pago por su cuenta, pulse **Declarar pago recibido**. Si quiere, adjunte antes un comprobante propio en **Comprobante, si lo tienes**. La solicitud pasa a «Pago declarado», con su nombre y la fecha.",
+    "Para decidir, escriba en **Motivo de la decisión o condiciones del alquiler** y pulse **Aceptar** o **Rechazar**."
+  ]},
+  {"t":"fig","id":"U25","file":"U25_decidir_reserva.png","pie":"Solicitudes de una zona común, con los datos de la reserva"},
+  {"t":"fig","id":"U25b","file":"U25b_decidir_reserva_decision.png","pie":"El bloque de pago y la decisión: aceptar o rechazar con su motivo"},
+  {"t":"ul","items":[
+    "**Aceptar:** escriba el motivo o las condiciones del alquiler (es obligatorio). La solicitud pasa a **Reservada** y el residente recibe un aviso. AdMind muestra «La decisión quedó guardada.»",
+    "**Rechazar:** elija un **Motivo del rechazo**: «El área no está disponible», «No se cumplen las condiciones», «Documentación incompleta», «Incumple el reglamento» u «Otro motivo». Con «Otro motivo», escriba cuál es. El texto lo lee el residente y la franja queda libre."
+  ]},
+  {"t":"nota","titulo":"Tenga en cuenta","items":[
+    "AdMind **no verifica el dinero**: el pago lo declara una persona de la administración. Si se equivocó, pulse **Retirar la declaración** y escriba el motivo.",
+    "Si falta algo, AdMind lo dice: «Para aceptar, escribe el motivo o las condiciones.», «Para rechazar, elige el motivo del rechazo.» o «Con «Otro motivo», escribe cuál es.»"
+  ]},
+
+  {"t":"h2","texto":"6.2 Zonas comunes y sus dos modos de uso"},
+  {"t":"p","texto":"**Para qué sirve:** definir qué zonas tiene el conjunto, cómo se usan y en qué horario. **Quién puede hacerlo:** Administración (Secretaría solo las consulta)."},
+  {"t":"p","texto":"Pulse **Áreas comunes** ({U26}). La tabla muestra, por zona, su **Nombre**, **Cómo se usa**, el **Horario**, el **Estado** y las acciones: **Solicitudes** (sección 6.1), **Editar** y **Desactivar**."},
+  {"t":"fig","id":"U26","file":"U26_areas.png","pie":"Áreas comunes: la lista con «Cómo se usa»"},
+  {"t":"p","texto":"Para agregar una zona, pulse **Crear área** ({U26b}) y complete el formulario:"},
+  {"t":"ul","items":[
+    "**Cómo se usa:** «Con reserva» (se aparta una franja con anticipación: salón, BBQ, jacuzzi) o «Con ingreso» (no se aparta: portería registra a quien entra y no se pasa del aforo: gimnasio, piscina). Se puede cambiar después, al editar la zona.",
+    "**Nombre**, como lo conoce el conjunto (por ejemplo, «Salón comunal»), y **Descripción** (opcional).",
+    "**Reglas de renta de la zona:** el texto que se precarga cuando se revisa una solicitud de reserva.",
+    "**Abre a las** y **Cierra a las**.",
+    "**Duración de cada franja, en minutos:** solo para zonas con reserva. Mínimo 120 minutos (2 horas); las franjas se arman en bloques desde la hora de apertura.",
+    "**Permanencia máxima, en minutos:** solo para zonas con ingreso, de 15 a 1440 minutos. La salida prevista no pasa de la hora de cierre.",
+    "**Aforo máximo:** cuántas personas caben. Con reserva es el máximo de asistentes de cada reserva; con ingreso es el máximo de personas adentro al mismo tiempo."
+  ]},
+  {"t":"fig","id":"U26b","file":"U26b_area_nueva.png","pie":"Crear una zona común"},
+  {"t":"p","texto":"Pulse **Crear área** para guardarla, o **Cancelar**. Si cambia el modo de uso de una zona que ya tenía reservas o ingresos, AdMind le avisa qué quedó pendiente."},
+
+  {"t":"h2","texto":"6.3 Reglas del conjunto y de cada zona"},
+  {"t":"p","texto":"**Para qué sirve:** fijar los límites con los que se aceptan o se rechazan las solicitudes. **Quién puede hacerlo:** Administración."},
+  {"t":"p","texto":"Pulse **Reglas** ({U27}). El tablero tiene dos partes: las **Reglas del conjunto**, que valen para todas las zonas, y un bloque por cada zona con sus reglas propias. Cada regla dice cuál es su valor hoy y quién la definió. Use **Definir** para crearla, **Cambiar** para modificarla y **Quitar** para retirarla."},
+  {"t":"fig","id":"U27","file":"U27_reglas.png","pie":"Tablero de reglas del conjunto y de cada zona"},
+  {"t":"tabla","cols":["Regla","Qué hace"],"pesos":[2,5],"primeraNegrita":true,"filas":[
+    ["Anticipación mínima","Cuántas horas antes, como mínimo, se pide una reserva. Con 24, nadie reserva para hoy mismo. Con 0 no hay mínimo."],
+    ["Anticipación máxima","Hasta cuántos días hacia adelante se puede reservar. Con 30, se puede pedir cualquier fecha de los próximos 30 días y ninguna posterior."],
+    ["Paz y salvo","Si la activa, un apartamento en mora con la administración no reserva ni ingresa a las zonas comunes hasta ponerse al día. Solo restringe si también define el día límite de pago. Aplíquela solo si el reglamento del conjunto lo permite."],
+    ["Día límite de pago","El día del mes hasta el que se paga la administración sin entrar en mora."],
+    ["Acompañantes","Cuántos acompañantes puede tener adentro una misma vivienda a la vez, en las zonas con ingreso. Cada acompañante ocupa un puesto del aforo."],
+    ["Parqueaderos por vivienda","Cuántos parqueaderos de residentes puede tener asignados una misma vivienda, por tipo de vehículo. Solo limita las asignaciones nuevas."],
+    ["Días que no abre (por zona)","Días de la semana, fechas o periodos en que la zona no presta servicio. Cada uno lleva su motivo, que es lo que lee el residente. Se agregan con **Agregar día**."],
+    ["Límite de reservas por apartamento (por zona)","Cuántas reservas de la zona puede tener un mismo apartamento en un periodo."],
+    ["Una reserva al día (por zona)","La zona admite una sola reserva por día: cuando una franja queda apartada o reservada, las demás de ese día dejan de ofrecerse."],
+    ["Sin franjas seguidas (por zona)","Un mismo apartamento no reserva dos franjas seguidas del mismo día en esa zona."]
+  ]},
+  {"t":"p","texto":"Para cambiar el horario o el aforo de una zona, pulse **Cambiar horario o aforo** en su bloque."},
+
+  {"t":"h2","texto":"6.4 Usuarios y roles"},
+  {"t":"p","texto":"**Para qué sirve:** ver quién tiene un rol en el conjunto, asignar o cambiar el rol de una persona y retirarla del conjunto. **Quién puede hacerlo:** Administración (Secretaría solo consulta)."},
+  {"t":"h3","texto":"La lista de usuarios"},
+  {"t":"p","texto":"Pulse **Usuarios** ({U28}). Las personas aparecen agrupadas por rol: **Administración**, **Secretaría**, **Vigilancia** y **Residentes**, cada grupo con su cantidad. Escriba en **Buscar un usuario** y la lista se filtra mientras escribe. **Contraer todos** recoge los grupos, y en cada grupo **Ordenar por** cambia el orden (por nombre, por agrupación y vivienda, o por correo). Pulse **Ver todos los datos** en la fila de una persona para abrir su detalle."},
+  {"t":"fig","id":"U28","file":"U28_usuarios.png","pie":"Usuarios agrupados por rol, con buscador"},
+  {"t":"h3","texto":"Registrar a una persona"},
+  {"t":"ol","items":[
+    "Pulse **Registrar persona** ({U28b}).",
+    "Elija el **Tipo de documento** y escriba el **Número de documento**, tal como aparece en el documento (los puntos y espacios no importan).",
+    "Pulse **Buscar**. Si la persona ya existe en AdMind, aparece su nombre, si «Ya tiene cuenta» o está «Sin cuenta» y qué rol tiene aquí.",
+    "Elija el **Rol** y pulse **Vincular al conjunto**."
+  ]},
+  {"t":"fig","id":"U28b","file":"U28b_usuario_registrar.png","pie":"Registrar persona: primero se busca por documento"},
+  {"t":"aviso","titulo":"En implementación","texto":"Crear desde esta pantalla a una persona que todavía no existe en AdMind no está disponible. Los residentes nuevos se crean desde la vivienda, con **Crear nuevo residente** (sección 6.5)."},
+  {"t":"h3","texto":"Cambiar el rol o retirar a una persona"},
+  {"t":"p","texto":"En el detalle de la persona ({U29}) aparecen sus datos y su **Rol en este conjunto**."},
+  {"t":"ul","items":[
+    "**Cambiar el rol:** elija el rol nuevo en **Cambiar rol** (Vigilancia, Secretaría o Administración) y pulse **Cambiar rol**. El rol nuevo reemplaza al actual: una persona tiene un solo rol por conjunto.",
+    "**Retirar a la persona del conjunto:** pulse **Eliminar usuario**. AdMind pregunta «¿Seguro que quiere eliminar este usuario?»; confirme o pulse **NO**. Eliminar no borra a la persona: solo cierra sus roles en este conjunto, y es la forma de desvincularla."
+  ]},
+  {"t":"fig","id":"U29","file":"U29_usuario_detalle.png","pie":"Detalle de un usuario: cambiar el rol y eliminar del conjunto"},
+
+  {"t":"h2","texto":"6.5 Viviendas y vínculos"},
+  {"t":"p","texto":"**Para qué sirve:** mantener la lista de viviendas y quién es propietario, arrendatario o vive en cada una. **Quién puede hacerlo:** Administración (Secretaría consulta)."},
+  {"t":"p","texto":"Pulse **Unidades** ({U30}). Arriba hay un buscador: escriba la nomenclatura de la vivienda, el nombre de quien la habita o su cédula, y la lista se filtra mientras escribe. Debajo hay un recuadro por agrupación (Torre, Etapa, Bloque…) con su cantidad de viviendas y cuántas están sin vínculos. Para agregar una vivienda suelta use **Registrar apartamento**."},
+  {"t":"fig","id":"U30","file":"U30_unidades.png","pie":"Unidades: una agrupación por recuadro"},
+  {"t":"p","texto":"Pulse un recuadro para ver las viviendas de esa agrupación ({U30b}). En cada fila, **Ver vínculos** abre la vivienda."},
+  {"t":"fig","id":"U30b","file":"U30b_unidades_torre.png","pie":"Las viviendas de una torre"},
+  {"t":"p","texto":"En el detalle de la vivienda ({U30c}), **Vigentes** muestra quiénes tienen un vínculo hoy y **Históricos** los que ya terminaron."},
+  {"t":"h3","texto":"Agregar un vínculo"},
+  {"t":"ol","items":[
+    "Pulse **Agregar vínculo**.",
+    "En **Persona**, escriba el nombre, el correo o la cédula, y pulse a quien quiere vincular. Si todavía no existe, pulse **Crear nuevo residente** y complete los datos en la ventana que se abre: desde ahí solo se crean residentes.",
+    "Elija el **Tipo de vínculo**: **Propietario** o **Arrendatario**.",
+    "Marque **Vive en la unidad** si la persona vive ahí. Solo quien vive en la unidad puede reservar a su nombre.",
+    "Pulse **Agregar vínculo**."
+  ]},
+  {"t":"fig","id":"U30c","file":"U30c_unidad_detalle.png","pie":"Detalle de una vivienda, con Agregar vínculo"},
+  {"t":"h3","texto":"Cerrar un vínculo"},
+  {"t":"p","texto":"Cuando una persona deja de ser propietaria, arrendataria o de vivir en la vivienda, en su fila de **Vigentes** escriba el **Primer día sin el vínculo** y pulse **Cerrar vínculo**. El vínculo pasa a **Históricos**; no se borra."},
+
+  {"t":"h2","texto":"6.6 Parqueaderos"},
+  {"t":"p","texto":"**Para qué sirve:** llevar el inventario de parqueaderos y asignarlos a las viviendas. **Quién puede hacerlo:** Administración."},
+  {"t":"p","texto":"Pulse **Parqueaderos** ({U31}). Arriba está el formulario para crear un puesto:"},
+  {"t":"ul","items":[
+    "**Código**, por ejemplo «V-01». Se guarda en mayúsculas y no se repite.",
+    "**Tipo**: **Visitantes** o **Residentes**. Un parqueadero de visitantes no se asigna a un apartamento: lo ocupa la visita mientras no registre su salida. Los de residentes se crean sin asignar y se asignan desde la tabla.",
+    "**Vehículo**: **Carro**, **Moto** o **Bicicleta**. Con él se cuenta el tope por vivienda.",
+    "**Es accesible** y **Notas** (opcionales).",
+    "Pulse **Crear parqueadero**."
+  ]},
+  {"t":"fig","id":"U31","file":"U31_parqueaderos.png","pie":"Parqueaderos: el formulario y la tabla con asignar y liberar"},
+  {"t":"p","texto":"En la tabla, cada puesto muestra su **Estado** («Sin asignar», «Asignado a Torre 1 – Apto 101», «Libre») y las acciones:"},
+  {"t":"ul","items":[
+    "**Asignar:** elija la **Vivienda** y pulse **Asignar**. La pantalla le recuerda el tope por vivienda que se definió en Reglas (o que no hay tope).",
+    "**Reasignar** y **Liberar:** cambian o terminan la asignación.",
+    "**Historial:** muestra quién ha tenido el puesto.",
+    "**Retirar:** el puesto deja de ofrecerse y su código no se vuelve a usar."
+  ]},
+  {"t":"nota","titulo":"Tenga en cuenta","texto":"Asignar registra un hecho administrativo: no constituye un derecho sobre el puesto."},
+
+  {"t":"h2","texto":"6.7 Confirmar los pagos de administración"},
+  {"t":"p","texto":"**Para qué sirve:** dejar confirmado que una vivienda pagó la cuota de un mes. **Quién puede hacerlo:** Administración."},
+  {"t":"p","texto":"Pulse **Pagos** ({U32}). La tabla muestra, por vivienda, quiénes son sus propietarios y arrendatarios, el **Estado** del mes, quién **Reportó** y cuándo, el **Comprobante** que subió y la casilla **Pagado**. Con **Mes anterior** y **Mes siguiente** cambia de mes, y con **Buscar por nombre, cédula o apartamento** encuentra una vivienda."},
+  {"t":"fig","id":"U32","file":"U32_pagos_admin.png","pie":"Pagos de administración del mes: el residente ya reportó, falta confirmar"},
+  {"t":"ol","items":[
+    "Abra el comprobante, si hay uno, pulsando su nombre.",
+    "Verifique el pago por su cuenta (extracto, consignación).",
+    "Marque la casilla **Pagado** de esa vivienda."
+  ]},
+  {"t":"p","texto":"El estado pasa a **Confirmado** y queda escrito quién lo confirmó y cuándo ({U32b}). AdMind no verifica el dinero: la confirmación es de una persona de la administración."},
+  {"t":"fig","id":"U32b","file":"U32b_pago_confirmado.png","pie":"El pago quedó confirmado, con quién y cuándo"},
+
+  {"t":"h2","texto":"6.8 Documentos del conjunto"},
+  {"t":"p","texto":"**Para qué sirve:** publicar el reglamento y el manual de convivencia para que los residentes los consulten. **Quién puede hacerlo:** Administración."},
+  {"t":"p","texto":"Pulse **Documentos** ({U15b}). Para el reglamento de propiedad horizontal, además de **Descargar**, puede pulsar **Subir versión nueva**: la versión anterior se conserva y la vigente pasa a ser la más reciente. **Versiones de reglamento de propiedad horizontal** muestra el historial. Para el manual de convivencia, pulse **Subir manual de convivencia**."},
+  {"t":"fig","id":"U15b","file":"U15b_documentos_admin.png","pie":"Documentos del conjunto, vistos por Administración"},
+
+  {"t":"h2","texto":"6.9 Color y foto del conjunto"},
+  {"t":"p","texto":"**Para qué sirve:** que todas las personas reconozcan en qué conjunto están trabajando. **Quién puede hacerlo:** Administración."},
+  {"t":"p","texto":"Abra **Conjunto** y pulse **Cambiar color y foto**. Aparece **Color y foto del conjunto** ({U33})."},
+  {"t":"ol","items":[
+    "En **Color del conjunto**, elija uno de los ocho colores (Verde, Azul, Índigo, Púrpura, Vino, Terracota, Ocre y Pizarra) o **Personalizado** para escoger uno propio en **Color propio**. Pulse **Guardar color**.",
+    "En **Foto del conjunto**, elija una imagen PNG, JPG o WebP de hasta 512 KB. La foto se guarda cuadrada (1:1): en **Encuadre** arrastre la foto, o use las flechas, para elegir qué parte queda dentro del cuadro, y use **Acercar** si lo necesita.",
+    "Pulse **Subir foto**. AdMind responde «Cambios guardados.»"
+  ]},
+  {"t":"fig","id":"U33","file":"U33_identidad.png","pie":"Color y foto del conjunto"},
+  {"t":"p","texto":"El color pinta la barra y los botones mientras se trabaja en ese conjunto. Sin foto, AdMind muestra las iniciales del conjunto junto a su nombre."},
+
+  {"t":"h2","texto":"6.10 Infracciones"},
+  {"t":"p","texto":"**Para qué sirve:** dejar constancia de que se comunicó a una vivienda un hecho que contraría el reglamento. **Quién puede hacerlo:** Administración."},
+  {"t":"aviso","titulo":"Importante","texto":"Este registro deja constancia de la comunicación. No es una sanción ni reemplaza el procedimiento del artículo 59 de la Ley 675. AdMind no sanciona."},
+  {"t":"p","texto":"Pulse **Infracciones** ({U34}). La tabla muestra, por registro, la **Vivienda**, el **Hecho**, la **Fecha del hecho**, cuándo se **Comunicó**, el **Estado** y las acciones."},
+  {"t":"fig","id":"U34","file":"U34_infracciones.png","pie":"Registro de infracciones"},
+  {"t":"ol","items":[
+    "Pulse **Registrar infracción** ({U34b}).",
+    "Elija la **Vivienda**. Se comunica al propietario y al arrendatario vigentes, vivan o no ahí.",
+    "Escriba la **Fecha del hecho**.",
+    "En **Qué ocurrió**, describa el hecho, no a las personas. El aviso no dice quién lo registró.",
+    "Pulse **Registrar y comunicar**."
+  ]},
+  {"t":"fig","id":"U34b","file":"U34b_infraccion_nueva.png","pie":"Registrar una infracción"},
+  {"t":"p","texto":"AdMind responde «Infracción registrada y comunicada a quienes tienen un vínculo con la vivienda.» El registro queda **Abierto**. Para abrirlo, pulse **Ver registro** en su fila ({U34c}). Cuando el asunto se resuelva, escriba el **Comentario del cierre** y pulse **Cerrar registro**: avisa a la vivienda y no cambia el hecho ni la fecha en que se comunicó."},
+  {"t":"fig","id":"U34c","file":"U34c_infraccion_detalle.png","pie":"Detalle de un registro de infracción, con su cierre"},
+  {"t":"p","texto":"Si lo que reporta un caso es una infracción, en el detalle del caso también hay un botón **Registrar infracción**."},
+  {"t":"nota","titulo":"Tenga en cuenta","texto":"Un registro equivocado no se borra: lo anula el Superusuario (sección 7.5), y queda en la lista tachado y con su motivo."},
+
+  {"t":"h2","texto":"6.11 Responder los casos"},
+  {"t":"p","texto":"**Para qué sirve:** dar la respuesta final a un caso que Secretaría le redirigió. **Quién puede hacerlo:** Administración."},
+  {"t":"p","texto":"Abra el caso redirigido ({U23b}). Además de los datos del residente y de la nota de Secretaría («Interna: el residente no la ve»), usted tiene estas acciones:"},
+  {"t":"ul","items":[
+    "**Responder y resolver:** escriba la **Respuesta para el residente** y pulse **Responder y resolver**. Sin una respuesta escrita, el caso no se cierra.",
+    "**Rechazar el caso:** escriba la **Razón del rechazo**. El residente la va a leer: cuenta como la respuesta al caso.",
+    "**Registrar infracción:** si lo reportado es una infracción (sección 6.10).",
+    "**Cambiar la prioridad:** igual que en Secretaría."
+  ]},
+  {"t":"fig","id":"U23b","file":"U23b_caso_admin.png","pie":"Un caso redirigido, visto por Administración"},
+  {"t":"aviso","titulo":"En implementación","texto":"La lista de Casos de Administración todavía no muestra los casos que Secretaría le redirige. Por ahora, Secretaría le entrega el enlace de la pantalla del caso para que usted lo abra."},
+
+  {"t":"h2","texto":"6.12 Otras secciones de su menú"},
+  {"t":"ul","items":[
+    "**Anuncios:** publicar y consultar anuncios, igual que en Secretaría (sección 5.3).",
+    "**Visitantes e Ingresos:** consulta del historial de visitantes y de ingresos a las zonas con aforo. El formulario de registro lo usa Vigilancia.",
+    "**Notificaciones:** los avisos que AdMind le envía.",
+    "**Conjunto:** el resumen de los datos del conjunto, con **Cambiar color y foto**."
+  ]}
+]

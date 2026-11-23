@@ -1,0 +1,513 @@
+<div class="marco">
+  <nav class="indice" aria-label="Secciones">
+    <a class="marca" href="#inicio">AdMind · arquitectura</a>
+    <ol>
+      <li><a class="ir" href="#sistema">El sistema</a></li>
+      <li><a class="ir" href="#recorrido">Una petición</a></li>
+      <li><a class="ir" href="#capas">Capas</a></li>
+      <li><a class="ir" href="#aislamiento">Aislamiento</a></li>
+      <li><a class="ir" href="#sesion">Sesión y seguridad</a></li>
+      <li><a class="ir" href="#front">El front</a></li>
+      <li><a class="ir" href="#modulos">Módulos</a></li>
+      <li><a class="ir" href="#datos">Base de datos</a></li>
+      <li><a class="ir" href="#correo">Correo y reportes</a></li>
+      <li><a class="ir" href="#api">Swagger</a></li>
+      <li><a class="ir" href="#repaso">Repaso</a></li>
+    </ol>
+    <button type="button" class="boton-repaso" id="boton-repaso" aria-pressed="false">Modo repaso</button>
+    <p class="otra"><!--ENLACE_OTRA--></p>
+  </nav>
+
+  <main class="contenido">
+    <section class="portada" id="inicio">
+      <p class="antetitulo">Sustentación técnica · 23 de noviembre de 2026</p>
+      <h1>Arquitectura de AdMind</h1>
+      <p class="entrada">Dos servidores Django, una base PostgreSQL y un túnel. Esta página recorre cómo está hecho el software, de la pantalla a la base, con los nombres reales de los archivos. Activa el <strong>modo repaso</strong> en el índice para ocultar las explicaciones y ponerte a prueba.</p>
+      <dl class="ficha">
+        <div><dt>Servidores</dt><dd>2 Django</dd></div>
+        <div><dt>Base</dt><dd>PostgreSQL</dd></div>
+        <div><dt>Tablas</dt><dd>42</dd></div>
+        <div><dt>Rutas de la API</dt><dd>101</dd></div>
+        <div><dt>Roles</dt><dd>5</dd></div>
+      </dl>
+    </section>
+
+    <section class="tema" id="sistema">
+      <header>
+        <p class="ruta">Backend/Admind_Backend · Frontend/Admind_Front-End</p>
+        <h2>El sistema completo</h2>
+      </header>
+      <p>El navegador solo habla con el front. El front le habla a la API de servidor a servidor, dentro del mismo VPS, y solo la API toca PostgreSQL. Nada de la API está publicado en internet.</p>
+      <figure class="diagrama" style="margin:0">
+        <svg viewBox="0 0 860 370" role="img" aria-labelledby="sis-t sis-d">
+          <title id="sis-t">El sistema completo de AdMind</title>
+          <desc id="sis-d">El navegador llega por HTTPS a Cloudflare, que entra al VPS por el túnel de cloudflared hasta el front en el puerto 8001. El front llama a la API en el 8000 y la API consulta PostgreSQL. GitHub manda el webhook de despliegue por el mismo túnel al receptor del puerto 8010.</desc>
+          <defs>
+            <marker id="p1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="d-punta"/></marker>
+            <marker id="p2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="d-punta-tenue"/></marker>
+          </defs>
+          <rect x="360" y="14" width="486" height="342" rx="14" class="d-marco"/>
+          <text x="378" y="38" class="d-m">VPS · ORACLE CLOUD · UBUNTU 24.04</text>
+
+          <rect x="16" y="150" width="134" height="72" rx="10" class="d-caja"/>
+          <text x="83" y="181" text-anchor="middle" class="d-t">Navegador</text>
+          <text x="83" y="200" text-anchor="middle" class="d-s">HTML + Alpine.js</text>
+
+          <rect x="196" y="150" width="134" height="72" rx="10" class="d-caja"/>
+          <text x="263" y="181" text-anchor="middle" class="d-t">Cloudflare</text>
+          <text x="263" y="200" text-anchor="middle" class="d-s">DNS · HTTPS</text>
+
+          <rect x="196" y="276" width="134" height="62" rx="10" class="d-caja"/>
+          <text x="263" y="302" text-anchor="middle" class="d-t">GitHub</text>
+          <text x="263" y="320" text-anchor="middle" class="d-s">push a main</text>
+
+          <rect x="380" y="150" width="118" height="72" rx="10" class="d-caja"/>
+          <text x="439" y="181" text-anchor="middle" class="d-t">cloudflared</text>
+          <text x="439" y="200" text-anchor="middle" class="d-s">túnel saliente</text>
+
+          <rect x="540" y="52" width="156" height="78" rx="10" class="d-caja"/>
+          <text x="618" y="82" text-anchor="middle" class="d-t">Front · Django</text>
+          <text x="618" y="101" text-anchor="middle" class="d-s">plantillas + gunicorn</text>
+          <text x="618" y="117" text-anchor="middle" class="d-s">127.0.0.1:8001</text>
+
+          <rect x="540" y="176" width="156" height="78" rx="10" class="d-clave"/>
+          <text x="618" y="206" text-anchor="middle" class="d-t">API · DRF</text>
+          <text x="618" y="225" text-anchor="middle" class="d-s">reglas + gunicorn</text>
+          <text x="618" y="241" text-anchor="middle" class="d-s">127.0.0.1:8000</text>
+
+          <path d="M730,192 v52 a50,10 0 0 0 100,0 v-52" class="d-bd"/>
+          <ellipse cx="780" cy="192" rx="50" ry="10" class="d-bd"/>
+          <text x="780" y="225" text-anchor="middle" class="d-t">PostgreSQL</text>
+          <text x="780" y="243" text-anchor="middle" class="d-s">16 · 42 tablas</text>
+
+          <rect x="540" y="288" width="156" height="56" rx="10" class="d-caja"/>
+          <text x="618" y="312" text-anchor="middle" class="d-t">admind-webhook</text>
+          <text x="618" y="330" text-anchor="middle" class="d-s">127.0.0.1:8010</text>
+
+          <path d="M150,186 H192" class="d-flecha" marker-end="url(#p1)"/>
+          <text x="171" y="176" text-anchor="middle" class="d-e">HTTPS</text>
+          <path d="M330,186 H376" class="d-flecha" marker-end="url(#p1)"/>
+          <text x="353" y="176" text-anchor="middle" class="d-e">túnel</text>
+          <path d="M498,170 C522,150 516,98 536,92" class="d-flecha" marker-end="url(#p1)"/>
+          <path d="M618,130 V172" class="d-flecha" marker-end="url(#p1)"/>
+          <text x="628" y="156" class="d-e">JSON + Token</text>
+          <path d="M696,214 H726" class="d-flecha" marker-end="url(#p1)"/>
+          <text x="711" y="205" text-anchor="middle" class="d-e">SQL</text>
+          <path d="M263,276 V226" class="d-punteada" marker-end="url(#p2)"/>
+          <text x="272" y="255" class="d-s">webhook HMAC</text>
+          <path d="M498,206 C520,232 516,312 536,316" class="d-punteada" marker-end="url(#p2)"/>
+        </svg>
+        <figcaption>La respuesta vuelve por el mismo camino: la API devuelve JSON, el front arma el HTML y el navegador lo muestra. La línea punteada es el despliegue continuo, que se explica en la otra página.</figcaption>
+      </figure>
+      <div class="dos">
+        <div class="panel">
+          <h3>Por qué dos servidores</h3>
+          <p>El objetivo del proyecto es que el back y el front estén separados y se comuniquen por una API. Otra interfaz, como una app móvil, podría usar la misma API sin tocar el backend. El front tiene <code>DATABASES = {}</code>: no puede tocar la base.</p>
+        </div>
+        <div class="panel">
+          <h3>Por qué el navegador no llama a la API</h3>
+          <p>Las pantallas se generan en el servidor del front. Así el token de sesión se queda en el servidor y el navegador solo tiene una cookie <code>HttpOnly</code>, que JavaScript no puede leer.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="tema" id="recorrido">
+      <header>
+        <p class="ruta">cliente_api/http.py → apps/&lt;app&gt;/views.py → servicios.py → models.py</p>
+        <h2>El recorrido de una petición</h2>
+      </header>
+      <p>Un residente abre la lista de sus reservas. Este es el camino completo, en orden. Es la pregunta que más amarra todo lo demás.</p>
+      <ol class="pasos">
+        <li><div class="cabeza"><span class="chip nube">Nube</span>Cloudflare recibe <code>https://admind.detkor.com</code></div>
+          <p class="explica oculta">Pone el HTTPS en el borde y manda la petición por el túnel cifrado de <code>cloudflared</code> hasta el gunicorn del front, en <code>127.0.0.1:8001</code>.</p></li>
+        <li><div class="cabeza"><span class="chip front">Front</span><code>SesionRequeridaMiddleware</code> revisa la sesión</div>
+          <p class="explica oculta">Sin sesión, manda a <code>/ingresar/</code>. Solo las vistas marcadas con <code>@publica</code> se abren sin sesión: el ingreso, recuperar la contraseña y el enlace que quita el segundo factor.</p></li>
+        <li><div class="cabeza"><span class="chip front">Front</span>La vista llama a <code>cliente_api</code></div>
+          <p class="explica oculta"><code>pedir()</code> saca el token de la sesión del servidor, lo pone en <code>Authorization: Token …</code> y llama a la API con <code>requests</code>, con 10 segundos de espera máxima.</p></li>
+        <li><div class="cabeza"><span class="chip api">API</span><code>CorsMiddleware</code></div>
+          <p class="explica oculta">Solo importa si la petición viene de un navegador. Aquí la llamada es de servidor a servidor, así que no interviene; cierra la puerta si algún día la API se publica.</p></li>
+        <li><div class="cabeza"><span class="chip api">API</span><code>AutenticacionPorToken</code></div>
+          <p class="explica oculta">Calcula el SHA-256 del token y busca un <code>TokenDeSesion</code> vigente con esa huella. Si no hay, responde 401.</p></li>
+        <li><div class="cabeza"><span class="chip api">API</span>El segundo factor, si el rol lo exige</div>
+          <p class="explica oculta">Superusuario, Administración y Secretaría tienen permisos sensibles: sin el segundo factor verificado, la API responde 403.</p></li>
+        <li><div class="cabeza"><span class="chip api">API</span><code>VistaDeConjunto</code> fija el conjunto activo</div>
+          <p class="explica oculta">Lo toma de la sesión del token, nunca de la petición. Si alguien manda <code>conjunto</code> en la URL o el cuerpo, responde 400. Guarda el conjunto en una <code>ContextVar</code>.</p></li>
+        <li><div class="cabeza"><span class="chip api">API</span><code>exigir_permiso(request, "reserva.ver")</code></div>
+          <p class="explica oculta">Primera línea de la vista. Si el rol no tiene ese permiso, 403. El menú del front solo decide qué se ve; quien decide de verdad es la API.</p></li>
+        <li><div class="cabeza"><span class="chip api">API</span>Serializer y servicio</div>
+          <p class="explica oculta">El serializer valida la forma de la entrada (400 si falla). El servicio, en <code>servicios.py</code>, aplica la regla de negocio y no sabe nada de HTTP.</p></li>
+        <li><div class="cabeza"><span class="chip api">API</span>El Manager del modelo consulta</div>
+          <p class="explica oculta"><code>ManagerDeConjunto</code> agrega solo <code>WHERE conjunto_id = activo</code>. Nadie tiene que acordarse de filtrar.</p></li>
+        <li><div class="cabeza"><span class="chip bd">Base</span>PostgreSQL responde</div>
+          <p class="explica oculta">Con sus propias defensas: FK compuestas, índices únicos parciales, CHECK y triggers. Vuelve JSON al front, que arma el HTML.</p></li>
+      </ol>
+      <div class="tabla-envoltura">
+        <table>
+          <thead><tr><th>Código</th><th>Cuándo lo devuelve la API</th></tr></thead>
+          <tbody>
+            <tr><td class="num">200 · 201</td><td>Lectura correcta · se creó algo</td></tr>
+            <tr><td class="num">400</td><td>Datos mal formados, con el motivo por campo, o <code>conjunto</code> en la petición</td></tr>
+            <tr><td class="num">401</td><td>Sin token o con el token vencido</td></tr>
+            <tr><td class="num">403</td><td>Sin el permiso de la operación o sin el segundo factor</td></tr>
+            <tr><td class="num">404</td><td>No existe <strong>o es de otro conjunto</strong>: nunca 403, para no confirmar que existe</td></tr>
+            <tr><td class="num">409</td><td>El estado no lo permite, como una franja que otro está tramitando</td></tr>
+            <tr><td class="num">429</td><td>Demasiados intentos</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="tema" id="capas">
+      <header>
+        <p class="ruta">apps/reservas/ · urls.py · views.py · serializers.py · servicios.py · models.py</p>
+        <h2>Capas: controlador, servicio, repositorio</h2>
+      </header>
+      <p>Es el flujo que pidió el profesor, a partir de su plantilla de ASP.NET. Lo que se evalúa es la dirección de las llamadas: las flechas solo bajan.</p>
+      <div class="flujo" role="list">
+        <div class="bloque" role="listitem"><b>Rutas</b><code>urls.py</code><span>Una ruta por operación</span></div>
+        <span class="sig" aria-hidden="true">→</span>
+        <div class="bloque clave" role="listitem"><b>Controlador</b><code>views.py</code><span>Permiso, serializer y traducción a HTTP</span></div>
+        <span class="sig" aria-hidden="true">→</span>
+        <div class="bloque clave" role="listitem"><b>Servicio</b><code>servicios.py</code><span>Las reglas del negocio, sin HTTP</span></div>
+        <span class="sig" aria-hidden="true">→</span>
+        <div class="bloque clave" role="listitem"><b>Repositorio</b><code>Manager</code><span>Consulta ya filtrada por conjunto</span></div>
+        <span class="sig" aria-hidden="true">→</span>
+        <div class="bloque" role="listitem"><b>PostgreSQL</b><code>admind_db</code><span>Restricciones y triggers</span></div>
+      </div>
+      <div class="tabla-envoltura">
+        <table>
+          <thead><tr><th>Plantilla del profesor</th><th>En AdMind (Django)</th><th>Qué hace</th></tr></thead>
+          <tbody>
+            <tr><td>Controllers</td><td><code>views.py</code></td><td>Exige el permiso, valida con el serializer, llama al servicio y convierte cada excepción en un código HTTP</td></tr>
+            <tr><td>Dtos</td><td><code>serializers.py</code></td><td>La forma de la entrada y de la salida</td></tr>
+            <tr><td>Services</td><td><code>servicios.py</code></td><td>Las reglas. Lanza excepciones con nombre de negocio</td></tr>
+            <tr><td>Repositories</td><td><code>ManagerDeConjunto</code> + <code>models.py</code></td><td>Busca y guarda, siempre dentro del conjunto activo</td></tr>
+            <tr><td>Utilities</td><td><code>apps/comun/</code></td><td>Aislamiento, modelo base, bloqueo y validación de archivos</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="dos">
+        <div class="panel">
+          <h3>El patrón de errores</h3>
+          <p>El servicio dice <em>qué</em> pasó: lanza <code>FranjaOcupada</code>. La vista decide <em>cómo</em> se dice por HTTP: <code>409 "Otra persona está tramitando esta franja"</code>. Así el servicio no sabe nada de HTTP y se puede probar llamando una función de Python.</p>
+        </div>
+        <div class="panel">
+          <h3>Dónde va cada regla</h3>
+          <ol>
+            <li>¿Lo prohíbe la ley? La operación no existe.</li>
+            <li>¿Quién puede intentarla? Permiso en la vista.</li>
+            <li>¿Se ve en la petición? Serializer.</li>
+            <li>¿Necesita el estado guardado? Servicio.</li>
+            <li>¿Tiene que ser imposible aunque se salten el código? Además, restricción en la base.</li>
+          </ol>
+        </div>
+      </div>
+      <div class="nota jurado">
+        <strong class="titulo">Para el jurado</strong>
+        <p>Si en <code>views.py</code> apareciera <code>Area.objects</code>, la vista se estaría saltando dos capas. Si en <code>servicios.py</code> apareciera <code>Response</code>, el servicio sabría de HTTP y no se podría reutilizar desde otra entrada, como una importación por Excel.</p>
+      </div>
+    </section>
+
+    <section class="tema" id="aislamiento">
+      <header>
+        <p class="ruta">apps/comun/aislamiento/ · apps/comun/modelos_base/</p>
+        <h2>Aislamiento entre conjuntos</h2>
+      </header>
+      <p>Una sola base guarda a todos los conjuntos, distinguidos por <code>conjunto_id</code>. Si una consulta olvidara filtrar, la app no se rompería: le mostraría a un residente de un conjunto los datos de otro. Por eso el filtro no depende de que alguien se acuerde, y hay dos líneas de defensa.</p>
+      <div class="dos">
+        <div class="panel">
+          <h3>Primera línea: el código</h3>
+          <ul>
+            <li><code>VistaDeConjunto</code>, la clase base de toda vista con datos de un conjunto, fija el conjunto activo desde la sesión del token.</li>
+            <li><code>contexto.py</code> lo guarda en una <code>ContextVar</code>: cada petición ve el suyo.</li>
+            <li><code>ManagerDeConjunto</code> reemplaza <code>Modelo.objects</code> y filtra siempre. Sin conjunto activo, falla a propósito.</li>
+            <li><code>ModeloDeConjunto</code>: id UUID, el conjunto, el Manager filtrado y un <code>save()</code> que rechaza escribir en otro conjunto.</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <h3>Segunda línea: la base</h3>
+          <p>Llaves foráneas compuestas, escritas por <code>fk_compuesta()</code> en las migraciones. Una fila no puede apuntar a otra de otro conjunto: la base la rechaza.</p>
+          <pre class="codigo"><span class="com">-- en esencia</span>
+FOREIGN KEY (area_id, conjunto_id)
+  REFERENCES areas_area (id, conjunto_id)</pre>
+        </div>
+      </div>
+      <div class="tabla-envoltura">
+        <table>
+          <thead><tr><th>Regla</th><th>Por qué</th></tr></thead>
+          <tbody>
+            <tr><td>Ningún endpoint acepta <code>conjunto_id</code></td><td>El conjunto sale de la sesión. Si llega en la petición, 400</td></tr>
+            <tr><td>Lo de otro conjunto responde 404</td><td>Un 403 confirmaría que el recurso existe</td></tr>
+            <tr><td>Identificadores UUID</td><td>No se pueden adivinar recorriendo números</td></tr>
+            <tr><td>Mensajes sin datos de la fila</td><td>«No encontrado», nunca «pertenece al conjunto Mirador»</td></tr>
+            <tr><td>Lista cerrada de tablas globales</td><td>Personas, usuarios, roles y permisos no llevan conjunto; una prueba falla si aparece otra tabla sin <code>conjunto_id</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="nota jurado">
+        <strong class="titulo">La prueba estrella</strong>
+        <p><code>tests/aislamiento/test_intruso.py</code> recorre todas las rutas de la API con un usuario de otro conjunto y con uno sin permiso. Si alguien agrega una vista que no hereda de <code>VistaDeConjunto</code>, la prueba falla.</p>
+      </div>
+      <div class="dos">
+        <div class="panel">
+          <h3>Por qué no es un middleware</h3>
+          <p>Los middleware de Django corren antes de que DRF lea el token. Por eso el trabajo lo hace <code>VistaDeConjunto</code>, que corre justo después de autenticar.</p>
+        </div>
+        <div class="panel">
+          <h3>Por qué no Row Level Security</h3>
+          <p>Se evaluó y se descartó: exige una variable de sesión bien puesta en cada conexión. Sostener eso cuesta más que las FK compuestas, que impiden el dato cruzado donde nace.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="tema" id="sesion">
+      <header>
+        <p class="ruta">apps/cuentas/ · apps/permisos/catalogo.py</p>
+        <h2>Sesión, permisos y seguridad</h2>
+      </header>
+      <ol class="pasos">
+        <li><div class="cabeza">Ingreso con correo y contraseña</div>
+          <p class="explica oculta">La contraseña se compara con su hash PBKDF2-SHA256, con sal y 1.000.000 de iteraciones, el de Django. La recuperación da 3 enlaces por hora, que vencen en 1 hora.</p></li>
+        <li><div class="cabeza">La API crea un token opaco</div>
+          <p class="explica oculta"><code>secrets.token_urlsafe(32)</code>: 32 bytes aleatorios que no se pueden leer ni descifrar. La base guarda solo su huella SHA-256 en <code>TokenDeSesion</code>.</p></li>
+        <li><div class="cabeza">El front lo guarda en su sesión</div>
+          <p class="explica oculta">Sesión en archivos del servidor, con el token, el conjunto activo, los permisos, el rol y el estado del segundo factor. El navegador solo recibe una cookie <code>HttpOnly</code> y <code>Secure</code>.</p></li>
+        <li><div class="cabeza">Vence 1 hora después del ingreso</div>
+          <p class="explica oculta">Se cuenta desde el ingreso, no desde el último uso. La sesión del front vence a la misma hora.</p></li>
+        <li><div class="cabeza">Cerrar sesión borra la fila</div>
+          <p class="explica oculta">El token deja de valer de verdad. Cambiar la contraseña también cierra las sesiones. Y el front manda <code>Cache-Control: no-store</code>: el botón <em>Atrás</em> no muestra nada.</p></li>
+      </ol>
+      <div class="tabla-envoltura">
+        <table>
+          <thead><tr><th>Rol</th><th>Alcance</th><th>Segundo factor</th></tr></thead>
+          <tbody>
+            <tr><td>Superusuario</td><td>La plataforma: crea y da de baja conjuntos</td><td><span class="chip ok">Exige</span></td></tr>
+            <tr><td>Administración</td><td>Su conjunto: zonas, reglas, decisiones, usuarios, reportes</td><td><span class="chip ok">Exige</span></td></tr>
+            <tr><td>Secretaría</td><td>Su conjunto: bandeja, prioridad, casos</td><td><span class="chip ok">Exige</span></td></tr>
+            <tr><td>Vigilancia</td><td>Su conjunto: ingresos, visitantes, anuncios</td><td><span class="chip nube">No</span></td></tr>
+            <tr><td>Residente</td><td>Su conjunto y su vivienda: reservas, casos, pagos</td><td><span class="chip nube">No</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="dos">
+        <div class="panel">
+          <h3>Permisos en código</h3>
+          <p>El catálogo vive en <code>apps/permisos/catalogo.py</code>: cada rol es una lista de permisos como <code>reserva.aprobar</code>. El administrador solo asigna roles. Un solo rol vigente por persona y conjunto: se cambia, no se suma.</p>
+        </div>
+        <div class="panel">
+          <h3>Se valida en tres sitios</h3>
+          <p>El front oculta lo que el rol no puede usar. La API exige el permiso en cada endpoint (403). Y los datos de cada conjunto están aislados (404).</p>
+        </div>
+        <div class="panel">
+          <h3>CORS <span class="chip ok">Hecho</span></h3>
+          <p><code>django-cors-headers</code> con lista blanca desde <code>CORS_ALLOWED_ORIGINS</code>: en la nube, solo <code>https://admind.detkor.com</code>. Sin comodín ni credenciales. Cierra la puerta de atrás si la API se publicara.</p>
+        </div>
+        <div class="panel">
+          <h3>JWT <span class="chip no">No implementado</span></h3>
+          <p>Se decidió un híbrido (JWT firmado más la tabla para revocar) y no alcanzó el tiempo. El token opaco se revoca al instante; un JWT puro vale hasta que vence y para revocarlo hace falta una tabla como esta.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="tema" id="front">
+      <header>
+        <p class="ruta">Frontend/Admind_Front-End · cliente_api/ · apps/ · templates/ · design-system/</p>
+        <h2>El front por dentro</h2>
+      </header>
+      <p>Django con plantillas: el HTML se arma en el servidor. Alpine.js aparece solo donde hay interacción real, y el estilo sale de un sistema de diseño propio.</p>
+      <div class="dos">
+        <div class="panel">
+          <h3><code>cliente_api/</code>: el mesero</h3>
+          <p>Un archivo por app de la API, una función por endpoint. Todas usan <code>http.py → pedir(request, metodo, ruta, datos)</code>:</p>
+          <ul>
+            <li>pone el token de la sesión en la cabecera;</li>
+            <li>llama con <code>requests</code>, 10 s como máximo;</li>
+            <li>si la API no responde, <code>ApiNoDisponible</code>;</li>
+            <li>si responde con error, <code>ErrorDeApi</code>, con el mensaje en español y los errores por campo.</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <h3>La sesión y los errores</h3>
+          <ul>
+            <li><code>sesion.py</code>: <code>abrir_sesion()</code> guarda token, conjunto, permisos y rol; <code>tiene_permiso()</code> decide qué se ve.</li>
+            <li><code>SesionRequeridaMiddleware</code>: toda pantalla exige sesión salvo las <code>@publica</code>.</li>
+            <li><code>ErroresDeApiMiddleware</code>: API caída → 503; 401 → al ingreso; 403 y 404 → su página propia.</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <h3>Diseño</h3>
+          <p>Tokens de color y tipografía y componentes <code>am-*</code>, sin Bootstrap ni Tailwind. Verde <code>#0E6B5A</code>, Archivo e Inter. Cada conjunto elige su acento (8 o uno propio) y su foto 1:1.</p>
+        </div>
+        <div class="panel">
+          <h3>Dónde hay Alpine.js</h3>
+          <p>La solicitud de reserva con su cuenta regresiva de 3 minutos, el color y la foto del conjunto, el paso de viviendas del asistente, los buscadores de Unidades y Usuarios y el detalle de la vivienda. La cuenta regresiva solo muestra: el vencimiento lo decide la API.</p>
+        </div>
+      </div>
+      <div class="nota jurado">
+        <strong class="titulo">¿Por qué no React?</strong>
+        <p>La app es sobre todo formularios y tablas. Con plantillas no hay npm ni compilación, y el token se queda en el servidor; con React tendría que vivir en el navegador.</p>
+      </div>
+    </section>
+
+    <section class="tema" id="modulos">
+      <header>
+        <p class="ruta">Backend/Admind_Backend/apps/</p>
+        <h2>Los módulos de la API</h2>
+      </header>
+      <p>Una app de Django por tema del negocio, todas con la misma forma: <code>urls.py</code>, <code>views.py</code>, <code>serializers.py</code>, <code>servicios.py</code>, <code>models.py</code>, migraciones y pruebas. <code>comun</code> y <code>auditoria</code> no importan ninguna app de negocio; todas las demás las usan a ellas.</p>
+      <div class="buscador">
+        <label for="filtro-apps">Buscar un módulo o una historia</label>
+        <input id="filtro-apps" type="search" placeholder="reservas, HU-29, parqueadero…" autocomplete="off">
+      </div>
+      <div class="rejilla-apps">
+        <article class="app"><header><code>cuentas</code><span class="hu">HU-01 · 02 · 26</span></header><p>Usuario que entra con correo, <code>TokenDeSesion</code>, segundo factor y recuperación.</p></article>
+        <article class="app"><header><code>permisos</code><span class="hu">HU-06</span></header><p>Catálogo de 5 roles y la asignación: un rol vigente por persona y conjunto.</p></article>
+        <article class="app"><header><code>personas</code><span class="hu">HU-04 · 07</span></header><p>Persona global, única por tipo y número de documento normalizado.</p></article>
+        <article class="app"><header><code>conjuntos</code><span class="hu">HU-03 · 21</span></header><p>Asistente de creación en siete pasos, color y foto 1:1, y la baja del conjunto.</p></article>
+        <article class="app"><header><code>unidades</code><span class="hu">HU-08 · 39</span></header><p>Agrupaciones, viviendas y vínculos con histórico; el generador de viviendas.</p></article>
+        <article class="app"><header><code>documentos</code><span class="hu">HU-33</span></header><p>Reglamento y manual en PDF dentro de la base, con versiones; cada descarga se audita.</p></article>
+        <article class="app"><header><code>areas</code><span class="hu">HU-09</span></header><p>Zonas comunes: modo de uso (reserva o ingreso), horario, aforo y mantenimiento.</p></article>
+        <article class="app"><header><code>reglas</code><span class="hu">HU-10 · 13</span></header><p>Reglas del sistema, alfa (del conjunto) y beta (de la zona), versionadas, con su evaluador.</p></article>
+        <article class="app"><header><code>reservas</code><span class="hu">HU-11 a 16</span></header><p>Franjas, bloqueo de 3 minutos, envío, decisión y pago declarado con comprobante.</p></article>
+        <article class="app"><header><code>casos</code><span class="hu">HU-29</span></header><p>El residente abre un caso; Secretaría prioriza o descarta; Administración responde o rechaza.</p></article>
+        <article class="app"><header><code>citas</code><span class="hu">HU-31</span></header><p>Horario de atención, agenda y bandeja de citas con Administración.</p></article>
+        <article class="app"><header><code>ingresos</code><span class="hu">sin HU</span></header><p>Quién está adentro de una zona con ingreso, el aforo simultáneo y la salida.</p></article>
+        <article class="app"><header><code>visitantes</code><span class="hu">HU-27 · 28</span></header><p>Ingreso y salida de visitantes, con el parqueadero de visitantes que ocupan.</p></article>
+        <article class="app"><header><code>parqueaderos</code><span class="hu">HU-28 · 34</span></header><p>Puestos de residentes y de visitantes; asignación a una vivienda con historial.</p></article>
+        <article class="app"><header><code>pagos</code><span class="hu">HU-35</span></header><p>Pago de administración por vivienda y mes, comprobante y mora de paz y salvo.</p></article>
+        <article class="app"><header><code>infracciones</code><span class="hu">HU-30</span></header><p>Registro y comunicación obligatoria. El sistema no sanciona ni multa.</p></article>
+        <article class="app"><header><code>anuncios</code><span class="hu">HU-25</span></header><p>Anuncios del conjunto o de una vivienda, con hasta 4 fotos.</p></article>
+        <article class="app"><header><code>notificaciones</code><span class="hu">HU-08 · 25</span></header><p>Bandeja en la app y correo en HTML: <code style="font-weight:400;color:inherit">canal.notificar()</code>.</p></article>
+        <article class="app"><header><code>reportes</code><span class="hu">criterio 7</span></header><p>PDF de uso de zonas comunes y Excel de estado de pagos del mes.</p></article>
+        <article class="app"><header><code>auditoria</code><span class="hu">transversal</span></header><p>Registro de solo inserción: prohíbe <code style="font-weight:400;color:inherit">update()</code> y <code style="font-weight:400;color:inherit">delete()</code>.</p></article>
+        <article class="app"><header><code>comun</code><span class="hu">HU-05 · 11</span></header><p>Aislamiento, modelo base, bloqueo de franjas y validación de archivos por su firma.</p></article>
+      </div>
+      <p class="sin-resultados" id="apps-vacio" hidden>Ningún módulo coincide con la búsqueda.</p>
+      <div class="dos">
+        <div class="panel">
+          <h3>El bloqueo de franjas</h3>
+          <p>Si 50 residentes pulsan «Reservar» a la vez, solo uno obtiene la franja. <code>tomar()</code> intenta el <code>INSERT</code> en una transacción sin preguntar antes si está libre; si el índice único parcial lo rechaza, lanza <code>RecursoOcupado</code>. La base decide, una sola vez.</p>
+        </div>
+        <div class="panel">
+          <h3>Los archivos</h3>
+          <p><code>comprobantes.py</code> valida cada archivo por su firma (PDF, JPG o PNG, hasta 5 MB), no por el nombre ni por lo que dice el navegador, y calcula su SHA-256. Se guardan dentro de la base.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="tema" id="datos">
+      <header>
+        <p class="ruta">PostgreSQL · admind_db · migraciones con RunSQL</p>
+        <h2>La base de datos</h2>
+      </header>
+      <p>42 tablas en PostgreSQL. La base impone reglas por sí misma, para que valgan aunque alguien entre por SQL directo, por el shell o por un script que se salte el código.</p>
+      <div class="dos">
+        <div class="panel">
+          <h3>Índice único parcial</h3>
+          <p>No puede haber dos solicitudes bloqueantes sobre la misma franja:</p>
+          <pre class="codigo"><span class="com">-- en esencia</span>
+UNIQUE (area, fecha, hora_inicio)
+WHERE estado IN ('EN_SOLICITUD',
+  'APARTADA', 'RESERVADA')</pre>
+        </div>
+        <div class="panel">
+          <h3>Sin borrado físico</h3>
+          <p>Se cierra una vigencia o se anula con motivo. Ninguna FK con <code>ON DELETE CASCADE</code>. Las tablas clave tienen un trigger que impide el <code>DELETE</code>.</p>
+        </div>
+      </div>
+      <h3>Rutinas almacenadas: 4 funciones y 1 procedimiento</h3>
+      <div class="tabla-envoltura">
+        <table>
+          <thead><tr><th>Rutina</th><th>Tipo</th><th>Qué hace</th><th>Quién la usa</th></tr></thead>
+          <tbody>
+            <tr><td><code>fn_ocupacion_areas</code></td><td>Función</td><td>Reservas confirmadas y horas por zona</td><td>Reporte PDF</td></tr>
+            <tr><td><code>fn_estado_pagos</code></td><td>Función</td><td>Por vivienda: confirmado, reportado o sin reporte</td><td>Reporte Excel</td></tr>
+            <tr><td><code>fn_aforo_actual</code></td><td>Función</td><td>Personas adentro más acompañantes</td><td>Servicio de ingresos</td></tr>
+            <tr><td><code>fn_resumen_casos</code></td><td>Función</td><td>Casos por estado y prioridad</td><td>Las pruebas</td></tr>
+            <tr><td><code>sp_expirar_bloqueos_vencidos</code></td><td>Procedimiento</td><td>Pasa a <code>EXPIRADA</code> lo que venció a los 3 minutos</td><td>Servicio de reservas</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="dos">
+        <div class="panel">
+          <h3>Función o procedimiento</h3>
+          <p>Una función devuelve datos y se usa dentro de un <code>SELECT</code>. Un procedimiento no devuelve nada, se llama con <code>CALL</code> y sirve para hacer algo: expirar bloqueos es una acción; las otras cuatro son consultas.</p>
+        </div>
+        <div class="panel">
+          <h3>5 triggers, 2 reglas distintas</h3>
+          <p><code>trg_sin_borrado_fisico</code> protege casos, infracciones, pagos y reservas. <code>trg_infraccion_anulada_inmutable</code> impide modificar una infracción anulada. Todos son <code>BEFORE</code> y lanzan <code>RAISE EXCEPTION</code>.</p>
+        </div>
+      </div>
+      <div class="nota jurado">
+        <strong class="titulo">Frente al MER inicial</strong>
+        <p>El MER suponía varios roles por persona y un rol Consejo: quedó un rol vigente por conjunto y 5 roles. El estado de la reserva vive en la solicitud, no en la franja, que es solo una coordenada. Y aparecieron tablas que el MER no tenía: la auditoría, los tokens de sesión y las del segundo factor.</p>
+      </div>
+    </section>
+
+    <section class="tema" id="correo">
+      <header>
+        <p class="ruta">apps/notificaciones/ · apps/reportes/</p>
+        <h2>Correo y reportes</h2>
+      </header>
+      <div class="flujo" role="list">
+        <div class="bloque" role="listitem"><b>Servicio</b><span>Pasa algo: un anuncio, un caso, una decisión</span></div>
+        <span class="sig" aria-hidden="true">→</span>
+        <div class="bloque" role="listitem"><b>canal.notificar()</b><span>Guarda el aviso en la bandeja de la app</span></div>
+        <span class="sig" aria-hidden="true">→</span>
+        <div class="bloque clave" role="listitem"><b>on_commit</b><span>El correo sale solo si la operación quedó guardada</span></div>
+        <span class="sig" aria-hidden="true">→</span>
+        <div class="bloque" role="listitem"><b>Hilo aparte</b><span>El SMTP no hace esperar a la API</span></div>
+      </div>
+      <div class="dos">
+        <div class="panel">
+          <h3>El correo</h3>
+          <p><code>EmailMultiAlternatives</code> con texto plano y HTML. Maquetado con tablas, CSS en línea y 600 px, porque los clientes de correo ignoran el CSS moderno. El logo va adjunto con <code>Content-ID</code> y el HTML lo muestra con <code>cid:logo</code>: se ve aunque el cliente bloquee imágenes externas.</p>
+        </div>
+        <div class="panel">
+          <h3>Los reportes</h3>
+          <p>PDF «Uso de zonas comunes» (reportlab, desde <code>fn_ocupacion_areas</code>) y Excel «Estado de pagos del mes» (openpyxl, desde <code>fn_estado_pagos</code>). Rutas en <code>/api/reportes/</code>, solo para Administración y Superusuario.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="tema" id="api">
+      <header>
+        <p class="ruta">config/settings.py · SPECTACULAR_SETTINGS · apps/cuentas/schema.py</p>
+        <h2>Documentación de la API</h2>
+      </header>
+      <p><code>drf-spectacular</code> genera el esquema OpenAPI 3.0 leyendo las vistas y los serializers: <code>/api/schema/</code> da el esquema y <code>/api/docs/</code> lo muestra en Swagger UI. La documentación es pública, pero cada operación pide el token; <code>schema.py</code> describe ese token para el botón <em>Authorize</em>.</p>
+      <dl class="ficha">
+        <div><dt>Rutas</dt><dd>101</dd></div>
+        <div><dt>Operaciones</dt><dd>123</dd></div>
+        <div><dt>Grupos</dt><dd>18</dd></div>
+        <div><dt>Formato</dt><dd>OpenAPI 3.0</dd></div>
+      </dl>
+      <p>En la nube la API no está publicada, así que Swagger se abre con un túnel SSH hasta <code>127.0.0.1:8000</code>.</p>
+    </section>
+
+    <section class="tema" id="repaso">
+      <header>
+        <p class="ruta">Para estudiar</p>
+        <h2>Repaso</h2>
+      </header>
+      <p>Responde en voz alta antes de abrir cada una.</p>
+      <div class="repaso">
+        <details><summary>¿Por qué hay dos servidores Django y no uno?</summary><div>Porque el proyecto exige back y front separados que se hablen por una API. Otra interfaz podría usar la misma API. El front ni siquiera tiene base de datos configurada.</div></details>
+        <details><summary>¿Qué hace la vista y qué no hace?</summary><div>Exige el permiso, valida con el serializer, llama al servicio y traduce las excepciones a HTTP. No consulta el ORM para decidir ni contiene reglas de negocio.</div></details>
+        <details><summary>¿Dónde se filtra por conjunto?</summary><div>En <code>ManagerDeConjunto</code>, con el conjunto que <code>VistaDeConjunto</code> fija en una <code>ContextVar</code>. Las FK compuestas lo respaldan en la base.</div></details>
+        <details><summary>¿Qué pasa si alguien manda <code>conjunto</code> en la petición?</summary><div>La API responde 400. El conjunto solo sale de la sesión del token.</div></details>
+        <details><summary>¿Por qué 404 y no 403 para lo de otro conjunto?</summary><div>Un 403 confirma que el recurso existe, y esa confirmación ya es información filtrada.</div></details>
+        <details><summary>¿Qué guarda la base del token de sesión?</summary><div>Solo su huella SHA-256. Cerrar sesión borra la fila y el token deja de valer.</div></details>
+        <details><summary>¿Cómo se evita que dos personas tomen la misma franja?</summary><div>Con un índice único parcial y un <code>INSERT</code> dentro de una transacción, sin preguntar antes si está libre. Si el índice lo rechaza, <code>RecursoOcupado</code>.</div></details>
+        <details><summary>¿Por qué cuatro funciones y un procedimiento?</summary><div>Las funciones devuelven datos para leer. El procedimiento hace un <code>UPDATE</code> y no devuelve nada, por eso se llama con <code>CALL</code>.</div></details>
+        <details><summary>¿Por qué el correo sale con <code>on_commit</code> y en un hilo?</summary><div>Para que solo salga si la operación quedó guardada, y para que un SMTP lento no haga pasar a la API de los 10 segundos que espera el front.</div></details>
+        <details><summary>¿Qué pasa con una vista nueva que no hereda de <code>VistaDeConjunto</code>?</summary><div>Falla con 500 porque no hay conjunto activo, y la prueba del intruso la marca como ruta no registrada.</div></details>
+      </div>
+    </section>
+
+    <footer class="pie">
+      <p>Datos del 22 de noviembre de 2026, contra <code>main</code>: backend <code>b4d5c7c</code> y frontend <code>a0feaf4</code>.</p>
+      <p>Fuentes: las notas <code>vision_general</code>, <code>backend</code>, <code>frontend</code>, <code>mapa_codigo</code>, <code>capas</code> y <code>aislamiento</code> de la bóveda, y la guía de la sustentación final.</p>
+    </footer>
+  </main>
+</div>

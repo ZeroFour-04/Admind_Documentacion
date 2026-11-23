@@ -1,0 +1,66 @@
+[
+  {"t":"h1","texto":"5. Secretaría"},
+  {"t":"p","texto":"Este capítulo es para quien atiende las solicitudes de los residentes. En el menú lateral usted ve **Inicio**, **Zonas comunes**, **Áreas comunes**, **Reglas**, **Anuncios**, **Notificaciones**, **Solicitudes**, **Casos**, **Pagos**, **Usuarios** y **Unidades**."},
+  {"t":"aviso","titulo":"Importante","texto":"Secretaría **no aprueba reservas**. Las reservas las decide Administración (capítulo 6). Secretaría organiza el tablero, prioriza y redirige los casos, y publica anuncios."},
+
+  {"t":"h2","texto":"5.1 El tablero de solicitudes"},
+  {"t":"p","texto":"**Para qué sirve:** ver de un vistazo lo que los residentes han enviado y lo que espera atención. **Quién puede hacerlo:** Secretaría (y Administración)."},
+  {"t":"p","texto":"Pulse **Solicitudes**. Se abre el **Dashboard de Gestión de Reservas** ({U22}), con tres pestañas:"},
+  {"t":"ul","items":[
+    "**Reservas:** las solicitudes de zonas comunes. Con **Pendientes** ve las que esperan decisión y con **Todas** ve también las ya decididas. Puede filtrar por **Estado**, **Zona**, **Vivienda**, **Residente** y por las fechas **Enviada desde** y **Enviada hasta**; después pulse **Filtrar**.",
+    "**Casos:** los casos que abrieron los residentes. El número junto a la pestaña (por ejemplo, «2 pendientes») dice cuántos esperan revisión.",
+    "**Citas:** una pestaña que todavía no tiene función."
+  ]},
+  {"t":"fig","id":"U22","file":"U22_solicitudes.png","pie":"Tablero de solicitudes, pestaña Reservas"},
+  {"t":"p","texto":"La pestaña **Casos** ({U22b}) muestra una tabla con el **ID** del caso (por ejemplo, «CAS-9C3196»), el **Asunto**, el **Estado**, la **Prioridad**, el **Residente**, la **Vivienda** y cuándo se creó. Use **Abiertos** o **Todos**, ordene **Por prioridad** o **Por antigüedad**, y filtre por **Estado**, **Prioridad**, **Residente** y fechas de creación."},
+  {"t":"fig","id":"U22b","file":"U22b_solicitudes_casos.png","pie":"Tablero de solicitudes, pestaña Casos"},
+  {"t":"aviso","titulo":"En implementación","texto":"La pestaña Citas existe, pero todavía no permite hacer nada. Tampoco hay una vista que junte reservas, casos y citas en una sola lista."},
+
+  {"t":"h2","texto":"5.2 Gestionar un caso"},
+  {"t":"p","texto":"**Para qué sirve:** dar curso a un caso: ponerle prioridad, avisarle al residente que se está revisando, pasarlo a quien lo resuelve o cerrarlo si no corresponde. **Quién puede hacerlo:** Secretaría."},
+  {"t":"p","texto":"En la pestaña **Casos**, pulse el caso para abrir su detalle ({U23}). Arriba aparecen su estado y su prioridad, el **Residente**, la **Vivienda**, la fecha de creación, **Lo que reporta** y, si el residente la adjuntó, la foto. A la derecha están las acciones:"},
+  {"t":"fig","id":"U23","file":"U23_caso_gestion.png","pie":"Detalle de un caso con las acciones de Secretaría"},
+  {"t":"h3","texto":"Tomar el caso"},
+  {"t":"p","texto":"Pulse **Tomar el caso**. Le dice al residente que ya lo están revisando y pasa a «En revisión». No es obligatorio para seguir con las otras acciones."},
+  {"t":"h3","texto":"Cambiar la prioridad"},
+  {"t":"ol","items":[
+    "En **Cambiar la prioridad**, elija **Baja**, **Normal**, **Alta** o **Urgente**.",
+    "Si elige **Urgente**, escriba la **Justificación**: es obligatoria solo para esa prioridad. El cambio queda en la auditoría.",
+    "Pulse **Guardar prioridad**."
+  ]},
+  {"t":"h3","texto":"Redirigir al administrador"},
+  {"t":"ol","items":[
+    "En **Redirigir al administrador**, escriba si quiere una **Nota para el administrador**. Es opcional y el residente no la ve.",
+    "Pulse **Redirigir al administrador**."
+  ]},
+  {"t":"p","texto":"AdMind confirma con «El caso fue redirigido a Administración.», el caso pasa a **Redirigido** y la nota queda como «Nota de Secretaría», marcada como interna."},
+  {"t":"h3","texto":"Descartar el caso"},
+  {"t":"p","texto":"Descartar cierra el caso cuando no corresponde a la administración. Elija la **Causal** («No es competencia de la administración», «Caso duplicado» o «Información insuficiente»), escriba el **Comentario para el residente** y pulse **Descartar el caso**. Si el caso no cabe en ninguna causal, no lo descarte: redirígelo."},
+  {"t":"nota","titulo":"Tenga en cuenta","items":[
+    "El residente lee el comentario con que se descarta un caso: escríbalo con respeto y con claridad.",
+    "Secretaría no responde ni resuelve los casos: eso lo hace Administración (sección 6.11)."
+  ]},
+
+  {"t":"h2","texto":"5.3 Publicar un anuncio"},
+  {"t":"p","texto":"**Para qué sirve:** comunicar algo a todo el conjunto o a una vivienda. **Quién puede hacerlo:** Secretaría y Administración."},
+  {"t":"ol","items":[
+    "Pulse **Anuncios** y luego **Publicar anuncio**. Se abre el formulario ({U24}).",
+    "Escriba el **Título** y el **Texto del anuncio**.",
+    "Si quiere, agregue **Fotos** (opcional): hasta 4 imágenes PNG, JPG o WebP de hasta 5 MB cada una.",
+    "En **¿Para quién es?** elija **Todo el conjunto** (lo reciben todas las personas con un rol) o **Una vivienda** (lo reciben el propietario y el arrendatario de esa vivienda, vivan o no ahí). Si elige una vivienda, escoja cuál en **Vivienda**.",
+    "Pulse **Publicar**. Para salir sin publicar, pulse **Cancelar**."
+  ]},
+  {"t":"fig","id":"U24","file":"U24_anuncio_nuevo.png","pie":"Publicar un anuncio, con su alcance"},
+  {"t":"nota","titulo":"Tenga en cuenta","items":[
+    "Al publicar, AdMind avisa **una sola vez**, dentro de AdMind y por correo. Si después edita el texto con **Editar texto**, no se vuelve a avisar.",
+    "Las fotos no se pueden cambiar después de publicar.",
+    "Una foto donde se reconoce a una persona es un dato personal: publíquela solo con su permiso.",
+    "Una infracción no se comunica con un anuncio dirigido: se comunica desde Infracciones (sección 6.10).",
+    "Publicar puede tardar unos segundos porque se envían los correos. Si aparece «No hay conexión con el servidor de AdMind», revise la lista de **Anuncios** antes de publicar de nuevo: es posible que ya esté publicado (ver capítulo 8)."
+  ]},
+
+  {"t":"h2","texto":"5.4 Consultar los pagos de administración"},
+  {"t":"p","texto":"**Para qué sirve:** ver qué viviendas reportaron o tienen confirmado el pago del mes. **Quién puede hacerlo:** Secretaría (solo consulta) y Administración (consulta y confirma)."},
+  {"t":"p","texto":"Pulse **Pagos** ({U32c}). Con **Mes anterior** y **Mes siguiente** cambia de mes, y con **Buscar por nombre, cédula o apartamento** encuentra una vivienda. La tabla muestra, por vivienda, quiénes son sus propietarios y arrendatarios, el **Estado** del mes, quién reportó y cuándo, el comprobante y quién confirmó. Secretaría ve el estado pero no tiene la casilla para confirmar el pago."},
+  {"t":"fig","id":"U32c","file":"U32c_pagos_secretaria.png","pie":"Pagos de administración, vistos por Secretaría (solo consulta)"}
+]
