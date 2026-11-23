@@ -2,8 +2,8 @@
 resumen: "Qué es la sustentación técnica final de AdMind, su fecha (movida del martes 17-nov al lunes 23-nov), la rúbrica del profesor, qué se entregó, cómo está cada criterio el 18-nov y dónde está cada fuente. Entrada para cualquier tarea sobre la sustentación."
 tipo: contexto
 origen: "guía del profesor (clase del 3-nov), plan de Alejo (F0 a F3), tareas.md (auditada el 17-nov a las 10:00), chats del 14 al 18-nov, y GitHub y el VPS el 18-nov. La fecha nueva la dijo Alejo en chat el 2026-11-18."
-actualizado: 2026-11-22
-revisado: 2026-11-22
+actualizado: 2026-11-23
+revisado: 2026-11-23
 ---
 
 # Sustentación técnica final de AdMind
@@ -28,7 +28,7 @@ revisado: 2026-11-22
 
 ## La rúbrica: 12 criterios
 
-La mandó el profesor (guía de la clase del 3-nov) y es la base de todo. Estado al **2026-11-22**: `main` del back en `b4d5c7c` y del front en `a0feaf4`, desplegados en el VPS, con el CI en verde (comprobado con `gh` y por SSH). Ese día entraron a `main` CORS (PR #19) y Swagger (PR #20) de Camilo, y el CI endurecido de Alejo (PR #21 del back y #12 del front), más un arreglo de sintaxis del `ci.yml` subido directo a `main` con permiso de Alejo.
+La mandó el profesor (guía de la clase del 3-nov) y es la base de todo. Estado al **2026-11-22**: `main` del back en `4cbb86b` y del front en `00d0f7e` (validación de formato del 23-nov), desplegados en el VPS, con el CI en verde (comprobado con `gh` y por SSH). Ese día entraron a `main` CORS (PR #19) y Swagger (PR #20) de Camilo, y el CI endurecido de Alejo (PR #21 del back y #12 del front), más un arreglo de sintaxis del `ci.yml` subido directo a `main` con permiso de Alejo.
 
 | # | Criterio | Qué exige | Estado | Cómo se muestra |
 |---|---|---|---|---|
@@ -39,11 +39,11 @@ La mandó el profesor (guía de la clase del 3-nov) y es la base de todo. Estado
 | 5 | Documentación de la API | Swagger/OpenAPI **o** colección de Postman organizada | **Swagger hecho** (PR #20 de Camilo, en `main` y en la nube el 22-nov): `drf-spectacular` 0.30.0, `/api/schema/` y `/api/docs/`. El esquema de la nube tiene 101 rutas de negocio, 123 operaciones y 18 grupos | Captura `evidencias/swagger_nube_2026-11-22.jpg`; en vivo, por túnel SSH al puerto 8000 del VPS |
 | 6 | Correo | Automático, HTML con logo y estilos | Hecho (A7: `EmailMultiAlternatives`, logo incrustado). Falta la captura desde la nube | Captura del correo en Gmail |
 | 7 | Reportes | PDF o Excel con formato profesional | Hecho (C6: PDF de zonas y Excel de pagos, pantalla `/reportes/`; solo Administración y Superusuario). Falta descargarlos desde la nube | Archivos descargados de la app desplegada |
-| 8 | Pruebas del back | 70 % de cobertura, camino feliz y de excepción, con reporte | 854 pruebas y 94,2 % en el CI de `main` del 22-nov. El front tiene 541 | El paso de cobertura en *Actions* y el artefacto `cobertura-backend` |
+| 8 | Pruebas del back | 70 % de cobertura, camino feliz y de excepción, con reporte | 854 pruebas y 94,2 % en el CI de `main` del 22-nov; 865 en local el 23-nov. El front tiene 557 | El paso de cobertura en *Actions* y el artefacto `cobertura-backend` |
 | 9 | Base de datos | Sustentar el diseño frente al MER inicial; 5 procedimientos y 5 triggers que sirvan | 4 funciones, 1 procedimiento (`sp_expirar_bloqueos_vencidos`) y 5 triggers, en migraciones, aplicados en el VPS el 17-nov | `\df`, `information_schema.triggers` y el [diccionario](datos/diccionario_datos.md), que hay que regenerar con esto |
 | 10 | CI | Flujos automáticos, con historial | GitHub Actions en los dos repos, con ejecuciones desde el 16-nov. **Endurecido** (PR #21 del back y #12 del front, 22-nov): instala desde `requirements.lock` con hashes y solo wheels, token de solo lectura y acciones en Node 24. El back fija además las dependencias de `drf-spectacular`. Las dos primeras ejecuciones fallaron por un error de YAML (los dos puntos de `:all:`), corregido el mismo día. 30 ejecuciones en el back y 15 en el front. Las ramas no están protegidas | Pestaña *Actions* de cada repo |
 | 11 | SonarQube | Primer escaneo, una vulnerabilidad alta o media corregida **por integrante**, segundo escaneo | SonarCloud analiza `main` y los PR. Primer escaneo el 17-nov: back 3 vulnerabilidades MAJOR (dos en `ci.yml`, una contraseña de ejemplo en `.env _ejemplo`), front 17 (las dos de `ci.yml`, una MAJOR en `cliente_api/http.py` y 14 MINOR). La de Alejo (las dos de `ci.yml`) entró a `main` el 22-nov. **Segundo escaneo el 22-nov: back 3 → 1, front 17 → 15**, seguridad C en los dos. **Falta la de Camilo**; la candidata es la del `.env _ejemplo`, que deja el back en 0 | Capturas `sonar_1_*` y `sonar_2_*`, y la pestaña *Activity* |
-| 12 | Despliegue | 100 % en la nube (front, back y base) y operativo | `https://admind.detkor.com`, VPS de Oracle detrás de Cloudflare. Desplegado igual a `main` (back `b4d5c7c`, front `a0feaf4`) desde el 22-nov, con CORS y Swagger | QR, la app en vivo, `systemctl status` y la consola de Oracle |
+| 12 | Despliegue | 100 % en la nube (front, back y base) y operativo | `https://admind.detkor.com`, VPS de Oracle detrás de Cloudflare. Desplegado igual a `main` (back `4cbb86b`, front `00d0f7e`) desde el 23-nov, con CORS, Swagger y la validación de formato de los campos | QR, la app en vivo, `systemctl status` y la consola de Oracle |
 
 Sobre los criterios 9 y 11: el profesor escribió «5 *stored procedures*» y «mínimo 4 integrantes». Son 2 personas, y 4 de los 5 triggers son el mismo `trg_sin_borrado_fisico` en cuatro tablas. Saber explicar por qué cuatro rutinas son funciones y una es procedimiento, y que el segundo trigger distinto es `trg_infraccion_anulada_inmutable`.
 
