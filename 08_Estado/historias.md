@@ -67,7 +67,7 @@ El reparto por sprint está en [estado_actual](estado_actual.md).
 | HU-23 | Prioridad sobre citas y casos | 6 | 5 | Media | Sin empezar | [triage](../05_Modulos/triage.md) | — |
 | HU-24 | Rechazo por causal formal de la Secretaría | 6 | 3 | Media | Parcial | [triage](../05_Modulos/triage.md) | [Plan_Triage_HU-22_HU-24](../07_Planes/hechos/Plan_Triage_HU-22_HU-24.md) |
 | HU-30 | Registro y comunicación de infracciones | 6 | 4 | Media | Construida | [infracciones](../05_Modulos/infracciones.md) | [Infracciones](../07_Planes/activos/Plan_Infracciones.md) |
-| HU-31 | Agendar cita dentro del horario de atención | 6 | 4 | Media | Sin empezar | [citas](../05_Modulos/citas.md) | — |
+| HU-31 | Agendar cita dentro del horario de atención | 6 | 4 | Media | Parcial: solo backend (Camilo, 27/10; `apps/citas`, 3 rutas, 9 pruebas). El front no tiene pantallas: la pestaña Citas dice «todavía no están disponibles» (verificado 2026-11-14) | [citas](../05_Modulos/citas.md) | — |
 | HU-32 | Cambio de horario con alternativas a los afectados | 6 | 8 | Media | Sin empezar | [citas](../05_Modulos/citas.md) | — |
 | HU-33 | Repositorio de documentos vigentes | 6 | 3 | Media | Parcial | [conjuntos](../05_Modulos/conjuntos.md) (los documentos) | [Asistente_De_Creacion](../07_Planes/hechos/Plan_Asistente_De_Creacion.md), [Documentos](../07_Planes/activos/Plan_Documentos.md) |
 | HU-34 | Asignación de parqueaderos de residentes | 6 | 4 | Media | Construida | [parqueaderos](../05_Modulos/parqueaderos.md) | [Parqueaderos_De_Residentes](../07_Planes/activos/Plan_Parqueaderos_De_Residentes.md) |

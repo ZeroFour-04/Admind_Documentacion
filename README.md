@@ -134,11 +134,29 @@ Los planes están en `07_Planes/hechos/` y son históricos: se abren para ver el
 
 Plantillas, en `09_Protocolos/Plantillas/`: [nota](09_Protocolos/Plantillas/nota.md), [plan](09_Protocolos/Plantillas/plan.md), [plan_guiado](09_Protocolos/Plantillas/plan_guiado.md), [informe_de_avance](09_Protocolos/Plantillas/informe_de_avance.md) y [documento_de_avance](09_Protocolos/Plantillas/documento_de_avance.md).
 
+## 10 Sustentación — entrega final (docs 14-nov; sustentación movida del 17-nov al lunes 23-nov)
+
+| Nota | Qué tiene |
+|---|---|
+| [sustentacion_tecnica](10_Sustentacion/sustentacion_tecnica.md) | **Entrada.** Qué es la sustentación técnica, la fecha nueva, la rúbrica de 12 criterios con su estado, lo que se entregó, lo que falta y dónde está cada fuente |
+| [reparto_sustentacion](10_Sustentacion/reparto_sustentacion.md) | Quién presenta cada diapositiva (Alejo o Camilo), qué dice, qué estudia, las preguntas probables y la demostración |
+| [estudio_alejo](10_Sustentacion/estudio_alejo.md) | Guía de estudio de Alejo: su guion por diapositiva, sus seis temas desde cero (diseño, correo, pruebas, CI, Sonar, despliegue), las preguntas difíciles, su parte de la demostración y una autoevaluación |
+| [plan_entrega_final_documentos](10_Sustentacion/plan_entrega_final_documentos.md) | Plan de los tres Word de la entrega final (metodología ágil, código y despliegue), con los datos del tablero y del VPS |
+| [tareas](10_Sustentacion/tareas.md) | Lista de tareas de Alejo y Camilo contra la rúbrica del profesor, lista para pegar en Notion |
+| [tareas_por_persona](10_Sustentacion/tareas_por_persona.md) | Lo que le falta a cada uno, en orden sugerido, con el estado de GitHub del 16-nov |
+| [estilo_entregables](10_Sustentacion/estilo_entregables.md) | Portada, colores, fuentes, logo y carpeta de salida de los Word |
+| [plan_F0_manual_tecnico](10_Sustentacion/plan_F0_manual_tecnico.md) | Plan del manual técnico |
+| [plan_F0_manual_usuario](10_Sustentacion/plan_F0_manual_usuario.md) | Plan del manual de usuario: datos de demostración y 38 capturas por rol |
+| [plan_F0_diccionario](10_Sustentacion/plan_F0_diccionario.md) | Plan del diccionario de datos y cómo regenerarlo |
+| [plan_F0_tablero_y_repos](10_Sustentacion/plan_F0_tablero_y_repos.md) | Plan del tablero de Notion y los enlaces a los repos |
+| [diccionario_datos](10_Sustentacion/datos/diccionario_datos.md) | Diccionario generado del esquema real de `admind_db` (42 tablas) |
+| [endpoints_api](10_Sustentacion/datos/endpoints_api.md) | Las 97 rutas reales de la API; los scripts que generan los dos están en `datos/scripts/` |
+
 ## Fuera del recorrido de un agente
 
 | Carpeta | Qué hay |
 |---|---|
-| `Guias/` | Tutoriales para personas, con fecha de corte: [sustentación técnica](Guias/Admind_Guia_Sustentacion_Tecnica.md) (03/11), [estructura actual](Guias/Admind_Guia_Estructura_Actual.md) (30/09), [guía de desarrollo](Guias/Admind_Guia_Desarrollo.md) (15/09), [instalación local](Guias/Admind_Backend_Instalacion_Local.md) e [inicialización del backend](Guias/Admind_Backend_Inicializacion.md) (14/09). No se actualizan: lo vigente está en las carpetas numeradas |
+| `Guias/` | Tutoriales para personas, con fecha de corte: [sustentación final](Guias/Admind_Guia_Sustentacion_Final.md) (19/11: los 12 criterios, el recorrido y la pregunta difícil de cada tema), [sustentación técnica](Guias/Admind_Guia_Sustentacion_Tecnica.md) (03/11), [estructura actual](Guias/Admind_Guia_Estructura_Actual.md) (30/09), [guía de desarrollo](Guias/Admind_Guia_Desarrollo.md) (15/09), [instalación local](Guias/Admind_Backend_Instalacion_Local.md) e [inicialización del backend](Guias/Admind_Backend_Inicializacion.md) (14/09). No se actualizan: lo vigente está en las carpetas numeradas |
 | `Archivo/` | Histórico, no se edita: `Avances/` (fotos fechadas y el [inventario del código al 27/09](Archivo/Avances/Inventario_codigo_2026-09-27.md)), `Informes/` (los cuatro informes al docente), `Lab/` y `Notas/` (apuntes de Alejo) |
 | `Credenciales/` | No la abre un agente |
 | [Admin_Master](Admin_Master.md) | Tabla de equivalencias: dónde quedó cada sección del maestro y qué es cada identificador |

@@ -33,6 +33,7 @@ Tres repositorios hermanos dentro de `A D M I N D/` (la carpeta tiene espacios: 
 | Saber qué falta (pruebas manuales, avisos, lo legal, deuda) | `08_Estado/pendientes.md`, ordenada por tipo |
 | Algo que suene a decisión de equipo | `06_Decisiones/abiertas.md` y `06_Decisiones/construccion.md` |
 | Un informe de avance, una foto de avance o un plan | `09_Protocolos/` |
+| **La sustentación** (técnica, final, «la del lunes»), su rúbrica, sus documentos o su presentación | `10_Sustentacion/sustentacion_tecnica.md`: fecha (movida al lunes 23-nov), los 12 criterios con su estado, lo entregado y lo que falta. El detalle, en `10_Sustentacion/tareas.md` |
 | Resolver una cita como *maestro §5.4*, *R12* o *decisión 24* | `Admin_Master.md`, que es la tabla de equivalencias |
 
 ## Reglas que no se saltan
